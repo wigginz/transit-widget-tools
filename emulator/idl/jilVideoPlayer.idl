@@ -1,0 +1,24 @@
+#include "jilService.idl"
+#include "nsIDOMHTMLElement.idl"
+#include "nsIDOMDocument.idl"
+
+
+[scriptable, function, uuid(3697902a-3e81-11df-9879-0800200c9a66)]
+interface jilVPOnStateChange : nsISupports
+{
+  void invoke(in string state);
+};
+
+
+[scriptable, uuid(639cdd20-bb61-11de-8a39-0800200c9a66)]
+interface jilVideoPlayer : jilService
+{
+  attribute jilVPOnStateChange onStateChange;
+
+  void open(in string fileUrl);
+  void pause();
+  void play(in unsigned long repeatTimes);
+  void resume();
+  void setWindow(in nsIDOMHTMLElement domObj, in nsIDOMHTMLElement videoElement);
+  void stop();
+};

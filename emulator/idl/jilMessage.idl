@@ -1,0 +1,41 @@
+#include "nsISupports.idl"
+#include "nsIArray.idl"
+
+#include "jilAttachment.idl"
+
+
+[scriptable, uuid(20e45300-baa8-11de-8a39-0800200c9a66)]
+interface jilMessage : nsISupports
+{
+  attribute string body;
+  attribute string callbackNumber;
+  attribute boolean isRead;
+  attribute string messageId;
+  attribute boolean messagePriority;
+  attribute string messageType;
+  attribute string sourceAddress;
+  attribute string subject;
+  attribute string time; // !DATE
+  attribute unsigned long validityPeriodHours;
+
+  // deviates from JIL API to get around having native JS arrays as attributes
+  void getAttachments([optional] out unsigned long count, [array, size_is(count), retval] out string retv);
+  void getBccAddress([optional] out unsigned long count, [array, size_is(count), retval] out string retv);
+  void getCcAddress([optional] out unsigned long count, [array, size_is(count), retval] out string retv);
+  void getDestinationAddress([optional] out unsigned long count, [array, size_is(count), retval] out string retv);
+
+  // same as above
+  void setAttachments(in unsigned long count, [array, size_is(count)] in string argv);
+  void setBccAddress(in unsigned long count, [array, size_is(count)] in string argv);
+  void setCcAddress(in unsigned long count, [array, size_is(count)] in string argv);
+  void setDestinationAddress(in unsigned long count, [array, size_is(count)] in string argv);
+
+  void addAddress(in string type, in string address);
+  void addAttachment(in string fileFullName);
+  void deleteAddress(in string type, in string address);
+  void deleteAttachment(in jilAttachment attachment);
+  void saveAttachment(in string fileFullName, in jilAttachment attachment);
+
+  // update doesnt seem to exist in the JIL spec, but we need it
+  void update();
+};

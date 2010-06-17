@@ -1,0 +1,20 @@
+#include "jilService.idl"
+
+
+[scriptable, function, uuid(36979027-3e81-11df-9879-0800200c9a66)]
+interface jilRIOnSignalSourceChangeEvent : nsISupports
+{
+  void invoke(in string signalSource, in boolean isRoaming);
+};
+
+
+[scriptable, uuid(39075290-bae2-11de-8a39-0800200c9a66)]
+interface jilRadioInfo : jilService
+{
+  attribute boolean isRadioEnabled;
+  attribute boolean isRoaming;
+  attribute string radioSignalSource;
+  attribute string radioSignalStrengthPercent;
+
+  attribute jilRIOnSignalSourceChangeEvent onSignalSourceChange;
+};

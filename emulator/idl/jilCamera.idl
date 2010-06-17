@@ -1,0 +1,21 @@
+#include "jilService.idl"
+#include "nsIDOMHTMLElement.idl"
+
+
+[scriptable, function, uuid(36979010-3e81-11df-9879-0800200c9a66)]
+interface jilCAOnCameraCaptured : nsISupports
+{
+  void invoke(in string fileName);
+};
+
+
+[scriptable, uuid(a6793ed1-bb5d-11de-8a39-0800200c9a66)]
+interface jilCamera : jilService
+{
+  attribute jilCAOnCameraCaptured onCameraCaptured;
+
+  string captureImage(in string fileName, in boolean lowRes);
+  string startVideoCapture(in string fileName, in boolean lowRes, in unsigned long maxDurationSeconds, in boolean showDefaultControls);
+  void setWindow(in nsIDOMHTMLElement domObj);
+  void stopVideoCapture();
+};

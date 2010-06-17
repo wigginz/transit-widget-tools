@@ -1,0 +1,9 @@
+#include "nsISupports.idl"
+
+
+[scriptable, uuid(50b6af90-baaa-11de-8a39-0800200c9a66)]
+interface jilAccount : nsISupports
+{
+  attribute string accountId;
+  attribute string accountName;
+};

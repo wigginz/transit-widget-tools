@@ -1,0 +1,675 @@
+<!ENTITY jwe.menu.group "Transit Widget Emulator">
+<!ENTITY jwe.menu.emulate "Emulate Widget">
+<!ENTITY jwe.menu.emulateintab "Emulate Widget (debug)">
+<!ENTITY jwe.menu.logviewer "Log Viewer">
+<!ENTITY jwe.emulator.title "Transit Widget Emulator">
+<!ENTITY jwe.emulator.emulating "Emulating: ">
+<!ENTITY jwe-emulator-widget-name-version "Version: ">
+<!ENTITY jwe.emulator.pickprofile "Device Profile: ">
+<!ENTITY jwe.emulator.controls.popout "Pop-out">
+<!ENTITY jwe.menu.profiles "Manage Profiles">
+
+<!ENTITY jwe.emulator.tab.settings "General Settings">
+<!ENTITY jwe.emulator.tab.settings.displaylabel "Display">
+
+<!ENTITY jwe.emulator.tab.events.context.none "N/A">
+<!ENTITY jwe.emulator.tab.events.context.nonevent "Event will be triggered when the associated API call is complete (search, export, etc.).">
+<!ENTITY jwe.emulator.tab.events.context "Event Context">
+<!ENTITY jwe.emulator.tab.events.context.trigger "Trigger Event">
+<!ENTITY jwe.emulator.tab.events.context.warning "Note: values will not be saved to the device profile.">
+
+<!ENTITY jwe.emulator.tab.events "API Events">
+<!ENTITY jwe.emulator.tab.events.list.caption "API Events">
+<!ENTITY jwe.emulator.tab.events.list.widget "Widget">
+<!ENTITY jwe.emulator.tab.events.list.device "Widget.Device">
+<!ENTITY jwe.emulator.tab.events.list.devicestate "Widget.Device.DeviceStateInfo">
+<!ENTITY jwe.emulator.tab.events.list.power "Widget.Device.PowerInfo">
+<!ENTITY jwe.emulator.tab.events.list.network "Widget.Device.DeviceNetworkInfo">
+<!ENTITY jwe.emulator.tab.events.list.radio "Widget.Device.RadioInfo">
+<!ENTITY jwe.emulator.tab.events.list.messaging "Widget.Messaging">
+<!ENTITY jwe.emulator.tab.events.list.audio "Widget.Multimedia.AudioPlayer">
+<!ENTITY jwe.emulator.tab.events.list.video "Widget.Multimedia.VideoPlayer">
+<!ENTITY jwe.emulator.tab.events.list.camera "Widget.Multimedia.Camera">
+<!ENTITY jwe.emulator.tab.events.list.pim "Widget.PIM">
+<!ENTITY jwe.emulator.tab.events.list.telephony "Widget.Telephony">
+
+<!ENTITY jwe.emulator.tab.events.widget "Widget Events">
+<!ENTITY jwe.emulator.tab.events.widget.caption "">
+<!ENTITY jwe.emulator.tab.events.widget.onfocus "onFocus">
+<!ENTITY jwe.emulator.tab.events.widget.onmax "onMaximize">
+<!ENTITY jwe.emulator.tab.events.widget.onrestore "onRestore">
+<!ENTITY jwe.emulator.tab.events.widget.onwakeup "onWakeup">
+<!ENTITY jwe.emulator.tab.events.widget.onmax.context.forcemax "Also physically maximize widget.">
+
+<!ENTITY jwe.emulator.tab.events.device "Widget.Device Events">
+<!ENTITY jwe.emulator.tab.events.device.onfilesfound "onFilesFound">
+
+<!ENTITY jwe.emulator.tab.events.devicestate "Widget.Device.DeviceStateInfo Events">
+<!ENTITY jwe.emulator.tab.events.devicestate.onflip "onFlipEvent">
+<!ENTITY jwe.emulator.tab.events.devicestate.onposition "onPositionRetrieved">
+<!ENTITY jwe.emulator.tab.events.devicestate.onscreenchange "onScreenChangeDimensions">
+<!ENTITY jwe.emulator.tab.events.devicestate.onflip.context.fliptrue "Indicate device has flipped closed.">
+<!ENTITY jwe.emulator.tab.events.devicestate.onposition.context.accuracy "Accuracy (m): ">
+<!ENTITY jwe.emulator.tab.events.devicestate.onposition.context.altitude "Altitude (m): ">
+<!ENTITY jwe.emulator.tab.events.devicestate.onposition.context.altitudeaccuracy "Altitude Accuracy (m): ">
+<!ENTITY jwe.emulator.tab.events.devicestate.onposition.context.cellid "Cell Id: ">
+<!ENTITY jwe.emulator.tab.events.devicestate.onposition.context.latitude "Latitude: ">
+<!ENTITY jwe.emulator.tab.events.devicestate.onposition.context.longitude "Longitude: ">
+<!ENTITY jwe.emulator.tab.events.devicestate.onposition.context.failure "Simulate a failed request.">
+<!ENTITY jwe.emulator.tab.events.devicestate.onposition.context.timestamp "Time Stamp: ">
+<!ENTITY jwe.emulator.tab.events.devicestate.onscreenchange.context.newwidth "New Width: ">
+<!ENTITY jwe.emulator.tab.events.devicestate.onscreenchange.context.newheight "New Height: ">
+<!ENTITY jwe.emulator.tab.events.devicestate.onscreenchange.context.resize "Also physically resize screen to new dimensions.">
+
+<!ENTITY jwe.emulator.tab.events.power "Widget.Device.PowerInfo Events">
+<!ENTITY jwe.emulator.tab.events.power.onchargelevel "onChargeLevelChange">
+<!ENTITY jwe.emulator.tab.events.power.onchargestate "onChargeStateChange">
+<!ENTITY jwe.emulator.tab.events.power.onlowbattery "onLowBattery">
+<!ENTITY jwe.emulator.tab.events.power.onchargelevel.context.newlevel "New Charge Level: ">
+<!ENTITY jwe.emulator.tab.events.power.onchargelevel.context.newlevel "New Percentage Remaining: ">
+<!ENTITY jwe.emulator.tab.events.power.onchargestate.context.state "New Charge State: ">
+<!ENTITY jwe.emulator.tab.events.power.onchargestate.context.state.charging "Charging">
+<!ENTITY jwe.emulator.tab.events.power.onchargestate.context.state.discharging "Discharging">
+<!ENTITY jwe.emulator.tab.events.power.onchargestate.context.state.full "Full">
+<!ENTITY jwe.emulator.tab.events.power.onlowbattery.context.remaining "New Percentage Remaining: ">
+
+<!ENTITY jwe.emulator.tab.events.network "Widget.Device.DataNetworkInfo Events">
+<!ENTITY jwe.emulator.tab.events.network.onnetworkchange "onNetworkConnectionChangeed">
+<!ENTITY jwe.emulator.tab.events.power.onnetworkchange.context.name "Data Connection Name: ">
+
+<!ENTITY jwe.emulator.tab.events.radio "Widget.Device.RadioInfo Events">
+<!ENTITY jwe.emulator.tab.events.radio.onsignalchange "onSignalSourceChange">
+<!ENTITY jwe.emulator.tab.events.radio.onsignalchange.context.source "Signal Source: ">
+<!ENTITY jwe.emulator.tab.events.radio.onsignalchange.context.source.cdma "CDMA">
+<!ENTITY jwe.emulator.tab.events.radio.onsignalchange.context.source.gsm "GSM">
+<!ENTITY jwe.emulator.tab.events.radio.onsignalchange.context.source.lte "LTE">
+<!ENTITY jwe.emulator.tab.events.radio.onsignalchange.context.source.tdscdma "TDSCDMA">
+<!ENTITY jwe.emulator.tab.events.radio.onsignalchange.context.source.wcdma "WCDMA">
+<!ENTITY jwe.emulator.tab.events.radio.onsignalchange.context.roaming "Is Roaming">
+
+<!ENTITY jwe.emulator.tab.events.messaging "Widget.Messaging">
+<!ENTITY jwe.emulator.tab.events.messaging.onmsgarrived "onMessageArrived">
+<!ENTITY jwe.emulator.tab.events.messaging.onmsgsendfail "onMessageSendingFailure">
+<!ENTITY jwe.emulator.tab.events.messaging.onmsgsfound "onMessagesFound">
+<!ENTITY jwe.emulator.tab.events.messaging.onmessagearrived.context.subject "Message to Deliver: ">
+<!ENTITY jwe.emulator.tab.events.messaging.onmessagefailure.context.subject "Message to Fail: ">
+<!ENTITY jwe.emulator.tab.events.messaging.onmessagefailure.context.error "Error Message: ">
+
+<!ENTITY jwe.emulator.tab.events.audio "Widget.Multimedia.AudioPlayer">
+<!ENTITY jwe.emulator.tab.events.audio.onstatechange "onStateChange">
+<!ENTITY jwe.emulator.tab.events.audio.onstatechange.context.state "New State: ">
+<!ENTITY jwe.emulator.tab.events.audio.onstatechange.context.state.opened "opened">
+<!ENTITY jwe.emulator.tab.events.audio.onstatechange.context.state.playing "playing">
+<!ENTITY jwe.emulator.tab.events.audio.onstatechange.context.state.paused "paused">
+<!ENTITY jwe.emulator.tab.events.audio.onstatechange.context.state.stopped "stopped">
+<!ENTITY jwe.emulator.tab.events.audio.onstatechange.context.state.completed "completed">
+
+<!ENTITY jwe.emulator.tab.events.video "Widget.Multimedia.VideoPlayer">
+<!ENTITY jwe.emulator.tab.events.video.onstatechange "onStateChange">
+<!ENTITY jwe.emulator.tab.events.video.onstatechange.context.state "New State: ">
+<!ENTITY jwe.emulator.tab.events.video.onstatechange.context.state.opened "opened">
+<!ENTITY jwe.emulator.tab.events.video.onstatechange.context.state.playing "playing">
+<!ENTITY jwe.emulator.tab.events.video.onstatechange.context.state.paused "paused">
+<!ENTITY jwe.emulator.tab.events.video.onstatechange.context.state.stopped "stopped">
+<!ENTITY jwe.emulator.tab.events.video.onstatechange.context.state.completed "completed">
+
+<!ENTITY jwe.emulator.tab.events.camera "Widget.Multimedia.Camera">
+<!ENTITY jwe.emulator.tab.events.camera.oncaptured "onCameraCaptured">
+<!ENTITY jwe.emulator.tab.events.camera.oncameracaptured.context.rootpath "File System Root: ">
+<!ENTITY jwe.emulator.tab.events.camera.oncameracaptured.context.filename "File Name (relative): ">
+<!ENTITY jwe.emulator.tab.events.camera.oncameracaptured.context.localpath "Local Path: ">
+<!ENTITY jwe.emulator.tab.events.camera.oncameracaptured.context.localfile "Local File: ">
+<!ENTITY jwe.emulator.tab.events.camera.oncameracaptured.context.sentfile "Sending to Callback: ">
+<!ENTITY jwe.emulator.tab.events.camera.oncameracaptured.context.pathwarning "Use forward slash &quot;/&quot; for all file separators.">
+
+<!ENTITY jwe.emulator.tab.events.pim "Widget.PIM">
+<!ENTITY jwe.emulator.tab.events.pim.onaddrfound "onAddressBookItemsFound">
+<!ENTITY jwe.emulator.tab.events.pim.oncalendaralert "onCalendarItemAlert">
+<!ENTITY jwe.emulator.tab.events.pim.oncalfound "onCalendarItemsFound">
+<!ENTITY jwe.emulator.tab.events.pim.onvcardexport "onVCardExportingFinish">
+<!ENTITY jwe.emulator.tab.events.pim.oncalendaritemalert.context.calitems "Calendar Item: ">
+
+<!ENTITY jwe.emulator.tab.events.telephony "Widget.Telephony">
+<!ENTITY jwe.emulator.tab.events.telephony.oncall "onCallEvent">
+<!ENTITY jwe.emulator.tab.events.telephony.oncallrecfound "onCallRecordsFound">
+
+<!ENTITY jwe.emulator.tab.events.telephony.oncallevent.context.type "Call Type: ">
+<!ENTITY jwe.emulator.tab.events.telephony.oncallevent.context.missed "MISSED">
+<!ENTITY jwe.emulator.tab.events.telephony.oncallevent.context.outgoing "OUTGOING">
+<!ENTITY jwe.emulator.tab.events.telephony.oncallevent.context.received "RECEIVED">
+<!ENTITY jwe.emulator.tab.events.telephony.oncall.context.number "Phone Number: ">
+
+
+<!ENTITY jwe.emulator.tab.log "Log">
+
+<!ENTITY jwe.emulator.tab.settings.overflow "Hide overflow">
+<!ENTITY jwe.emulator.tab.settings.dragborder "Hide drag border">
+<!ENTITY jwe.emulator.tab.settings.fullscreen "Full screen mode">
+
+
+<!ENTITY jwe.emulator.start "Start">
+<!ENTITY jwe.emulator.reload "Reload">
+<!ENTITY jwe-emulator-press-start-button "Press the 'Start' button to start emulating: ">
+
+<!ENTITY jwe.emulator.multimedia.status.label "Multimedia API Details">
+<!ENTITY jwe.emulator.multimedia.currentaudio "Opened Audio Source: ">
+
+<!ENTITY jwe.emulator.log.status.label "Emulator Log">
+<!ENTITY jwe.emulator.log.warning.caption "Log entries are shown most recent first.">
+<!ENTITY jwe.emulator.log.copy "Copy All">
+<!ENTITY jwe.emulator.log.clear "Clear">
+
+
+<!ENTITY jwe.emulator.logviewer.title "Emulator Log Viewer">
+<!ENTITY jwe.emulator.log.refresh "Refresh">
+
+<!-- profiles window -->
+<!ENTITY jwe.profiles.title "Manage Emulator Profiles">
+<!ENTITY jwe.profiles.tab.devices "Devices">
+<!ENTITY jwe.profiles.tab.messaging "Messaging">
+<!ENTITY jwe.profiles.tab.pim "PIM">
+<!ENTITY jwe.profiles.tab.defaults "Import Defaults">
+
+<!ENTITY jwe.profiles.device.add "New...">
+<!ENTITY jwe.profiles.device.remove "Delete">
+<!ENTITY jwe.profiles.device.remove.confirm "Are you sure you would like to delete this device profile? This operation cannot be undone.">
+<!ENTITY jwe.profiles.messaging.remove.confirm "Are you sure you would like to delete this messaging profile? This operation cannot be undone.">
+<!ENTITY jwe.profiles.pim.remove.confirm "Are you sure you would like to delete this PIM profile? This operation cannot be undone.">
+<!ENTITY jwe.profiles.rename "Rename Profile...">
+
+<!ENTITY jwe.profiles.devices.tab.settings "General Settings">
+<!ENTITY jwe.profiles.devices.tab.widget "Widget">
+<!ENTITY jwe.profiles.devices.tab.device "Widget.Device">
+<!ENTITY jwe.profiles.devices.tab.multimedia "Widget.Multimedia">
+<!ENTITY jwe.profiles.devices.tab.telephony "Widget.Telephony">
+<!ENTITY jwe.profiles.devices.tab.account "Widget.Device.AccountInfo">
+<!ENTITY jwe.profiles.devices.tab.deviceinfo "Widget.Device.DeviceInfo">
+<!ENTITY jwe.profiles.devices.tab.datanetwork "Widget.Device.DataNetworkInfo">
+<!ENTITY jwe.profiles.devices.tab.devicestate "Widget.Device.DeviceStateInfo">
+<!ENTITY jwe.profiles.devices.tab.accelerometer "Widget.Device.DeviceStateInfo.AccelerometerInfo">
+<!ENTITY jwe.profiles.devices.tab.config "Widget.Device.DeviceStateInfo.Config">
+<!ENTITY jwe.profiles.devices.tab.position "Widget.Device.PositionInfo">
+<!ENTITY jwe.profiles.devices.tab.power "Widget.Device.PowerInfo">
+<!ENTITY jwe.profiles.devices.tab.radio "Widget.Device.RadioInfo">
+<!ENTITY jwe.profiles.devices.settings.messaging "Messaging Profile: ">
+<!ENTITY jwe.profiles.devices.settings.pim "PIM Profile: ">
+<!ENTITY jwe.profiles.devices.settings.assoc "Associated Profiles">
+
+<!ENTITY jwe.profiles.widget.prefs "Emulated Widget">
+<!ENTITY jwe.profiles.widget.prefs.name "Widget Name">
+<!ENTITY jwe.profiles.widget.prefs.version "Version">
+<!ENTITY jwe.profiles.widget.prefs.values "Preferences">
+<!ENTITY jwe.profiles.widget.prefs.author "Author">
+<!ENTITY jwe.profiles.widget.prefs.delete "Delete">
+<!ENTITY jwe.profiles.widget.prefs.modify "Modify...">
+<!ENTITY jwe.profiles.widget.prefs.new "New...">
+<!ENTITY jwe.profiles.widget.prefs.preferences "Preferences...">
+<!ENTITY jwe.profiles.widget.prefs.warning "Emulated widgets are automatically added to this list when they are first run in the emulator. Widgets may also be added, edited, and removed manually. Ensure all attributes here match those in the widget package.">
+
+<!ENTITY jwe.profiles.devices.device.values "Device">
+<!ENTITY jwe.profiles.devices.device.clip "Clipboard String: ">
+<!ENTITY jwe.profiles.devices.device.engine.name "Widget Engine Name: ">
+<!ENTITY jwe.profiles.devices.device.engine.prov "Widget Engine Provider: ">
+<!ENTITY jwe.profiles.devices.device.engine.ver "Widget Engine Version: ">
+<!ENTITY jwe.profiles.devices.filesystems "File Systems">
+  <!ENTITY jwe.profiles.devices.filesystems.localpath "Local Path">
+<!ENTITY jwe.profiles.devices.filesystems.path "Root Path">
+<!ENTITY jwe.profiles.devices.filesystems.delete "Delete">
+<!ENTITY jwe.profiles.devices.filesystems.modify "Modify...">
+<!ENTITY jwe.profiles.devices.filesystems.new "New...">
+<!ENTITY jwe.profiles.devices.apps "Available Applications">
+<!ENTITY jwe.profiles.devices.apps.alarm "Alarm">
+<!ENTITY jwe.profiles.devices.apps.browser "Browser">
+<!ENTITY jwe.profiles.devices.apps.calculator "Calculator">
+<!ENTITY jwe.profiles.devices.apps.calendar "Calendar">
+<!ENTITY jwe.profiles.devices.apps.camera "Camera">
+<!ENTITY jwe.profiles.devices.apps.contacts "Contacts">
+<!ENTITY jwe.profiles.devices.apps.files "Files">
+<!ENTITY jwe.profiles.devices.apps.games "Games">
+<!ENTITY jwe.profiles.devices.apps.mail "Mail">
+<!ENTITY jwe.profiles.devices.apps.mediaplayer "Media Player">
+<!ENTITY jwe.profiles.devices.apps.messaging "Messaging">
+<!ENTITY jwe.profiles.devices.apps.phonecall "Phone Call">
+<!ENTITY jwe.profiles.devices.apps.pictures "Pictures">
+<!ENTITY jwe.profiles.devices.apps.progmgr "Program Manager">
+<!ENTITY jwe.profiles.devices.apps.settings "Settings">
+<!ENTITY jwe.profiles.devices.apps.tasks "Tasks">
+<!ENTITY jwe.profiles.devices.apps.widgetmgr "Widget Manager">
+
+<!ENTITY jwe.profiles.devices.save "Save Device Profile">
+<!ENTITY jwe.profiles.devices.reset "Reset All">
+<!ENTITY jwe.profiles.devices.resetMessage "All device changes will be lost, are you sure you would like to reset?">
+<!ENTITY jwe.profiles.devices.saveMessage "The save operation cannot be undone, are you sure you would like to save?">
+
+<!ENTITY jwe.profiles.messaging.save "Save Messaging Profile">
+<!ENTITY jwe.profiles.messaging.reset "Reset All">
+<!ENTITY jwe.profiles.messaging.resetMessage "All messaging changes will be lost, are you sure you would like to reset?">
+<!ENTITY jwe.profiles.messaging.saveMessage "The save operation cannot be undone, are you sure you would like to save?">
+
+<!ENTITY jwe.profiles.pim.save "Save PIM Profile">
+<!ENTITY jwe.profiles.pim.reset "Reset All">
+<!ENTITY jwe.profiles.pim.resetMessage "All PIM changes will be lost, are you sure you would like to reset?">
+<!ENTITY jwe.profiles.pim.saveMessage "The save operation cannot be undone, are you sure you would like to save?">
+
+<!ENTITY jwe.profiles.defaults.save "Save Import Defaults">
+<!ENTITY jwe.profiles.defaults.reset "Reset All">
+<!ENTITY jwe.profiles.defaults.resetMessage "All import defaults changes will be lost, are you sure you would like to reset?">
+<!ENTITY jwe.profiles.defaults.saveMessage "The save operation cannot be undone, are you sure you would like to save?">
+<!ENTITY jwe.profiles.defaults.caption "Change default values to be used for non-device specific settings when new device profiles are created or imported. Under normal circumstances, these values will not need to be changed.">
+
+<!ENTITY jwe.profiles.devices.account "Account Information">
+<!ENTITY jwe.profiles.devices.account.phonemsisdn "Phone MSISDN: ">
+<!ENTITY jwe.profiles.devices.account.opname "Phone Operator Name: ">
+<!ENTITY jwe.profiles.devices.account.userid "Phone Unique User Id: ">
+<!ENTITY jwe.profiles.devices.account.balance "User Account Balance: ">
+<!ENTITY jwe.profiles.devices.account.type "User Subscription Type: ">
+<!ENTITY jwe.profiles.devices.account.type.prepaid "Prepaid">
+<!ENTITY jwe.profiles.devices.account.type.postpaid "Postpaid">
+<!ENTITY jwe.profiles.devices.account.type.other "Other">
+
+<!ENTITY jwe.profiles.devices.ownerinfo "Owner Info: ">
+<!ENTITY jwe.profiles.devices.ownerinfo.address "Address: ">
+<!ENTITY jwe.profiles.devices.ownerinfo.company "Company: ">
+<!ENTITY jwe.profiles.devices.ownerinfo.email "Email: ">
+<!ENTITY jwe.profiles.devices.ownerinfo.fullname "Full Name: ">
+<!ENTITY jwe.profiles.devices.ownerinfo.title "Title: ">
+<!ENTITY jwe.profiles.devices.ownerinfo.homephone "Home Phone: ">
+<!ENTITY jwe.profiles.devices.ownerinfo.mobilephone "Mobile Phone: ">
+<!ENTITY jwe.profiles.devices.ownerinfo.workphone "Work Phone: ">
+
+<!ENTITY jwe.profiles.devices.deviceinfo "Device Information">
+<!ENTITY jwe.profiles.devices.deviceinfo.colordepth "Color Depth Default: ">
+<!ENTITY jwe.profiles.devices.deviceinfo.firmware "Firmware: ">
+<!ENTITY jwe.profiles.devices.deviceinfo.manufacturer "Manufacturer: ">
+<!ENTITY jwe.profiles.devices.deviceinfo.model "Model: ">
+<!ENTITY jwe.profiles.devices.deviceinfo.os "Operating System: ">
+<!ENTITY jwe.profiles.devices.deviceinfo.height "Screen Height Default: ">
+<!ENTITY jwe.profiles.devices.deviceinfo.width "Screen Width Default: ">
+<!ENTITY jwe.profiles.devices.deviceinfo.software "Software: ">
+<!ENTITY jwe.profiles.devices.deviceinfo.memory "Memory (kb): ">
+
+<!ENTITY jwe.profiles.devices.datanetwork "Data Network Information">
+<!ENTITY jwe.profiles.devices.datanetwork.connected "Data Network Connected">
+<!ENTITY jwe.profiles.devices.datanetwork.disconnected "Data Network Not Connected">
+<!ENTITY jwe.profiles.devices.datanetwork.bluetooth "Bluetooth">
+<!ENTITY jwe.profiles.devices.datanetwork.edge "EDGE">
+<!ENTITY jwe.profiles.devices.datanetwork.evdo "EVDO">
+<!ENTITY jwe.profiles.devices.datanetwork.gprs "GPRS">
+<!ENTITY jwe.profiles.devices.datanetwork.irda "IRDA">
+<!ENTITY jwe.profiles.devices.datanetwork.lte "LTE">
+<!ENTITY jwe.profiles.devices.datanetwork.onexrtt "ONEXRTT">
+<!ENTITY jwe.profiles.devices.datanetwork.wifi "WiFi">
+
+<!ENTITY jwe.profiles.devices.datanetwork.enabled "Connections Enabled">
+<!ENTITY jwe.profiles.devices.datanetwork.names "Data Connection Names">
+<!ENTITY jwe.profiles.devices.datanetwork.bluename "Bluetooth Name: ">
+<!ENTITY jwe.profiles.devices.datanetwork.edgename "EDGE Name: ">
+<!ENTITY jwe.profiles.devices.datanetwork.evdoname "EVDO Name: ">
+<!ENTITY jwe.profiles.devices.datanetwork.gprsname "GPRS Name: ">
+<!ENTITY jwe.profiles.devices.datanetwork.irdaname "IRDA Name: ">
+<!ENTITY jwe.profiles.devices.datanetwork.ltename "LTE Name: ">
+<!ENTITY jwe.profiles.devices.datanetwork.onexrttname "ONEXRTT Name: ">
+<!ENTITY jwe.profiles.devices.datanetwork.wifiname "WiFi Name: ">
+
+<!ENTITY jwe.profiles.devices.devicestate "Device State Information">
+<!ENTITY jwe.profiles.devices.devicestate.audiopath "Audio Path: ">
+<!ENTITY jwe.profiles.devices.devicestate.availmem "Available Memory (kb): ">
+<!ENTITY jwe.profiles.devices.devicestate.backlight "Back Light: ">
+<!ENTITY jwe.profiles.devices.devicestate.keypad "Keypad Light: ">
+<!ENTITY jwe.profiles.devices.devicestate.backlight.on "On">
+<!ENTITY jwe.profiles.devices.devicestate.keypad.on "On">
+<!ENTITY jwe.profiles.devices.devicestate.language "Language: ">
+<!ENTITY jwe.profiles.devices.devicestate.proc "Processor Utilization: ">
+<!ENTITY jwe.profiles.devices.devicestate.proc.percent "&#37;">
+<!ENTITY jwe.profiles.devices.devicestate.audiopath.speaker "Speaker">
+<!ENTITY jwe.profiles.devices.devicestate.audiopath.receiver "Receiver">
+<!ENTITY jwe.profiles.devices.devicestate.audiopath.earphone "Earphone">
+
+<!ENTITY jwe.profiles.devices.accelerometer "Accelerometer Information">
+<!ENTITY jwe.profiles.devices.accelerometer.x "X Axis: ">
+<!ENTITY jwe.profiles.devices.accelerometer.y "Y Axis: ">
+<!ENTITY jwe.profiles.devices.accelerometer.z "Z Axis: ">
+
+<!ENTITY jwe.profiles.devices.config "Config">
+<!ENTITY jwe.profiles.devices.config.msgvol "Message Ringtone Volume: ">
+<!ENTITY jwe.profiles.devices.config.ringvol "Ringtone Volume: ">
+<!ENTITY jwe.profiles.devices.config.vibration "Vibration Setting: ">
+<!ENTITY jwe.profiles.devices.config.vibration.on "On">
+
+<!ENTITY jwe.profiles.devices.position "Position Information">
+<!ENTITY jwe.profiles.devices.position.cellid "Cell Id: ">
+<!ENTITY jwe.profiles.devices.position.accuracy "Accuracy (m): ">
+<!ENTITY jwe.profiles.devices.position.lat "Latitude: ">
+<!ENTITY jwe.profiles.devices.position.long "Longitude: ">
+<!ENTITY jwe.profiles.devices.position.altitude "Altitude (m): ">
+<!ENTITY jwe.profiles.devices.position.altaccuracy "Altitude Accuracy (m): ">
+
+<!ENTITY jwe.profiles.devices.power "Power Information">
+<!ENTITY jwe.profiles.devices.power.charging "Power Charging: ">
+<!ENTITY jwe.profiles.devices.power.charging.on "On">
+<!ENTITY jwe.profiles.devices.power.remaining "Charge Remaining: ">
+<!ENTITY jwe.profiles.devices.power.remaining.percent "&#37;">
+
+<!ENTITY jwe.profiles.devices.radio "Radio Information">
+<!ENTITY jwe.profiles.devices.radio.enabled "Radio: ">
+<!ENTITY jwe.profiles.devices.radio.enabled.on "On">
+<!ENTITY jwe.profiles.devices.radio.roaming "Roaming: ">
+<!ENTITY jwe.profiles.devices.radio.roaming.on "On">
+<!ENTITY jwe.profiles.devices.radio.signalsource "Radio Signal Source: ">
+<!ENTITY jwe.profiles.devices.radio.signalsource.cdma "CDMA">
+<!ENTITY jwe.profiles.devices.radio.signalsource.gsm "GSM">
+<!ENTITY jwe.profiles.devices.radio.signalsource.lte "LTE">
+<!ENTITY jwe.profiles.devices.radio.signalsource.tdscdma "TDSCDMA">
+<!ENTITY jwe.profiles.devices.radio.signalsource.wcdma "WCDMA">
+<!ENTITY jwe.profiles.devices.radio.strength "Radio Signal Strength: ">
+<!ENTITY jwe.profiles.devices.radio.strength.percent "&#37;">
+
+<!ENTITY jwe.profiles.devices.multimedia "Multimedia">
+<!ENTITY jwe.profiles.devices.multimedia.audioplaying "Audio Playing: ">
+<!ENTITY jwe.profiles.devices.multimedia.audioplaying.on "On">
+<!ENTITY jwe.profiles.devices.multimedia.videoplaying "Video Playing: ">
+<!ENTITY jwe.profiles.devices.multimedia.videoplaying.on "On">
+<!ENTITY jwe.profiles.devices.multimedia.volume "Volume: ">
+
+<!ENTITY jwe.profiles.devices.telephony "Call Records: ">
+<!ENTITY jwe.profiles.devices.telephony.id "Id: ">
+<!ENTITY jwe.profiles.devices.telephony.type "Type: ">
+<!ENTITY jwe.profiles.devices.telephony.address "Address: ">
+<!ENTITY jwe.profiles.devices.telephony.new "New...">
+<!ENTITY jwe.profiles.devices.telephony.modify "Modify...">
+<!ENTITY jwe.profiles.devices.telephony.delete "Delete">
+
+<!ENTITY jwe.profiles.messaging.tab.email "Email Accounts">
+<!ENTITY jwe.profiles.messaging.tab.folders "Message Folders">
+<!ENTITY jwe.profiles.messaging.tab.messages "Messages">
+<!ENTITY jwe.profiles.messaging.email "Email Accounts">
+<!ENTITY jwe.profiles.messaging.folders "Message Folders">
+<!ENTITY jwe.profiles.messaging.messages "Messages">
+
+<!ENTITY jwe.profiles.messaging.email.name "Name">
+<!ENTITY jwe.profiles.messaging.email.id "Id">
+<!ENTITY jwe.profiles.messaging.email.default "Default">
+<!ENTITY jwe.profiles.messaging.email.new "New...">
+<!ENTITY jwe.profiles.messaging.email.modify "Modify...">
+<!ENTITY jwe.profiles.messaging.email.delete "Delete">
+<!ENTITY jwe.profiles.messaging.email.makedefault "Make Default">
+<!ENTITY jwe.profiles.messaging.email.warning "The default email account cannot be deleted. New email accounts must be saved before they can be marked as the default account.">
+
+<!ENTITY jwe.profiles.messaging.folders.name "Name">
+<!ENTITY jwe.profiles.messaging.folders.type "Type">
+<!ENTITY jwe.profiles.messaging.folders.messages "Messages">
+<!ENTITY jwe.profiles.messaging.folders.new "New...">
+<!ENTITY jwe.profiles.messaging.folders.modify "Modify...">
+<!ENTITY jwe.profiles.messaging.folders.delete "Delete">
+
+<!ENTITY jwe.profiles.pim.attributes "Available Attributes">
+<!ENTITY jwe.profiles.pim.attributes.key "Key">
+<!ENTITY jwe.profiles.pim.attributes.new "New...">
+<!ENTITY jwe.profiles.pim.attributes.modify "Modify...">
+<!ENTITY jwe.profiles.pim.attributes.delete "Delete">
+
+<!ENTITY jwe.profiles.messaging.messages.to "To">
+<!ENTITY jwe.profiles.messaging.messages.subject "Subject">
+<!ENTITY jwe.profiles.messaging.messages.from "From">
+<!ENTITY jwe.profiles.messaging.messages.folder "Folder">
+<!ENTITY jwe.profiles.messaging.messages.new "New...">
+<!ENTITY jwe.profiles.messaging.messages.modify "Modify...">
+<!ENTITY jwe.profiles.messaging.messages.delete "Delete">
+
+<!ENTITY jwe.profiles.pim.tab.address "Address Book">
+<!ENTITY jwe.profiles.pim.tab.calendar "Calendar Events">
+
+<!ENTITY jwe.profiles.pim.address "Address Book">
+<!ENTITY jwe.profiles.pim.address.name "Full Name">
+<!ENTITY jwe.profiles.pim.address.mobile "Mobile Phone">
+<!ENTITY jwe.profiles.pim.address.email "Email">
+<!ENTITY jwe.profiles.pim.address.new "New...">
+<!ENTITY jwe.profiles.pim.address.modify "Modify...">
+<!ENTITY jwe.profiles.pim.address.delete "Delete">
+
+<!ENTITY jwe.profiles.pim.groups "Groups">
+<!ENTITY jwe.profiles.pim.groups.name "Name">
+<!ENTITY jwe.profiles.pim.groups.items "Address Book Items">
+<!ENTITY jwe.profiles.pim.groups.new "New...">
+<!ENTITY jwe.profiles.pim.groups.modify "Modify...">
+<!ENTITY jwe.profiles.pim.groups.delete "Delete">
+
+<!ENTITY jwe.profiles.pim.calendar "Calendar Events">
+<!ENTITY jwe.profiles.pim.calendar.name "Name">
+<!ENTITY jwe.profiles.pim.calendar.start "Start Time">
+<!ENTITY jwe.profiles.pim.calendar.end "End Time">
+<!ENTITY jwe.profiles.pim.calendar.new "New...">
+<!ENTITY jwe.profiles.pim.calendar.modify "Modify...">
+<!ENTITY jwe.profiles.pim.calendar.delete "Delete">
+
+<!ENTITY jwe.profiles.messaging.add "New...">
+<!ENTITY jwe.profiles.messaging.remove "Delete">
+
+<!ENTITY jwe.profiles.pim.add "New...">
+<!ENTITY jwe.profiles.pim.remove "Delete">
+
+<!ENTITY jwe.profiles.import "Import Profile...">
+<!ENTITY jwe.profiles.export "Export Profile...">
+<!ENTITY jwe.profiles.ok "Close">
+<!ENTITY jwe.profiles.ok.confirm "You have unsaved changes! Closing will discard these changes, are you sure you would like to close the Profile Manager?">
+<!ENTITY jwe.profiles.save.successful "Your profile has been successfully updated.">
+
+<!ENTITY jwe.profiles.popup.widget.title "Emulated Widget Details">
+<!ENTITY jwe.profiles.popup.widget.caption "Emulated Widget Details">
+<!ENTITY jwe.profiles.popup.widget.id "Application Id: ">
+<!ENTITY jwe.profiles.popup.widget.name "Name: ">
+<!ENTITY jwe.profiles.popup.widget.version "Version: ">
+<!ENTITY jwe.profiles.popup.widget.author "Author: ">
+<!ENTITY jwe.profiles.popup.widget.save "Save">
+<!ENTITY jwe.profiles.popup.widget.cancel "Cancel">
+
+<!ENTITY jwe.profiles.popup.wprefs.title "Emulated Widget Details">
+<!ENTITY jwe.profiles.popup.wprefs.caption "Preferences for ">
+<!ENTITY jwe.profiles.popup.wprefs.key "Key">
+<!ENTITY jwe.profiles.popup.wprefs.value "Value">
+<!ENTITY jwe.profiles.popup.wprefs.add "Add...">
+<!ENTITY jwe.profiles.popup.wprefs.modify "Modify...">
+
+<!ENTITY jwe.profiles.popup.wprefs.remove "Remove">
+<!ENTITY jwe.profiles.popup.wprefs.close "Close">
+<!ENTITY jwe.profiles.popup.wprefs.warning "Caution: widget preference changes are saved immediately and cannot be undone or reset by the main profile management dialog.">
+
+<!ENTITY jwe.profiles.popup.wpref.title "Set Widget Preference">
+<!ENTITY jwe.profiles.popup.wpref.caption "Set Widget Preference">
+<!ENTITY jwe.profiles.popup.wpref.key "Key: ">
+<!ENTITY jwe.profiles.popup.wpref.value "Value: ">
+<!ENTITY jwe.profiles.popup.wpref.ok "OK">
+<!ENTITY jwe.profiles.popup.wpref.cancel "Cancel">
+<!ENTITY jwe.profiles.popup.wpref.keyerror "Preference key cannot be blank or start with a space.">
+
+<!ENTITY jwe.profiles.popup.fsys.title "File System">
+<!ENTITY jwe.profiles.popup.fsys.caption "File System">
+<!ENTITY jwe.profiles.popup.fsys.path "Root Path: ">
+<!ENTITY jwe.profiles.popup.fsys.localpath "Local Path: ">
+<!ENTITY jwe.profiles.popup.fsys.ok "OK">
+<!ENTITY jwe.profiles.popup.fsys.cancel "Cancel">
+<!ENTITY jwe.profiles.popup.fsys.error "Root path cannot be blank or start with a space.">
+
+
+<!ENTITY jwe.profiles.popup.crec.title "Call Record">
+<!ENTITY jwe.profiles.popup.crec.caption "Call Record">
+<!ENTITY jwe.profiles.popup.crec.name "Name: ">
+<!ENTITY jwe.profiles.popup.crec.address "Address: ">
+<!ENTITY jwe.profiles.popup.crec.type "Type: ">
+<!ENTITY jwe.profiles.popup.crec.duration "Dration (seconds): ">
+<!ENTITY jwe.profiles.popup.crec.start "Start Time: ">
+<!ENTITY jwe.profiles.popup.crec.ok "OK">
+<!ENTITY jwe.profiles.popup.crec.cancel "Cancel">
+<!ENTITY jwe.profiles.popup.crec.outgoing "Outgoing">
+<!ENTITY jwe.profiles.popup.crec.received "Received">
+<!ENTITY jwe.profiles.popup.crec.missed "Missed">
+
+<!ENTITY jwe.profiles.popup.email.title "Email Account">
+<!ENTITY jwe.profiles.popup.email.caption "Email Account">
+<!ENTITY jwe.profiles.popup.email.name "Name: ">
+<!ENTITY jwe.profiles.popup.email.save "OK">
+<!ENTITY jwe.profiles.popup.email.cancel "Cancel">
+
+<!ENTITY jwe.profiles.popup.mfolder.title "Message Folder">
+<!ENTITY jwe.profiles.popup.mfolder.caption "Message Folder">
+<!ENTITY jwe.profiles.popup.mfolder.name "Name: ">
+<!ENTITY jwe.profiles.popup.mfolder.type "Type: ">
+<!ENTITY jwe.profiles.popup.mfolder.drafts "Drafts">
+<!ENTITY jwe.profiles.popup.mfolder.inbox "Inbox">
+<!ENTITY jwe.profiles.popup.mfolder.outbox "Outbox">
+<!ENTITY jwe.profiles.popup.mfolder.sentbox "Sentbox">
+<!ENTITY jwe.profiles.popup.mfolder.account "Email Account: ">
+<!ENTITY jwe.profiles.popup.mfolder.messagetype "Message Type: ">
+<!ENTITY jwe.profiles.popup.mfolder.emailmessage "Email">
+<!ENTITY jwe.profiles.popup.mfolder.mmsmessage "MMS">
+<!ENTITY jwe.profiles.popup.mfolder.smsmessage "SMS">
+
+<!ENTITY jwe.profiles.popup.mfolder.save "OK">
+<!ENTITY jwe.profiles.popup.mfolder.cancel "Cancel">
+
+<!ENTITY jwe.profiles.popup.message.title "Message">
+<!ENTITY jwe.profiles.popup.message.caption "Message">
+<!ENTITY jwe.profiles.popup.message.warning "Destination fields can include multiple addresses separated by a semicolon.">
+<!ENTITY jwe.profiles.popup.message.from "From: ">
+<!ENTITY jwe.profiles.popup.message.to "To: ">
+<!ENTITY jwe.profiles.popup.message.cc "CC: ">
+<!ENTITY jwe.profiles.popup.message.bcc "BCC: ">
+<!ENTITY jwe.profiles.popup.message.priority "Priority Flag: ">
+<!ENTITY jwe.profiles.popup.message.priority.enabled "Enabled">
+<!ENTITY jwe.profiles.popup.message.isread "Read Falg: ">
+<!ENTITY jwe.profiles.popup.message.isread.enabled "Enabled">
+<!ENTITY jwe.profiles.popup.message.type "Type: ">
+<!ENTITY jwe.profiles.popup.message.email "Email">
+<!ENTITY jwe.profiles.popup.message.mms "MMS">
+<!ENTITY jwe.profiles.popup.message.sms "SMS">
+<!ENTITY jwe.profiles.popup.message.callback "Callback Address: ">
+<!ENTITY jwe.profiles.popup.message.time "Time: ">
+<!ENTITY jwe.profiles.popup.message.validity "Vailidity (hours): ">
+<!ENTITY jwe.profiles.popup.message.subject "Subject: ">
+<!ENTITY jwe.profiles.popup.message.body "Body: ">
+<!ENTITY jwe.profiles.popup.message.save "OK">
+<!ENTITY jwe.profiles.popup.message.cancel "Cancel">
+<!ENTITY jwe.profiles.popup.message.folder "Folder: ">
+
+<!ENTITY jwe.profiles.popup.addr.title "Address Book Item">
+<!ENTITY jwe.profiles.popup.addr.caption "Address Book Item">
+<!ENTITY jwe.profiles.popup.addr.address "Address: ">
+<!ENTITY jwe.profiles.popup.addr.company "Company: ">
+<!ENTITY jwe.profiles.popup.addr.email "Email: ">
+<!ENTITY jwe.profiles.popup.addr.fullname "Full Name: ">
+<!ENTITY jwe.profiles.popup.addr.homephone "Home Phone: ">
+<!ENTITY jwe.profiles.popup.addr.mobilephone "Mobile Phone: ">
+<!ENTITY jwe.profiles.popup.addr.workphone "Work Phone: ">
+<!ENTITY jwe.profiles.popup.addr.itemtitle "Title: ">
+<!ENTITY jwe.profiles.popup.addr.ringtone "Ringtone File Url: ">
+<!ENTITY jwe.profiles.popup.addr.attributes "Attributes: ">
+<!ENTITY jwe.profiles.popup.addr.key "Key">
+<!ENTITY jwe.profiles.popup.addr.value "Value">
+<!ENTITY jwe.profiles.popup.addr.new "New...">
+<!ENTITY jwe.profiles.popup.addr.modify "Modify...">
+<!ENTITY jwe.profiles.popup.addr.delete "Delete">
+<!ENTITY jwe.profiles.popup.addr.ok "OK">
+<!ENTITY jwe.profiles.popup.addr.cancel "Cancel">
+
+<!ENTITY jwe.profiles.popup.attraddrv.title "Address Book Item Attribute Value">
+<!ENTITY jwe.profiles.popup.attraddrv.caption "Address Book Item Attribute Value">
+<!ENTITY jwe.profiles.popup.attraddrv.key "Attribute: ">
+<!ENTITY jwe.profiles.popup.attraddrv.value "Value: ">
+<!ENTITY jwe.profiles.popup.attraddrv.ok "OK">
+<!ENTITY jwe.profiles.popup.attraddrv.cancel "Cancel">
+
+<!ENTITY jwe.profiles.popup.addrattr.title "Available Attribute">
+<!ENTITY jwe.profiles.popup.addrattr.caption "Available Attribute">
+<!ENTITY jwe.profiles.popup.addrattr.key "Attribute Key: ">
+<!ENTITY jwe.profiles.popup.addrattr.ok "OK">
+<!ENTITY jwe.profiles.popup.addrattr.cancel "Cancel">
+
+<!ENTITY jwe.profiles.popup.addrgrp.title "Address Book Group">
+<!ENTITY jwe.profiles.popup.addrgrp.caption "Address Book Group">
+<!ENTITY jwe.profiles.popup.addrgrp.name "Full Name">
+<!ENTITY jwe.profiles.popup.addrgrp.members "Members: ">
+<!ENTITY jwe.profiles.popup.addrgrp.groupname "Group Name: ">
+<!ENTITY jwe.profiles.popup.addrgrp.mobilephone "Mobile Phone">
+<!ENTITY jwe.profiles.popup.addrgrp.add "Add...">
+<!ENTITY jwe.profiles.popup.addrgrp.remove "Remove">
+<!ENTITY jwe.profiles.popup.addrgrp.ok "OK">
+<!ENTITY jwe.profiles.popup.addrgrp.cancel "Cancel">
+
+<!ENTITY jwe.profiles.popup.addrgrpm.title "Address Book Group Members">
+<!ENTITY jwe.profiles.popup.addrgrpm.caption "Address Book Group Members">
+<!ENTITY jwe.profiles.popup.addrgrpm.caution "Address Book Group Members. Multiple select (shift key) is allowed. Only address book items not currently in this group are shown.">
+<!ENTITY jwe.profiles.popup.addrgrpm.name "Full Name">
+<!ENTITY jwe.profiles.popup.addrgrpm.mobile "Mobile Phone">
+<!ENTITY jwe.profiles.popup.addrgrpm.ok "OK">
+<!ENTITY jwe.profiles.popup.addrgrpm.cancel "Cancel">
+
+<!ENTITY jwe.profiles.popup.calitem.title "Calendar Item">
+<!ENTITY jwe.profiles.popup.calitem.caption "Calendar Item">
+<!ENTITY jwe.profiles.popup.calitem.name "Name: ">
+<!ENTITY jwe.profiles.popup.calitem.start "Start Time: ">
+<!ENTITY jwe.profiles.popup.calitem.end "End Time: ">
+<!ENTITY jwe.profiles.popup.calitem.alarmedflag "Alarmed Flag: ">
+<!ENTITY jwe.profiles.popup.calitem.alarmedflag.enabled "Enabled">
+<!ENTITY jwe.profiles.popup.calitem.recurrence "Recurrence: ">
+<!ENTITY jwe.profiles.popup.calitem.daily "Daily">
+<!ENTITY jwe.profiles.popup.calitem.everyweekday "Every Weekday">
+<!ENTITY jwe.profiles.popup.calitem.monthlyonday "Monthly on Day">
+<!ENTITY jwe.profiles.popup.calitem.monthlyondayct "Monthly on Count">
+<!ENTITY jwe.profiles.popup.calitem.notrepeat "No Repeat">
+<!ENTITY jwe.profiles.popup.calitem.weeklyonday "Weekly on Day">
+<!ENTITY jwe.profiles.popup.calitem.yearly "Yearly">
+<!ENTITY jwe.profiles.popup.calitem.alarmeddate "Alarm Trigger Date: ">
+<!ENTITY jwe.profiles.popup.calitem.notes "Notes: ">
+<!ENTITY jwe.profiles.popup.calitem.ok "OK">
+<!ENTITY jwe.profiles.popup.calitem.cancel "Cancel">
+
+<!ENTITY jwe.profiles.popup.export.title "Export Profile">
+<!ENTITY jwe.profiles.popup.export.header "Export Profile">
+<!ENTITY jwe.profiles.popup.export.caption "Choose a profile to export to a file. When the Export button is clicked, you will be asked choose where to save the export file. This file can then be used to import into the Transit Widget Emulator, or help submit and diagnose bug reports.">
+<!ENTITY jwe.profiles.popup.export.devicelist "Device Profile: ">
+<!ENTITY jwe.profiles.popup.export.messaginglist "Messaging Profile: ">
+<!ENTITY jwe.profiles.popup.export.pimlist "PIM Profile: ">
+<!ENTITY jwe.profiles.popup.export.ok "Done">
+<!ENTITY jwe.profiles.popup.export.saveSuccess "Profile has been successfully exported.">
+<!ENTITY jwe.profiles.popup.export.button "Export">
+
+<!ENTITY jwe.profiles.import.success "Profile has been successfully imported.">
+<!ENTITY jwe.profiles.import.failed "Profile import has failed. If this was a device profile, ensure the file is correct and that this device UUID does not already exist on this system.">
+
+<!ENTITY jwe.profiles.popup.newdevice.title "New Device Profile">
+<!ENTITY jwe.profiles.popup.newdevice.saveSuccess "Device profile has been successfully created.">
+<!ENTITY jwe.profiles.popup.newdevice.saveFailure "Device profile could not be created. Ensure the device UUID does not already exist in a profile on this system.">
+<!ENTITY jwe.profiles.popup.newdevice.header "New Device Profile">
+<!ENTITY jwe.profiles.popup.newdevice.caption "New device profiles may be created by copying an existing profile and using default values defined in the 'Import Defaults' tab. A UUID must be defined to differentiate the device, most official devices will use a UUID in the format of a GUID, however they may be any unique string.">
+<!ENTITY jwe.profiles.popup.newdevice.name "Device Name: ">
+<!ENTITY jwe.profiles.popup.newdevice.uuid "UUID: ">
+<!ENTITY jwe.profiles.popup.newdevice.devicelist "Copy From: ">
+<!ENTITY jwe.profiles.popup.newdevice.ok "OK">
+<!ENTITY jwe.profiles.popup.newdevice.cancel "Cancel">
+
+<!ENTITY jwe.profiles.popup.newmessaging.title "New Messaging Profile">
+<!ENTITY jwe.profiles.popup.newmessaging.saveSuccess "Messaging profile has been successfully created.">
+<!ENTITY jwe.profiles.popup.newmessaging.saveFailure "Messaging profile could not be created, please try again.">
+<!ENTITY jwe.profiles.popup.newmessaging.header "New Messaging Profile">
+<!ENTITY jwe.profiles.popup.newmessaging.caption "New messaging profiles may be created by copying an existing profile.">
+<!ENTITY jwe.profiles.popup.newmessaging.name "Profile Name: ">
+<!ENTITY jwe.profiles.popup.newmessaging.messaginglist "Copy From: ">
+<!ENTITY jwe.profiles.popup.newmessaging.ok "OK">
+<!ENTITY jwe.profiles.popup.newmessaging.cancel "Cancel">
+
+<!ENTITY jwe.profiles.popup.newpim.title "New PIM Profile">
+<!ENTITY jwe.profiles.popup.newpim.saveSuccess "PIM profile has been successfully created.">
+<!ENTITY jwe.profiles.popup.newpim.saveFailure "PIM profile could not be created, please try again.">
+<!ENTITY jwe.profiles.popup.newpim.header "New PIM Profile">
+<!ENTITY jwe.profiles.popup.newpim.caption "New PIM profiles may be created by copying an existing profile.">
+<!ENTITY jwe.profiles.popup.newpim.name "Profile Name: ">
+<!ENTITY jwe.profiles.popup.newpim.pimlist "Copy From: ">
+<!ENTITY jwe.profiles.popup.newpim.ok "OK">
+<!ENTITY jwe.profiles.popup.newpim.cancel "Cancel">
+
+<!ENTITY jwe.profiles.popup.renameprofile.title "Rename Profile">
+<!ENTITY jwe.profiles.popup.renameprofile.header "Rename Profile">
+<!ENTITY jwe.profiles.popup.renameprofile.caption "Rename selected profile, changes will be saved immediately.">
+<!ENTITY jwe.profiles.popup.renameprofile.name "Name: ">
+<!ENTITY jwe.profiles.popup.renameprofile.ok "OK">
+<!ENTITY jwe.profiles.popup.renameprofile.cancel "Cancel">

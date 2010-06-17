@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<script type="text/javascript" src="ApplicationTypes.js"></script>
+<script type="text/javascript" src="Device_run.js"></script>
+<script type="text/javascript" src="../js/util.js"></script>
+<link rel="stylesheet" type="text/css" href="../style.css" />
+</head>
+
+<body>
+<div id="showDetail" class="bodyStyle">
+	<div id="textdivshowName" class="Nameclass"></div>	
+	<div id="textdivshowExplanation" class="ExplanationClass"></div>	
+	<div id="textdivshowSampleCode" class="ExplanationClass"></div>	
+	<div id="textdivshowInitialCondition" class="ExplanationClass"></div>
+	<div onclick="clickItResult();" id="textdivshowClick" class="ClickClass"><img src="../res/run_light.png" /></div>
+	<div id="textdivshowResult" class="ExplanationClass"></div>	
+	<table id="back_table">	
+		<tr>
+			<td><a class="goTop" onClick="showApplicationTypes();"><img src="../res/back.png" /></a></td>
+			<td><a class="goTop" href="../main.html"><img src="../res/gotop.png" /></a></td>
+		</tr>
+	</table>
+</div>
+<div id="ApplicationTypes" class="bodyStyle">	
+	<div id="textdivcreateDate" class="oBodyStyle obStyle"	onclick="clickALARM();"><a href="#">ALARM</a></div>
+	<div id="textdivfileName" class="oBodyStyle obStyle"	onclick="clickBROWSER();"><a href="#">BROWSER</a></div>
+	<div id="textdivfilePath" class="oBodyStyle obStyle"	onclick="clickCALCULATOR();"><a href="#">CALCULATOR</a></div>
+	<div id="textdivfileSize" class="oBodyStyle obStyle"	onclick="clickCALENDAR();"><a href="#">CALENDAR</a></div>
+	<div id="textdivisDirectory" class="oBodyStyle obStyle"	onclick="clickCAMERA();"><a href="#">CAMERA</a></div>
+	<div id="textdivlastModifyDate" class="oBodyStyle obStyle"	onclick="clickFILES();"><a href="#">FILES</a></div>
+	<div id="textdivisDirectory" class="oBodyStyle obStyle"	onclick="clickGAMES();"><a href="#">GAMES</a></div>
+	<div id="textdivlastModifyDate" class="oBodyStyle obStyle"	onclick="clickMAIL();"><a href="#">MAIL</a></div>	
+	<table id="back_table">	
+		<tr>
+			<td><a class="goTop" href="device.html"><img src="../res/back.png" /></a></td>
+			<td><a class="goTop" href="../main.html"><img src="../res/gotop.png" /></a></td>
+		</tr>
+	</table>
+</div>	
+</body>
+</html>

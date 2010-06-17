@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<script type="text/javascript" src="Messagingtest.js"></script>
+<script type="text/javascript" src="../js/util.js"></script>
+<script type="text/javascript" src="Messaging_run.js"></script>
+<link rel="stylesheet" type="text/css" href="../style.css" />
+</head>
+
+<body>
+<div id="showDetail" class="bodyStyle">
+	<div id="textdivshowName" class="Nameclass"></div>	
+	<div id="textdivshowExplanation" class="ExplanationClass"></div>	
+	<div id="textdivshowSampleCode" class="ExplanationClass"></div>	
+	<div id="textdivshowInitialCondition" class="ExplanationClass"></div>
+	<div onclick="clickItResult();" id="textdivshowClick" class="ClickClass"><img src="../res/run_light.png" /></div>
+	<div id="textdivshowResult" class="ExplanationClass"></div>
+	<table id="back_table">	
+		<tr>
+			<td><a class="goTop" onClick="showMessagingtest();"><img src="../res/back.png" /></a></td>
+			<td><a class="goTop" href="../main.html"><img src="../res/gotop.png" /></a></td>
+		</tr>
+	</table>
+</div>
+<div id="Messagingtest" class="bodyStyle">
+	<div id="textdivshowMessagingattachment" class="oBodyStyle obStyle"><a href="Attachment.html">Attachment</a></div>
+	<div id="textdivshowMessagingquantities" class="oBodyStyle obStyle"><a href="Quantities.html">MessageQuantities</a></div>
+	<div id="textdivshowMessagingAccount" class="oBodyStyle obStyle"><a href="Account.html">Account</a></div>
+	<div id="textdivshowMessageFolderType" class="oBodyStyle obStyle"><a href="MessageFolderTypes.html">MessageFolderTypes</a></div>
+	<div id="textdivshowMessageObject" class="oBodyStyle obStyle"><a href="Message.html">Message</a></div>
+	<div id="textdivshowMessageType" class="oBodyStyle obStyle"><a href="MessageTypes.html">MessageTypes</a></div>		
+	<div id="textdivmessaging1" class="mStyle"onclick="createSMSMessage();"><a href="#" class="method_style"> createMessage (SMS)</a></div>
+
+	<div id="textdivmessaging2" class="mStyle"	onclick="createMMSMessage();"><a href="#" class="method_style"> createMessage (MMS)</a></div>	
+	
+
+	<div id="textdivmessaging3" class="mStyle"	onclick="createEmailMessage();"><a href="#" class="method_style"> createMessage (Email)</a></div>		
+	<div  class="mStyle"	onclick="getSMSMessage();"><a href="#" class="method_style">getMessage (SMS)</a></div>
+	<div  class="mStyle"	onclick="getEmailMessage();"><a href="#" class="method_style">getMessage (Email)</a></div>
+	<div  class="mStyle"	onclick="getMMSMessage();"><a href="#" class="method_style">getMessage (MMS)</a></div>
+	<div  class="mStyle"	onclick="createSMSFolder();"><a href="#" class="method_style">createFolder (SMS)</a></div>
+	<div  class="mStyle"	onclick="createEmailFolder();"><a href="#" class="method_style">createFolder (Email)</a></div>
+	<div  class="mStyle"	onclick="createMMSFolder();"><a href="#" class="method_style">createFolder (MMS)</a></div>
+	<div  class="mStyle"	onclick="deleteSMSFolder();"><a href="#" class="method_style">deleteFolder(SMS)</a></div>
+	 <div  class="mStyle"	onclick="deleteEmailFolder();"><a href="#" class="method_style">deleteFolder (Email)</a></div>
+	 <div  class="mStyle"	onclick="deleteMMSFolder();"><a href="#" class="method_style">deleteFolder (MMS)</a></div>
+	<div  class="mStyle"	onclick="getSMSFolderNames();"><a href="#" class="method_style">getFolderNames(SMS)</a></div>
+	<div  class="mStyle"	onclick="getEmailFolderNames();"><a href="#" class="method_style">getFolderNames (Email)</a></div>
+	<div  class="mStyle"	onclick="getMMSFolderNames();"><a href="#" class="method_style">getFolderNames (MMS)</a></div>
+	<div  class="mStyle"	onclick="sendSMSMessage();"><a href="#" class="method_style">sendMessage(SMS)</a></div>
+	<div  class="mStyle"	onclick="sendEmailMessage();"><a href="#" class="method_style">sendMessage (Email)</a></div>
+	<div  class="mStyle"	onclick="sendMMSMessage();"><a href="#" class="method_style">sendMMSMessage (MMS)</a></div>
+	<div  class="mStyle"	onclick="onMessageArrived();"><a href="#" class="method_style">onMessageArrived</a></div>
+	<div  class="mStyle"	onclick="onMessageSendingFailure();"><a href="#" class="method_style">onMessageSendingFailure</a></div>
+	<div  class="mStyle"	onclick="onMessagesFound();"><a href="#" class="method_style">onMessagesFound</a></div>
+
+
+	<div  class="mStyle"	onclick="deleteAllSMSMessages();"><a href="#" class="method_style">deleteAllMessages (SMS)</a></div>
+	 <div  class="mStyle"	onclick="deleteAllMMSMessages();"><a href="#" class="method_style">deleteAllMessages (MMS)</a></div>
+	<div  class="mStyle"	onclick="deleteAllEmailMessages();"><a href="#" class="method_style">deleteAllMessages (Email)</a></div>
+	<div  class="mStyle"	onclick="deleteOneSmsMessages1();"><a href="#" class="method_style">deleteMessage (SMS)</a></div>
+	 <div  class="mStyle"	onclick="deleteOneMmsMessages1();"><a href="#" class="method_style">deleteMessage (MMS)</a></div>
+	<div  class="mStyle"	onclick="deleteOneEmailMessages1();"><a href="#" class="method_style">deleteMessage (Email)</a></div>
+	<div  class="mStyle"	onclick="copySmsMessageToFolder();"><a href="#" class="method_style">copyMessageToFolder (SMS)</a></div>
+	 <div  class="mStyle"	onclick="copyMmsMessageToFolder();"><a href="#" class="method_style">copyMessageToFolder (MMS)</a></div>
+	<div  class="mStyle"	onclick="copyEmailMessageToFolder();"><a href="#" class="method_style">copyMessageToFolder (Email)</a></div>
+	<div  class="mStyle"	onclick="getSmsMessageQuantities();"><a href="#" class="method_style">getMessageQuantities (SMS)</a></div>
+	 <div  class="mStyle"	onclick="getMmsMessageQuantities();"><a href="#" class="method_style">getMessageQuantities (MMS)</a></div>
+	<div  class="mStyle"	onclick="getEmailMessageQuantities();"><a href="#" class="method_style">getMessageQuantities (Email)</a></div>
+	<div  class="mStyle"	onclick="moveSmsMessageToFolder();"><a href="#" class="method_style">moveMessageToFolder (SMS)</a></div>
+	 <div  class="mStyle"	onclick="moveMmsMessageToFolder();"><a href="#" class="method_style">moveMessageToFolder (MMS)</a></div>
+	<div  class="mStyle"	onclick="moveEmailMessageToFolder();"><a href="#" class="method_style">moveMessageToFolder (Email)</a></div>
+	<div  class="mStyle"	onclick="findSMSMessage();"><a href="#" class="method_style">findMessages (SMS)</a></div>
+	<div  class="mStyle"	onclick="findMMSMessage();"><a href="#" class="method_style">findMessages (MMS)</a></div>
+	<div  class="mStyle"	onclick="findEmailMessage();"><a href="#" class="method_style">findMessages (Email)</a></div>
+	<div  class="mStyle"	onclick="getAllEmailAccounts();"><a href="#" class="method_style">getEmailAccounts</a></div>
+	<div  class="mStyle"	onclick="getCurrentEmailAccount();"><a href="#" class="method_style">getCurrentEmailAccount</a></div>
+	<div  class="mStyle"	onclick="setCurrentEmailAccount();"><a href="#" class="method_style">setCurrentEmailAccount</a></div>
+	<div  class="mStyle"	onclick="deleteEmailAccount();"><a href="#" class="method_style">deleteEmailAccount</a></div>
+	<table id="back_table">	
+		<tr>
+			<td><a class="goTop" href="../main.html"><img src="../res/back.png" /></div></a></td>
+			<td><a class="goTop" href="../main.html"><img src="../res/gotop.png" /></a></td>
+		</tr>
+	</table>
+</div>
+</body>
+</html>

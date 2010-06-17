@@ -1,0 +1,153 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://transit-emulator/skin/skin.css" type="text/css"?>
+<!DOCTYPE jilemulator SYSTEM "chrome://transit-emulator/locale/translations.dtd">
+
+
+
+<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        xmlns:html="http://www.w3.org/1999/xhtml"
+        id="jwe-profiles-popup-calitem"        
+        title="&jwe.profiles.popup.calitem.title;"
+        buttons="accept,cancel"
+        onload="jwe_populateForm();"
+        ondialogaccept="return jwe_saveForm();"
+        ondialogcancel="return true;">
+
+  <vbox flex="1" style="background-color: #CCCCCC;">
+
+    <dialogheader title="&jwe.profiles.popup.calitem.caption;"/>
+
+    <vbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.calitem.name;" class="jwe-defaultText" style="width: 10em;"/>
+        <textbox id="jwe-profiles-popup-calitem-name" size="25"/>
+      </hbox>        
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.calitem.start;" class="jwe-defaultText" style="width: 10em;"/>
+        <datepicker type="popup" id="jwe-profiles-popup-calitem-startdate"/> <timepicker id="jwe-profiles-popup-calitem-starttime"/>
+      </hbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.calitem.end;" class="jwe-defaultText" style="width: 10em;"/>
+        <datepicker type="popup" id="jwe-profiles-popup-calitem-enddate"/> <timepicker id="jwe-profiles-popup-calitem-endtime"/>
+      </hbox> 
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.calitem.recurrence;" class="jwe-defaultText" style="width: 10em;"/>
+        <menulist align="right" oncommand="" id="jwe-profiles-popup-calitem-recurlist">
+          <menupopup id="jwe-profiles-popup-calitem-recurtype">
+            <menuitem label="&jwe.profiles.popup.calitem.daily;" value="DAILY"/>
+            <menuitem label="&jwe.profiles.popup.calitem.everyweekday;" value="EVERY_WEEKDAY"/>
+            <menuitem label="&jwe.profiles.popup.calitem.monthlyonday;" value="MONTHLY_ON_DAY"/>
+            <menuitem label="&jwe.profiles.popup.calitem.monthlyondayct;" value="MONTHLY_ON_DAY_COUNT"/>
+            <menuitem label="&jwe.profiles.popup.calitem.notrepeat;" value="NOT_REPEAT"/>
+            <menuitem label="&jwe.profiles.popup.calitem.weeklyonday;" value="WEEKLY_ON_DAY"/>
+            <menuitem label="&jwe.profiles.popup.calitem.yearly;" value="YEARLY"/>
+          </menupopup>
+        </menulist>
+      </hbox>  
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.calitem.alarmeddate;" class="jwe-defaultText" style="width: 10em;"/>
+        <datepicker type="popup" id="jwe-profiles-popup-calitem-alarmeddate"/> <timepicker id="jwe-profiles-popup-calitem-alarmedtime"/>
+      </hbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.calitem.alarmedflag;" class="jwe-defaultText" style="width: 10em;"/>
+        <checkbox label="&jwe.profiles.popup.calitem.alarmedflag.enabled;" value="isread" id="jwe-profiles-popup-calitem-alarmedflag" oncommand=""/>
+      </hbox>  
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.calitem.notes;" class="jwe-defaultText" style="width: 10em;"/>
+        <textbox id="jwe-profiles-popup-calitem-notes" multiline="true" cols="35" rows="5"/>
+      </hbox>
+    </vbox>
+
+    <hbox pack="right" class="jwe-profiles-buttons">
+      <spacer flex="1"/>
+      <button dlgtype="accept" label="&jwe.profiles.popup.calitem.ok;"/> 
+      <button dlgtype="cancel" label="&jwe.profiles.popup.calitem.cancel;"/>
+    </hbox>
+    
+  </vbox>
+  
+<html:script>
+<![CDATA[
+
+function jwe_populateForm()
+{
+  var pimProfileId = window.arguments[0].inn.pimProfileId;
+  var item = window.arguments[0].inn.item;
+  
+  if ( item != null )
+  {
+    document.getElementById("jwe-profiles-popup-calitem-name").value = item.name; 
+    document.getElementById("jwe-profiles-popup-calitem-notes").value = item.notes; 
+    
+    var startDatetime = item.startDatetime.split(" ");
+    document.getElementById("jwe-profiles-popup-calitem-startdate").value = startDatetime[0];
+    document.getElementById("jwe-profiles-popup-calitem-starttime").value = startDatetime[1];
+    
+    var endDatetime = item.endDatetime.split(" ");
+    document.getElementById("jwe-profiles-popup-calitem-enddate").value = endDatetime[0];
+    document.getElementById("jwe-profiles-popup-calitem-endtime").value = endDatetime[1];
+    
+    var alarmDatetime = item.alarmDatetime.split(" ");
+    document.getElementById("jwe-profiles-popup-calitem-alarmeddate").value = alarmDatetime[0];
+    document.getElementById("jwe-profiles-popup-calitem-alarmedtime").value = alarmDatetime[1];
+    
+    if ( item.alarmedFlag == true )
+      document.getElementById("jwe-profiles-popup-calitem-alarmedflag").checked = true;
+    else
+      document.getElementById("jwe-profiles-popup-calitem-alarmedflag").checked = false;
+      
+    if ( item.recurType == "DAILY" )
+      document.getElementById("jwe-profiles-popup-calitem-recurlist").selectedIndex = 0;
+    else if ( item.recurType == "EVERY_WEEKDAY" )
+      document.getElementById("jwe-profiles-popup-calitem-recurlist").selectedIndex = 1;
+    else if ( item.recurType == "MONTHLY_ON_DAY" )
+      document.getElementById("jwe-profiles-popup-calitem-recurlist").selectedIndex = 2;
+    else if ( item.recurType == "MONTHLY_ON_DAY_COUNT" )
+      document.getElementById("jwe-profiles-popup-calitem-recurlist").selectedIndex = 3;
+    else if ( item.recurType == "NOT_REPEAT" )
+      document.getElementById("jwe-profiles-popup-calitem-recurlist").selectedIndex = 4;
+    else if ( item.recurType == "WEEKLY_ON_DAY" )
+      document.getElementById("jwe-profiles-popup-calitem-recurlist").selectedIndex = 5;
+    else if ( item.recurType == "YEARLY" )
+      document.getElementById("jwe-profiles-popup-calitem-recurlist").selectedIndex = 6;
+  }
+}
+
+function jwe_saveForm()
+{
+  var alarmed = false;
+  if ( document.getElementById("jwe-profiles-popup-calitem-alarmedflag").checked == true )
+    alarmed = true;
+  
+  var item =
+  {
+    name: document.getElementById("jwe-profiles-popup-calitem-name").value,
+    notes: document.getElementById("jwe-profiles-popup-calitem-notes").value,
+    startDatetime : document.getElementById("jwe-profiles-popup-calitem-startdate").value + " "+document.getElementById("jwe-profiles-popup-calitem-starttime").value,
+    endDatetime : document.getElementById("jwe-profiles-popup-calitem-startdate").value + " "+document.getElementById("jwe-profiles-popup-calitem-starttime").value,
+    alarmDatetime : document.getElementById("jwe-profiles-popup-calitem-startdate").value + " "+document.getElementById("jwe-profiles-popup-calitem-starttime").value,
+    alarmFlag : alarmed,
+    recurType: document.getElementById("jwe-profiles-popup-calitem-recurlist").getItemAtIndex(document.getElementById("jwe-profiles-popup-calitem-recurlist").selectedIndex).value,
+    pimProfileId: window.arguments[0].inn.pimProfileId
+  };
+
+  if ( window.arguments[0].inn.item )
+  {
+    item.id = window.arguments[0].inn.item.id;
+    item.isChanged = true;
+  }
+  else
+  {
+    item.id = new Date().getTime();
+    item.isNew = true;
+  }
+
+  window.arguments[0].out = {item: item};
+  return(true);
+}
+
+]]>
+</html:script>
+
+</dialog>

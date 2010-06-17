@@ -1,0 +1,20 @@
+#include "jilService.idl"
+
+
+[scriptable, function, uuid(cb374fe0-3e80-11df-9879-0800200c9a66)]
+interface jilAPOnStateChange : nsISupports
+{
+  void invoke(in string state);
+};
+
+
+[scriptable, uuid(a6793ed2-bb5d-11de-8a39-0800200c9a66)]
+interface jilAudioPlayer : jilService
+{
+  attribute jilAPOnStateChange onStateChange;
+  void open(in string fileUrl);
+  void pause();
+  void play(in unsigned long repeatTimes);
+  void resume();
+  void stop();
+};

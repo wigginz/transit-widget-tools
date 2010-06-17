@@ -1,0 +1,10 @@
+#include "nsISupports.idl"
+
+
+[scriptable, uuid(d72522d0-baac-11de-8a39-0800200c9a66)]
+interface jilMessageTypes : nsISupports
+{
+  attribute string EmailMessage;
+  attribute string MMSMessage;
+  attribute string SMSMessage;
+};

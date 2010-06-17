@@ -1,0 +1,19 @@
+#include "nsISupports.idl"
+
+#include "jilEventRecurrenceTypes.idl"
+
+
+[scriptable, uuid(22b6b0b0-bb66-11de-8a39-0800200c9a66)]
+interface jilCalendarItem : nsISupports
+{
+    attribute string alarmDate;
+    attribute boolean alarmed;
+    attribute string calendarItemId;
+    attribute string eventEndTime; // !DATE
+    attribute string eventName;
+    attribute string eventNotes;
+    attribute string eventRecurrence;
+    attribute string eventStartTime; // !DATE
+
+    void update();
+};

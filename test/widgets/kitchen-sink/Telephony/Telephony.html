@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="Telephonytest.js"></script>
+
+<script type="text/javascript" src="../js/util.js"></script>
+<script type="text/javascript" src="Telephony_run.js"></script>
+<link rel="stylesheet" type="text/css" href="../style.css" />
+</head>
+
+<body>
+<div id="showDetail" class="bodyStyle">
+	<div id="textdivshowName" class="Nameclass"></div>	
+	<div id="textdivshowExplanation" class="ExplanationClass"></div>	
+	<div id="textdivshowSampleCode" class="ExplanationClass"></div>	
+	<div id="textdivshowInitialCondition" class="ExplanationClass"></div>
+	<div onclick="clickItResult();" id="textdivshowClick" class="ClickClass"><img src="../res/run_light.png" /></div>
+	<div id="textdivshowResult" class="ExplanationClass"></div>
+	<table id="back_table">	
+		<tr>
+			<td><a class="goTop" onClick="showTelephonytest();"><img src="../res/back.png" /></a></td>
+			<td><a class="goTop" href="../main.html"><img src="../res/gotop.png" /></a></td>
+		</tr>
+	</table>
+</div>
+<div id="Telephonytest" class="bodyStyle">	
+	<div id="textdivshowCallRecordTypestest" class="oBodyStyle obStyle"><a href="CallRecordTypes.html">CallRecordTypes</a></div>
+	<div id="textdivshowCallRecordtest" class="oBodyStyle obStyle"	><a href="CallRecord.html">CallRecord</a></div>
+	<div id="textdivinitiateVoiceCall" class="mStyle"	onclick="clickItinitiateVoiceCall();"><a href="#" class="method_style">initiateVoiceCall</a></div>
+	<div id="textdivTelephonycallback" class="mStyle"	onclick="clickItTelephonycallback();"><a href="#" class="method_style">onCallEvent</a></div>	
+	<div id="textdivgetCallRecordCnt" class="mStyle" onclick="clickItgetCallRecordCnt();"><a href="#" class="method_style">getCallRecordCnt</a></div>	
+	<div id="textdivfindCallRecords" class="mStyle" onclick="clickItfindCallRecords();"><a href="#" class="method_style">findCallRecords</a></div>	
+	<div id="textdivgetCallRecord" class="mStyle"	onclick="clickItgetCallRecord();"><a href="#" class="method_style">getCallRecord</a></div>	
+	<div id="textdivdeleteCallRecord" class="mStyle" onclick="clickItdeleteCallRecord();"><a href="#" class="method_style">deleteCallRecord</a></div>	
+	<div id="textdivdeleteAllCallRecords" class="mStyle"	onclick="clickItdeleteAllCallRecords();"><a href="#" class="method_style">deleteAllCallRecords</a></div>	
+	<div id="textdivdeleteAllCallRecords" class="mStyle"	onclick="clickItonCallRecordsFound();"><a href="#" class="method_style">onCallRecordsFound</a></div>
+	
+	<table id="back_table">	
+		<tr>
+			<td><a class="goTop" href="../main.html"><img src="../res/back.png" /></a></td>
+			<td><a class="goTop" href="../main.html"><img src="../res/gotop.png" /></a></td>
+		</tr>
+	</table>
+</div>
+</body>
+</html>

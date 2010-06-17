@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="Position.js"></script>
+<script type="text/javascript" src="Devicetest.js"></script>
+<script type="text/javascript" src="Device_run.js"></script>
+<script type="text/javascript" src="../js/util.js"></script>
+<link rel="stylesheet" type="text/css" href="../style.css" />
+</head>
+
+<body>
+<div id="showDetail" class="bodyStyle">
+	<div id="textdivshowName" class="Nameclass"></div>	
+	<div id="textdivshowExplanation" class="ExplanationClass"></div>	
+	<div id="textdivshowSampleCode" class="ExplanationClass"></div>	
+	<div id="textdivshowInitialCondition" class="ExplanationClass"></div>
+	<div onclick="clickItResult();" id="textdivshowClick" class="ClickClass"><img src="../res/run_light.png" /></div>
+	<div id="textdivshowResult" class="ExplanationClass"></div>	
+	<table id="back_table">	
+		<tr>
+			<td><a class="goTop" onClick="showPositiontest();"><img src="../res/back.png" /></a></td>
+			<td><a class="goTop" href="../main.html"><img src="../res/gotop.png" /></a></td>
+		</tr>
+	</table>
+</div>
+<div id="Positiontest"  class="bodyStyle">	
+	<div id="textdivlatitude" class="oBodyStyle obStyle" onclick="clickItlatitude();"><a href="#">latitude</a></div>	
+	<div id="textdivlongitude" class="oBodyStyle obStyle"	onclick="clickItlongitude();"><a href="#">longitude</a></div>	
+	<div id="textdivaltitude" class="oBodyStyle obStyle"	onclick="clickItaltitude();"><a href="#">altitude</a></div>	
+	<div id="textdivcellID" class="oBodyStyle obStyle" onclick="clickItcellID();"><a href="#">cellID</a></div>	
+	<div id="textdivtimeStamp" class="oBodyStyle obStyle"	onclick="clickIttimeStamp();"><a href="#">timeStamp</a></div>	
+	<div id="textdivaccuracy" class="oBodyStyle obStyle" onclick="clickItaccuracy();"><a href="#">accuracy</a></div>	
+	<div id="textdivaccuracy" class="oBodyStyle obStyle" onclick="clickItaltitudeAccuracy();"><a href="#">altitudeAccuracy </a></div>
+	<table id="back_table">	
+		<tr>
+			<td><a class="goTop"  href="device.html"><img src="../res/back.png" /></a></td>
+			<td><a class="goTop" href="../main.html"><img src="../res/gotop.png" /></a></td>
+		</tr>
+	</table>	
+</div>
+</div>
+</body>
+</html>

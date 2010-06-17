@@ -1,0 +1,8 @@
+#include "nsISupports.idl"
+
+
+[scriptable, uuid(a890f2e0-63e0-11df-a08a-0800200c9a66)]
+interface jilService : nsISupports
+{
+  void reload();
+}; 

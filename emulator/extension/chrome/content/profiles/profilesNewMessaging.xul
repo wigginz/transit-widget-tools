@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://transit-emulator/skin/skin.css" type="text/css"?>
+<!DOCTYPE jilemulator SYSTEM "chrome://transit-emulator/locale/translations.dtd">
+
+
+
+<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        xmlns:html="http://www.w3.org/1999/xhtml"
+        id="jwe-profiles-popup-newmessaging"        
+        title="&jwe.profiles.popup.newmessaging.title;"
+        buttons="accept,cancel"
+        onload="jwe_populateForm();"
+        ondialogaccept="return jwe_saveForm('&jwe.profiles.popup.newmessaging.saveSuccess;', '&jwe.profiles.popup.newmessaging.saveFailure;');"
+        ondialogcancel="return true;">
+
+  <script src="chrome://transit-emulator/content/utils/utils.js" />
+
+  <vbox flex="1" style="background-color: #CCCCCC;">
+  
+    <dialogheader title="&jwe.profiles.popup.newmessaging.header;"/>
+
+    <vbox minwidth="400px" maxwidth="400px">
+      <description>&jwe.profiles.popup.newmessaging.caption;</description>
+      <hbox align="center" style="margin-top: 20px;">
+        <label value="&jwe.profiles.popup.newmessaging.name;" style="width: 10em; font-weight: bold;"/>
+        <textbox id="jwe-profiles-newmessaging-name" size="25"/>
+      </hbox>
+      <hbox align="center" style="margin-bottom: 20px;">
+        <label value="&jwe.profiles.popup.newmessaging.messaginglist;" style="width: 10em; font-weight: bold;"/>
+        <menulist id="jwe-profiles-newmessaging-copy"/>
+      </hbox>
+    </vbox>
+
+    <hbox pack="right" class="jwe-profiles-buttons">
+      <spacer flex="1"/>
+      <button dlgtype="accept" label="&jwe.profiles.popup.newmessaging.ok;"/> 
+      <button dlgtype="cancel" label="&jwe.profiles.popup.newmessaging.cancel;"/>
+    </hbox>
+    
+  </vbox>
+  
+<html:script>
+<![CDATA[
+
+function jwe_populateForm()
+{
+  var messages = JILProfileService.wrappedJSObject.getAllMessageProfiles();
+  $("jwe-profiles-newmessaging-copy").node.removeAllItems();
+  var menupopup = document.createElement("menupopup");
+  menupopup.setAttribute("id", "jwe-profiles-newmessaging-copy-list");
+  for ( var i = 0; i < messages.length; i++ )
+  {
+    var menuitem = document.createElement("menuitem");
+    menuitem.setAttribute("label", messages[i].name);
+    menuitem.setAttribute("value", messages[i].id);
+    menupopup.appendChild(menuitem);
+  }
+  $("jwe-profiles-newmessaging-copy").add(menupopup);
+  $("jwe-profiles-newmessaging-copy").sel(0);
+}
+
+function jwe_saveForm(saveMessage, failMessage)
+{
+  var copyId = $("jwe-profiles-newmessaging-copy").selValue();
+  var name = $("jwe-profiles-newmessaging-name").val();
+ 
+  if ( JILProfileService.wrappedJSObject.createNewMessagingProfile(name, copyId) )
+  {
+    alert(saveMessage);
+    return(true);
+  }
+  else 
+  {
+    alert(failMessage);
+    return(false);
+  }
+}
+
+]]>
+</html:script>
+
+</dialog>

@@ -1,0 +1,21 @@
+#include "jilService.idl"
+
+#include "jilAddressBookItem.idl"
+
+
+[scriptable, uuid(a5361d70-bace-11de-8a39-0800200c9a66)]
+interface jilDeviceInfo : jilService
+{
+  attribute unsigned long phoneColorDepthDefault;
+  attribute string phoneFirmware;
+  attribute string phoneManufacturer;
+  attribute string phoneModel;
+  attribute string phoneOS;
+  attribute unsigned long phoneScreenHeightDefault;
+  attribute unsigned long phoneScreenWidthDefault;
+  attribute string phoneSoftware;
+  attribute unsigned long totalMemory;
+
+  // different from the jil API to make it easier for the wrapper to retrieve the right values
+  jilAddressBookItem getOwnerInfo();
+};

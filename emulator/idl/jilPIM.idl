@@ -1,0 +1,64 @@
+#include "jilService.idl"
+
+#include "jilAddressBookItem.idl"
+#include "jilEventRecurrenceTypes.idl"
+#include "jilCalendarItem.idl"
+
+
+[scriptable, function, uuid(36979019-3e81-11df-9879-0800200c9a66)]
+interface jilPIOnAddressBookItemsFound : nsISupports
+{
+  void invoke([array, size_is(count)] in jilAddressBookItem addressBookItemsFound, [optional] in unsigned long count);
+};
+
+[scriptable, function, uuid(36979020-3e81-11df-9879-0800200c9a66)]
+interface jilPIOnCalendarItemAlert : nsISupports
+{
+  void invoke(in jilCalendarItem calendarItem);
+};
+
+[scriptable, function, uuid(36979021-3e81-11df-9879-0800200c9a66)]
+interface jilPIOnCalendarItemsFound : nsISupports
+{
+  void invoke([array, size_is(count)] in jilCalendarItem calendarItemsFound, [optional] in unsigned long count);
+};
+
+[scriptable, function, uuid(36979022-3e81-11df-9879-0800200c9a66)]
+interface jilPIOnVCardExportingFinish : nsISupports
+{
+  void invoke(in string vCardFilePath);
+};
+
+
+[scriptable, uuid(a6793ed0-bb5d-11de-8a39-0800200c9a66)]
+interface jilPIM : jilService
+{
+  attribute jilAddressBookItem AddressBookItem;  
+  attribute jilEventRecurrenceTypes EventRecurrenceTypes;
+  attribute jilCalendarItem CalendarItem;
+
+  attribute jilPIOnAddressBookItemsFound onAddressBookItemsFound;
+  attribute jilPIOnCalendarItemAlert onCalendarItemAlert;
+  attribute jilPIOnCalendarItemsFound onCalendarItemsFound;
+  attribute jilPIOnVCardExportingFinish onVCardExportingFinish;
+
+  void addAddressBookItem(in jilAddressBookItem contact);
+  void addCalendarItem(in jilCalendarItem item);
+  void createAddressBookGroup(in string groupName);
+  jilAddressBookItem createAddressBookItem();
+  void deleteAddressBookGroup(in string groupName);
+  void deleteAddressBookItem(in string id);
+  void deleteCalendarItem(in string calendarId);
+  void exportAsVCard([array, size_is(count)] in jilAddressBookItem addressBookItems, [optional] in unsigned long count);
+  void findAddressBookItems(in jilAddressBookItem comparisonContact, in unsigned long startInx, in unsigned long endInx);
+  void findCalendarItems(in jilCalendarItem itemToMatch, in unsigned long startInx, in unsigned long endInx);
+  void getAddressBookGroupMembers(in string groupName, [optional] out unsigned long count, [array, size_is(count), retval] out jilAddressBookItem retv);
+  jilAddressBookItem getAddressBookItem(in string id);
+  unsigned long getAddressBookItemsCount();
+  void getAvailableAddressGroupNames([optional] out unsigned long count, [array, size_is(count), retval] out string retv);
+  jilCalendarItem getCalendarItem(in string calendarId);
+  void getCalendarItems(in string startTime, in string endTime, [optional] out unsigned long count, [array, size_is(count), retval] out jilCalendarItem retv);
+
+  // helpers
+  jilCalendarItem getNewCalendarItem();  
+};

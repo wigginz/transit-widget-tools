@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="CallRecordtest.js"></script>
+<script type="text/javascript" src="Telephony_run.js"></script>
+<link rel="stylesheet" type="text/css" href="../style.css" />
+</head>
+
+<body>
+<div id="showDetail" class="bodyStyle">
+	<div id="textdivshowName" class="Nameclass"></div>	
+	<div id="textdivshowExplanation" class="ExplanationClass"></div>	
+	<div id="textdivshowSampleCode" class="ExplanationClass"></div>	
+	<div id="textdivshowInitialCondition" class="ExplanationClass"></div>
+	<div onclick="clickItResult();" id="textdivshowClick" class="ClickClass"><img src="../res/run_light.png" /></div>
+	<div id="textdivshowResult" class="ExplanationClass"></div>
+	<table id="back_table">	
+		<tr>
+			<td><a class="goTop" onClick="showCallRecordtest();"><img src="../res/back.png" /></a></td>
+			<td><a class="goTop" href="../main.html"><img src="../res/gotop.png" /></a></td>
+		</tr>
+	</table>
+</div>
+<div id="CallRecordtest" class="bodyStyle">
+	<div id="textdivcallRecordAddress" class="oBodyStyle obStyle" onclick="clickItcallRecordAddress();"><a href="#">callRecordAddress</a></div>
+	<div id="textdivcallRecordId" class="oBodyStyle obStyle" onclick="clickItcallRecordId();"><a href="#">callRecordId</a></div>
+	<div id="textdivcallRecordName" class="oBodyStyle obStyle" onclick="clickItcallRecordName();"><a href="#">callRecordName</a></div>
+	<div id="textdivcallRecordType" class="oBodyStyle obStyle" onclick="clickItcallRecordType();"><a href="#">callRecordType</a></div>
+	<div id="textdivdurationSeconds" class="oBodyStyle obStyle" onclick="clickItdurationSeconds();"><a href="#">durationSeconds</a></div>
+	<div id="textdivstartTime" class="oBodyStyle obStyle" onclick="clickItstartTime();"><a href="#">startTime</a></div>	
+	<table id="back_table">	
+		<tr>
+			<td><a class="goTop" href="Telephony.html"><img src="../res/back.png" /></a></td>
+			<td><a class="goTop" href="../main.html"><img src="../res/gotop.png" /></a></td>
+		</tr>
+	</table>
+</div>
+</body>
+</html>
