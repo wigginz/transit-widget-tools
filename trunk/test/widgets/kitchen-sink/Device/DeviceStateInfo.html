@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="DeviceStateInfo.js"></script>
+<script type="text/javascript" src="Device_run.js"></script>
+<link rel="stylesheet" type="text/css" href="../style.css" />
+</head>
+
+<body>
+<div id="showDetail" class="bodyStyle">
+	<div id="textdivshowName" class="Nameclass"></div>	
+	<div id="textdivshowExplanation" class="ExplanationClass"></div>	
+	<div id="textdivshowSampleCode" class="ExplanationClass"></div>	
+	<div id="textdivshowInitialCondition" class="ExplanationClass"></div>
+	<div onclick="clickItResult();" id="textdivshowClick" class="ClickClass"><img src="../res/run_light.png" /></div>
+	<div id="textdivshowResult" class="ExplanationClass"></div>		
+	<table id="back_table">	
+		<tr>
+			<td><a class="goTop" onClick="showDeviceStateInfotest();"><img src="../res/back.png" /></a></td>
+			<td><a class="goTop" href="../main.html"><img src="../res/gotop.png" /></a></td>
+		</tr>
+	</table>
+</div>
+<div id="DeviceStateInfotest"  class="bodyStyle">	
+	<div id="textdivshowAccelerometerInfo" class="oBodyStyle obStyle"><a href="AccelerometerInfo.html">AccelerometerInfo</a></div>
+	<div id="textdivshowConfigtest" class="oBodyStyle obStyle"><a href="Config.html">Config</a></div>	
+	<div id="divlanguage" class="oBodyStyle obStyle" onclick="clicItklanguage();"><a href="#">language</a></div>	
+	<div id="divavailableMemory" class="oBodyStyle obStyle"	onclick="clickItavailableMemory();"><a href="#">availableMemory</a></div>	
+	<div id="divbackLightOn" class="oBodyStyle obStyle"	onclick="clickDeviceStateInfobackLightOn();"><a href="#">backLightOn</a></div>
+	<div id="divAccelerometerInfo" class="oBodyStyle obStyle"	onclick="clickDeviceStateInfoAccelerometerInfo();"><a href="#">AccelerometerInfo</a></div>
+	<div id="divkeypadLightOn" class="oBodyStyle obStyle"	onclick="clickDeviceStateInfokeypadLightOn();"><a href="#">keypadLightOn</a></div>
+	<div id="divprocessorUtilizationPercent" class="oBodyStyle obStyle"	onclick="clickDeviceStateInfoPUP();"><a href="#">processorUtilizationPercent</a></div>
+	<div id="divaudioPath" class="oBodyStyle obStyle"	onclick="clickDeviceStateInfoAP();"><a href="#">audioPath</a></div>
+	<div id="divonScreenChangeDimensions" class="mStyle"	onclick="clickDeviceStateInfoOnScreenChange();"><a href="#" class="method_style">onScreenChangeDimensions</a></div>
+	<div id="textdivgetFileSystemSize" class="mStyle"	onclick="clickOnPositionRetrieved();"><a href="#" class="method_style">onPositionRetrieved</a></div>
+	<div id="textdivgetFileSystemSize" class="mStyle"	onclick="clickRequestPositionInfo();"><a href="#" class="method_style">requestPositionInfo</a></div>
+	<table id="back_table">	
+		<tr>
+			<td><a class="goTop"  href="device.html"><img src="../res/back.png" /></a></td>
+			<td><a class="goTop" href="../main.html"><img src="../res/gotop.png" /></a></td>
+		</tr>
+	</table>
+</div>
+</body>
+</html>

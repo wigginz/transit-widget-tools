@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="CalendarItemtest.js"></script>
+<script type="text/javascript" src="PIM_run.js"></script>
+<link rel="stylesheet" type="text/css" href="../style.css" />
+</head>
+
+<body>
+<div id="showDetail" class="bodyStyle">
+	<div id="textdivshowName" class="Nameclass"></div>	
+	<div id="textdivshowExplanation" class="ExplanationClass"></div>	
+	<div id="textdivshowSampleCode" class="ExplanationClass"></div>	
+	<div id="textdivshowInitialCondition" class="ExplanationClass"></div>
+	<div onclick="clickItResult();" id="textdivshowClick" class="ClickClass"><img src="../res/run_light.png" /></div>
+	<div id="textdivshowResult" class="ExplanationClass"></div>
+	<table id="back_table">	
+		<tr>
+			<td><a class="goTop" onClick="showCalendarItemtest();"><img src="../res/back.png" /></a></td>
+			<td><a class="goTop" href="../main.html"><img src="../res/gotop.png" /></a></td>
+		</tr>
+	</table>
+</div>
+<div id="CalendarItemtest"  class="bodyStyle">
+	<div id="textdivNOT_REPEAT" class="oBodyStyle obStyle" onclick="clickAlarmDate();"><a href="#">alarmDate</a></div>	
+	<div id="textdivNOT_REPEAT" class="oBodyStyle obStyle" onclick="clickAlarmed();"><a href="#">alarmed</a></div>
+	<div id="textdivNOT_REPEAT" class="oBodyStyle obStyle" onclick="clickCalendarItemId();"><a href="#">calendarItemId</a></div>
+	<div id="textdivNOT_REPEAT" class="oBodyStyle obStyle" onclick="clickEventEndTime();"><a href="#">eventEndTime</a></div>
+	<div id="textdivNOT_REPEAT" class="oBodyStyle obStyle" onclick="clickEventStartTime();"><a href="#">eventStartTime</a></div>
+	<div id="textdivNOT_REPEAT" class="oBodyStyle obStyle" onclick="clickEventName();"><a href="#">eventName</a></div>
+	<div id="textdivNOT_REPEAT" class="oBodyStyle obStyle" onclick="clickEventNotes();"><a href="#">eventNotes</a></div>
+	<div id="textdivNOT_REPEAT" class="oBodyStyle obStyle" onclick="ClickEventRecurrence();"><a href="#">eventRecurrence</a></div>
+	<div id="inputtext" class="mStyle">id : <input type="text"	id="CalendarItemtestid" value=""></div>	
+	<div id="textdivupdate" class="mStyle" onclick="clickItupdate();"><a href="#" class="method_style">update</a></div>
+	<table id="back_table">	
+		<tr>
+			<td><a class="goTop"  href="PIM.html"><img src="../res/back.png" /></a></td>
+			<td><a class="goTop" href="../main.html"><img src="../res/gotop.png" /></a></td>
+		</tr>
+	</table>
+</div>
+</body>
+</html>

@@ -1,0 +1,10 @@
+#include "nsISupports.idl"
+
+
+[scriptable, uuid(4a71f5d0-baab-11de-8a39-0800200c9a66)]
+interface jilMessageQuantities : nsISupports
+{
+  attribute unsigned long totalMessageCnt;
+  attribute unsigned long totalMessageReadCnt;
+  attribute unsigned long totalMessageUnreadCnt;
+};

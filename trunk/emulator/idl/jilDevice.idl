@@ -1,0 +1,55 @@
+#include "jilService.idl"
+#include "nsIArray.idl"
+
+#include "jilAccountInfo.idl"
+#include "jilAddressBookItem.idl"
+#include "jilApplicationTypes.idl"
+#include "jilDataNetworkInfo.idl"
+#include "jilDeviceInfo.idl"
+#include "jilDeviceStateInfo.idl"
+#include "jilFile.idl"
+#include "jilPositionInfo.idl"
+#include "jilRadioInfo.idl"
+#include "jilPowerInfo.idl"
+
+
+[scriptable, function, uuid(36979012-3e81-11df-9879-0800200c9a66)]
+interface jilDEOnFilesFound : nsISupports
+{
+  void invoke(in nsIArray filesFound);
+};
+
+
+[scriptable, uuid(0b523a10-bac7-11de-8a39-0800200c9a66)]
+interface jilDevice : jilService
+{
+  attribute jilAccountInfo AccountInfo;
+  attribute jilApplicationTypes ApplicationTypes;
+  attribute jilDataNetworkInfo DataNetworkInfo;
+  attribute jilDeviceInfo DeviceInfo;
+  attribute jilDeviceStateInfo DeviceStateInfo;
+  attribute jilFile File;
+  attribute jilPositionInfo PositionInfo;
+  attribute jilPowerInfo PowerInfo;
+  attribute jilRadioInfo RadioInfo;
+
+  attribute string clipboardString;
+  attribute string widgetEngineName;
+  attribute string widgetEngineProvider;
+  attribute string widgetEngineVersion;
+
+  attribute jilDEOnFilesFound onFilesFound;
+
+  boolean copyFile(in string originalFile, in string destinationFullName);
+  boolean deleteFile(in string destinationFullName);
+  void findFiles(in jilFile matchFile, in unsigned long startInx, in unsigned long endInx);
+  void getAvailableApplications([optional] out unsigned long count, [array, size_is(count), retval] out string retv);
+  void getDirectoryFileNames(in string sourceDirectory, [optional] out unsigned long count, [array, size_is(count), retval] out string retv);
+  jilFile getFile(in string fullName);
+  void getFileSystemRoots([optional] out unsigned long count, [array, size_is(count), retval] out string retv);
+  unsigned long getFileSystemSize(in string fileSystemRoot);
+  void launchApplication(in string application, in string startParameter);
+  boolean moveFile(in string originalFile, in string destinationFullName);
+  void setRingtone(in string ringtoneFileUrl, in jilAddressBookItem addressBookItem);
+  void vibrate(in unsigned long durationSeconds);
+};

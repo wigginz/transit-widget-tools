@@ -1,0 +1,14 @@
+#include "nsISupports.idl"
+
+
+[scriptable, uuid(46836140-bad1-11de-8a39-0800200c9a66)]
+interface jilFile : nsISupports
+{
+  attribute string createDate;
+  attribute string fileName;
+  attribute string filePath;
+  attribute unsigned long fileSize;
+  attribute boolean isDirectory;
+  attribute string lastModifyDate;
+};
+

@@ -1,0 +1,25 @@
+#include "jilService.idl"
+#include "nsIMutableArray.idl"
+
+
+[scriptable, function, uuid(36979011-3e81-11df-9879-0800200c9a66)]
+interface jilDNOnNetworkConnectionChanged : nsISupports
+{
+  void invoke(in string newConnectionName);
+};
+
+
+[scriptable, uuid(2b011be1-be8e-11de-8a39-0800200c9a66)]
+interface jilDataNetworkInfo : jilService
+{
+  attribute boolean isDataNetworkConnected;
+  
+  attribute jilDNOnNetworkConnectionChanged onNetworkConnectionChanged;
+
+  // in the spec, this is an attribute and named a little differently, but to 
+  // simply return a javascript array, we change it to function which is fixed
+  // up in the API wrapper script
+  void getNetworkConnectionTypes([optional] out unsigned long count, [array, size_is(count), retval] out string retv);
+
+  string getNetworkConnectionName(in string networkConnecionType);
+};

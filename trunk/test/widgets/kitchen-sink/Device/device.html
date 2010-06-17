@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<script type="text/javascript" src="Device.js"></script>
+<script type="text/javascript" src="Device_run.js"></script>
+<script type="text/javascript" src="../js/util.js"></script>
+<link rel="stylesheet" type="text/css" href="../style.css" />
+</head>
+
+<body>
+<div id="showDetail" class="bodyStyle">
+	<div id="textdivshowName" class="Nameclass"></div>	
+	<div id="textdivshowExplanation" class="ExplanationClass"></div>	
+	<div id="textdivshowSampleCode" class="ExplanationClass"></div>	
+	<div id="textdivshowInitialCondition" class="ExplanationClass"></div>
+	<div onclick="clickItResult();" id="textdivshowClick" class="ClickClass"><img src="../res/run_light.png" /></div>
+	<div id="textdivshowResult" class="ExplanationClass"></div>
+	<table id="back_table">	
+		<tr>
+			<td><a class="goTop" onClick="showDevicetest();"><img src="../res/back.png" /></a></td>
+			<td><a class="goTop" href="../main.html"><img src="../res/gotop.png" /></a></td>
+		</tr>
+	</table>
+</div>
+<div id="Devicetest" class="bodyStyle">	
+	<div id="" class="oBodyStyle obStyle"><a href="File.html">File</a></div>
+	<div id="" class="oBodyStyle obStyle"><a href="PowerInfo.html">PowerInfo</a></div>	
+	<div id="" class="oBodyStyle obStyle"><a href="RadioInfo.html">RadioInfo</a></div>	
+	<div id="" class="oBodyStyle obStyle"><a href="Position.html">Position</a></div>	
+	<div id="" class="oBodyStyle obStyle"><a href="DeviceInfo.html">DeviceInfo</a></div>	
+	<div id="" class="oBodyStyle obStyle"><a href="DeviceStateInfo.html">DeviceStateInfo</a></div>	
+	<div id="" class="oBodyStyle obStyle"><a href="DataNetworkInfo.html">DataNetworkInfo</a></div>	
+	<div id="" class="oBodyStyle obStyle"><a href="AccountInfo.html">AccountInfo</a></div>	
+	<div id="" class="oBodyStyle obStyle"><a href="ApplicationTypes.html">ApplicationTypes</a></div>	
+	<div id="" class="oBodyStyle obStyle"	onclick="clickItshowwidgetEngineNametest();"><a href="#" class="field_style">widgetEngineName</a></div>
+	<div id="" class="oBodyStyle obStyle"	onclick="clickItshowwidgetEngineProvidertest();"><a href="#" class="field_style">widgetEngineProvider</a></div>
+	<div id="" class="oBodyStyle obStyle"	onclick="clickItshowwidgetEngineVersiontest();"><a href="#" class="field_style">widgetEngineVersion</a></div>
+	<div id="" class="oBodyStyle obStyle"	onclick="clickItshowclipboardString();"><a href="#" class="field_style">clipboardString </a></div>		
+	<div id="" class="mStyle"	onclick="clickItcopyFile();"><a href="#" class="method_style">copyFile</a></div>	
+	<div id="" class="mStyle" onClick="clickItgetFile();"><a href="#" class="method_style">getFile</a></div>
+	<div id="" class="mStyle"	onclick="clickItdeleteFile();"><a href="#" class="method_style">deleteFile</a></div>	
+	<div id="" class="mStyle"	onclick="clickItfindFiles();"><a href="#" class="method_style">findFiles</a></div>
+	<div id="" class="mStyle"	onclick="clickItmoveFile();"><a href="#" class="method_style">moveFile</a></div>
+
+	<!-- In spec, there are no createFile,createFolder,copyFolder,deleteFolder,moveFolder-->	
+	<!--div id="textdivcreateFile" class="mStyle"	onclick="clickItcreateFile();"><a href="#" class="method_style">createFile</a></div>	
+	<div id="textdivcreateFolder" class="mStyle"	onclick="clickItcreateFolder();"><a href="#" class="method_style">createFolder</a></div>
+	<div id="textdivcopyFolder" class="mStyle"		onclick="clickItcopyFolder();"><a href="#" class="method_style">copyFolder</a></div>
+	<div id="textdivdeleteFolder" class="mStyle"	onclick="clickItdeleteFolder();"><a href="#" class="method_style">deleteFolder</a></div>
+	<div id="textdivmoveFolder" class="mStyle"		onclick="clickItmoveFolder();"><a href="#" class="method_style">moveFolder</a></div-->	
+
+	<div id="" class="mStyle"	onclick="clickItgetDirectoryFileNames();"><a href="#" class="method_style">getDirectoryFileNames</a></div>
+	<div id="" class="mStyle"	onclick="clickItgetFileSystemRoots();"><a href="#" class="method_style">getFileSystemRoots</a></div>	
+	<div id="" class="mStyle"	onclick="clickItgetFileSystemSize();"><a href="#" class="method_style">getFileSystemSize</a></div>
+	<div id="" class="mStyle"	onclick="clickItgetAvailableApplications();"><a href="#" class="method_style">getAvailableApplications</a></div>	
+	<div id="" class="mStyle"	onclick="clickItlaunchApplication();"><a href="#" class="method_style">launchApplication</a></div>
+	<div id="" class="mStyle" onclick="clickItsetRingtone();"><a href="#" class="method_style">setRingtone</a></div>
+	<div id="" class="mStyle"	onclick="clickItvibrate();"><a href="#" class="method_style">vibrate</a></div>
+	<table id="back_table">	
+		<tr>
+			<td><a class="goTop"   href="../main.html"><img src="../res/back.png" /></a></td>
+			<td><a class="goTop" href="../main.html"><img src="../res/gotop.png" /></a></td>
+		</tr>
+	</table>
+</div>
+</body>
+</html>

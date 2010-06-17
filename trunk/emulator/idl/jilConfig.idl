@@ -1,0 +1,13 @@
+#include "jilService.idl"
+
+
+[scriptable, uuid(f170f981-be8e-11de-8a39-0800200c9a66)]
+interface jilConfig : jilService
+{
+  attribute unsigned long msgRingtoneVolume;
+  attribute unsigned long ringtoneVolume;
+  attribute string vibrationSetting;
+
+  void setAsWallpaper(in string wallpaperFileurl);
+  void setDefaultRingtone(in string ringtoneFileurl);
+};

@@ -1,0 +1,37 @@
+#include "jilService.idl"
+
+#include "jilCallRecord.idl"
+#include "jilCallRecordTypes.idl"
+
+
+[scriptable, function, uuid(36979028-3e81-11df-9879-0800200c9a66)]
+interface jilTEOnCallEvent : nsISupports
+{
+  void invoke(in string callType, in string phoneNumber);
+};
+
+[scriptable, function, uuid(36979029-3e81-11df-9879-0800200c9a66)]
+interface jilTEOnCallRecordsFound : nsISupports
+{
+  void invoke([array, size_is(count)] in jilCallRecord callRecordsFound, [optional] in unsigned long count);
+};
+
+
+[scriptable, uuid(f07d48a0-ba86-11de-8a39-0800200c9a66)]
+interface jilTelephony : jilService
+{
+  attribute jilCallRecordTypes CallRecordTypes;
+  attribute jilCallRecord CallRecord;
+
+  // callbacks
+  attribute jilTEOnCallEvent onCallEvent;
+  attribute jilTEOnCallRecordsFound onCallRecordsFound;
+
+  void deleteAllCallRecords(in string callRecordType);
+  void deleteCallRecord(in string callRecordType, in string id);
+  void findCallRecords(in jilCallRecord comparisonRecord, in long startInx, in long endInx);
+  jilCallRecord getCallRecord(in string callRecordType, in string id);
+  long getCallRecordCnt(in string callRecordType);
+  void initiateVoiceCall(in string phoneNumber);
+  jilCallRecord createCallRecord();
+};

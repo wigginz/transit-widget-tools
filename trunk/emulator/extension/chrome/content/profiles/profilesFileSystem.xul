@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://transit-emulator/skin/skin.css" type="text/css"?>
+<!DOCTYPE jilemulator SYSTEM "chrome://transit-emulator/locale/translations.dtd">
+
+
+        
+<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        xmlns:html="http://www.w3.org/1999/xhtml"
+        id="jwe-profiles-popup-fsys"        
+        title="&jwe.profiles.popup.fsys.title;"
+        buttons="accept,cancel"
+        onload="jwe_populateForm();"
+        ondialogaccept="return jwe_saveForm('&jwe.profiles.popup.fsys.error;');"
+        ondialogcancel="return true;">
+
+  <vbox flex="1" style="background-color: #CCCCCC;">
+
+    <dialogheader title="&jwe.profiles.popup.fsys.caption;"/>
+    
+    <vbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.fsys.path;" class="jwe-defaultText" style="width: 10em;"/>
+        <textbox id="jwe-profiles-popup-fsys-path" size="25"/>
+      </hbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.fsys.localpath;" class="jwe-defaultText" style="width: 10em;"/>
+        <textbox id="jwe-profiles-popup-fsys-localpath" size="25"/>
+      </hbox>
+    </vbox>
+
+    <hbox pack="right" class="jwe-profiles-buttons">
+      <spacer flex="1"/>
+      <button dlgtype="accept" label="&jwe.profiles.popup.fsys.ok;"/> 
+      <button dlgtype="cancel" label="&jwe.profiles.popup.fsys.cancel;"/>
+    </hbox>
+    
+  </vbox>
+
+<html:script>
+<![CDATA[
+
+function jwe_populateForm()
+{
+  var profileId = window.arguments[0].inn.profileId;
+  var filesystem = window.arguments[0].inn.filesystem;
+  
+  if ( filesystem != null )
+  {
+    document.getElementById("jwe-profiles-popup-fsys-path").value = filesystem.rootPath;
+    document.getElementById("jwe-profiles-popup-fsys-localpath").value = filesystem.localPath;
+  }
+}
+
+function jwe_saveForm(message)
+{
+  var rootPath = document.getElementById("jwe-profiles-popup-fsys-path").value;
+  var error = false;
+  if ( rootPath != null )
+  {
+    if ( rootPath.length < 1 )
+      error = true;
+    else if ( rootPath.charAt(0) == " " )
+      error = true;
+  }
+  else
+    error = true;
+    
+  if ( error )
+  {
+    alert(message);
+    return(false);
+  }
+  
+  var filesystem =
+  {
+    rootPath: rootPath,
+    localPath: document.getElementById("jwe-profiles-popup-fsys-localpath").value,
+    profileId: window.arguments[0].inn.profileId
+  };
+  
+  if ( window.arguments[0].inn.filesystem )
+  {
+    filesystem.id = window.arguments[0].inn.filesystem.id;
+    filesystem.isChanged = true;
+  }
+  else
+  {
+    filesystem.id = new Date().getTime();
+    filesystem.isNew = true;
+  }
+
+  window.arguments[0].out = {filesystem: filesystem};
+  return(true);
+}
+
+]]>
+</html:script>
+
+</dialog>

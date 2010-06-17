@@ -1,0 +1,9 @@
+#include "nsISupports.idl"
+
+
+[scriptable, uuid(93e2b310-3785-11df-9879-0800200c9a66)]
+interface jilException : nsISupports
+{
+  attribute string message;
+  attribute string type;
+}; 

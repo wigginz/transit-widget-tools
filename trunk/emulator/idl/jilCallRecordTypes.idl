@@ -1,0 +1,9 @@
+#include "nsISupports.idl"
+
+[scriptable, uuid(3c0a9960-ba93-11de-8a39-0800200c9a66)]
+interface jilCallRecordTypes : nsISupports
+{
+  attribute string MISSED;
+  attribute string OUTGOING;
+  attribute string RECEIVED;
+}; 

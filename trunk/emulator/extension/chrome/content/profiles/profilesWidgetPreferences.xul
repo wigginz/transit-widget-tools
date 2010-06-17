@@ -1,0 +1,167 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://transit-emulator/skin/skin.css" type="text/css"?>
+<!DOCTYPE jilemulator SYSTEM "chrome://transit-emulator/locale/translations.dtd">
+
+
+        
+<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        xmlns:html="http://www.w3.org/1999/xhtml"
+        id="jwe-profiles-popup-wprefs"        
+        title="&jwe.profiles.popup.wprefs.title;"
+        buttons="accept"
+        onload="jwe_populateForm();"
+        ondialogaccept="return jwe_saveForm();"
+        ondialogcancel="return true;">
+       
+
+  <vbox flex="1" style="background-color: #CCCCCC;">
+
+    <dialogheader id="jwe-profiles-popup-wprefs-header" title="&jwe.profiles.popup.wprefs.caption;"/>
+    
+    <vbox>
+      <listbox id="jwe-profiles-popup-wprefs-list" style="width: 500px;" onselect="jwe_selectPreference();"  ondblclick="jwe_modifyWidgetPref();">
+        <listhead>
+          <listheader label="&jwe.profiles.popup.wprefs.key;" />
+          <listheader label="&jwe.profiles.popup.wprefs.value;" />            
+        </listhead>
+        <listcols>
+          <listcol flex="1" />
+          <splitter class="tree-splitter" />
+          <listcol flex="1" />
+        </listcols>
+      </listbox>      
+    </vbox>
+    
+    <description style="width: 300px;">&jwe.profiles.popup.wprefs.warning;</description>
+    
+    <hbox pack="right" class="jwe-profiles-buttons">
+      <spacer flex="1"/>
+      <button label="&jwe.profiles.popup.wprefs.add;" oncommand="jwe_addWidgetPref();"/> 
+      <button label="&jwe.profiles.popup.wprefs.modify;" oncommand="jwe_modifyWidgetPref();" id="jwe-profiles-popup-wprefs-modify" disabled="true"/> 
+      <button label="&jwe.profiles.popup.wprefs.remove;" id="jwe-profiles-popup-wprefs-remove" oncommand="jwe_removePreference();" disabled="true"/>
+         </hbox>
+
+    <hbox pack="right" class="jwe-profiles-buttons">
+      <spacer flex="1"/>
+      <button dlgtype="accept" label="&jwe.profiles.popup.wprefs.close;"/>
+    </hbox>
+    
+  </vbox>
+
+<html:script>
+<![CDATA[
+
+var keymap = new Array();
+
+function jwe_selectPreference()
+{
+  document.getElementById("jwe-profiles-popup-wprefs-modify").disabled = false;
+  document.getElementById("jwe-profiles-popup-wprefs-remove").disabled = false;
+}
+
+function jwe_populateForm()
+{
+  var profileId = window.arguments[0].inn.profileId;
+  var widget = window.arguments[0].inn.widget;
+    
+  document.getElementById("jwe-profiles-popup-wprefs-header").setAttribute("title", document.getElementById("jwe-profiles-popup-wprefs-header").getAttribute("title")+widget.name);
+
+  var preferences = JILProfileService.wrappedJSObject.getWidgetPreferences(widget);
+  for ( var i = 0; i < preferences.length; i++ )
+  {
+    keymap[preferences[i].key] = i;
+  
+    var listitem = document.createElement("listitem");
+    listitem.setAttribute("value", preferences[i].key);
+    listitem.setAttribute("id", i);
+    var keyCell = document.createElement("listcell");
+    var valueCell = document.createElement("listcell");
+
+    keyCell.setAttribute("id", i+"-key");
+    keyCell.setAttribute("label", preferences[i].key); 
+    keyCell.setAttribute("value", preferences[i].key);
+    valueCell.setAttribute("id", i+"-val");
+    valueCell.setAttribute("label", preferences[i].value); 
+    valueCell.setAttribute("value", preferences[i].value);
+    listitem.appendChild(keyCell);
+    listitem.appendChild(valueCell);
+    
+    document.getElementById("jwe-profiles-popup-wprefs-list").appendChild(listitem);
+  }
+}
+
+function jwe_addWidgetPref()
+{
+  var profileId = window.arguments[0].inn.profileId;
+  var widget = window.arguments[0].inn.widget;
+  
+  var params = {inn:{profileId: profileId, widget: widget}, out:null};       
+  window.openDialog("chrome://transit-emulator/content/profiles/profilesWidgetPref.xul", "jwe-widget-pref-popup", "dialog, modal", params).focus();
+
+  if (params.out) 
+  {
+    JILProfileService.wrappedJSObject.addWidgetPreference(widget, params.out.key, params.out.value);
+    
+    var tempId = new Date().getTime();
+    keymap[params.out.key] = tempId;
+    
+    var listitem = document.createElement("listitem");
+    listitem.setAttribute("value", params.out.key);
+    listitem.setAttribute("id", tempId);
+    var keyCell = document.createElement("listcell");
+    var valueCell = document.createElement("listcell");
+
+    keyCell.setAttribute("label", params.out.key); 
+    keyCell.setAttribute("value", params.out.key);
+    keyCell.setAttribute("id", tempId+"-key");
+    valueCell.setAttribute("label", params.out.value); 
+    valueCell.setAttribute("value", params.out.value);
+    valueCell.setAttribute("id", tempId+"-val");
+    listitem.appendChild(keyCell);
+    listitem.appendChild(valueCell);
+    
+    document.getElementById("jwe-profiles-popup-wprefs-list").appendChild(listitem);
+  }
+}
+
+function jwe_modifyWidgetPref()
+{
+  var profileId = window.arguments[0].inn.profileId;
+  var widget = window.arguments[0].inn.widget;
+  
+  var key = document.getElementById("jwe-profiles-popup-wprefs-list").getItemAtIndex(document.getElementById("jwe-profiles-popup-wprefs-list").selectedIndex).value;
+  var value = document.getElementById(keymap[key]+"-val").getAttribute("label");
+
+  var params = {inn:{profileId: profileId, widget: widget, key: key, value: value}, out:null};       
+  window.openDialog("chrome://transit-emulator/content/profiles/profilesWidgetPref.xul", "jwe-widget-pref-popup", "dialog, modal", params).focus();
+
+  if (params.out) 
+  {
+    JILProfileService.wrappedJSObject.updateWidgetPreference(widget, key, params.out.value);
+       
+    document.getElementById(keymap[key]+"-val").setAttribute("label", params.out.value);
+  }
+}
+
+function jwe_removePreference()
+{
+  var profileId = window.arguments[0].inn.profileId;
+  var widget = window.arguments[0].inn.widget;
+  
+  var key = document.getElementById("jwe-profiles-popup-wprefs-list").getItemAtIndex(document.getElementById("jwe-profiles-popup-wprefs-list").selectedIndex).value;
+  
+  // remove
+  JILProfileService.wrappedJSObject.removeWidgetPreference(widget, key);
+  
+  var key = document.getElementById("jwe-profiles-popup-wprefs-list").removeItemAt(document.getElementById("jwe-profiles-popup-wprefs-list").selectedIndex);
+}
+
+function jwe_saveForm()
+{
+}
+
+]]>
+</html:script>
+
+</dialog>

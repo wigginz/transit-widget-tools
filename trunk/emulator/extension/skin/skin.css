@@ -1,0 +1,126 @@
+#jwe-emulator-workspace-container
+{
+  margin: 10px;
+}
+
+#jwe-emulator-workspace
+{
+  border: 1px solid black; 
+  background-image: url(chrome://transit-emulator/skin/images/emu-large-bg.png);
+  overflow: hidden;
+  z-index: 1000;
+}
+
+#jwe-emulator-container
+{
+  position:fixed;
+  border: 2px solid #444444;
+  cursor: move;
+  padding: 10px;
+  -moz-border-radius: 10px;
+  background-image: url(chrome://transit-emulator/skin/images/border-bg.png);
+  z-index: 100;
+  height: auto;
+  width: auto;
+}
+
+#jwe-emulator-title
+{
+  margin-top: 5px;
+  color: #000000;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+#jwe-emulator-widget-press-start
+{
+  color: red;
+}
+
+#jwe-emulator-version
+{
+  color: #000000;
+  font-size: 1em;
+}
+
+#jwe-emulator-tab-container
+{
+  margin: 10px;
+}
+
+#jwe-emulator-content
+{
+  cursor: auto;
+  overflow: auto;
+}
+
+#jwe-emulator-reload
+{
+  margin: 10px;
+}
+
+.jwe-emulator-events-panel
+{
+  width: 98%;
+  margin: 5px;
+  height: 450px;
+  padding: 10px;
+  border: 1px solid #666666;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  overflow-y: auto;
+}
+
+/** Manage Profile Window Styles **/
+
+.jwe-profiles-panel-container
+{
+  width: 600px;
+}
+
+#jwe-profiles-content
+{
+  vertical-align: middle;
+  padding: 10px;
+}
+
+.jwe-profiles-buttons
+{
+  padding: 5px;
+}
+
+.jwe-profiles-inner-panel
+{
+  height: 450px;
+  margin: 5px;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-bottom: 10px;
+  border: 2px solid #666666;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  overflow-y: auto;
+}
+
+groupbox
+{
+  width: 95%;
+}
+
+groupbox caption
+{
+  font-weight: bold;
+}
+
+.jwe-profiles-defaults-key
+{
+  width: 16em;
+}
+
+.jwe-profiles-defaults-row
+{
+  margin-top: 5px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #999999;
+  margin-right: 10px;
+}

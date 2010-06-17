@@ -1,0 +1,11 @@
+#include "nsISupports.idl"
+
+
+[scriptable, uuid(93e2b311-3785-11df-9879-0800200c9a66)]
+interface jilExceptionTypes : nsISupports
+{
+  attribute string INVALID_PARAMETER;
+  attribute string SECURITY;
+  attribute string UNKNOWN;
+  attribute string UNSUPPORTED;
+}; 

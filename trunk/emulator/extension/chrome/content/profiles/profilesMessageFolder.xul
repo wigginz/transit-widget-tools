@@ -1,0 +1,138 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://transit-emulator/skin/skin.css" type="text/css"?>
+<!DOCTYPE jilemulator SYSTEM "chrome://transit-emulator/locale/translations.dtd">
+
+
+
+<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        xmlns:html="http://www.w3.org/1999/xhtml"
+        id="jwe-profiles-popup-mfolder"        
+        title="&jwe.profiles.popup.mfolder.title;"
+        buttons="accept,cancel"
+        onload="jwe_populateForm();"
+        ondialogaccept="return jwe_saveForm();"
+        ondialogcancel="return true;">
+
+  <vbox flex="1" style="background-color: #CCCCCC;">
+
+    <dialogheader title="&jwe.profiles.popup.mfolder.caption;"/>
+
+    <vbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.mfolder.name;" class="jwe-defaultText" style="width: 10em;"/>
+        <textbox id="jwe-profiles-popup-mfolder-name" size="25"/>
+      </hbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.mfolder.type;" class="jwe-defaultText" style="width: 10em;"/>
+        <menulist align="right" id="jwe-profiles-popup-mfolder-typelist">
+          <menupopup id="jwe-profiles-popup-mfolder-type">
+            <menuitem label="&jwe.profiles.popup.mfolder.drafts;" value="DRAFTS"/>
+            <menuitem label="&jwe.profiles.popup.mfolder.inbox;" value="INBOX"/>
+            <menuitem label="&jwe.profiles.popup.mfolder.outbox;" value="OUTBOX"/>
+            <menuitem label="&jwe.profiles.popup.mfolder.sentbox;" value="SENTBOX"/>
+          </menupopup>
+        </menulist>
+      </hbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.mfolder.messagetype;" class="jwe-defaultText" style="width: 10em;"/>
+        <menulist align="right" id="jwe-profiles-popup-mfolder-messagetype">
+          <menupopup id="jwe-profiles-popup-mfolder-messagetype-list">
+            <menuitem label="&jwe.profiles.popup.mfolder.emailmessage;" value="EmailMessage"/>
+            <menuitem label="&jwe.profiles.popup.mfolder.mmsmessage;" value="MMSMessage"/>
+            <menuitem label="&jwe.profiles.popup.mfolder.smsmessage;" value="SMSMessage"/>
+          </menupopup>
+        </menulist>
+      </hbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.mfolder.account;" class="jwe-defaultText" style="width: 10em;"/>
+        <menulist align="right" oncommand="" id="jwe-profiles-popup-mfolder-accountlist"/>
+      </hbox>
+    </vbox>
+
+    <hbox pack="right" class="jwe-profiles-buttons">
+      <spacer flex="1"/>
+      <button dlgtype="accept" label="&jwe.profiles.popup.mfolder.save;"/> 
+      <button dlgtype="cancel" label="&jwe.profiles.popup.mfolder.cancel;"/>
+    </hbox>
+    
+  </vbox>
+  
+<html:script>
+<![CDATA[
+
+function jwe_populateForm()
+{
+  var msgProfileId = window.arguments[0].inn.msgProfileId;
+  var folder = window.arguments[0].inn.folder;
+  
+  // load the email accounts
+  var accounts = JILProfileService.wrappedJSObject.getEmailAccounts(msgProfileId);
+
+  var menupopup = document.createElement("menupopup");
+  menupopup.setAttribute("id", "jwe-profiles-popup-mfolder-accountlist");
+  var accountIndex = 0;
+  for ( var i = 0; i < accounts.length; i++ )
+  {
+    var menuitem = document.createElement("menuitem");
+    menuitem.setAttribute("label", accounts[i].name);
+    menuitem.setAttribute("value", accounts[i].id);
+    menupopup.appendChild(menuitem);
+    if ( (folder != null) && (accounts[i].id == folder.emailAccountId) )
+      accountIndex = i;
+  }
+  document.getElementById("jwe-profiles-popup-mfolder-accountlist").appendChild(menupopup);
+  document.getElementById("jwe-profiles-popup-mfolder-accountlist").selectedIndex = accountIndex;
+    
+  if ( folder != null )
+  {
+    document.getElementById("jwe-profiles-popup-mfolder-name").value = folder.name;
+    
+    if ( folder.type == "DRAFTS" )
+      document.getElementById("jwe-profiles-popup-mfolder-typelist").selectedIndex = 0;
+    else if ( folder.type == "INBOX" )
+      document.getElementById("jwe-profiles-popup-mfolder-typelist").selectedIndex = 1;
+    else if ( folder.type == "OUTBOX" )
+      document.getElementById("jwe-profiles-popup-mfolder-typelist").selectedIndex = 2;
+    else if ( folder.type == "SENTBOX" )
+      document.getElementById("jwe-profiles-popup-mfolder-typelist").selectedIndex = 3;
+      
+    if ( folder.messageType == "EmailMessage" )
+      document.getElementById("jwe-profiles-popup-mfolder-messagetype").selectedIndex = 0;
+    else if ( folder.messageType == "MMSMessage" )
+      document.getElementById("jwe-profiles-popup-mfolder-messagetype").selectedIndex = 1;
+    else if ( folder.messageType == "SMSMessage" )
+      document.getElementById("jwe-profiles-popup-mfolder-messagetype").selectedIndex = 2;
+  }
+}
+
+function jwe_saveForm()
+{
+  var folder =
+  {
+    name: document.getElementById("jwe-profiles-popup-mfolder-name").value,
+    type: document.getElementById("jwe-profiles-popup-mfolder-typelist").getItemAtIndex(document.getElementById("jwe-profiles-popup-mfolder-typelist").selectedIndex).value,
+    msgProfileId: window.arguments[0].inn.msgProfileId,
+    emailAccountId: document.getElementById("jwe-profiles-popup-mfolder-accountlist").getItemAtIndex(document.getElementById("jwe-profiles-popup-mfolder-accountlist").selectedIndex).value,
+    messageType: document.getElementById("jwe-profiles-popup-mfolder-messagetype").getItemAtIndex(document.getElementById("jwe-profiles-popup-mfolder-messagetype").selectedIndex).value,
+  };
+  
+  if ( window.arguments[0].inn.folder )
+  {
+    folder.id = window.arguments[0].inn.folder.id;
+    folder.isChanged = true;
+  }
+  else
+  {
+    folder.id = new Date().getTime();
+    folder.isNew = true;
+  }
+
+  window.arguments[0].out = {folder: folder};
+  return(true);
+}
+
+]]>
+</html:script>
+  
+</dialog>

@@ -1,0 +1,155 @@
+const INTERFACE = Components.interfaces.jilRadioInfo; //#
+const CLASS_ID = Components.ID("39075290-bae2-11de-8a39-0800200c9a66"); //#
+const CLASS_NAME = "JIL API RadioInfo"; //#
+const CONTRACT_ID = "@jil.org/jilapi-radioinfo;1"; //#
+
+/***********************************************************/
+
+var service = null;
+
+function JILRadioInfo() //#
+{
+  this.runtime = Components.classes['@jil.org/jilapi-emulatorruntime;1'].getService().wrappedJSObject;
+
+  this.reload();
+
+  service = this;
+}
+
+/***********************************************************/
+
+JILRadioInfo.prototype = //#
+{
+  isRadioEnabled             : null,
+  isRoaming                  : null,
+  radioSignalSource          : null,
+  radioSignalStrengthPercent : null,
+
+  onSignalSourceChange : null,
+
+  runtime : null,
+  
+  reload : function()
+  {
+    var radioInfo = this.runtime.getRadioInfo();
+    this.isRadioEnabled = radioInfo.isEnabled;
+    this.isRoaming = radioInfo.isRoaming;
+    this.radioSignalSource = radioInfo.signalSource;
+    this.radioSignalStrengthPercent = radioInfo.signalStrength;
+    
+    this.onSignalSourceChange = null;
+  },
+  
+  alert: function(aMsg)
+  {
+    var promptService = 
+      Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
+        .getService(Components.interfaces.nsIPromptService);
+    promptService.alert(null, "JIL Debug", aMsg);
+    promptService = null; 
+  },
+
+  QueryInterface: function(aIID)
+  {
+    if (!aIID.equals(INTERFACE) &&    
+        !aIID.equals(Components.interfaces.nsIClassInfo) &&
+        !aIID.equals(Components.interfaces.nsISupports) ) 
+      throw Components.results.NS_ERROR_NO_INTERFACE;
+    return this;
+  },
+
+  // nsIClassInfo
+  flags: Components.interfaces.nsIClassInfo.DOM_OBJECT,
+
+  implementationLanguage: Components.interfaces.nsIProgrammingLanguage.JAVASCRIPT,
+
+  classDescription: CLASS_NAME,
+  classID: CLASS_ID,
+  contractID: CONTRACT_ID,
+
+  getInterfaces: function(aCount) {
+    var aResult = [
+      INTERFACE
+      , Components.interfaces.nsIClassInfo
+    ];
+    aCount.value = aResult.length;
+    return aResult;
+  },
+
+  getHelperForLanguage: function(count) { return null; },
+};
+
+/***********************************************************/
+
+var JILRadioInfoFactory = { //#
+  createInstance: function (aOuter, aIID)
+  {
+    if (aOuter != null)
+      throw Components.results.NS_ERROR_NO_AGGREGATION;
+    
+    if ( service == null )
+      return(new JILRadioInfo()).QueryInterface(aIID);
+    else 
+      return(service);
+  }
+};
+
+/***********************************************************/
+
+var JILRadioInfoModule = { //#
+  registerSelf: function(aCompMgr, aFileSpec, aLocation, aType)
+  {
+    aCompMgr = aCompMgr.
+        QueryInterface(Components.interfaces.nsIComponentRegistrar);
+    aCompMgr.registerFactoryLocation(CLASS_ID, CLASS_NAME, 
+        CONTRACT_ID, aFileSpec, aLocation, aType);
+
+    var catman = Components.classes["@mozilla.org/categorymanager;1"].
+              getService(Components.interfaces.nsICategoryManager);
+    // Register Global Property, make object accessible to any window
+    catman.addCategoryEntry(
+      "JavaScript global property"
+      , "_RadioInfo_122a"
+      , CONTRACT_ID
+      , true
+      , false
+    );
+    catman = null;
+    aCompMgr = null;
+  },
+
+  unregisterSelf: function(aCompMgr, aLocation, aType)
+  {
+    var catman = Components.classes["@mozilla.org/categorymanager;1"].
+            getService(Components.interfaces.nsICategoryManager);
+    catman.deleteCategoryEntry(
+      "JavaScript global property"
+      , "_RadioInfo_122a"
+      , true
+    );
+
+    aCompMgr = aCompMgr.
+        QueryInterface(Components.interfaces.nsIComponentRegistrar);
+    aCompMgr.unregisterFactoryLocation(CLASS_ID, aLocation);    
+
+    aCompMgr = null;        
+    catman = null;    
+  },
+  
+  getClassObject: function(aCompMgr, aCID, aIID)
+  {
+    if (!aIID.equals(Components.interfaces.nsIFactory))
+      throw Components.results.NS_ERROR_NOT_IMPLEMENTED;
+
+    if (aCID.equals(CLASS_ID))
+      return JILRadioInfoFactory; //#
+
+    throw Components.results.NS_ERROR_NO_INTERFACE;
+  },
+
+  canUnload: function(aCompMgr) { return true; }
+};
+
+/***********************************************************/
+
+function NSGetModule(aCompMgr, aFileSpec) { return JILRadioInfoModule; } //#

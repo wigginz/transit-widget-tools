@@ -1,0 +1,58 @@
+<!--
+ * Copyright by JIL, 2009. 
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ -->
+
+<html>
+
+<head>
+<script type="text/javascript" src="Widget.js"></script>
+<script type="text/javascript" src="js/util.js"></script>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+
+<body>
+<div id="showDetail" class="bodyStyle">
+	<div id="textdivshowName" class="Nameclass"></div>	
+	<div id="textdivshowExplanation" class="ExplanationClass"></div>	
+	<div id="textdivshowSampleCode" class="ExplanationClass"></div>	
+	<div id="textdivshowInitialCondition" class="ExplanationClass"></div>
+	<div onclick="clickItResult();" id="textdivshowClick" class="ClickClass"><img src="res/run_light.png" /></div>
+	<div id="textdivshowResult" class="ExplanationClass"></div>	
+	<table id="back_table">	
+		<tr>
+			<td><a class="goTop" onClick="showWidget();"><img src="res/back.png" /></a></td>
+			<td><a class="goTop" href="main.html"><img src="res/gotop.png" /></a></td>
+		</tr>
+	</table>
+</div>
+<div id="front" class="bodyStyle">
+	<div id="textdivshowDevicetest" class="oBodyStyle obStyle"><a href="Device/device.html">Device</a></div>	
+	<div id="textdivshowPIMtest" class="oBodyStyle obStyle" onMouseOver=""><a href="PIM/PIM.html">PIM</a></div>	
+	<div id="textdivshowMessagingtest" class="oBodyStyle obStyle"><a href="Messaging/Messaging.html">Messaging</a></div>	
+	<div id="textdivshowMultimediatest" class="oBodyStyle obStyle"><a href="Multimedia/Multimedia.html">Multimedia</a></div>	
+	<div id="textdivshowTelephonytest" class="oBodyStyle obStyle"><a href="Telephony/Telephony.html">Telephony</a></div>		
+	<div id="textdivshowTelephonytest" class="oBodyStyle obStyle"><a href="WidgetManager/widgetManager.html">widgetManager</a></div>	
+	<div id="textdivshowTelephonytest" class="oBodyStyle obStyle"><a href="Exception/Exception.html">Exception</a></div>		
+	<div id="textdivshowTelephonytest" class="oBodyStyle obStyle"><a href="ExceptionTypes/ExceptionTypes.html">ExceptionTypes</a></div>			
+	<div id="textdivopenURL" class="mStyle" onClick="clickItopenURL();"><a href="#" class="method_style">openURL</a></div>	
+	<div id="textdivsetPreferenceForKey" class="mStyle" onClick="clickItsetPreferenceForKey();"><a href="#" class="method_style">setPreferenceForKey</a></div>	
+	<div id="textdivpreferenceForKey" class="mStyle" onClick="clickItpreferenceForKey();"><a href="#" class="method_style">preferenceForKey</a></div>	
+	<div id="textdivonFocus" class="mStyle" onClick="clickItonFocus();"><a href="#" class="method_style">onFocus</a></div>
+	<div id="textdivonMaximize" class="mStyle" onClick="clickItonMaximize();"><a href="#" class="method_style">onMaximize</a></div>
+	<div id="textdivonRestore" class="mStyle" onClick="clickItonRestore();"><a href="#" class="method_style">onRestore</a></div>
+	<div id="textdivonWakeup" class="mStyle" onClick="clickItonWakeup();"><a href="#" class="method_style">onWakeup</a></div>
+</div>
+</body>
+</html>

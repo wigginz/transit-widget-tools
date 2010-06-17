@@ -1,0 +1,7 @@
+#include "jilService.idl"
+
+[scriptable, uuid(abb49f20-babd-11de-8a39-0800200c9a66)]
+interface jilWidgetManager : jilService
+{
+  string checkWidgetInstallationStatus(in string widgetId, in string widgetName, in string widgetVersion);
+}; 

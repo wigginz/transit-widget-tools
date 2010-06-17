@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="AddressBookItemtest.js"></script>
+<script type="text/javascript" src="../js/util.js"></script>
+<script type="text/javascript" src="PIM_run.js"></script>
+
+<link rel="stylesheet" type="text/css" href="../style.css" />
+</head>
+
+<body>
+<div id="showDetail" class="bodyStyle">
+	<div id="textdivshowName" class="Nameclass"></div>	
+	<div id="textdivshowExplanation" class="ExplanationClass"></div>	
+	<div id="textdivshowSampleCode" class="ExplanationClass"></div>	
+	<div id="textdivshowInitialCondition" class="ExplanationClass"></div>
+	<div onclick="clickItResult();" id="textdivshowClick" class="ClickClass"><img src="../res/run_light.png" /></div>
+	<div id="textdivshowResult" class="ExplanationClass"></div>
+	<table id="back_table">	
+		<tr>
+			<td><a class="goTop" onClick="showAddressBookItemtest();"><img src="../res/back.png" /></a></td>
+			<td><a class="goTop" href="../main.html"><img src="../res/gotop.png" /></a></td>
+		</tr>
+	</table>
+</div>
+<div id="AddressBookItemtest"  class="bodyStyle">	
+	<div id="textdivNOT_REPEAT" class="oBodyStyle obStyle" onclick="clickAddress();"><a href="#">address</a></div>
+	<div id="textdivNOT_REPEAT" class="oBodyStyle obStyle" onclick="clickAddressBookItemId();"><a href="#">addressBookItemId</a></div>
+	<div id="textdivNOT_REPEAT" class="oBodyStyle obStyle" onclick="clickCompany();"><a href="#">company</a></div>
+	<div id="textdivNOT_REPEAT" class="oBodyStyle obStyle" onclick="clickEMail();"><a href="#">eMail</a></div>
+	<div id="textdivNOT_REPEAT" class="oBodyStyle obStyle" onclick="clickFullName();"><a href="#">fullName</a></div>
+	<div id="textdivNOT_REPEAT" class="oBodyStyle obStyle" onclick="clickHomePhone();"><a href="#">homePhone</a></div>
+	<div id="textdivNOT_REPEAT" class="oBodyStyle obStyle" onclick="clickMobilePhone();"><a href="#">mobilePhone</a></div>
+	<div id="textdivNOT_REPEAT" class="oBodyStyle obStyle" onclick="clickTitle();"><a href="#">title</a></div>
+	<div id="textdivNOT_REPEAT" class="oBodyStyle obStyle" onclick="clickWorkPhone();"><a href="#">workPhone</a></div>
+	<div id="inputtext" class="mStyle">id : <input	type="text" id="AddressBookItemtestid" value=""></div>	
+	<div id="textdivgetAttributeValue" class="mStyle"	onclick="clickItgetAttributeValue();"><a href="#" class="method_style">getAttributeValue</a></div>	
+	<div id="textdivsetAttributeValue" class="mStyle"	onclick="clickItsetAttributeValue();"><a href="#" class="method_style">setAttributeValue</a></div>	
+	<div id="textdivgetAvailableAttributes" class="mStyle"	onclick="clickItgetAvailableAttributes();"><a href="#" class="method_style">getAvailableAttributes</a></div>	
+	<div id="textdivupdate" class="mStyle"	onclick="clickItupdateAddressBookItem();"><a href="#" class="method_style">update</div>
+	<div id="textdivsetAddressGroupNames" class="mStyle"	onclick="clickItsetAddressGroupNames();"><a href="#" class="method_style">setAddressGroupNames</a></div>	
+	<div id="textdivgetAddressGroupNames" class="mStyle"	onclick="clickItgetAddressGroupNames();"><a href="#" class="method_style">getAddressGroupNames</a></div>		
+	<table id="back_table">	
+		<tr>
+			<td><a class="goTop"  href="PIM.html"><img src="../res/back.png" /></a></td>
+			<td><a class="goTop" href="../main.html"><img src="../res/gotop.png" /></a></td>
+		</tr>
+	</table>
+</div>
+</body>
+</html>

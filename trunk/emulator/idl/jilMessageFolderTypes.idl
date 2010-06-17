@@ -1,0 +1,11 @@
+#include "nsISupports.idl"
+
+
+[scriptable, uuid(6c6b82e0-baac-11de-8a39-0800200c9a66)]
+interface jilMessageFolderTypes : nsISupports
+{
+  attribute string DRAFTS;
+  attribute string INBOX;
+  attribute string OUTBOX;
+  attribute string SENTBOX;
+};

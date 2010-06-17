@@ -1,0 +1,25 @@
+#include "nsISupports.idl"
+#include "nsIArray.idl"
+
+
+[scriptable, uuid(bc546390-bace-11de-8a39-0800200c9a66)]
+interface jilAddressBookItem : nsISupports
+{
+  attribute string address;
+  attribute string addressBookItemId;
+  attribute string company;
+  attribute string eMail;
+  attribute string fullName;
+  attribute string homePhone;
+  attribute string mobilePhone;
+  attribute string title;
+  attribute string workPhone;
+  attribute string ringtone;
+
+  void getAddressGroupNames([optional] out unsigned long count, [array, size_is(count), retval] out string retv);
+  string getAttributeValue(in string attr);
+  void getAvailableAttributes([optional] out unsigned long count, [array, size_is(count), retval] out string retv);
+  void setAddressGroupNames([array, size_is(count)] in string groups, [optional] in unsigned long count);
+  void setAttributeValue(in string attr, in string value);
+  void update();
+};

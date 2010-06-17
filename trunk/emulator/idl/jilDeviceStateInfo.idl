@@ -1,0 +1,46 @@
+#include "jilService.idl"
+
+#include "jilAccelerometerInfo.idl"
+#include "jilConfig.idl"
+#include "jilPositionInfo.idl"
+
+
+[scriptable, function, uuid(36979013-3e81-11df-9879-0800200c9a66)]
+interface jilDSOnFlipEvent : nsISupports
+{
+  void invoke(in boolean isNowClosed);
+};
+
+[scriptable, function, uuid(36979014-3e81-11df-9879-0800200c9a66)]
+interface jilDSOnPositionRetrieved : nsISupports
+{
+  void invoke(in jilPositionInfo locationinfo, in string method);
+};
+
+[scriptable, function, uuid(36979015-3e81-11df-9879-0800200c9a66)]
+interface jilDSOnScreenChangeDimensions : nsISupports
+{
+  void invoke(in unsigned long newWidth, in unsigned long newHeight);
+};
+
+
+[scriptable, uuid(ddc351f0-bad1-11de-8a39-0800200c9a66)]
+interface jilDeviceStateInfo : jilService
+{
+  attribute jilAccelerometerInfo AccelerometerInfo;
+  attribute jilConfig Config;
+
+  attribute jilDSOnFlipEvent onFlipEvent;
+  attribute jilDSOnPositionRetrieved onPositionRetrieved;
+  attribute jilDSOnScreenChangeDimensions onScreenChangeDimensions;
+
+  attribute string audioPath;
+  attribute unsigned long availableMemory;
+  attribute boolean backLightOn;
+  attribute boolean keypadLightOn;
+  attribute string language;
+  attribute string processorUtilizationPercent;
+  attribute string positionMethod;
+
+  void requestPositionInfo(in string method);
+};
