@@ -39,7 +39,7 @@ JILAddressBookItem.prototype = //#
 
   getAttributeValue : function(attribute)
   {
-    return(this.atttributes[attribute]);
+    return(this.attributes[attribute]);
   },
 
   getAvailableAttributes : function(count, retv)
