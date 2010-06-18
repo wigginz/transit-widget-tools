@@ -115,7 +115,7 @@ JILDevice.prototype = //#
 
   setRingtone : function(ringtoneFileUrl, addressBookItem)
   {
-    var pContact = convertJILToContact(addressBookItem);
+    var pContact = this.convertJILToContact(addressBookItem);
     pContact.ringtoneFileUrl = ringtoneFileUrl;
     
     this.runtime.updateAddressBookItem(pContact);
