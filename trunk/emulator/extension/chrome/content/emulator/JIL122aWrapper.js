@@ -136,6 +136,7 @@ var Widget =
         IRDA : _DataNetworkConnectionTypes_122a.IRDA,
         LTE : _DataNetworkConnectionTypes_122a.LTE,
         ONEXRTT : _DataNetworkConnectionTypes_122a.ONEXRTT,
+        WIFI : _DataNetworkConnectionTypes_122a.WIFI,
       },
       
       isDataNetworkConnected : _DataNetworkInfo_122a.isDataNetworkConnected,
@@ -145,7 +146,26 @@ var Widget =
       
       getNetworkConnectionName : function(networkConnecionType)
       {
+        if ( ! this.testDataNetworkConnectionTypes(networkConnecionType) )
+          Widget.throwIPException("Invalid argument type for networkConnecionType in DataNetworkInfo.getNetworkConnectionName");      
+        
         return(_DataNetworkInfo_122a.getNetworkConnectionName(networkConnecionType));
+      },
+      
+      testDataNetworkConnectionTypes : function(type)
+      {
+        if ( (type != Widget.Device.DataNetworkInfo.DataNetworkConnectionTypes.BLUETOOTH ) &&
+             (type != Widget.Device.DataNetworkInfo.DataNetworkConnectionTypes.EDGE ) &&
+             (type != Widget.Device.DataNetworkInfo.DataNetworkConnectionTypes.EVDO ) &&
+             (type != Widget.Device.DataNetworkInfo.DataNetworkConnectionTypes.GPRS ) &&
+             (type != Widget.Device.DataNetworkInfo.DataNetworkConnectionTypes.IRDA ) &&
+             (type != Widget.Device.DataNetworkInfo.DataNetworkConnectionTypes.LTE ) &&
+             (type != Widget.Device.DataNetworkInfo.DataNetworkConnectionTypes.ONEXRTT ) &&
+             (type != Widget.Device.DataNetworkInfo.DataNetworkConnectionTypes.WIFI )
+          )
+          return(false);
+        else
+          return(true);
       },
     },
     
@@ -179,9 +199,12 @@ var Widget =
         ringtoneVolume : _Config_122a.ringtoneVolume,
         vibrationSetting : _Config_122a.vibrationSetting,
 
-        setAsWallpaper : function(wallpaperFileurl)
+        setAsWallpaper : function(wallpaperFileUrl)
         {
-          _Config_122a.setAsWallpaper(wallpaperFileurl);
+          if ( (wallpaperFileUrl == null) || (wallpaperFileUrl.constructor != String) )
+            Widget.throwIPException("Invalid argument type for wallpaperFileUrl in Config.setAsWallpaper");
+
+          _Config_122a.setAsWallpaper(wallpaperFileUrl);
         },
         
         setDefaultRingtone : function(ringtoneFileUrl)
