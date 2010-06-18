@@ -81,6 +81,12 @@ var Widget =
     
     setRingtone : function(ringtoneFileUrl, addressBookItem)
     {
+      if ( (ringtoneFileUrl == null) || (ringtoneFileUrl.constructor != String) )
+        Widget.throwIPException("Invalid argument type for ringtoneFileUrl in Device.setRingtone");
+
+      if ( (addressBookItem == null) || !(addressBookItem instanceof Widget.PIM.AddressBookItem) )
+        Widget.throwIPException("Invalid argument type for addressBookItem in Device.setRingtone");
+    
       _Device_122a.setRingtone(ringtoneFileUrl, addressBookItem.updateJIL());
     },
     
@@ -178,9 +184,12 @@ var Widget =
           _Config_122a.setAsWallpaper(wallpaperFileurl);
         },
         
-        setDefaultRingtone : function(ringtoneFileurl)
+        setDefaultRingtone : function(ringtoneFileUrl)
         {
-           _Config_122a.setDefaultRingtone(ringtoneFileurl);
+          if ( (ringtoneFileUrl == null) || (ringtoneFileUrl.constructor != String) )
+            Widget.throwIPException("Invalid argument type for ringtoneFileUrl in Config.setDefaultRingtone");
+
+           _Config_122a.setDefaultRingtone(ringtoneFileUrl);
         },
       },
       
@@ -758,7 +767,9 @@ var Widget =
     
     createAddressBookItem : function()
     {
-      return(_PIM_122a.createAddressBookItem());
+      var item = new Widget.PIM.AddressBookItem();
+      item.setJIL(_PIM_122a.createAddressBookItem());
+      return(item);
     },
     
     deleteAddressBookGroup : function(groupName)
