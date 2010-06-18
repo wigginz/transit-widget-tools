@@ -876,7 +876,7 @@ var Widget =
     },
     
     AddressBookItem : function() //object
-    {
+    {      
       this._jilAddrItem = null;
       
       this.address = null;
