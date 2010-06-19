@@ -92,6 +92,9 @@ var Widget =
     
     vibrate : function(durationSeconds)
     {
+      if ( (durationSeconds == null) || !(durationSeconds > -1) )
+        Widget.throwIPException("Invalid argument type for durationSeconds in Device.vibrate");
+      
       _Device_122a.vibrate(durationSeconds);
     },
 
