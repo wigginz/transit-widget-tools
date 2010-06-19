@@ -233,7 +233,21 @@ var Widget =
 
       requestPositionInfo : function(method)
       {
+        if ( ! this.testPositionInfoMethods(method) )
+          Widget.throwIPException("Invalid argument type for method in DeviceStateInfo.requestPositionInfo");
+
         _DeviceStateInfo_122a.requestPositionInfo(method);
+      },
+      
+      testPositionInfoMethods : function(type)
+      {
+        if ( (type != "cellid" ) &&
+             (type != "gps" ) &&
+             (type != "agps" )
+          )
+          return(false);
+        else
+          return(true);
       },
     },
     
