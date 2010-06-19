@@ -1168,6 +1168,9 @@ var Widget =
   
   openURL : function(url) 
   {
+    if ( (url == null) || (url.constructor != String) )
+      Widget.throwIPException("Invalid argument type for url in Widget.openUrl");
+    
     _Widget_122a.openURL(url);
   },
   
