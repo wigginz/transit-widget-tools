@@ -39,6 +39,7 @@ JILAddressBookItem.prototype = //#
 
   getAttributeValue : function(attribute)
   {
+    this.alert(attribute);
     return(this.attributes[attribute]);
   },
 
