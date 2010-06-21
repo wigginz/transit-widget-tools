@@ -137,8 +137,11 @@ JILVideoPlayer.prototype = //#
     this.runtime.logAction("VideoPlayer.stop(): isPlaying now set to false");
 
     // pause first, then reload to reset the play position to beginning
-    this.video.pause();
-    this.video.load();
+    if ( this.video != null )
+    {
+      this.video.pause();
+      this.video.load();
+    }
     
     // log it
     this.runtime.logAction("VideoPlayer.stop(): stopped current audio playback");
