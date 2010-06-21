@@ -2094,7 +2094,7 @@ JILProfileService.prototype = //#
     stmt.params.from = message.sourceAddress;
     stmt.params.subject = message.subject;
     
-    if ( message.date == null )
+    if ( (message.date == null) || (message.date == 0) )
       stmt.params.time = new Date();
     else
       stmt.params.time = message.date;
