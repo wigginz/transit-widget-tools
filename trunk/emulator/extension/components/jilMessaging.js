@@ -195,9 +195,9 @@ JILMessaging.prototype = //#
     
     if ( message == null )
       return(null);
-dump(message.toAddress);
+    
     var jilMessage = this.convertMessageToJIL(message);
-dump(jilMessage.getDestinationAddress());    
+    
     this.runtime.logAction("Messaging.getMessage(): returning message with id: "+index);
     
     return(jilMessage);
