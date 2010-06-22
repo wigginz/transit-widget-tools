@@ -1,0 +1,152 @@
+<html>
+
+<head>
+<script type="text/javascript" src="KitchenSink.js"></script>
+
+<!--<script type="text/javascript" src="chrome://jilemulator/content/emulator/test.js"></script>-->
+
+<script>
+
+function quickTest()
+{
+  //var aTest = new Widget.Device.PositionInfo();
+  //aTest.cellID = "file name";
+  Widget.Device.DataNetworkInfo.onNetworkConnectionChanged = function(){alert("in test");};
+  var breakpoint = "";
+  //alert(aTest instanceof Widget.Device.PositionInfo);
+}
+
+</script>
+
+<style>
+
+#results 
+{
+  position: absolute;
+  top: 20;
+  left: 20;
+  height: 300px;
+  width: 300px;
+  margin: 5px;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-bottom: 10px;
+  border: 2px solid #666666;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  background-color: #dddddd;
+  overflow-x: auto;
+  overflow-y: auto;
+  display: none;
+}
+
+#results-title
+{
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+
+#result-detail
+{
+  padding-bottom: 30px;
+}
+
+a
+{
+  font-weight: bold;
+  color: blue;
+}
+
+
+</style>
+
+</head>
+
+<body bgcolor="white" id="widget-body">
+
+<h2>Tests</h2>
+
+<!--<input type="button" onclick="quickTest();" value="test"/><br><br>-->
+
+<br><b>Device</b><br>
+<a href="javascript:testDevice.getFile();">Test Device.getFile</a><br>
+<a href="javascript:testDevice.copyFile();">Test Device.copyFile</a><br>
+<a href="javascript:testDevice.deleteFile();">Test Device.deleteFile</a><br>
+
+<br><b>VideoPlayer</b><br>
+Div Video Container, <a href="javascript:testVideoPlayer.setWindow();">setWindow</a>, <a href="javascript:testVideoPlayer.open();">open</a>, <a href="javascript:testVideoPlayer.play();">play</a>, <a href="javascript:testVideoPlayer.stop();">stop</a>, <a href="javascript:testVideoPlayer.pause();">pause</a>, <a href="javascript:testVideoPlayer.resume();">resume</a>:<br>
+<div id="video-container"></div><br>
+<!--<video src="http://v2v.cc/~j/theora_testsuite/320x240.ogg" controls></video><br>-->
+
+<br><b>Message</b><br>
+<a href="javascript:testMessage.addAddress();">Test Message.addAddress</a><br>
+
+<br><b>Messaging</b><br>
+<a href="javascript:testMessaging.createFolder();">Test Messaging.createFolder</a><br>
+<a href="javascript:testMessaging.copyMessageToFolder();">Test Messaging.copyMessageToFolder</a><br>
+<a href="javascript:testMessaging.deleteAllMessages();">Test Messaging.deleteAllMessages</a><br>
+<a href="javascript:testMessaging.deleteEmailAccount();">Test Messaging.deleteEmailAccount</a><br>
+<a href="javascript:testMessaging.deleteFolder();">Test Messaging.deleteFolder</a><br>
+<a href="javascript:testMessaging.deleteMessage();">Test Messaging.deleteMessage</a><br>
+<a href="javascript:testMessaging.findMessages();">Test Messaging.findMessages</a><br>
+<a href="javascript:testMessaging.getFolderNames();">Test Messaging.getFolderNames</a><br>
+<a href="javascript:testMessaging.getMessage();">Test Messaging.getMessage</a><br>
+<a href="javascript:testMessaging.getMessageQuantities();">Test Messaging.getMessageQuantities</a><br>
+<a href="javascript:testMessaging.moveMessageToFolder();">Test Messaging.moveMessageToFolder</a><br>
+
+<br><b>DataNetworkInfo</b><br>
+<a href="javascript:testDataNetworkInfo.isDataNetworkConnected();">Test DataNetworkInfo.isDataNetworkConnected</a><br>
+<a href="javascript:testDataNetworkInfo.DataNetworkConnectionTypes();">Test DataNetworkInfo.DataNetworkConnectionTypes</a><br>
+<a href="javascript:testDataNetworkInfo.networkConnectionType();">Test DataNetworkInfo.networkConnectionType</a><br>
+
+<br><b>DeviceInfo</b><br>
+<a href="javascript:testDeviceInfo.phoneScreenWidthDefault();">Test DeviceInfo.phoneScreenWidthDefault</a><br>
+<a href="javascript:testDeviceInfo.phoneScreenHeightDefault();">Test DeviceInfo.phoneScreenHeightDefault</a><br>
+<a href="javascript:testDeviceInfo.ownerInfo();">Test DeviceInfo.ownerInfo</a><br>
+
+<br><b>PIM</b><br>
+<a href="javascript:testPIM.createAddressBookItem();">Test PIM.createAddressBookItem()</a><br>
+<a href="javascript:testPIM.addAddressBookItem();">Test PIM.addAddressBookItem()</a><br>
+<a href="javascript:testPIM.createAddressBookGroup();">Test PIM.createAddressBookGroup()</a><br>
+<a href="javascript:testPIM.findAddressBookItems();">Test PIM.findAddressBookItems()</a><br>
+<a href="javascript:testPIM.getAddressBookGroupMembers();">Test PIM.getAddressBookGroupMembers()</a><br>
+<a href="javascript:testPIM.getAddressBookItem();">Test PIM.getAddressBookItem()</a><br>
+<a href="javascript:testPIM.getAddressBookItemsCount();">Test PIM.getAddressBookItemsCount()</a><br>
+<a href="javascript:testPIM.getAvailableAddressGroupNames();">Test PIM.getAvailableAddressGroupNames()</a><br>
+<a href="javascript:testPIM.addCalendarItem();">Test PIM.addCalendarItem()</a><br>
+<a href="javascript:testPIM.deleteAddressBookGroup();">Test PIM.deleteAddressBookGroup()</a><br>
+<a href="javascript:testPIM.findCalendarItems();">Test PIM.findCalendarItems()</a><br>
+<a href="javascript:testPIM.deleteCalendarItem();">Test PIM.deleteCalendarItem()</a><br>
+<a href="javascript:testPIM.getCalendarItem();">Test PIM.getCalendarItem()</a><br>
+<a href="javascript:testPIM.getCalendarItems();">Test PIM.getCalendarItems()</a><br>
+<a href="javascript:testPIM.update();">Test PIM.update()</a><br>
+
+<br><b>AddressBookItem</b><br>
+<a href="javascript:testABI.getAvailableAttributes();">Test AddressBookItem.getAvailableAttributes()</a><br>
+<a href="javascript:testABI.setAddressGroupNames();">Test AddressBookItem.setAddressGroupNames()</a><br>
+<a href="javascript:testABI.getAddressGroupNames();">Test AddressBookItem.getAddressGroupNames()</a><br>
+<a href="javascript:testABI.update();">Test AddressBookItem.update()</a><br>
+
+<br><b>Telephony</b><br>
+<a href="javascript:testTelephony.findCallRecords();">Test Telephony.findCallRecords()</a><br>
+<a href="javascript:testTelephony.deleteAllCallRecords();">Test Telephony.deleteAllCallRecords()</a><br>
+<a href="javascript:testTelephony.deleteCallRecord();">Test Telephony.deleteCallRecord()</a><br>
+<a href="javascript:testTelephony.getCallRecord();">Test Telephony.getCallRecord()</a><br>
+<a href="javascript:testTelephony.getCallRecordCnt();">Test Telephony.getCallRecordCnt()</a><br>
+<a href="javascript:testTelephony.onCallEvent();">Test Telephony.onCallEvent()</a><br>
+
+<br><b>Messaging</b><br>
+<a href="javascript:testMessaging.createMessage();">Test Messaging.createMessage()</a><br>
+<a href="javascript:testMessaging.sendMessage();">Test Messaging.sendMessage()</a><br>
+
+<br><a href="./main-2.html">Test Injection</a><br>
+<br><a href="javascript:testWrapper();">Test Injection (no load)</a><br>
+
+<div id="results">
+  <div id="results-title"></div>
+  <div id="results-detail"></div>
+  <center><a class="close" href="javascript:closeResults();">Close</a></center>
+</div>
+
+</body>
+</html>

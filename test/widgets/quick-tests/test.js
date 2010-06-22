@@ -1,0 +1,4 @@
+function testAlert()
+{
+  alert("worked!!");
+}
