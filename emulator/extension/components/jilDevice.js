@@ -95,9 +95,15 @@ JILDevice.prototype = //#
     return(availApps);
   },
 
-  getDirectoryFileNames : function(sourceDirectory)
+  getDirectoryFileNames : function(sourceDirectory, count, retv)
   {
-    this.alert("Device.getDirectoryFileNames()");
+    var fileList = this.runtime.getDirectoryFileNames(sourceDirectory);
+    
+    count.value = fileList.length;
+    
+    this.runtime.logAction("Device.getDirectoryFileNames(): found "+count.value+" files and/or sub-directories for directory "+sourceDirectory);
+    
+    return(fileList);
   },
 
   getFile : function(fullName)

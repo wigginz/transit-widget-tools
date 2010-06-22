@@ -22,6 +22,18 @@ var testDevice =
     
     showResult("Device.copyFile", "Deleted file /app/var/tools/");
   },
+  
+  getDirectoryFileNames : function()
+  {
+    var results = "List of files in directory: <br>";
+    
+    var fileList = Widget.Device.getDirectoryFileNames("/app/var/");
+    
+    for ( var i = 0; i < fileList.length; i++ )
+      results += fileList[i]+"<br>";
+    
+    showResult("Device.deleteFile", results);
+  },
 };
 
 var testVideoPlayer =
