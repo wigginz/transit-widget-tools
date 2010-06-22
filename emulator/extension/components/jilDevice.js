@@ -68,7 +68,16 @@ JILDevice.prototype = //#
 
   deleteFile : function(destinationFullName)
   {
-    this.alert("Device.deleteFile()");
+    if ( this.runtime.deleteFile(destinationFullName) )
+    {
+       this.runtime.logAction("Device.deleteFile(): successfully deleted file or directory  "+destinationFullName);
+      return(true);
+    }
+    else
+    {
+      this.runtime.logAction("Device.deleteFile(): failed to delete file or directory "+destinationFullName);
+      return(false);
+    }
   },
 
   findFiles : function(matchFile, startInx, endInx)

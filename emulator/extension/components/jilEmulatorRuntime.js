@@ -893,6 +893,33 @@ JILEmulatorRuntime.prototype = //#
     return(true);
   },
   
+  deleteFile : function(file)
+  {
+    try
+    {
+      var delFile = this.getLocalFile(file);
+
+      if ( delFile.jilFile == null )
+      {
+        this.logAction("EmulatorRuntime.deleteFile(): file "+file+" does not exist, nothing to delete.");
+        return(false);
+      }
+      
+      // always set recursive to fals, JIL spec says not to delete a directory if it's not empty
+      delFile.mozFile.remove(false);
+    }   
+    catch(ex)
+    {
+      if ( ex.name == "NS_ERROR_FILE_DIR_NOT_EMPTY" )
+        this.logAction("EmulatorRuntime.deleteFile(): failed to delete non-empty directory "+file);
+      else
+        this.logAction("EmulatorRuntime.deleteFile(): failed to delete file or directory "+file+". Reason: "+ex.message);
+      
+      return(false);
+    }
+    return(true);
+  },
+  
   convertToJILFile : function(localFile, jilPath)
   {
     var jilFile = Components.classes["@jil.org/jilapi-file;1"].createInstance(Components.interfaces.jilFile);
