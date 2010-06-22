@@ -818,6 +818,105 @@ JILEmulatorRuntime.prototype = //#
   {
     return(this.profileService.moveMessage(messageId, pFolder.id));
   },
+  
+  // there's an opportunity to do some caching here if needed, look into it.
+  getLocalFile : function(fileName)
+  {
+    // create a map with the virtual root as the key and local root as the value
+    var fsys = this.getDeviceData().fileSystems;
+    var fsysMap = new Array();
+    for ( var i = 0; i < fsys.length; i++ )
+      fsysMap[fsys[i].rootPath] = fsys[i].localPath;
+    
+    // find the filesystem this file is supposed to be on by finding the 
+    // longest root path that is still a substring of the full file path
+    var candidate = null;
+    var score = 0;
+    for ( var root in fsysMap )
+    {
+      if ( (fileName.indexOf(root) > -1) && (root.length > score) )
+      {
+        score = root.length;
+        candidate = root;
+      }
+    }
+    
+    // remove the root path from the full file path to get the relative path
+    // for the local file
+    var relativePath = fileName.substr(score, fileName.length);
+    
+    // the real path to the mapped drive 
+    var realPath = fsysMap[candidate]+relativePath;
+    
+    var localFile = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);  
+    localFile.initWithPath(realPath);
+    
+    var jilFile = this.convertToJILFile(localFile, fileName);
+
+    var vFile = new VirtualFile();
+    vFile.mozFile = localFile;
+    vFile.jilFile = jilFile;
+    vFile.localFullPath = realPath;
+    vFile.jilFullPath = fileName;
+    
+    return(vFile);
+  },
+  
+  copyFile : function(from, to)
+  {
+    try
+    {
+      var fromFile = this.getLocalFile(from);
+      var toFile = this.getLocalFile(to);
+      
+      var toName = "";
+      var toPath = null;
+      
+      // see if the destination is a directory, if it is, dont specify the new file name, use the original name
+      // if the jilfile of the destination is null, that means mozilla reported the file as not existing
+      // a directory should exist, safe to assume this path is to a file with a new name
+      if ( toFile.jilFile == null )
+      {
+        toName = to.substr(to.lastIndexOf("/")+1, to.length); 
+        toPath = this.getLocalFile(to.substr(0, to.lastIndexOf("/")));
+      }
+      else
+        toPath = this.getLocalFile(to);
+      
+      fromFile.mozFile.copyTo(toPath.mozFile, toName);
+    }   
+    catch(ex)
+    {
+      this.logAction("EmulatorRuntime.copyFile(): failed to copy file "+from+" to "+to+". Reason: "+ex.message);
+      return(false);
+    }
+    return(true);
+  },
+  
+  convertToJILFile : function(localFile, jilPath)
+  {
+    var jilFile = Components.classes["@jil.org/jilapi-file;1"].createInstance(Components.interfaces.jilFile);
+
+    var fileName = jilPath.substr(jilPath.lastIndexOf("/")+1, jilPath.length);
+    var filePath = jilPath.substr(0, jilPath.lastIndexOf("/"));
+
+    try
+    {
+      jilFile.lastModifyDate = localFile.lastModifiedTime;
+      jilFile.fileSize = localFile.fileSize;
+      jilFile.createDate = localFile.lastModifiedTime;
+      jilFile.fileName = fileName;
+      jilFile.filePath = filePath;
+      jilFile.isDirectory = localFile.isDirectory();
+    }
+    catch(ex)
+    {
+      // might be a copy destination rather than actual file
+      return(null);
+    }
+    
+    return(jilFile);
+  },
 
   alert: function(aMsg){
     var promptService = 
@@ -931,6 +1030,14 @@ var JILEmulatorRuntimeModule = { //#
 
 function NSGetModule(aCompMgr, aFileSpec) { return JILEmulatorRuntimeModule; } //#
 
+function VirtualFile() {}
+VirtualFile.prototype =
+{
+  mozFile : null,
+  jilFile : null,
+  localFullPath: null,
+  jilFullPath : null,
+};
 
 
 
