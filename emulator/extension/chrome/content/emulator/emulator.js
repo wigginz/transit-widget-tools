@@ -303,6 +303,8 @@ var jwe_emulator =
     $("jwe-log").val(this.emulator.getLog());
     $("jwe-emulator-content").attr("src", "about:blank");
     $("jwe-emulator-content").attr("src", this.emulator.getWidget().contentSrc);
+    
+    this.clearLog();
 
     this.emulator.reload($("jwe-emulator-loadedprofile").selValue());
     this.init();
@@ -530,7 +532,18 @@ var jwe_emulator =
       $("jwe-emulator-subtab-event-context-oncameracaptured-sentfile").val(sentFile);
     }
   },
+  
+  launchErrorConsole : function()
+  {
+    window.open("chrome://global/content/console.xul", "_blank",  "chrome,extrachrome,menubar,resizable,scrollbars,status,toolbar");
+  },
+  
+  copyLog : function()
+  {
+    Components.classes["@mozilla.org/widget/clipboardhelper;1"].getService(Components.interfaces.nsIClipboardHelper).copyString($("jwe-log").val());  
+  },
 };
+
 
 
 

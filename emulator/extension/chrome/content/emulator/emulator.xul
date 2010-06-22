@@ -18,7 +18,7 @@
   <script src="chrome://transit-emulator/content/utils/utils.js" />
   <script src="chrome://transit-emulator/content/emulator/emulator.js" />
   <script src="chrome://transit-emulator/content/emulator/workspace.js" />
-
+  
   <vbox>
 
     <hbox pack="center" id="jwe-emulator-title">
@@ -73,6 +73,7 @@
                     <checkbox id="jwe-emulator-settings-fullscreen" label="&jwe.emulator.tab.settings.fullscreen;" oncommand="jwe_emulator.toggleFullScreen();"/> 
                   </vbox>
                 </groupbox>
+                <button label="&jwe.emulator.errorConsole;" oncommand="jwe_emulator.launchErrorConsole();"/>
               </vbox>      
             </tabpanel>
             
@@ -511,6 +512,7 @@
                   <textbox id="jwe-log" readonly="false" multiline="true" cols="50" rows="30" wrap="off" />
                   <hbox>
                     <button label="&jwe.emulator.log.clear;" id="jwe-log-clear" oncommand="jwe_emulator.clearLog();" />
+                    <button label="&jwe.emulator.log.copy;" id="jwe-log-copy" oncommand="jwe_emulator.copyLog();" />                    
                   </hbox>
                 </vbox>
               </groupbox>
