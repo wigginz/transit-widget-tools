@@ -54,7 +54,16 @@ JILDevice.prototype = //#
 
   copyFile : function(originalFile, destinationFullName)
   {
-
+    if ( this.runtime.copyFile(originalFile, destinationFullName) )
+    {
+       this.runtime.logAction("Device.copyFile(): successfully copied file "+originalFile+" to "+destinationFullName);
+      return(true);
+    }
+    else
+    {
+      this.runtime.logAction("Device.copyFile(): failed to copy file "+originalFile+" to "+destinationFullName);
+      return(false);
+    }
   },
 
   deleteFile : function(destinationFullName)
@@ -84,7 +93,7 @@ JILDevice.prototype = //#
 
   getFile : function(fullName)
   {
-    return(this.getLocalFile(fullName).jilFile);
+    return(this.runtime.getLocalFile(fullName).jilFile);
   },
 
   getFileSystemRoots : function(count, retv)
@@ -146,65 +155,6 @@ JILDevice.prototype = //#
       attributes: jilContact.attributes,
     };
     return(profileContact);
-  },
-  
-  convertToJILFile : function(localFile, jilPath)
-  {
-    var jilFile = Components.classes["@jil.org/jilapi-file;1"].createInstance(Components.interfaces.jilFile);
-
-    var fileName = jilPath.substr(jilPath.lastIndexOf("/")+1, jilPath.length);
-    var filePath = jilPath.substr(0, jilPath.lastIndexOf("/"));
-
-    jilFile.lastModifyDate = localFile.lastModifiedTime;
-    jilFile.fileSize = localFile.fileSize;
-    jilFile.createDate = localFile.lastModifiedTime;
-    jilFile.fileName = fileName;
-    jilFile.filePath = filePath;
-    jilFile.isDirectory = localFile.isDirectory();
-
-    return(jilFile);
-  },
-  
-  getLocalFile : function(fileName)
-  {
-    // create a map with the virtual root as the key and local root as the value
-    var fsys = this.runtime.getDeviceData().fileSystems;
-    var fsysMap = new Array();
-    for ( var i = 0; i < fsys.length; i++ )
-      fsysMap[fsys[i].rootPath] = fsys[i].localPath;
-    
-    // find the filesystem this file is supposed to be on by finding the 
-    // longest root path that is still a substring of the full file path
-    var candidate = null;
-    var score = 0;
-    for ( var root in fsysMap )
-    {
-      if ( (fileName.indexOf(root) > -1) && (root.length > score) )
-      {
-        score = root.length;
-        candidate = root;
-      }
-    }
-    
-    // remove the root path from the full file path to get the relative path
-    // for the local file
-    var relativePath = fileName.substr(score, fileName.length);
-    
-    // the real path to the mapped drive 
-    var realPath = fsysMap[candidate]+relativePath;
-    
-    var localFile = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);  
-    localFile.initWithPath(realPath);
-    
-    var jilFile = this.convertToJILFile(localFile, fileName);
-
-    var vFile = new VirtualFile();
-    vFile.mozFile = localFile;
-    vFile.jilFile = jilFile;
-    vFile.localFullPath = realPath;
-    vFile.jilFullPath = fileName;
-    
-    return(vFile);
   },
   
   reload : function()
@@ -331,16 +281,6 @@ var JILDeviceModule = { //#
 /***********************************************************/
 
 function NSGetModule(aCompMgr, aFileSpec) { return JILDeviceModule; } //#
-
-
-function VirtualFile() {}
-VirtualFile.prototype =
-{
-  mozFile : null,
-  jilFile : null,
-  localFullPath: null,
-  jilFullPath : null,
-};
 
 
 // Utility function, dump an object by reflexion up to niv level
