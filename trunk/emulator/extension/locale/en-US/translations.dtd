@@ -149,7 +149,8 @@
 
 <!ENTITY jwe.emulator.start "Start">
 <!ENTITY jwe.emulator.reload "Reload">
-<!ENTITY jwe-emulator-press-start-button "Press the 'Start' button to start emulating: ">
+<!ENTITY jwe.emulator.errorConsole "Error Console">
+<!ENTITY jwe-emulator-press-start-button "Press the 'Start' button to begin emulating: ">
 
 <!ENTITY jwe.emulator.multimedia.status.label "Multimedia API Details">
 <!ENTITY jwe.emulator.multimedia.currentaudio "Opened Audio Source: ">
@@ -177,7 +178,7 @@
 <!ENTITY jwe.profiles.pim.remove.confirm "Are you sure you would like to delete this PIM profile? This operation cannot be undone.">
 <!ENTITY jwe.profiles.rename "Rename Profile...">
 
-<!ENTITY jwe.profiles.devices.tab.settings "General Settings">
+<!ENTITY jwe.profiles.devices.tab.settings "General">
 <!ENTITY jwe.profiles.devices.tab.widget "Widget">
 <!ENTITY jwe.profiles.devices.tab.device "Widget.Device">
 <!ENTITY jwe.profiles.devices.tab.multimedia "Widget.Multimedia">
