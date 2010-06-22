@@ -920,6 +920,21 @@ JILEmulatorRuntime.prototype = //#
     return(true);
   },
   
+  getDirectoryFileNames : function(source)
+  {
+    var sourceFile = this.getLocalFile(source);
+    var fileList = new Array();
+
+    if ( sourceFile.mozFile.isDirectory() )
+    {
+      var results = sourceFile.mozFile.directoryEntries;
+      
+      while ( results.hasMoreElements() )
+        fileList.push(results.getNext().QueryInterface(Components.interfaces.nsIFile).leafName);
+    }
+    return(fileList);
+  },
+  
   convertToJILFile : function(localFile, jilPath)
   {
     var jilFile = Components.classes["@jil.org/jilapi-file;1"].createInstance(Components.interfaces.jilFile);
