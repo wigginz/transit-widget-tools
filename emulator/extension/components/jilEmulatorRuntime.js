@@ -862,7 +862,7 @@ JILEmulatorRuntime.prototype = //#
     return(vFile);
   },
   
-  copyFile : function(from, to)
+  copyFile : function(from, to, removeFromFile)
   {
     try
     {
@@ -884,6 +884,10 @@ JILEmulatorRuntime.prototype = //#
         toPath = this.getLocalFile(to);
       
       fromFile.mozFile.copyTo(toPath.mozFile, toName);
+      
+      // if the remove flag was set, delete the original (essentially performs a move)
+      if ( removeFromFile )
+        fromFile.mozFile.remove(false);
     }   
     catch(ex)
     {
@@ -932,6 +936,44 @@ JILEmulatorRuntime.prototype = //#
       while ( results.hasMoreElements() )
         fileList.push(results.getNext().QueryInterface(Components.interfaces.nsIFile).leafName);
     }
+    return(fileList);
+  },
+  
+  getFileSystemSize : function(directory)
+  {
+    // hidden feature, dont bother with validating the root, just return the directory size
+    var localFile = this.getLocalFile(directory);
+    var size = 0;
+    if ( localFile.jilFile != null )
+      size = localFile.mozFile.fileSize;
+    
+    return(size);
+  },
+  
+  getRecursiveFileList : function(mozDirectory)
+  {
+    try
+    {
+      var fileList = new Array();
+      var fileEnum = mozDirectory.directoryEntries;
+      
+      while ( fileEnum.hasMoreElements() )
+      {
+        var aFile = fileEnum.getNext().QueryInterface(Components.interfaces.nsIFile);
+       
+        if ( aFile.isDirectory() )
+           fileList = fileList.concat(this.getRecursiveFileList(aFile));
+        else 
+          fileList.push(aFile.leafName);
+      }
+    }
+    catch(ex)
+    {
+      // probably a permissions issue, return an empty array
+      this.logAction("EmulatorRuntime.getRecursiveFileList(): Error reading directory "+mozDirectory.leafName+", message: "+ex.message);
+      return(new Array());
+    }
+    
     return(fileList);
   },
   

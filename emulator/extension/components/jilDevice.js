@@ -54,7 +54,7 @@ JILDevice.prototype = //#
 
   copyFile : function(originalFile, destinationFullName)
   {
-    if ( this.runtime.copyFile(originalFile, destinationFullName) )
+    if ( this.runtime.copyFile(originalFile, destinationFullName, false) )
     {
        this.runtime.logAction("Device.copyFile(): successfully copied file "+originalFile+" to "+destinationFullName);
       return(true);
@@ -81,8 +81,9 @@ JILDevice.prototype = //#
   },
 
   findFiles : function(matchFile, startInx, endInx)
-  {
-    this.alert("Device.findFiles()");
+  {    
+    var files = this.runtime.getRecursiveFileList(this.runtime.getLocalFile("/app").mozFile);
+    this.alert(files.length);
   },
 
   getAvailableApplications : function(count, retv)
@@ -124,6 +125,21 @@ JILDevice.prototype = //#
 
     return(rootPaths);
   },
+  
+  getFileSystemSize : function(fileSystemRoot)
+  {
+    // meh, not in the mood to write a new runtime method
+    var fsys = this.runtime.getDeviceData().fileSystems;
+
+    var size = 0;
+    for ( var i = 0; i < fsys.length; i++ )
+    {
+      if ( fsys[i].rootPath == fileSystemRoot )
+        size = fsys[i].size;
+    }
+    
+    return(size);
+  },
 
   launchApplication : function(application, startParameter)
   {
@@ -134,7 +150,16 @@ JILDevice.prototype = //#
 
   moveFile : function(originalFile, destinationFullName)
   {
-    this.alert("Device.launchApplication()");
+    if ( this.runtime.copyFile(originalFile, destinationFullName, true) )
+    {
+       this.runtime.logAction("Device.moveFile(): successfully moved file "+originalFile+" to "+destinationFullName);
+      return(true);
+    }
+    else
+    {
+      this.runtime.logAction("Device.moveFile(): failed to move file "+originalFile+" to "+destinationFullName);
+      return(false);
+    }
   },
 
   setRingtone : function(ringtoneFileUrl, addressBookItem)
@@ -170,6 +195,11 @@ JILDevice.prototype = //#
       attributes: jilContact.attributes,
     };
     return(profileContact);
+  },
+  
+  getNewFile : function()
+  {
+    return(Components.classes["@jil.org/jilapi-file;1"].createInstance(Components.interfaces.jilFile));
   },
   
   reload : function()

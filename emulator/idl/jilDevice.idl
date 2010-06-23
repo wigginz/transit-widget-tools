@@ -52,4 +52,5 @@ interface jilDevice : jilService
   boolean moveFile(in string originalFile, in string destinationFullName);
   void setRingtone(in string ringtoneFileUrl, in jilAddressBookItem addressBookItem);
   void vibrate(in unsigned long durationSeconds);
+  jilFile getNewFile();
 };

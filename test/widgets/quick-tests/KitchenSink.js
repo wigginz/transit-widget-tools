@@ -34,6 +34,27 @@ var testDevice =
     
     showResult("Device.deleteFile", results);
   },
+  
+  getFileSystemSize : function()
+  {
+    var fileSize = Widget.Device.getFileSystemSize("/");
+    
+    showResult("Device.getFileSystemSize", "File system size for / is "+fileSize+" bytes");
+  },
+  
+  moveFile : function()
+  {
+    Widget.Device.moveFile("/app/var/tools/green-sauce.sh", "/app/var");
+    
+    showResult("Device.moveFile", "Moved file /app/var/tools/home.sh to /app/var");
+  },
+  
+  findFiles : function()
+  {
+    Widget.Device.findFiles(new Widget.Device.File(), 0, 10);
+    
+    showResult("Device.findFiles", "Move along please.");
+  }
 };
 
 var testVideoPlayer =
