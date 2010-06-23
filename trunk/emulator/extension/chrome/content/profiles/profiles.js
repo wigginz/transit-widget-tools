@@ -421,8 +421,10 @@ var jwe_Profiles =
       var fsItem = jwe_Profiles.createListitem({id: "fs-"+deviceData.fileSystems[i].id, value: deviceData.fileSystems[i].id});
       var fsCell = jwe_Profiles.createListCell({id: "fs-"+deviceData.fileSystems[i].id+"-rootPath", label: deviceData.fileSystems[i].rootPath});
       var lpCell = jwe_Profiles.createListCell({id: "fs-"+deviceData.fileSystems[i].id+"-localPath", label: deviceData.fileSystems[i].localPath});
+      var szCell = jwe_Profiles.createListCell({id: "fs-"+deviceData.fileSystems[i].id+"-size", label: deviceData.fileSystems[i].size});
       fsItem.appendChild(fsCell);
       fsItem.appendChild(lpCell);
+      fsItem.appendChild(szCell);
       document.getElementById("jwe-profiles-devices-device-filesystems").appendChild(fsItem);
       jwe_Profiles.state["fileSystems"][deviceData.fileSystems[i].id] = deviceData.fileSystems[i];
     }
@@ -1538,6 +1540,7 @@ function jwe_modifyFileSystem()
   {
     document.getElementById("fs-"+params.out.filesystem.id+"-rootPath").setAttribute("label", params.out.filesystem.rootPath);
     document.getElementById("fs-"+params.out.filesystem.id+"-localPath").setAttribute("label", params.out.filesystem.localPath);
+    document.getElementById("fs-"+params.out.filesystem.id+"-size").setAttribute("label", params.out.filesystem.size);
       
     jwe_Profiles.state["fileSystems"][params.out.filesystem.id] = params.out.filesystem;
     jwe_Profiles.change("dDevice");
@@ -1555,9 +1558,11 @@ function jwe_newFileSystem()
     
     var pathCell = jwe_Profiles.createListCell({id: "fs-"+params.out.filesystem.id+"-rootPath", label: params.out.filesystem.rootPath});
     var lpathCell = jwe_Profiles.createListCell({id: "fs-"+params.out.filesystem.id+"-localPath", label: params.out.filesystem.localPath});
+    var szCell = jwe_Profiles.createListCell({id: "fs-"+params.out.filesystem.id+"-size", label: params.out.filesystem.size});
 
     newItem.appendChild(pathCell);
     newItem.appendChild(lpathCell);
+    newItem.appendChild(szCell);
 
     document.getElementById("jwe-profiles-devices-device-filesystems").appendChild(newItem);
     jwe_Profiles.state["fileSystems"][params.out.filesystem.id] = params.out.filesystem;

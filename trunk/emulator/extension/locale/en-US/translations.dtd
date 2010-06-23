@@ -213,8 +213,9 @@
 <!ENTITY jwe.profiles.devices.device.engine.prov "Widget Engine Provider: ">
 <!ENTITY jwe.profiles.devices.device.engine.ver "Widget Engine Version: ">
 <!ENTITY jwe.profiles.devices.filesystems "File Systems">
-  <!ENTITY jwe.profiles.devices.filesystems.localpath "Local Path">
+<!ENTITY jwe.profiles.devices.filesystems.localpath "Local Path">
 <!ENTITY jwe.profiles.devices.filesystems.path "Root Path">
+<!ENTITY jwe.profiles.devices.filesystems.size "Size (bytes)">
 <!ENTITY jwe.profiles.devices.filesystems.delete "Delete">
 <!ENTITY jwe.profiles.devices.filesystems.modify "Modify...">
 <!ENTITY jwe.profiles.devices.filesystems.new "New...">
@@ -487,6 +488,7 @@
 <!ENTITY jwe.profiles.popup.fsys.caption "File System">
 <!ENTITY jwe.profiles.popup.fsys.path "Root Path: ">
 <!ENTITY jwe.profiles.popup.fsys.localpath "Local Path: ">
+<!ENTITY jwe.profiles.popup.fsys.size "Size (bytes)">
 <!ENTITY jwe.profiles.popup.fsys.ok "OK">
 <!ENTITY jwe.profiles.popup.fsys.cancel "Cancel">
 <!ENTITY jwe.profiles.popup.fsys.error "Root path cannot be blank or start with a space.">

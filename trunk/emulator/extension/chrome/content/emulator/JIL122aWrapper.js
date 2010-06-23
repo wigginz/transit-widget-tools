@@ -275,6 +275,9 @@ var Widget =
       
       this.updateJIL = function()
       {
+        if ( this._jilFile == null )
+          this._jilFile = _Device_122a.getNewFile();
+
         this._jilFile.createDate = this.createDate;
         this._jilFile.fileName = this.fileName;
         this._jilFile.filePath = this.filePath;

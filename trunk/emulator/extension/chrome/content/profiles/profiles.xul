@@ -138,10 +138,12 @@
                       <listhead>
                         <listheader label="&jwe.profiles.devices.filesystems.path;" />                      
                         <listheader label="&jwe.profiles.devices.filesystems.localpath;" />
+                        <listheader label="&jwe.profiles.devices.filesystems.size;" />
                       </listhead>
                       <listcols>
-                        <listcol style="width:  300px;"/>
+                        <listcol style="width:  150px;"/>
                         <listcol style="width:  215px;"/>
+                        <listcol style="width:  150px;"/>
                       </listcols>
                     </listbox>                          
                     <hbox pack="end" class="jwe-profiles-buttons">

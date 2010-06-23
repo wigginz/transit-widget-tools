@@ -27,6 +27,10 @@
         <label value="&jwe.profiles.popup.fsys.localpath;" class="jwe-defaultText" style="width: 10em;"/>
         <textbox id="jwe-profiles-popup-fsys-localpath" size="25"/>
       </hbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.fsys.size;" class="jwe-defaultText" style="width: 10em;"/>
+        <textbox type="number" size="15" id="jwe-profiles-popup-fsys-size" min="0"/>
+      </hbox>
     </vbox>
 
     <hbox pack="right" class="jwe-profiles-buttons">
@@ -49,6 +53,7 @@ function jwe_populateForm()
   {
     document.getElementById("jwe-profiles-popup-fsys-path").value = filesystem.rootPath;
     document.getElementById("jwe-profiles-popup-fsys-localpath").value = filesystem.localPath;
+    document.getElementById("jwe-profiles-popup-fsys-size").value = filesystem.size;
   }
 }
 
@@ -76,7 +81,8 @@ function jwe_saveForm(message)
   {
     rootPath: rootPath,
     localPath: document.getElementById("jwe-profiles-popup-fsys-localpath").value,
-    profileId: window.arguments[0].inn.profileId
+    profileId: window.arguments[0].inn.profileId,
+    size: document.getElementById("jwe-profiles-popup-fsys-size").value,
   };
   
   if ( window.arguments[0].inn.filesystem )

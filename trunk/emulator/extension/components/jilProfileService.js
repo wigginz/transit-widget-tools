@@ -496,7 +496,7 @@ JILProfileService.prototype = //#
     }
 
     // get file systems
-    var stmt_fs = this.getConnection().createStatement("select id, root_path, local_path from jwe_file_system where profile_id = :profileId");
+    var stmt_fs = this.getConnection().createStatement("select id, root_path, local_path, size from jwe_file_system where profile_id = :profileId");
     stmt_fs.params.profileId = profileId;
 
     deviceData.fileSystems = new Array();
@@ -507,6 +507,7 @@ JILProfileService.prototype = //#
         var fsys = new jilFileSystem();
         fsys.rootPath = stmt_fs.row.root_path;
         fsys.localPath = stmt_fs.row.local_path;
+        fsys.size = stmt_fs.row.size;
         fsys.profileId = profileId;
         fsys.id = stmt_fs.row.id;
         deviceData.fileSystems.push(fsys);
@@ -600,7 +601,7 @@ JILProfileService.prototype = //#
   getFileSystems : function(profileId)
   {
     // get file systems
-    var stmt = this.getConnection().createStatement("select id, root_path, local_path from jwe_file_system where profile_id = :profileId");
+    var stmt = this.getConnection().createStatement("select id, root_path, local_path, size from jwe_file_system where profile_id = :profileId");
     stmt.params.profileId = profileId;
 
     var fileSystems = new Array();
@@ -611,6 +612,7 @@ JILProfileService.prototype = //#
         var fsys = new jilFileSystem();
         fsys.rootPath = stmt.row.root_path;
         fsys.localPath = stmt.row.local_path;
+        fsys.size = stmt.row.size;
         fsys.profileId = profileId;
         fsys.id = stmt.row.id;
         fileSystems.push(fsys);
@@ -627,10 +629,11 @@ JILProfileService.prototype = //#
   updateFileSystem : function(fsys)
   {
     // get file systems
-    var stmt = this.getConnection().createStatement("update jwe_file_system set root_path = :rootPath, local_path = :localPath where profile_id = :profileId and id = :id");
+    var stmt = this.getConnection().createStatement("update jwe_file_system set root_path = :rootPath, local_path = :localPath, size = :size where profile_id = :profileId and id = :id");
     stmt.params.rootPath = fsys.rootPath;
     stmt.params.localPath = fsys.localPath;
     stmt.params.profileId = fsys.profileId;
+    stmt.params.size = fsys.size;
     stmt.params.id = fsys.id;
 
     try
@@ -652,10 +655,11 @@ JILProfileService.prototype = //#
   addFileSystem : function(fsys)
   {
     // get file systems
-    var stmt = this.getConnection().createStatement("insert into jwe_file_system (id, profile_id, root_path, local_path) values (null, :profileId, :rootPath, :localPath)");
+    var stmt = this.getConnection().createStatement("insert into jwe_file_system (id, profile_id, root_path, local_path, size) values (null, :profileId, :rootPath, :localPath, :size)");
     stmt.params.profileId = fsys.profileId;
     stmt.params.rootPath = fsys.rootPath;
     stmt.params.localPath = fsys.localPath;
+    stmt.params.size = fsys.size;
 
     try
     {
@@ -3308,7 +3312,12 @@ JILProfileService.prototype = //#
 
     ep.fileSystems = new Array();
     for ( var i = 0; i < dData.fileSystems.length; i++ )
-      ep.fileSystems.push(dData.fileSystems[i].rootPath);
+    {
+      var fsys = new ieFileSystem();
+      fsys.rootPath = dData.fileSystems[i].rootPath;
+      fsys.size = dData.fileSystems[i].size;
+      ep.fileSystems.push(fsys);
+    }
 
     var pInfo = this.getPositionInfo(profileId);
     ep.accuracy = pInfo.accuracy;
@@ -3446,9 +3455,10 @@ JILProfileService.prototype = //#
       // insert file systems
       for ( var i = 0; i < ip.fileSystems.length; i++ )
       {
-        stmt = conn.createStatement("insert into jwe_file_system (id, profile_id, root_path, local_path) values (null, :profileId, :rootPath, :localPath)");      
+        stmt = conn.createStatement("insert into jwe_file_system (id, profile_id, root_path, local_path, size) values (null, :profileId, :rootPath, :localPath, :size)");      
         stmt.params.profileId = profileId;
-        stmt.params.rootPath = ip.fileSystems[i];
+        stmt.params.rootPath = ip.fileSystems[i].rootPath;
+        stmt.params.size = ip.fileSystems[i].size;
         stmt.params.localPath = defaults["local-filesystem-path"];
 
         try
@@ -4436,7 +4446,8 @@ jilFileSystem.prototype =
   profileId : null,
   id: null,
   rootPath: null,
-  localPath: null
+  localPath: null,
+  size: null,
 };
 
 function jilAccountInfo() {}
@@ -4680,6 +4691,13 @@ ieDeviceProfile.prototype =
   networkState: null,
   softwareState: null,
   subscriberState: null,
+};
+
+function ieFileSystem() {}
+ieFileSystem.prototype = 
+{
+  rootPath: null,
+  size: null,
 };
 
 function ieAvailableApplication() {}
