@@ -60,4 +60,5 @@ interface jilMessaging : jilService
 
   // added to help the wrapper get empty objects
   jilMessage getNewMessage();
+  jilAttachment getNewAttachment();
 }; 

@@ -112,6 +112,17 @@ var testMessage =
     
     showResult("Message.addAddress", "cc values: "+message.ccAddress+", bcc values: "+message.bccAddress+", dest: "+message.destinationAddress);
   },
+  
+  saveAttachment : function()
+  {
+    var attach = new Widget.Messaging.Attachment();
+    attach.fileName = "/var/log/orig.txt";
+    
+    var message = new Widget.Messaging.Message();
+    message.saveAttachment("/var/log/new.txt", attach);
+    
+    showResult("Message.saveAttachment", "Saved attachment with path "+attach.fileName+" to /var/log/new.txt");
+  },
 };
 
 function testWrapper()

@@ -147,7 +147,19 @@ JILMessage.prototype = //#
 
   saveAttachment : function(fileFullName, attachment)
   {
-    this.alert("Message.saveAttachment()");
+    // essentially saving an attachment is a copy. There must exist an original file
+    // pointed to by the attachment object. since attachment objects are only pointers
+    // and do not encapsulate an actual file
+    if ( this.runtime.copyFile(attachment.fileName, fileFullName, false) )
+    {
+       this.runtime.logAction("Message.saveAttachment(): successfully saved (copied) file in attachment "+attachment.fileName+" to "+fileFullName+", existing attachment file untouched.");
+      return(true);
+    }
+    else
+    {
+      this.runtime.logAction("Message.saveAttachment(): failed to save (copy) attachment file "+attachment.fileName+" to "+fileFullName);
+      return(false);
+    }
   },
   
   update : function()
