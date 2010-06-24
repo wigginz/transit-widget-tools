@@ -38,6 +38,11 @@ JILMessaging.prototype = //#
   {
     return(Components.classes["@jil.org/jilapi-message;1"].createInstance(Components.interfaces.jilMessage));
   },
+  
+  getNewAttachment : function()
+  {
+    return(Components.classes["@jil.org/jilapi-attachment;1"].createInstance(Components.interfaces.jilAttachment));
+  },
 
   copyMessageToFolder : function(msg, destinationFolder)
   {

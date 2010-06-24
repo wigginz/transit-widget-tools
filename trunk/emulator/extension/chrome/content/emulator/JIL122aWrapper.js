@@ -542,7 +542,10 @@ var Widget =
         this._jilMessage.messageType = this.messageType;
         this._jilMessage.sourceAddress = this.sourceAddress;
         this._jilMessage.subject = this.subject;
-        this._jilMessage.time = this.time.getTime();
+        
+        if ( this.time != null )
+          this._jilMessage.time = this.time.getTime();
+        
         this._jilMessage.validityPeriodHours = this.validityPeriodHours;
         return(this._jilMessage);
       };
@@ -566,6 +569,9 @@ var Widget =
       
       this.updateJIL = function()
       {
+        if ( this._jilAttachment == null )
+          this._jilAttachment = _Messaging_122a.getNewAttachment();
+        
         this._jilAttachment.fileName = this.fileName;
         this._jilAttachment.MIMEType = this.MIMEType;
         this._jilAttachment.size = this.size;
@@ -1274,9 +1280,9 @@ var Widget =
       _Telephony_122a.onCallRecordsFound = newValue; });
   },
 };
-
+alert("hello 1");
 Widget.init();
-
+alert("hello 2");
 
 
 
