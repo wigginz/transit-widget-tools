@@ -16,7 +16,7 @@
 [scriptable, function, uuid(36979012-3e81-11df-9879-0800200c9a66)]
 interface jilDEOnFilesFound : nsISupports
 {
-  void invoke(in nsIArray filesFound);
+  void invoke([array, size_is(count)] in string filesFound, [optional] in unsigned long count);
 };
 
 

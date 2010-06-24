@@ -848,6 +848,8 @@ JILEmulatorRuntime.prototype = //#
     // the real path to the mapped drive 
     var realPath = fsysMap[candidate]+relativePath;
     
+    dump(realPath+"\n");
+    
     var localFile = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);  
     localFile.initWithPath(realPath);
     
@@ -939,17 +941,6 @@ JILEmulatorRuntime.prototype = //#
     return(fileList);
   },
   
-  getFileSystemSize : function(directory)
-  {
-    // hidden feature, dont bother with validating the root, just return the directory size
-    var localFile = this.getLocalFile(directory);
-    var size = 0;
-    if ( localFile.jilFile != null )
-      size = localFile.mozFile.fileSize;
-    
-    return(size);
-  },
-  
   getRecursiveFileList : function(mozDirectory)
   {
     try
@@ -970,7 +961,7 @@ JILEmulatorRuntime.prototype = //#
     catch(ex)
     {
       // probably a permissions issue, return an empty array
-      this.logAction("EmulatorRuntime.getRecursiveFileList(): Error reading directory "+mozDirectory.leafName+", message: "+ex.message);
+      this.logAction("EmulatorRuntime.getRecursiveFileList(): Error reading directory "+mozDirectory.leafName+", likely a permissions issue. Message: "+ex.message);
       return(new Array());
     }
     
