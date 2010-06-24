@@ -3,6 +3,8 @@ const CLASS_ID = Components.ID("0b523a10-bac7-11de-8a39-0800200c9a66"); //#
 const CLASS_NAME = "JIL API Device"; //#
 const CONTRACT_ID = "@jil.org/jilapi-device;1"; //#
 
+const REGEXP_SPECIALS = new RegExp("[.+?|()\\[\\]{}\\\\]", "g"); // .*+?|()[]{}\
+
 /***********************************************************/
 
 var service = null;
@@ -81,9 +83,46 @@ JILDevice.prototype = //#
   },
 
   findFiles : function(matchFile, startInx, endInx)
-  {    
-    var files = this.runtime.getRecursiveFileList(this.runtime.getLocalFile("/app").mozFile);
-    this.alert(files.length);
+  {
+    var tm = Components.classes["@mozilla.org/thread-manager;1"].getService(Components.interfaces.nsIThreadManager);
+
+    tm.mainThread.dispatch(
+    {
+      run: function()
+      {
+        var fsys = service.runtime.getDeviceData().fileSystems;
+
+        var allFiles = new Array();
+        for ( var i = 0; i < fsys.length; i++ )
+          allFiles = allFiles.concat(service.runtime.getRecursiveFileList(service.runtime.getLocalFile(fsys[i].rootPath).mozFile));
+        
+        // now search 'em
+        var results = new Array();
+        for ( var i = 0; i < allFiles.length; i++ )
+        {
+          var toTest = service.escapeString(matchFile.fileName);
+          toTest = toTest.replace("*", ".*");
+          if ( allFiles[i].search(toTest) > -1 )
+            results.push(allFiles[i]);
+        }
+        
+        service.runtime.logAction("Device.findFiles(): found "+results.length+" files from search");
+            
+        if ( service.onFilesFound == null )
+          Components.classes["@jil.org/jilapi-emulatorruntime;1"].getService().wrappedJSObject.logAction("Device.findFiles(): No callback function set, no where to send results.");
+        else
+        {
+          var count = {value: results.length};
+          service.onFilesFound.invoke(results, results.length);
+        }
+      }
+    }, Components.interfaces.nsIThread.DISPATCH_NORMAL);
+  },
+  
+  escapeString : function(toEscape)
+  {
+    //escape all but *
+    return toEscape.replace(REGEXP_SPECIALS, "\\$&");
   },
 
   getAvailableApplications : function(count, retv)

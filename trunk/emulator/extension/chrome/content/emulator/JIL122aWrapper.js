@@ -15,6 +15,7 @@ var Widget =
     widgetEngineName : _Device_122a.widgetEngineName,
     widgetEngineProvider : _Device_122a.widgetEngineProvider,
     widgetEngineVersion : _Device_122a.widgetEngineVersion,
+    onFilesFound : null,
     
     copyFile : function(originalFile, destinationFullName)
     {
@@ -1208,6 +1209,9 @@ var Widget =
       
     Widget.watch("onWakeup", function(id, oldValue, newValue) {
       _Widget_122a.onWakeup = newValue; });
+      
+    Widget.Device.watch("onFilesFound", function(id, oldValue, newValue) {
+      _Device_122a.onFilesFound = newValue; });
 
     Widget.Device.DataNetworkInfo.watch("onNetworkConnectionChanged", function(id, oldValue, newValue) {
       _DataNetworkInfo_122a.onNetworkConnectionChanged = newValue; });

@@ -51,10 +51,18 @@ var testDevice =
   
   findFiles : function()
   {
-    Widget.Device.findFiles(new Widget.Device.File(), 0, 10);
+    Widget.Device.onFilesFound = function(filesFound) 
+    {
+      var result = "Searching for files with '*.hmtl'";
+      for ( var i = 0; i < filesFound.length; i++ )
+        result += filesFound[i]+"<br>";
+      showResult("Widget.Device.findFiles() [callback]", result);
+    };
     
-    showResult("Device.findFiles", "Move along please.");
-  }
+    var match = new Widget.Device.File();
+    match.fileName = "*.html";
+    Widget.Device.findFiles(match, 0, 10);
+  },
 };
 
 var testVideoPlayer =
