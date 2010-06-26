@@ -1,0 +1,24 @@
+#include "nsISupports.idl"
+
+
+[scriptable, uuid(a4c75a60-3833-11df-9879-0800200c9a66)]
+interface jilApplicationTypes : nsISupports
+{
+  attribute string ALARM;
+  attribute string BROWSER;
+  attribute string CALCULATOR;
+  attribute string CALENDAR;
+  attribute string CAMERA;
+  attribute string CONTACTS;
+  attribute string FILES;
+  attribute string GAMES;
+  attribute string MAIL;
+  attribute string MEDIAPLAYER;
+  attribute string MESSAGING;
+  attribute string PHONECALL;
+  attribute string PICTURES;
+  attribute string PROG_MANAGER;
+  attribute string SETTINGS;
+  attribute string TASKS;
+  attribute string WIDGET_MANAGER;
+};

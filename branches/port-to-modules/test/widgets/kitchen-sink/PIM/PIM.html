@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<script type="text/javascript" src="../js/util.js"></script>
+<script type="text/javascript" src="PIMtest.js"></script>
+<script type="text/javascript" src="clickIt.js"></script>
+<script type="text/javascript" src="PIM_run.js"></script>
+
+<link rel="stylesheet" type="text/css" href="../style.css" />
+</head>
+
+<body>
+<div id="showDetail" class="bodyStyle">
+	<div id="textdivshowName" class="Nameclass"></div>	
+	<div id="textdivshowExplanation" class="ExplanationClass"></div>	
+	<div id="textdivshowSampleCode" class="ExplanationClass"></div>	
+	<div id="textdivshowInitialCondition" class="ExplanationClass"></div>
+	<div onclick="clickItResult();" id="textdivshowClick" class="ClickClass"><img src="../res/run_light.png" /></div>
+	<div id="textdivshowResult" class="ExplanationClass"></div>
+	<table id="back_table">	
+		<tr>
+			<td><a class="goTop" onClick="showPIMtest();"><img src="../res/back.png" /></a></td>
+			<td><a class="goTop" href="../main.html"><img src="../res/gotop.png" /></a></td>
+		</tr>
+	</table>
+</div>
+<div id="PIMtest"  class="bodyStyle">
+	<div id="textdivshowCalendarItemtest" class="oBodyStyle obStyle"><a href="CalendarItem.html">CalendarItem</a></div>	
+	<div id="textdivshowAddressBookItemtest" class="oBodyStyle obStyle"><a href="AddressBookItem.html">AddressBookItem</a></div>	
+	<div id="textdivshowAddressBookItemtest" class="oBodyStyle obStyle"><a href="EventRecurrenceTypes.html">EventRecurrenceTypes</a></div>	
+	<div id="inputtext" class="mStyle" style="height:40px;">id : <input type="text" id="PIMtestid" value="" /><br/>(used by the following functions)</div>	
+	<div id="textdivaddAddressBookItem" class="mStyle" onclick="clickItaddAddressBookItem();"><a href="#" class="method_style">addAddressBookItem</a></div>	
+	<div id="textdivgetAddressBookItem" class="mStyle" onclick="clickItgetAddressBookItem();"><a href="#" class="method_style">getAddressBookItem</a></div>	
+	<div id="textdivfindAddressBookItems" class="mStyle" onclick="clickItfindAddressBookItems();"><a href="#" class="method_style"> findAddressBookItems</a></div>	
+	<div id="textdivgetAddressBookItemsCount" class="mStyle" onclick="clickItgetAddressBookItemsCount();"><a href="#" class="method_style">getAddressBookItemsCount</a></div>
+	<div id="textdivdeleteAddressBookItem" class="mStyle"	onclick="clickItdeleteAddressBookItem();"><a href="#" class="method_style"> deleteAddressBookItem</a></div>	
+	<div id="textdivaddCalendarItem" class="mStyle" onclick="clickItaddCalendarItem();"><a href="#" class="method_style">addCalendarItem</a></div>	
+	<div id="textdivfindCalendarItems" class="mStyle" onclick="clickItfindCalendarItems();"><a href="#" class="method_style">findCalendarItems</a></div>	
+	<div id="textdivdeleteCalendarItem" class="mStyle"	onclick="clickItdeleteCalendarItem();"><a href="#" class="method_style">deleteCalendarItem</a></div>	
+	<div id="textdivgetCalendarItem" class="mStyle"	onclick="clickItgetCalendarItem();"><a href="#" class="method_style">getCalendarItem</a></div>	
+	<div id="textdivgetCalendarItems" class="mStyle" onclick="clickItgetCalendarItems();"><a href="#" class="method_style">getCalendarItems</a></div>	
+	<div id="textdivonCalendarItemsFound" class="mStyle" onclick="clickItonCalendarItemsFound();"><a href="#" class="method_style">onCalendarItemsFound</a></div>	
+	<div id="textdivonAddressBookItemsFound" class="mStyle" onclick="clickItonAddressBookItemsFound();"><a href="#" class="method_style">onAddressBookItemsFound</a></div>
+	<div id="textdivonCalendarItemAlert" class="mStyle" onclick="clickItonCalendarItemAlert();"><a href="#" class="method_style">onCalendarItemAlert</a></div>
+	<div id="textdivcreateAddressBookItem()" class="mStyle" onclick="clickItcreateAddressBookItem();"><a href="#" class="method_style">createAddressBookItem</a></div>
+	<div id="textdivcreateAddressBookGroup" class="mStyle" onclick="clickItcreateAddressBookGroup();"><a href="#" class="method_style">createAddressBookGroup</a></div>
+	<div id="textdivdeleteAddressBookGroup" class="mStyle" onclick="clickItdeleteAddressBookGroup();"><a href="#" class="method_style">deleteAddressBookGroup</a></div>
+	<div id="textdivgetAvailableAddressGroupNames" class="mStyle" onclick="clickItgetAvailableAddressGroupNames();"><a href="#" class="method_style">getAvailableAddressGroupNames</a></div>
+	<div id="textdivexportAsVCard" class="mStyle"	onclick="clickItexportAsVCard();"><a href="#" class="method_style">exportAsVCard</a></div>	
+	<div id="textdivonVCardExportingFinish" class="mStyle" onclick="clickItonVCardExportingFinish();"><a href="#" class="method_style">onVCardExportingFinish</a></div>
+	<div id="textdivonVCardExportingFinish" class="mStyle" onclick="clickgetAddressBookGroupMembers();"><a href="#" class="method_style">getAddressBookGroupMembers</a></div>
+	
+	<table id="back_table">	
+		<tr>
+			<td><a class="goTop"  href="../main.html"><img src="../res/back.png" /></a></td>
+			<td><a class="goTop" href="../main.html"><img src="../res/gotop.png" /></a></td>
+		</tr>
+	</table>
+</div>
+</body>
+</html>

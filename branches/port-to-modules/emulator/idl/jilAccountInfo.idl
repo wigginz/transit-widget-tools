@@ -1,0 +1,12 @@
+#include "jilService.idl"
+
+
+[scriptable, uuid(60e47983-bad5-11de-8a39-0800200c9a66)]
+interface jilAccountInfo : jilService
+{
+  attribute string phoneMSISDN;
+  attribute string phoneOperatorName;
+  attribute string phoneUserUniqueId;
+  attribute double userAccountBalance;
+  attribute string userSubscriptionType;
+};

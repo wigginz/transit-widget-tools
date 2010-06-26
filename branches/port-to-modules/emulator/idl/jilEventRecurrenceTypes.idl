@@ -1,0 +1,13 @@
+#include "nsISupports.idl"
+
+[scriptable, uuid(22b6b0b1-bb66-11de-8a39-0800200c9a66)]
+interface jilEventRecurrenceTypes : nsISupports
+{
+    attribute string DAILY;
+    attribute string EVERY_WEEKDAY;
+    attribute string MONTHLY_ON_DAY;
+    attribute string MONTHLY_ON_DAY_COUNT;
+    attribute string NOT_REPEAT;
+    attribute string WEEKLY_ON_DAY;
+    attribute string YEARLY;
+};

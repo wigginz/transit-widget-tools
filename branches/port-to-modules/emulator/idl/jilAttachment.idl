@@ -1,0 +1,10 @@
+#include "nsISupports.idl"
+
+
+[scriptable, uuid(8334d290-baa9-11de-8a39-0800200c9a66)]
+interface jilAttachment : nsISupports
+{
+  attribute string fileName;
+  attribute string MIMEType;
+  attribute unsigned long size;
+};

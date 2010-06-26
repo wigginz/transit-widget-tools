@@ -1,0 +1,66 @@
+<html>
+
+<head>
+
+  <script type="text/javascript" src="KitchenSink.js"></script>
+
+  <style>
+
+  #results 
+  {
+    position: absolute;
+    top: 20;
+    left: 20;
+    height: 300px;
+    width: 300px;
+    margin: 5px;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    border: 2px solid #666666;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    background-color: #dddddd;
+    overflow-x: auto;
+    overflow-y: auto;
+    display: none;
+  }
+
+  #results-title
+  {
+    font-weight: bold;
+    padding-bottom: 10px;
+  }
+
+  #result-detail
+  {
+    padding-bottom: 30px;
+  }
+
+  a
+  {
+    font-weight: bold;
+    color: blue;
+  }
+
+
+  </style>
+
+</head>
+
+<body bgcolor="#CCCCCC">
+
+  <h2>Internal Tests</h2>
+
+  <br><b>Test Injection</b><br>
+  <a href="#" onClick="testAlert();">Test testInjection()</a><br>
+
+  <div id="results">
+    <div id="results-title"></div>
+    <div id="results-detail"></div>
+    <center><a class="close" href="javascript:closeResults();">Close</a></center>
+  </div>
+
+</body>
+
+</html>

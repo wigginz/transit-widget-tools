@@ -1,0 +1,228 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://transit-emulator/skin/skin.css" type="text/css"?>
+<!DOCTYPE jilemulator SYSTEM "chrome://transit-emulator/locale/translations.dtd">
+
+
+
+<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        xmlns:html="http://www.w3.org/1999/xhtml"
+        id="jwe-profiles-popup-addr"        
+        title="&jwe.profiles.popup.addr.title;"
+        buttons="accept,cancel"
+        onload="jwe_populateForm();"
+        ondialogaccept="return jwe_saveForm();"
+        ondialogcancel="return true;">
+
+  <vbox flex="1" style="background-color: #CCCCCC;">
+  
+    <dialogheader title="&jwe.profiles.popup.addr.caption;"/>
+
+    <vbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.addr.address;" class="jwe-defaultText" style="width: 10em;"/>
+        <textbox id="jwe-profiles-popup-addr-address" size="25"/>
+      </hbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.addr.company;" class="jwe-defaultText" style="width: 10em;"/>
+        <textbox id="jwe-profiles-popup-addr-company" size="25"/>
+      </hbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.addr.email;" class="jwe-defaultText" style="width: 10em;"/>
+        <textbox id="jwe-profiles-popup-addr-email" size="25"/>
+      </hbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.addr.fullname;" class="jwe-defaultText" style="width: 10em;"/>
+        <textbox id="jwe-profiles-popup-addr-fullname" size="25"/>
+      </hbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.addr.homephone;" class="jwe-defaultText" style="width: 10em;"/>
+        <textbox id="jwe-profiles-popup-addr-homephone" size="25"/>
+      </hbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.addr.mobilephone;" class="jwe-defaultText" style="width: 10em;"/>
+        <textbox id="jwe-profiles-popup-addr-mobilephone" size="25"/>
+      </hbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.addr.workphone;" class="jwe-defaultText" style="width: 10em;"/>
+        <textbox id="jwe-profiles-popup-addr-workphone" size="25"/>
+      </hbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.addr.itemtitle;" class="jwe-defaultText" style="width: 10em;"/>
+        <textbox id="jwe-profiles-popup-addr-itemtitle" size="25"/>
+      </hbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.addr.ringtone;" class="jwe-defaultText" style="width: 10em;"/>
+        <textbox id="jwe-profiles-popup-addr-ringtone" size="25"/>
+      </hbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.addr.attributes;" class="jwe-defaultText" style="width: 10em;"/>
+        <vbox>
+          <listbox style="width: 300px; height: 100px;" id="jwe-profiles-popup-addr-attributes" ondblclick="jwe_modifyAddressAttribute();" onselect="jwe_selectAttribute();">
+            <listhead>
+              <listheader label="&jwe.profiles.popup.addr.key;" />
+              <listheader label="&jwe.profiles.popup.addr.value;" />
+            </listhead>
+            <listcols>
+              <listcol flex="1" />
+              <splitter class="tree-splitter" />
+              <listcol flex="1" />
+            </listcols>
+          </listbox>
+          <hbox pack="end" class="jwe-profiles-buttons">
+            <button label="&jwe.profiles.popup.addr.new;" id="jwe-profiles-popup-addr-new" oncommand="jwe_newAddressAttribute();" />
+            <button label="&jwe.profiles.popup.addr.modify;" id="jwe-profiles-popup-addr-modify" oncommand="jwe_modifyAddressAttribute();" disabled="true"/>
+            <button label="&jwe.profiles.popup.addr.delete;" id="jwe-profiles-popup-addr-delete" oncommand="jwe_removeAddressAttribute();" disabled="true"/> 
+          </hbox>
+        </vbox>
+      </hbox>
+    </vbox>
+
+    <hbox pack="right" class="jwe-profiles-buttons">
+      <spacer flex="1"/>
+      <button dlgtype="accept" label="&jwe.profiles.popup.addr.ok;"/> 
+      <button dlgtype="cancel" label="&jwe.profiles.popup.addr.cancel;"/>
+    </hbox>
+    
+  </vbox>
+
+<html:script>
+<![CDATA[
+
+var attribValues = new Array();
+
+function jwe_selectAttribute()
+{
+  document.getElementById("jwe-profiles-popup-addr-delete").disabled = false;
+  document.getElementById("jwe-profiles-popup-addr-modify").disabled = false;
+}
+
+function jwe_populateForm()
+{
+  var pimProfileId = window.arguments[0].inn.pimProfileId;
+  var item = window.arguments[0].inn.item;
+
+  if ( item != null )
+  {
+    var attributes = JILProfileService.wrappedJSObject.getAttributesForItem(item);
+    for ( var i = 0; i < attributes.length; i++ )
+    {
+      var listitem = document.createElement("listitem");
+      listitem.setAttribute("value", attributes[i].key);
+      
+      var keyCell = document.createElement("listcell");
+      var valueCell = document.createElement("listcell");
+
+      keyCell.setAttribute("label", attributes[i].key); 
+      valueCell.setAttribute("label", attributes[i].value); 
+      valueCell.setAttribute("id", attributes[i]+"-value");
+      
+      attribValues[attributes[i].key] = attributes[i].value;
+      
+      listitem.appendChild(keyCell);
+      listitem.appendChild(valueCell);
+      
+      document.getElementById("jwe-profiles-popup-addr-attributes").appendChild(listitem);
+    }
+  
+    document.getElementById("jwe-profiles-popup-addr-address").value = item.address;
+    document.getElementById("jwe-profiles-popup-addr-company").value = item.company;
+    document.getElementById("jwe-profiles-popup-addr-email").value = item.email;
+    document.getElementById("jwe-profiles-popup-addr-fullname").value = item.fullName;
+    document.getElementById("jwe-profiles-popup-addr-homephone").value = item.homePhone;
+    document.getElementById("jwe-profiles-popup-addr-mobilephone").value = item.mobilePhone;
+    document.getElementById("jwe-profiles-popup-addr-workphone").value = item.workPhone;
+    document.getElementById("jwe-profiles-popup-addr-itemtitle").value = item.title;  
+    document.getElementById("jwe-profiles-popup-addr-ringtone").value = item.ringtoneFileUrl;  
+  }
+}
+
+function jwe_newAddressAttribute()
+{
+  var pimProfileId = window.arguments[0].inn.pimProfileId;
+  
+  var params = {inn:{pimProfileId: pimProfileId}, out:null};       
+  window.openDialog("chrome://transit-emulator/content/profiles/profilesAddressAttributeValue.xul", "jwe-widget-addrattrvalue-popup", "dialog, modal", params).focus();
+
+  if (params.out) 
+  {
+    var listitem = document.createElement("listitem");
+    listitem.setAttribute("id", params.out.key);
+    listitem.setAttribute("value", params.out.key);
+    var keyCell = document.createElement("listcell");
+    var valueCell = document.createElement("listcell");
+
+    keyCell.setAttribute("label", params.out.key); 
+    valueCell.setAttribute("id", params.out.key+"-value");
+    valueCell.setAttribute("label", params.out.value);
+    
+    attribValues[params.out.key] = params.out.value;
+    
+    listitem.appendChild(keyCell);
+    listitem.appendChild(valueCell);
+    
+    document.getElementById("jwe-profiles-popup-addr-attributes").appendChild(listitem);
+  }
+}
+
+function jwe_modifyAddressAttribute()
+{
+  var pimProfileId = window.arguments[0].inn.pimProfileId;
+  
+  var attributeKey = document.getElementById("jwe-profiles-popup-addr-attributes").getItemAtIndex(document.getElementById("jwe-profiles-popup-addr-attributes").selectedIndex).value;
+  
+  var params = {inn:{pimProfileId: pimProfileId, key: attributeKey, value: attribValues[attributeKey]}, out:null};       
+  window.openDialog("chrome://transit-emulator/content/profiles/profilesAddressAttributeValue.xul", "jwe-widget-addrattrvalue-popup", "dialog, modal", params).focus();
+
+  if (params.out) 
+  {
+    attribValues[params.out.key] = params.out.value;
+    document.getElementById(params.out.key+"-value").setAttribute("label", params.out.value);
+  }
+}
+
+function jwe_removeAddressAttribute()
+{
+  var key = document.getElementById("jwe-profiles-popup-addr-attributes").getItemAtIndex(document.getElementById("jwe-profiles-popup-addr-attributes").selectedIndex).value;
+
+  delete attribValues[key];
+  
+  document.getElementById("jwe-profiles-popup-addr-attributes").removeItemAt(document.getElementById("jwe-profiles-popup-addr-attributes").selectedIndex);
+}
+
+function jwe_saveForm()
+{
+  var item =
+  {
+    fullName: document.getElementById("jwe-profiles-popup-addr-fullname").value,
+    mobilePhone: document.getElementById("jwe-profiles-popup-addr-mobilephone").value,
+    email: document.getElementById("jwe-profiles-popup-addr-email").value,
+    address: document.getElementById("jwe-profiles-popup-addr-address").value,
+    company: document.getElementById("jwe-profiles-popup-addr-company").value,
+    homePhone: document.getElementById("jwe-profiles-popup-addr-homephone").value,
+    workPhone: document.getElementById("jwe-profiles-popup-addr-workphone").value,
+    title: document.getElementById("jwe-profiles-popup-addr-itemtitle").value,
+    ringtoneFileUrl: document.getElementById("jwe-profiles-popup-addr-ringtone").value,
+    pimProfileId: window.arguments[0].inn.pimProfileId,
+    attributes: attribValues
+  };
+  
+  if ( window.arguments[0].inn.item )
+  {
+    item.id = window.arguments[0].inn.item.id;
+    item.isChanged = true;
+  }
+  else
+  {
+    item.id = new Date().getTime();
+    item.isNew = true;
+  }
+  
+  window.arguments[0].out = {item: item};
+  return(true);
+}
+
+]]>
+</html:script>
+
+</dialog>

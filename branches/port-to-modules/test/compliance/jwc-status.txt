@@ -1,0 +1,44 @@
+### Telephony
+
+Executing case[JIL-HAPI-03121]...
+Case[JIL-HAPI-03121] is passed.
+Executing case[JIL-HAPI-03122]...
+Case[JIL-HAPI-03122] is passed.
+All cases executed.
+Executor stopped.
+
+Executing case[JIL-HAPI-03126]...
+Case[JIL-HAPI-03126] is passed.
+Executing case[JIL-HAPI-03127]...
+Case[JIL-HAPI-03127] is passed.
+All cases executed.
+Executor stopped.
+
+Executing case[JIL-HAPI-03131]...
+Case[JIL-HAPI-03131] is passed.
+Executing case[JIL-HAPI-03132]...
+Case[JIL-HAPI-03132] is passed.
+All cases executed.
+Executor stopped.
+
+Executing case[JIL-HAPI-03136]...
+Case[JIL-HAPI-03136] is passed.
+All cases executed.
+Executor stopped.
+
+Executing case[JIL-HAPI-03612]...
+Case[JIL-HAPI-03612] is passed.
+All cases executed.
+Executor stopped.
+
+### SMS
+
+Executing case[JIL-HAPI-00215]...
+Case[JIL-HAPI-00215] is passed.
+All cases executed.
+Executor stopped.
+
+Executing case[JIL-HAPI-00217]...
+Case[JIL-HAPI-00217] is failed. Detail: ValidateException-Validate Fail[Unequal]! The expect value of [the total message quantity of Drafts increase one.] is '1', but the real value is '0'.
+Executor will stop due to fail in 'Stop On Fail' mode.
+Executor stopped.

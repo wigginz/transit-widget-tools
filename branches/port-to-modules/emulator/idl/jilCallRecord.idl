@@ -1,0 +1,13 @@
+#include "nsISupports.idl"
+
+
+[scriptable, uuid(3534b8a0-ba93-11de-8a39-0800200c9a66)]
+interface jilCallRecord : nsISupports
+{
+  attribute string callRecordAddress;
+  attribute string callRecordId;
+  attribute string callRecordName;
+  attribute string callRecordType;
+  attribute string durationSeconds;
+  attribute string startTime; // !DATE
+}; 

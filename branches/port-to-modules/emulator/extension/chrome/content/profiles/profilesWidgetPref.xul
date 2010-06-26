@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://transit-emulator/skin/skin.css" type="text/css"?>
+<!DOCTYPE jilemulator SYSTEM "chrome://transit-emulator/locale/translations.dtd">
+
+
+
+<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        xmlns:html="http://www.w3.org/1999/xhtml"
+        id="jwe-profiles-popup-wpref"        
+        title="&jwe.profiles.popup.wpref.title;"
+        buttons="accept,cancel"
+        onload="jwe_populateForm();"
+        ondialogaccept="return jwe_saveForm('&jwe.profiles.popup.wpref.keyerror;');"
+        ondialogcancel="return true;">
+
+  <vbox flex="1" style="background-color: #CCCCCC;">
+
+    <dialogheader title="&jwe.profiles.popup.wpref.caption;"/>
+    
+    <vbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.wpref.key;" class="jwe-defaultText" style="width: 10em;"/>
+        <textbox id="jwe-profiles-popup-wpref-key" size="25"/>
+      </hbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.wpref.value;" class="jwe-defaultText" style="width: 10em;"/>
+        <textbox id="jwe-profiles-popup-wpref-value" size="25"/>
+      </hbox>
+    </vbox>
+
+    <hbox pack="right" class="jwe-profiles-buttons">
+      <spacer flex="1"/>
+      <button dlgtype="accept" label="&jwe.profiles.popup.wpref.ok;"/> 
+      <button dlgtype="cancel" label="&jwe.profiles.popup.wpref.cancel;"/>
+    </hbox>
+    
+  </vbox>
+
+<html:script>
+<![CDATA[
+
+function jwe_populateForm()
+{
+  var key = window.arguments[0].inn.key;
+  var value = window.arguments[0].inn.value;
+  
+  if ( key != null )
+  {
+    document.getElementById("jwe-profiles-popup-wpref-key").value = key;
+    document.getElementById("jwe-profiles-popup-wpref-key").disabled = true;
+    document.getElementById("jwe-profiles-popup-wpref-value").value = value;
+  }
+}
+
+function jwe_saveForm(message)
+{
+  var curKey = window.arguments[0].inn.key;
+  if ( curKey == null )
+  {
+    var key = document.getElementById("jwe-profiles-popup-wpref-key").value;
+    var keyError = false;
+    if ( key != null )
+    {
+      if ( key.length < 1 )
+        keyError = true;
+      else if ( key.charAt(0) == " " )
+        keyError = true;
+    }
+    else
+      keyError = true;
+      
+    if ( keyError )
+    {
+      alert(message);
+      return(false);
+    }
+  }
+  
+  window.arguments[0].out = {key: document.getElementById("jwe-profiles-popup-wpref-key").value, value: document.getElementById("jwe-profiles-popup-wpref-value").value};
+
+  return(true);
+}
+
+]]>
+</html:script>
+
+</dialog>

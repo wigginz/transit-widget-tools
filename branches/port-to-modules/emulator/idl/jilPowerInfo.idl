@@ -1,0 +1,32 @@
+#include "jilService.idl"
+
+
+[scriptable, function, uuid(36979024-3e81-11df-9879-0800200c9a66)]
+interface jilPWOnChargeLevelChangeEvent : nsISupports
+{
+  void invoke(in unsigned long newPercentageRemaining);
+};
+
+[scriptable, function, uuid(36979025-3e81-11df-9879-0800200c9a66)]
+interface jilPWOnChargeStateChangeEvent : nsISupports
+{
+  void invoke(in string state);
+};
+
+[scriptable, function, uuid(36979026-3e81-11df-9879-0800200c9a66)]
+interface jilPWOnLowBatteryEvent : nsISupports
+{
+  void invoke(in unsigned long percentageRemaining);
+};
+
+
+[scriptable, uuid(21e61450-bae4-11de-8a39-0800200c9a66)]
+interface jilPowerInfo : jilService
+{
+  attribute boolean isCharging;
+  attribute unsigned long percentRemaining;
+
+  attribute jilPWOnChargeLevelChangeEvent onChargeLevelChange;
+  attribute jilPWOnChargeStateChangeEvent onChargeStateChange;
+  attribute jilPWOnLowBatteryEvent onLowBattery;
+};

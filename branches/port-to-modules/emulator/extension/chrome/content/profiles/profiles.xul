@@ -1,0 +1,881 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://transit-emulator/skin/skin.css" type="text/css"?>
+<!DOCTYPE jilemulator SYSTEM "chrome://transit-emulator/locale/translations.dtd">
+
+
+
+<window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        xmlns:html="http://www.w3.org/1999/xhtml"
+        id="jwe-profiles-panel"        
+        title="&jwe.profiles.title;"
+        onload="jwe_Profiles.init();"
+        onclose="return(closeForm('&jwe.profiles.ok.confirm;'));">
+
+  <script src="chrome://transit-emulator/content/utils/utils.js" />
+  <script src="chrome://transit-emulator/content/profiles/profiles.js" />
+
+  <vbox flex="1" style="background-color: #CCCCCC;">
+    
+    <tabbox id="jwe-profiles-content">
+    
+      <tabs>
+         <tab label="&jwe.profiles.tab.devices;" oncommand="jwe_Profiles.loadDeviceProfiles();"/>
+         <tab label="&jwe.profiles.tab.messaging;" oncommand="jwe_Profiles.loadMessageProfiles();"/>
+         <tab label="&jwe.profiles.tab.pim;" oncommand="jwe_Profiles.loadPIMProfiles();"/>
+         <tab label="&jwe.profiles.tab.defaults;" oncommand="jwe_loadDefaults();"/>
+      </tabs>
+      
+      <tabpanels align="center">
+      
+        <tabpanel flex="1"> 
+        
+          <hbox>
+            <vbox align="center" id="jwe-profiles-sel-device-panel">
+              <listbox id="jwe-profiles-sel-device-list" flex="1" style="width: 170px;" seltype="single" onselect="jwe_Profiles.changeSelectedDeviceProfile();"/>
+              <hbox pack="center" class="jwe-profiles-buttons">
+                <button label="&jwe.profiles.device.add;" id="jwe-profiles-device-add" oncommand="jwe_newDeviceProfile();"/> 
+                <button label="&jwe.profiles.device.remove;" id="jwe-profiles-device-remove" oncommand="jwe_deleteDeviceProfile('&jwe.profiles.device.remove.confirm;');"  disabled="true"/>
+              </hbox>
+            </vbox>
+            
+            <vbox class="jwe-profiles-panel-container">
+
+              <hbox align="center" pack="end">
+                <label id="jwe-profiles-sel-device-api-caption" style="font-weight: bold;"/>
+                <menulist label="&jwe.profiles.devices.tab.settings;" align="right" id="jwe-profiles-sel-device-api-list">
+                  <menupopup>
+                    <menuitem label="&jwe.profiles.devices.tab.settings;" selected="true" oncommand="jwe_changeDevicePanel('jwe-profiles-device-panel-general');" id="jwe-subtab-dGeneral"/>
+                    <menuitem label="&jwe.profiles.devices.tab.widget;" oncommand="jwe_changeDevicePanel('jwe-profiles-device-panel-widget'); jwe_Profiles.loadSubTab('dWidget');" id="jwe-subtab-dWidget"/>
+                    <menuitem label="&jwe.profiles.devices.tab.device;" oncommand="jwe_changeDevicePanel('jwe-profiles-device-panel-device'); jwe_Profiles.loadSubTab('dDevice');" id="jwe-subtab-dDevice"/>
+                    <menuitem label="&jwe.profiles.devices.tab.account;" oncommand="jwe_changeDevicePanel('jwe-profiles-device-panel-account'); jwe_Profiles.loadSubTab('dAccount');" id="jwe-subtab-dAccount"/>
+                    <menuitem label="&jwe.profiles.devices.tab.deviceinfo;" oncommand="jwe_changeDevicePanel('jwe-profiles-device-panel-deviceinfo'); jwe_Profiles.loadSubTab('dDInfo');" id="jwe-subtab-dDInfo"/>
+                    <menuitem label="&jwe.profiles.devices.tab.datanetwork;" oncommand="jwe_changeDevicePanel('jwe-profiles-device-panel-datanetwork'); jwe_Profiles.loadSubTab('dDNetwork');" id="jwe-subtab-dDNetwork"/>
+                    <menuitem label="&jwe.profiles.devices.tab.devicestate;" oncommand="jwe_changeDevicePanel('jwe-profiles-device-panel-devicestate'); jwe_Profiles.loadSubTab('dDState');" id="jwe-subtab-dDState"/>
+                    <menuitem label="&jwe.profiles.devices.tab.accelerometer;" oncommand="jwe_changeDevicePanel('jwe-profiles-device-panel-accelerometer'); jwe_Profiles.loadSubTab('dAccel');" id="jwe-subtab-dAccel"/>
+                    <menuitem label="&jwe.profiles.devices.tab.config;" oncommand="jwe_changeDevicePanel('jwe-profiles-device-panel-config'); jwe_Profiles.loadSubTab('dConfig');" id="jwe-subtab-dConfig"/>
+                    <menuitem label="&jwe.profiles.devices.tab.position;" oncommand="jwe_changeDevicePanel('jwe-profiles-device-panel-position'); jwe_Profiles.loadSubTab('dPosition');" id="jwe-subtab-dPosition"/>
+                    <menuitem label="&jwe.profiles.devices.tab.power;" oncommand="jwe_changeDevicePanel('jwe-profiles-device-panel-power'); jwe_Profiles.loadSubTab('dPower');" id="jwe-subtab-dPower"/>
+                    <menuitem label="&jwe.profiles.devices.tab.radio;" oncommand="jwe_changeDevicePanel('jwe-profiles-device-panel-radio'); jwe_Profiles.loadSubTab('dRadio');" id="jwe-subtab-dRadio"/>
+                    <menuitem label="&jwe.profiles.devices.tab.multimedia;" oncommand="jwe_changeDevicePanel('jwe-profiles-device-panel-multimedia'); jwe_Profiles.loadSubTab('dMultimedia');" id="jwe-subtab-dMultimedia"/>
+                    <menuitem label="&jwe.profiles.devices.tab.telephony;" oncommand="jwe_changeDevicePanel('jwe-profiles-device-panel-telephony'); jwe_Profiles.loadSubTab('dTelephony');" id="jwe-subtab-dTelephony"/>
+                  </menupopup>
+                </menulist>
+              </hbox>
+
+              <vbox id="jwe-profiles-device-panel-general" class="jwe-profiles-inner-panel">
+                <label flex="1" id="jwe-profiles-device-panel-general-uuid" style="margin-bottom: 20px;"/>
+                <groupbox>
+                  <caption label="&jwe.profiles.devices.settings.assoc;" class="jwe-defaultText" />
+                  <vbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.settings.messaging;" class="jwe-defaultText" style="width: 10em;"/>
+                      <menulist  align="right" oncommand="jwe_Profiles.change('dGeneral');" id="jwe-profiles-device-panel-general-msglist"/>
+                    </hbox>
+                    
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.settings.pim;" class="jwe-defaultText" style="width: 10em;"/>
+                      <menulist align="right" oncommand="jwe_Profiles.change('dGeneral');" id="jwe-profiles-device-panel-general-pimlist"/>
+                    </hbox>
+                  </vbox>
+                </groupbox>
+              </vbox>
+
+              <vbox id="jwe-profiles-device-panel-widget" class="jwe-profiles-inner-panel" style="display: none;">
+                <groupbox>
+                  <caption label="&jwe.profiles.widget.prefs;" class="jwe-defaultText" />
+                  <vbox>
+                    <listbox style="width: 500px;" id="jwe-profiles-device-panel-widgets" onselect="jwe_selectEmulatedWidget();" ondblclick="jwe_modifyEmulatedWidget();">
+                      <listhead>
+                        <listheader label="&jwe.profiles.widget.prefs.name;" />
+                        <listheader label="&jwe.profiles.widget.prefs.version;" />
+                        <listheader label="&jwe.profiles.widget.prefs.author;" />
+                      </listhead>
+                      <listcols>
+                        <listcol style="width:  275px;"/>
+                        <listcol style="width:  100px;"/>
+                        <listcol style="width:  155px;"/>
+                      </listcols>
+                    </listbox>
+                    <hbox pack="end" class="jwe-profiles-buttons">
+                      <button label="&jwe.profiles.widget.prefs.new;" id="jwe-profiles-widgets-prefs-new" oncommand="jwe_newEmulatedWidget();" />
+                      <button label="&jwe.profiles.widget.prefs.modify;" id="jwe-profiles-widgets-prefs-modify" oncommand="jwe_modifyEmulatedWidget();" />
+                      <button label="&jwe.profiles.widget.prefs.preferences;" id="jwe-profiles-widgets-prefs-preferences" oncommand="jwe_openWidgetPrefs();" />
+                      <button label="&jwe.profiles.widget.prefs.delete;" id="jwe-profiles-widgets-prefs-delete" oncommand="jwe_deleteEmulatedWidget();" /> 
+                    </hbox>
+                    <description>&jwe.profiles.widget.prefs.warning;</description>                  
+                  </vbox>
+                </groupbox>
+              </vbox>
+
+              <vbox id="jwe-profiles-device-panel-device" class="jwe-profiles-inner-panel" style="display: none;" flex="1">
+                <groupbox flex="1">
+                  <caption label="&jwe.profiles.devices.device.values;" class="jwe-defaultText" />
+                  <vbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.device.clip;" class="jwe-defaultText" style="width: 14em;"/>
+                      <textbox id="jwe-profiles-devices-device-clip" multiline="true" rows="3" cols="35" onchange="jwe_Profiles.change('dDevice');"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.device.engine.name;" class="jwe-defaultText" style="width: 14em;"/>
+                      <textbox id="jwe-profiles-devices-device-engine-name" size="25" onchange="jwe_Profiles.change('dDevice');"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.device.engine.prov;" class="jwe-defaultText" style="width: 14em;"/>
+                      <textbox id="jwe-profiles-devices-device-engine-prov" size="25" onchange="jwe_Profiles.change('dDevice');"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.device.engine.ver;" class="jwe-defaultText" style="width: 14em;"/>
+                      <textbox id="jwe-profiles-devices-device-engine-ver" size="10" onchange="jwe_Profiles.change('dDevice');"/>
+                    </hbox>
+                  </vbox>
+                </groupbox>
+                
+                <groupbox flex="1">
+                  <caption label="&jwe.profiles.devices.filesystems;" class="jwe-defaultText" />
+                  <vbox>                        
+                    <listbox rows="3" style="width: 400px;" id="jwe-profiles-devices-device-filesystems" onselect="jwe_selectFileSystem();" ondblclick="jwe_modifyFileSystem();">
+                      <listhead>
+                        <listheader label="&jwe.profiles.devices.filesystems.path;" />                      
+                        <listheader label="&jwe.profiles.devices.filesystems.localpath;" />
+                        <listheader label="&jwe.profiles.devices.filesystems.size;" />
+                      </listhead>
+                      <listcols>
+                        <listcol style="width:  150px;"/>
+                        <listcol style="width:  215px;"/>
+                        <listcol style="width:  150px;"/>
+                      </listcols>
+                    </listbox>                          
+                    <hbox pack="end" class="jwe-profiles-buttons">
+                      <button label="&jwe.profiles.devices.filesystems.new;" id="jwe-profiles-devices-filesystems-new" oncommand="jwe_newFileSystem();" />
+                      <button label="&jwe.profiles.devices.filesystems.modify;" id="jwe-profiles-devices-filesystems-modify" oncommand="jwe_modifyFileSystem();" />
+                      <button label="&jwe.profiles.devices.filesystems.delete;" id="jwe-profiles-devices-filesystems-delete" oncommand="jwe_deleteFileSystem();" /> 
+                    </hbox>
+                  </vbox>
+                </groupbox>
+                
+                <groupbox flex="1">
+                  <caption label="&jwe.profiles.devices.apps;" class="jwe-defaultText" />
+                  <vbox flex="1">
+                    <checkbox flex="1" label="&jwe.profiles.devices.apps.alarm;" value="ALARM" id="jwe-profiles-devices-device-app-alarm" oncommand="jwe_Profiles.change('dDevice');"/>
+                    <checkbox flex="1" label="&jwe.profiles.devices.apps.browser;" value="BROWSER" id="jwe-profiles-devices-device-app-browser" oncommand="jwe_Profiles.change('dDevice');"/>
+                    <checkbox flex="1" label="&jwe.profiles.devices.apps.calculator;" value="CALCULATOR" id="jwe-profiles-devices-device-app-calculator" oncommand="jwe_Profiles.change('dDevice');"/>
+                    <checkbox flex="1" label="&jwe.profiles.devices.apps.calendar;" value="CALENDAR" id="jwe-profiles-devices-device-app-calendar" oncommand="jwe_Profiles.change('dDevice');"/>
+                    <checkbox flex="1" label="&jwe.profiles.devices.apps.camera;" value="CAMERA" id="jwe-profiles-devices-device-app-camera" oncommand="jwe_Profiles.change('dDevice');"/>
+                    <checkbox flex="1" label="&jwe.profiles.devices.apps.contacts;" value="CONTACTS" id="jwe-profiles-devices-device-app-contacts" oncommand="jwe_Profiles.change('dDevice');"/>
+                    <checkbox flex="1" label="&jwe.profiles.devices.apps.files;" value="FILES" id="jwe-profiles-devices-device-app-files" oncommand="jwe_Profiles.change('dDevice');"/>
+                    <checkbox flex="1" label="&jwe.profiles.devices.apps.games;" value="GAMES" id="jwe-profiles-devices-device-app-games" oncommand="jwe_Profiles.change('dDevice');"/>
+                    <checkbox flex="1" label="&jwe.profiles.devices.apps.mail;" value="MAIL" id="jwe-profiles-devices-device-app-mail" oncommand="jwe_Profiles.change('dDevice');"/>
+                    <checkbox flex="1" label="&jwe.profiles.devices.apps.mediaplayer;" value="MEDIAPLAYER" id="jwe-profiles-devices-device-app-mediaplayer" oncommand="jwe_Profiles.change('dDevice');"/>
+                    <checkbox flex="1" label="&jwe.profiles.devices.apps.messaging;" value="MESSAGING" id="jwe-profiles-devices-device-app-messaging" oncommand="jwe_Profiles.change('dDevice');"/>
+                    <checkbox flex="1" label="&jwe.profiles.devices.apps.phonecall;" value="PHONECALL" id="jwe-profiles-devices-device-app-phonecall" oncommand="jwe_Profiles.change('dDevice');"/>
+                    <checkbox flex="1" label="&jwe.profiles.devices.apps.pictures;" value="PICTURES" id="jwe-profiles-devices-device-app-pictures" oncommand="jwe_Profiles.change('dDevice');"/>
+                    <checkbox flex="1" label="&jwe.profiles.devices.apps.progmgr;" value="PROG_MANAGER" id="jwe-profiles-devices-device-app-prog_manager" oncommand="jwe_Profiles.change('dDevice');"/>
+                    <checkbox flex="1" label="&jwe.profiles.devices.apps.settings;" value="SETTINGS" id="jwe-profiles-devices-device-app-settings" oncommand="jwe_Profiles.change('dDevice');"/>
+                    <checkbox flex="1" label="&jwe.profiles.devices.apps.tasks;" value="TASKS" id="jwe-profiles-devices-device-app-tasks" oncommand="jwe_Profiles.change('dDevice');"/>
+                    <checkbox flex="1" label="&jwe.profiles.devices.apps.widgetmgr;" value="WIDGET_MANAGER" id="jwe-profiles-devices-device-app-widget_manager" oncommand="jwe_Profiles.change('dDevice');"/>
+                  </vbox>
+                </groupbox>
+                
+              </vbox>
+                    
+              <vbox id="jwe-profiles-device-panel-account" class="jwe-profiles-inner-panel" style="display: none;">
+                <groupbox flex="1">
+                  <caption label="&jwe.profiles.devices.account;" class="jwe-defaultText" />
+                  <vbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.account.phonemsisdn;" class="jwe-defaultText" style="width: 14em;"/>
+                      <textbox id="jwe-profiles-devices-account-phonemsisdn" size="25" onchange="jwe_Profiles.change('dAccount');"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.account.opname;" class="jwe-defaultText" style="width: 14em;"/>
+                      <textbox id="jwe-profiles-devices-account-opname" size="25" onchange="jwe_Profiles.change('dAccount');"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.account.userid;" class="jwe-defaultText" style="width: 14em;"/>
+                      <textbox id="jwe-profiles-devices-account-userid" size="25" onchange="jwe_Profiles.change('dAccount');"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.account.balance;" class="jwe-defaultText" style="width: 14em;"/>
+                      <textbox id="jwe-profiles-devices-account-balance" size="10" onchange="jwe_Profiles.change('dAccount');"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.account.type;" class="jwe-defaultText" style="width: 14em;"/>
+                      <menulist id="jwe-profiles-devices-account-type" align="right" oncommand="jwe_Profiles.change('dAccount');">
+                        <menupopup>
+                          <menuitem label="&jwe.profiles.devices.account.type.prepaid;" value="prepaid"/>
+                          <menuitem label="&jwe.profiles.devices.account.type.postpaid;" value="postpaid"/>
+                          <menuitem label="&jwe.profiles.devices.account.type.other;" value="other"/>
+                        </menupopup>
+                      </menulist>
+                    </hbox>
+                  </vbox>
+                </groupbox>
+              </vbox>
+              
+              <vbox id="jwe-profiles-device-panel-deviceinfo" class="jwe-profiles-inner-panel" style="display: none;">
+                <groupbox flex="1">
+                  <caption label="&jwe.profiles.devices.ownerinfo;" class="jwe-defaultText" />
+                  <vbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.ownerinfo.address;" class="jwe-defaultText" style="width: 14em;"/>
+                      <textbox id="jwe-profiles-devices-ownerinfo-address" size="25" onchange="jwe_Profiles.change('dDInfo');"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.ownerinfo.company;" class="jwe-defaultText" style="width: 14em;"/>
+                      <textbox id="jwe-profiles-devices-ownerinfo-company" size="25" onchange="jwe_Profiles.change('dDInfo');"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.ownerinfo.email;" class="jwe-defaultText" style="width: 14em;"/>
+                      <textbox id="jwe-profiles-devices-ownerinfo-email" size="25" onchange="jwe_Profiles.change('dDInfo');"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.ownerinfo.fullname;" class="jwe-defaultText" style="width: 14em;"/>
+                      <textbox id="jwe-profiles-devices-ownerinfo-fullname" size="25" onchange="jwe_Profiles.change('dDInfo');"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.ownerinfo.title;" class="jwe-defaultText" style="width: 14em;"/>
+                      <textbox id="jwe-profiles-devices-ownerinfo-title" size="25" onchange="jwe_Profiles.change('dDInfo');"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.ownerinfo.homephone;" class="jwe-defaultText" style="width: 14em;"/>
+                      <textbox id="jwe-profiles-devices-ownerinfo-homephone" size="25" onchange="jwe_Profiles.change('dDInfo');"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.ownerinfo.mobilephone;" class="jwe-defaultText" style="width: 14em;"/>
+                      <textbox id="jwe-profiles-devices-ownerinfo-mobilephone" size="25" onchange="jwe_Profiles.change('dDInfo');"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.ownerinfo.workphone;" class="jwe-defaultText" style="width: 14em;"/>
+                      <textbox id="jwe-profiles-devices-ownerinfo-workphone" size="25" onchange="jwe_Profiles.change('dDInfo');"/>
+                    </hbox>
+                  </vbox>
+                </groupbox>
+                
+                <groupbox flex="1">
+                  <caption label="&jwe.profiles.devices.deviceinfo;" class="jwe-defaultText" />
+                  <vbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.deviceinfo.colordepth;" class="jwe-defaultText" style="width: 14em;"/>
+                      <textbox id="jwe-profiles-devices-deviceinfo-colordepth" size="5" onchange="jwe_Profiles.change('dDInfo');"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.deviceinfo.firmware;" class="jwe-defaultText" style="width: 14em;"/>
+                      <textbox id="jwe-profiles-devices-deviceinfo-firmware" size="15" onchange="jwe_Profiles.change('dDInfo');"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.deviceinfo.manufacturer;" class="jwe-defaultText" style="width: 14em;"/>
+                      <textbox id="jwe-profiles-devices-deviceinfo-manufacturer" size="25" onchange="jwe_Profiles.change('dDInfo');"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.deviceinfo.model;" class="jwe-defaultText" style="width: 14em;"/>
+                      <textbox id="jwe-profiles-devices-deviceinfo-model" size="25" onchange="jwe_Profiles.change('dDInfo');"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.deviceinfo.os;" class="jwe-defaultText" style="width: 14em;"/>
+                      <textbox id="jwe-profiles-devices-deviceinfo-os" size="25" onchange="jwe_Profiles.change('dDInfo');"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.deviceinfo.height;" class="jwe-defaultText" style="width: 14em;"/>
+                      <textbox id="jwe-profiles-devices-deviceinfo-height" size="5" onchange="jwe_Profiles.change('dDInfo');"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.deviceinfo.width;" class="jwe-defaultText" style="width: 14em;"/>
+                      <textbox id="jwe-profiles-devices-deviceinfo-width" size="5" onchange="jwe_Profiles.change('dDInfo');"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.deviceinfo.software;" class="jwe-defaultText" style="width: 14em;"/>
+                      <textbox id="jwe-profiles-devices-deviceinfo-software" size="25" onchange="jwe_Profiles.change('dDInfo');"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.deviceinfo.memory;" class="jwe-defaultText" style="width: 14em;"/>
+                      <textbox id="jwe-profiles-devices-deviceinfo-memory" size="15" onchange="jwe_Profiles.change('dDInfo');"/>
+                    </hbox>
+                  </vbox>
+                </groupbox>
+              </vbox>
+             
+              <vbox id="jwe-profiles-device-panel-datanetwork" class="jwe-profiles-inner-panel" style="display: none;">
+                <groupbox flex="1" style="width: 90%;">
+                  <caption label="&jwe.profiles.devices.datanetwork.enabled;" class="jwe-defaultText" />
+                  <vbox pack="start">                    
+                    <checkbox flex="1" label="&jwe.profiles.devices.datanetwork.bluetooth;" oncommand="jwe_Profiles.change('dDNetwork'); jwe_Profiles.adjustNetwork();"  id="jwe-profiles-devices-datanetwork-bluetooth"/>                    
+                    <checkbox flex="1" label="&jwe.profiles.devices.datanetwork.edge;" oncommand="jwe_Profiles.change('dDNetwork'); jwe_Profiles.adjustNetwork();"  id="jwe-profiles-devices-datanetwork-edge"/>
+                    <checkbox flex="1" label="&jwe.profiles.devices.datanetwork.evdo;" oncommand="jwe_Profiles.change('dDNetwork'); jwe_Profiles.adjustNetwork();"  id="jwe-profiles-devices-datanetwork-evdo"/>                    
+                    <checkbox flex="1" label="&jwe.profiles.devices.datanetwork.gprs;" oncommand="jwe_Profiles.change('dDNetwork'); jwe_Profiles.adjustNetwork();"  id="jwe-profiles-devices-datanetwork-gprs"/>
+                    <checkbox flex="1" label="&jwe.profiles.devices.datanetwork.irda;" oncommand="jwe_Profiles.change('dDNetwork'); jwe_Profiles.adjustNetwork();"  id="jwe-profiles-devices-datanetwork-irda"/>
+                    <checkbox flex="1" label="&jwe.profiles.devices.datanetwork.lte;" oncommand="jwe_Profiles.change('dDNetwork'); jwe_Profiles.adjustNetwork();"  id="jwe-profiles-devices-datanetwork-lte"/>
+                    <checkbox flex="1" label="&jwe.profiles.devices.datanetwork.onexrtt;" oncommand="jwe_Profiles.change('dDNetwork'); jwe_Profiles.adjustNetwork();"  id="jwe-profiles-devices-datanetwork-onexrtt"/>                    
+                    <checkbox flex="1" label="&jwe.profiles.devices.datanetwork.wifi;" oncommand="jwe_Profiles.change('dDNetwork'); jwe_Profiles.adjustNetwork();"  id="jwe-profiles-devices-datanetwork-wifi"/>
+                  </vbox>
+                </groupbox>
+                <groupbox flex="1" style="width: 90%;">
+                  <caption label="&jwe.profiles.devices.datanetwork.names;"/>
+                  <vbox pack="start">
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.datanetwork.bluename;" style="width: 14em;"/>
+                      <textbox id="jwe-profiles-devices-datanetwork-name-bluetooth" size="25" onchange="jwe_Profiles.change('dDNetwork');"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.datanetwork.edgename;" style="width: 14em;"/>
+                      <textbox id="jwe-profiles-devices-datanetwork-name-edge" size="25" onchange="jwe_Profiles.change('dDNetwork');"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.datanetwork.evdoname;" style="width: 14em;"/>
+                      <textbox id="jwe-profiles-devices-datanetwork-name-evdo" size="25" onchange="jwe_Profiles.change('dDNetwork');"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.datanetwork.gprsname;" style="width: 14em;"/>
+                      <textbox id="jwe-profiles-devices-datanetwork-name-gprs" size="25" onchange="jwe_Profiles.change('dDNetwork');"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.datanetwork.irdaname;" style="width: 14em;"/>
+                      <textbox id="jwe-profiles-devices-datanetwork-name-irda" size="25" onchange="jwe_Profiles.change('dDNetwork');"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.datanetwork.ltename;" style="width: 14em;"/>
+                      <textbox id="jwe-profiles-devices-datanetwork-name-lte" size="25" onchange="jwe_Profiles.change('dDNetwork');"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.datanetwork.onexrttname;" style="width: 14em;"/>
+                      <textbox id="jwe-profiles-devices-datanetwork-name-onexrtt" size="25" onchange="jwe_Profiles.change('dDNetwork');"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.datanetwork.wifiname;" style="width: 14em;"/>
+                      <textbox id="jwe-profiles-devices-datanetwork-name-wifi" size="25" onchange="jwe_Profiles.change('dDNetwork');"/>
+                    </hbox>                    
+                  </vbox>
+                </groupbox>
+                <groupbox flex="1" style="width: 90%;">
+                  <caption label="&jwe.profiles.devices.datanetwork;" class="jwe-defaultText" />
+                  <vbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.datanetwork.connected;" id="jwe-profiles-devices-datanetwork-connected" style="display: none; color: green;"/>
+                      <label value="&jwe.profiles.devices.datanetwork.disconnected;" id="jwe-profiles-devices-datanetwork-disconnected" style="display: none; color: red;"/>
+                    </hbox>
+                  </vbox>
+                </groupbox>
+              </vbox>
+              
+              <vbox id="jwe-profiles-device-panel-devicestate" class="jwe-profiles-inner-panel" style="display: none;">
+                <groupbox flex="1" style="width: 90%;">
+                  <caption label="&jwe.profiles.devices.devicestate;" class="jwe-defaultText" />
+                  <vbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.devicestate.audiopath;" class="jwe-defaultText" style="width: 14em;"/>
+                      <menulist id="jwe-profiles-devices-devicestate-audiopath" oncommand="jwe_Profiles.change('dDState');" align="right">
+                        <menupopup>
+                          <menuitem label="&jwe.profiles.devices.devicestate.audiopath.speaker;" value="speaker"/>
+                          <menuitem label="&jwe.profiles.devices.devicestate.audiopath.receiver;" value="receiver"/>
+                          <menuitem label="&jwe.profiles.devices.devicestate.audiopath.earphone;" value="earphone"/>
+                        </menupopup>
+                      </menulist>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.devicestate.availmem;" class="jwe-defaultText" style="width: 14em;"/>
+                      <textbox id="jwe-profiles-devices-devicestate-availmem" size="15" onchange="jwe_Profiles.change('dDState');"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.devicestate.language;" class="jwe-defaultText" style="width: 14em;"/>
+                      <textbox id="jwe-profiles-devices-devicestate-language" size="3" onchange="jwe_Profiles.change('dDState');"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.devicestate.proc;" class="jwe-defaultText" style="width: 14em;"/>
+                      <textbox type="number" size="3" id="jwe-profiles-devices-devicestate-proc" min="0" max="100" onchange="jwe_Profiles.change('dDState');"/><label value="&jwe.profiles.devices.devicestate.proc.percent;" class="jwe-defaultText"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.devicestate.backlight;" class="jwe-defaultText" style="width: 14em;"/>
+                      <checkbox flex="1" label="&jwe.profiles.devices.devicestate.backlight.on;" id="jwe-profiles-devices-devicestate-backlight" oncommand="jwe_Profiles.change('dDState');" />
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.devicestate.keypad;" class="jwe-defaultText" style="width: 14em;"/>
+                      <checkbox flex="1" label="&jwe.profiles.devices.devicestate.keypad.on;" id="jwe-profiles-devices-devicestate-keypadlight" oncommand="jwe_Profiles.change('dDState');" />
+                    </hbox>
+                  </vbox>
+                </groupbox>
+              </vbox>
+              
+              <vbox id="jwe-profiles-device-panel-accelerometer" class="jwe-profiles-inner-panel" style="display: none;">
+                <groupbox flex="1">
+                  <caption label="&jwe.profiles.devices.accelerometer;" class="jwe-defaultText" />
+                  <vbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.accelerometer.x;" class="jwe-defaultText" style="width: 8em;"/>
+                      <textbox id="jwe-profiles-devices-accelerometer-x" size="10" onchange="jwe_Profiles.change('dAccel');"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.accelerometer.y;" class="jwe-defaultText" style="width: 8em;"/>
+                      <textbox id="jwe-profiles-devices-accelerometer-y" size="10" onchange="jwe_Profiles.change('dAccel');"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.accelerometer.z;" class="jwe-defaultText" style="width: 8em;"/>
+                      <textbox id="jwe-profiles-devices-accelerometer-z" size="10" onchange="jwe_Profiles.change('dAccel');"/>
+                    </hbox>
+                  </vbox>
+                </groupbox>
+              </vbox>
+              
+              <vbox id="jwe-profiles-device-panel-config" class="jwe-profiles-inner-panel" style="display: none;">
+                <groupbox flex="1">
+                  <caption label="&jwe.profiles.devices.config;" class="jwe-defaultText" />
+                  <vbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.config.msgvol;" class="jwe-defaultText" style="width: 16em;"/>
+                      <textbox type="number" size="2" id="jwe-profiles-devices-config-msgvol" min="0" max="10" onchange="jwe_Profiles.change('dConfig');"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.config.ringvol;" class="jwe-defaultText" style="width: 16em;"/>
+                      <textbox type="number" size="2" id="jwe-profiles-devices-config-ringvol" min="0" max="10" onchange="jwe_Profiles.change('dConfig');"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.config.vibration;" class="jwe-defaultText" style="width: 16em;"/>
+                      <checkbox flex="1" label="&jwe.profiles.devices.config.vibration.on;" id="jwe-profiles-devices-config-vibe" oncommand="jwe_Profiles.change('dConfig');" />
+                    </hbox>
+                  </vbox>
+                </groupbox>
+              </vbox>
+
+              <vbox id="jwe-profiles-device-panel-position" class="jwe-profiles-inner-panel" style="display: none;">
+                <groupbox flex="1">
+                  <caption label="&jwe.profiles.devices.position;" class="jwe-defaultText" />
+                  <vbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.position.cellid;" class="jwe-defaultText" style="width: 16em;"/>
+                      <textbox size="25" id="jwe-profiles-devices-position-cellid" onchange="jwe_Profiles.change('dPosition');"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.position.accuracy;" class="jwe-defaultText" style="width: 16em;"/>
+                      <textbox size="5" id="jwe-profiles-devices-position-accuracy" onchange="jwe_Profiles.change('dPosition');"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.position.lat;" class="jwe-defaultText" style="width: 16em;"/>
+                      <textbox size="25" id="jwe-profiles-devices-position-lat" onchange="jwe_Profiles.change('dPosition');"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.position.long;" class="jwe-defaultText" style="width: 16em;"/>
+                      <textbox size="25" id="jwe-profiles-devices-position-long" onchange="jwe_Profiles.change('dPosition');"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.position.altaccuracy;" class="jwe-defaultText" style="width: 16em;"/>
+                      <textbox size="5" id="jwe-profiles-devices-position-altaccuracy" onchange="jwe_Profiles.change('dPosition');"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.position.altitude;" class="jwe-defaultText" style="width: 16em;"/>
+                      <textbox size="10" id="jwe-profiles-devices-position-altitude" onchange="jwe_Profiles.change('dPosition');"/>
+                    </hbox>
+                  </vbox>
+                </groupbox>
+              </vbox>
+              
+              <vbox id="jwe-profiles-device-panel-power" class="jwe-profiles-inner-panel" style="display: none;">
+                <groupbox flex="1">
+                  <caption label="&jwe.profiles.devices.power;" class="jwe-defaultText" />
+                  <vbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.power.charging;" class="jwe-defaultText" style="width: 14em;"/>
+                      <checkbox flex="1" label="&jwe.profiles.devices.power.charging.on;" oncommand="jwe_Profiles.change('dPower');"  id="jwe-profiles-devices-power-charging"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.power.remaining;" class="jwe-defaultText" style="width: 14em;"/>
+                      <textbox type="number" size="3" id="jwe-profiles-devices-power-remaining" min="0" max="100"/><label value="&jwe.profiles.devices.power.remaining.percent;" class="jwe-defaultText" onchange="jwe_Profiles.change('dPower');"/>
+                    </hbox>
+                  </vbox>
+                </groupbox>
+              </vbox>
+
+              <vbox id="jwe-profiles-device-panel-radio" class="jwe-profiles-inner-panel" style="display: none;">
+                <groupbox flex="1">
+                  <caption label="&jwe.profiles.devices.radio;" class="jwe-defaultText" />
+                  <vbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.radio.enabled;" class="jwe-defaultText" style="width: 14em;"/>
+                      <checkbox flex="1" label="&jwe.profiles.devices.radio.enabled.on;" oncommand="jwe_Profiles.change('dRadio');" id="jwe-profiles-devices-radio-enabled"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.radio.roaming;" class="jwe-defaultText" style="width: 14em;"/>
+                      <checkbox flex="1" label="&jwe.profiles.devices.radio.roaming.on;" oncommand="jwe_Profiles.change('dRadio');" id="jwe-profiles-devices-radio-roaming"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.radio.signalsource;" class="jwe-defaultText" style="width: 14em;"/>
+                      <menulist id="jwe-profiles-devices-radio-signalsource" align="right" oncommand="jwe_Profiles.change('dRadio');">
+                        <menupopup>
+                          <menuitem label="&jwe.profiles.devices.radio.signalsource.cdma;" value="CDMA"/>
+                          <menuitem label="&jwe.profiles.devices.radio.signalsource.gsm;" value="GSM"/>
+                          <menuitem label="&jwe.profiles.devices.radio.signalsource.lte;" value="LTE"/>
+                          <menuitem label="&jwe.profiles.devices.radio.signalsource.tdscdma;" value="TDSCDMA"/>
+                          <menuitem label="&jwe.profiles.devices.radio.signalsource.wcdma;" value="WCDMA"/>
+                        </menupopup>
+                      </menulist>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.radio.strength;" class="jwe-defaultText" style="width: 14em;"/>
+                      <textbox type="number" size="3" id="jwe-profiles-devices-radio-strength" min="0" max="100"/><label value="&jwe.profiles.devices.radio.strength.percent;" class="jwe-defaultText" onchange="jwe_Profiles.change('dRadio');"/>
+                    </hbox>
+                  </vbox>
+                </groupbox>
+              </vbox>
+              
+              <vbox id="jwe-profiles-device-panel-multimedia" class="jwe-profiles-inner-panel" style="display: none;">
+                <groupbox flex="1">
+                  <caption label="&jwe.profiles.devices.multimedia;" class="jwe-defaultText" />
+                  <vbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.multimedia.audioplaying;" class="jwe-defaultText" style="width: 14em;"/>
+                      <checkbox flex="1" label="&jwe.profiles.devices.multimedia.audioplaying.on;" oncommand="jwe_Profiles.change('dMultimedia');" id="jwe-profiles-devices-multimedia-audioplaying"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.multimedia.videoplaying;" class="jwe-defaultText" style="width: 14em;"/>
+                      <checkbox flex="1" label="&jwe.profiles.devices.multimedia.videoplaying.on;" oncommand="jwe_Profiles.change('dMultimedia');" id="jwe-profiles-devices-multimedia-videoplaying"/>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.multimedia.volume;" class="jwe-defaultText" style="width: 14em;"/>
+                      <textbox type="number" size="3" id="jwe-profiles-devices-multimedia-volume" min="0" max="10" onchange="jwe_Profiles.change('dMultimedia');"/>
+                    </hbox>
+                  </vbox>
+                </groupbox>
+              </vbox>
+              
+              <vbox id="jwe-profiles-device-panel-telephony" class="jwe-profiles-inner-panel" style="display: none;">
+                <groupbox flex="1">
+                  <caption label="&jwe.profiles.devices.telephony;" class="jwe-defaultText" />
+                  <vbox>
+                    <listbox style="width: 500px;" id="jwe-profiles-devices-telephony-records" onselect="jwe_selectCallRecord();" ondblclick="jwe_modifyCallRecord();">
+                      <listhead>
+                        <listheader label="&jwe.profiles.devices.telephony.address;" />
+                        <listheader label="&jwe.profiles.devices.telephony.type;" />
+                        <listheader label="&jwe.profiles.devices.telephony.id;" />
+                      </listhead>
+                      <listcols>
+                        <listcol flex="1" />
+                        <splitter class="tree-splitter" />
+                        <listcol flex="1" />
+                        <splitter class="tree-splitter" />
+                        <listcol flex="1" />
+                      </listcols>
+                    </listbox>
+                    <hbox pack="end" class="jwe-profiles-buttons">
+                      <button label="&jwe.profiles.devices.telephony.new;" id="jwe-profiles-devices-telephony-new" oncommand="jwe_newCallRecord();" />
+                      <button label="&jwe.profiles.devices.telephony.modify;" id="jwe-profiles-devices-telephony-modify" oncommand="jwe_modifyCallRecord();" />
+                      <button label="&jwe.profiles.devices.telephony.delete;" id="jwe-profiles-devices-telephony-delete" oncommand="jwe_deleteCallRecord();" /> 
+                    </hbox>
+                  </vbox>
+                </groupbox>
+              </vbox>
+              
+              <hbox pack="end" class="jwe-profiles-buttons" flex="1">
+                <button label="&jwe.profiles.devices.save;" id="jwe-profiles-devices-save" oncommand="saveForm('device', '&jwe.profiles.devices.saveMessage;', '&jwe.profiles.save.successful;');" />
+                <button label="&jwe.profiles.devices.reset;" id="jwe-profiles-devices-reset" oncommand="resetForm('device', '&jwe.profiles.devices.resetMessage;');" /> 
+              </hbox>
+            </vbox>
+          </hbox>
+        </tabpanel>
+        
+        
+        <!-- MESSAGING PANEL START -->
+        <tabpanel flex="1">
+          <hbox>
+            <vbox align="center" id="jwe-profiles-sel-messaging-panel">
+              <listbox id="jwe-profiles-sel-messages-list" flex="1" onselect="jwe_Profiles.changeSelectedMessagingProfile();" style="width: 170px;"/>
+              <hbox pack="center" class="jwe-profiles-buttons">
+                  <button label="&jwe.profiles.messaging.add;" id="jwe-profiles-messaging-add" oncommand="jwe_newMessagingProfile();"/> 
+                  <button label="&jwe.profiles.messaging.remove;" id="jwe-profiles-messaging-remove" oncommand="jwe_deleteMessagingProfile('&jwe.profiles.messaging.remove.confirm;');"  disabled="true"/>
+              </hbox>
+            </vbox>
+            
+            <vbox class="jwe-profiles-panel-container">
+            
+              <hbox align="center" pack="end">
+              <label id="jwe-profiles-sel-messaging-api-caption" style="font-weight: bold;"/>
+                <menulist label="&jwe.profiles.messaging.tab.email;" align="right" id="jwe-profiles-sel-messaging-api-list">
+                  <menupopup>
+                    <menuitem label="&jwe.profiles.messaging.tab.email;" selected="true" onclick="jwe_changeMessagingPanel('jwe-profiles-messaging-panel-email'); jwe_Profiles.loadSubTab('mEmail');" id="jwe-subtab-mEmail"/>
+                    <menuitem label="&jwe.profiles.messaging.tab.folders;" onclick="jwe_changeMessagingPanel('jwe-profiles-messaging-panel-folders'); jwe_Profiles.loadSubTab('mFolders');" id="jwe-subtab-mFolders"/>
+                    <menuitem label="&jwe.profiles.messaging.tab.messages;" onclick="jwe_changeMessagingPanel('jwe-profiles-messaging-panel-messages'); jwe_Profiles.loadSubTab('mMessages');" id="jwe-subtab-mMessages"/>
+                  </menupopup>
+                </menulist>
+              </hbox>
+              
+              <vbox id="jwe-profiles-messaging-panel-email" class="jwe-profiles-inner-panel">
+                <groupbox>
+                  <caption label="&jwe.profiles.messaging.email;" class="jwe-defaultText" />
+                  <vbox>
+                    <listbox style="width: 500px;" id="jwe-profiles-messaging-emailaccounts" onselect="jwe_selectEmailAccount();" ondblclick="jwe_modifyEmailAccount();">
+                      <listhead>
+                        <listheader label="&jwe.profiles.messaging.email.name;" />
+                        <listheader label="&jwe.profiles.messaging.email.default;" />
+                      </listhead>
+                      <listcols>
+                        <listcol flex="1" />
+                        <splitter class="tree-splitter" />
+                        <listcol flex="1" />
+                      </listcols>
+                    </listbox>
+                    <hbox pack="end" class="jwe-profiles-buttons">
+                      <button label="&jwe.profiles.messaging.email.new;" id="jwe-profiles-messaging-email-new" oncommand="jwe_newEmailAccount();" />
+                      <button label="&jwe.profiles.messaging.email.modify;" id="jwe-profiles-messaging-email-modify" oncommand="jwe_modifyEmailAccount();" />
+                      <button label="&jwe.profiles.messaging.email.makedefault;" id="jwe-profiles-messaging-email-makedefault" oncommand="jwe_setDefaultEmailAccount();" /> 
+                      <button label="&jwe.profiles.messaging.email.delete;" id="jwe-profiles-messaging-email-delete" oncommand="jwe_deleteEmailAccount();" /> 
+                    </hbox>
+                    <description>&jwe.profiles.messaging.email.warning;</description>
+                  </vbox>
+                </groupbox>
+              </vbox>
+              
+              <vbox id="jwe-profiles-messaging-panel-folders" class="jwe-profiles-inner-panel" style="display: none;">
+                <groupbox>
+                  <caption label="&jwe.profiles.messaging.folders;" class="jwe-defaultText" />
+                  <vbox>
+                    <listbox style="width: 500px;" id="jwe-profiles-messaging-folders" onselect="jwe_selectMessageFolder();" ondblclick="jwe_modifyMessageFolder();">
+                      <listhead>
+                        <listheader label="&jwe.profiles.messaging.folders.name;" />
+                        <listheader label="&jwe.profiles.messaging.folders.type;" />
+                        <listheader label="&jwe.profiles.messaging.folders.messages;" />
+                      </listhead>
+                      <listcols>
+                        <listcol flex="1" />
+                        <splitter class="tree-splitter" />
+                        <listcol flex="1" />
+                        <splitter class="tree-splitter" />
+                        <listcol flex="1" />
+                      </listcols>
+                    </listbox>
+                    <hbox pack="end" class="jwe-profiles-buttons">
+                      <button label="&jwe.profiles.messaging.folders.new;" id="jwe-profiles-messaging-folders-new" oncommand="jwe_newMessageFolder();" />
+                      <button label="&jwe.profiles.messaging.folders.modify;" id="jwe-profiles-messaging-folders-modify" oncommand="jwe_modifyMessageFolder();" />
+                      <button label="&jwe.profiles.messaging.folders.delete;" id="jwe-profiles-messaging-folders-delete" oncommand="jwe_deleteMessageFolder();" /> 
+                    </hbox>
+                  </vbox>
+                </groupbox>
+              </vbox>
+              
+              <vbox id="jwe-profiles-messaging-panel-messages" class="jwe-profiles-inner-panel" style="display: none;">
+                <groupbox>
+                  <caption label="&jwe.profiles.messaging.messages;" class="jwe-defaultText" />
+                  <vbox>
+                    <listbox style="width: 500px;" id="jwe-profiles-messaging-messages" onselect="jwe_selectMessage();" ondblclick="jwe_modifyMessage();">
+                      <listhead>
+                        <listheader label="&jwe.profiles.messaging.messages.folder;" />
+                        <listheader label="&jwe.profiles.messaging.messages.to;" />
+                        <listheader label="&jwe.profiles.messaging.messages.subject;" />
+                        <listheader label="&jwe.profiles.messaging.messages.from;" />                      
+                      </listhead>
+                      <listcols>
+                        <listcol flex="1" />
+                        <splitter class="tree-splitter" />
+                        <listcol flex="1" />
+                        <splitter class="tree-splitter" />
+                        <listcol flex="1" />
+                        <splitter class="tree-splitter" />
+                        <listcol flex="1" />
+                      </listcols>
+                    </listbox>
+                    <hbox pack="end" class="jwe-profiles-buttons">
+                      <button label="&jwe.profiles.messaging.messages.new;" id="jwe-profiles-messaging-messages-new" oncommand="jwe_newMessage();" />
+                      <button label="&jwe.profiles.messaging.messages.modify;" id="jwe-profiles-messaging-messages-modify" oncommand="jwe_modifyMessage();" />
+                      <button label="&jwe.profiles.messaging.messages.delete;" id="jwe-profiles-messaging-messages-delete" oncommand="jwe_deleteMessage();" /> 
+                    </hbox>
+                  </vbox>
+                </groupbox>
+              </vbox>
+              
+              <hbox pack="end" class="jwe-profiles-buttons" flex="1">
+                <button label="&jwe.profiles.messaging.save;" id="jwe-profiles-messaging-save" oncommand="saveForm('messaging', '&jwe.profiles.messaging.saveMessage;', '&jwe.profiles.save.successful;');" />
+                <!--button label="&jwe.profiles.rename;" id="jwe-profiles-messaging-save" oncommand="jwe_RenameProfile('messaging', 'jwe-profiles-sel-messages-list');" /-->
+                <button label="&jwe.profiles.messaging.reset;" id="jwe-profiles-messaging-reset" oncommand="resetForm('messaging', '&jwe.profiles.messaging.resetMessage;');" /> 
+              </hbox>
+            </vbox>
+          </hbox>
+        </tabpanel>      
+                
+        
+        <!-- PIM PANEL START -->
+        <tabpanel flex="1">
+          <hbox>
+            <vbox align="center" id="jwe-profiles-sel-pim-panel">
+              <listbox id="jwe-profiles-sel-pims-list" flex="1" onselect="jwe_Profiles.changeSelectedPIMProfile();" style="width: 170px;"/>
+              <hbox pack="center" class="jwe-profiles-buttons">
+                  <button label="&jwe.profiles.pim.add;" id="jwe-profiles-pim-add" oncommand="jwe_newPIMProfile();"/> 
+                  <button label="&jwe.profiles.pim.remove;" id="jwe-profiles-pim-remove" oncommand="jwe_deletePIMProfile('&jwe.profiles.pim.remove.confirm;');"/>
+              </hbox>
+            </vbox>
+            
+            <vbox class="jwe-profiles-panel-container">
+            
+              <hbox align="center" pack="end">
+                <label id="jwe-profiles-sel-pim-api-caption" style="font-weight: bold;"/>
+                <menulist label="&jwe.profiles.pim.tab.address;" align="right" id="jwe-profiles-sel-pim-api-list">
+                  <menupopup>
+                    <menuitem label="&jwe.profiles.pim.tab.address;" selected="true" onclick="jwe_changePIMPanel('jwe-profiles-pim-panel-address'); jwe_Profiles.loadSubTab('pAddress');" id="jwe-subtab-pAddress"/>
+                    <menuitem label="&jwe.profiles.pim.tab.calendar;" onclick="jwe_changePIMPanel('jwe-profiles-pim-panel-calendar'); jwe_Profiles.loadSubTab('pCalendar');" id="jwe-subtab-pCalendar"/>
+                  </menupopup>
+                </menulist>
+              </hbox>
+              
+              <vbox id="jwe-profiles-pim-panel-address" class="jwe-profiles-inner-panel">
+                <groupbox>
+                  <caption label="&jwe.profiles.pim.attributes;" class="jwe-defaultText" />
+                  <vbox>      
+                    <listbox style="width: 300px;" id="jwe-profiles-pim-attributes" onselect="jwe_selectAddressAttribute();" ondblclick="jwe_modifyAddressAttribute();">
+                      <listhead>
+                        <listheader label="&jwe.profiles.pim.attributes.key;" />
+                      </listhead>
+                      <listcols>
+                        <listcol flex="1" />
+                      </listcols>
+                    </listbox>
+                    <hbox pack="end" class="jwe-profiles-buttons">
+                      <button label="&jwe.profiles.pim.attributes.new;" id="jwe-profiles-pim-attributes-new" oncommand="jwe_newAddressAttribute();" />
+                      <button label="&jwe.profiles.pim.attributes.modify;" id="jwe-profiles-pim-attributes-modify" oncommand="jwe_modifyAddressAttribute();" />
+                      <button label="&jwe.profiles.pim.attributes.delete;" id="jwe-profiles-pim-attributes-delete" oncommand="jwe_deleteAddressAttribute();" /> 
+                    </hbox>
+                  </vbox>
+                </groupbox>
+                <groupbox>
+                  <caption label="&jwe.profiles.pim.address;" class="jwe-defaultText" />
+                  <vbox>      
+                    <listbox style="width: 500px;" id="jwe-profiles-pim-addressbook" onselect="jwe_selectAddressBookItem();" ondblclick="jwe_modifyAddressBookItem();">
+                      <listhead>
+                        <listheader label="&jwe.profiles.pim.address.name;" />
+                        <listheader label="&jwe.profiles.pim.address.mobile;" />
+                        <listheader label="&jwe.profiles.pim.address.email;" />             
+                      </listhead>
+                      <listcols>
+                        <listcol flex="1" />
+                        <splitter class="tree-splitter" />
+                        <listcol flex="1" />
+                        <splitter class="tree-splitter" />
+                        <listcol flex="1" />
+                      </listcols>
+                    </listbox>
+                    <hbox pack="end" class="jwe-profiles-buttons">
+                      <button label="&jwe.profiles.pim.address.new;" id="jwe-profiles-pim-address-new" oncommand="jwe_newAddressBookItem();" />
+                      <button label="&jwe.profiles.pim.address.modify;" id="jwe-profiles-pim-address-modify" oncommand="jwe_modifyAddressBookItem();" />
+                      <button label="&jwe.profiles.pim.address.delete;" id="jwe-profiles-pim-address-delete" oncommand="jwe_deleteAddressBookItem();" /> 
+                    </hbox>
+                  </vbox>
+                </groupbox>
+                <groupbox>
+                  <caption label="&jwe.profiles.pim.groups;" class="jwe-defaultText" />
+                  <vbox>      
+                    <listbox style="width: 300px;" id="jwe-profiles-pim-addressgroups" onselect="jwe_selectAddressBookGroup();" ondblclick="jwe_modifyAddressBookGroup();">
+                      <listhead>
+                        <listheader label="&jwe.profiles.pim.groups.name;" />
+                        <listheader label="&jwe.profiles.pim.groups.items;" />
+                      </listhead>
+                      <listcols>
+                        <listcol flex="1" />
+                        <splitter class="tree-splitter" />
+                        <listcol flex="1" />
+                      </listcols>
+                    </listbox>
+                    <hbox pack="end" class="jwe-profiles-buttons">
+                      <button label="&jwe.profiles.pim.groups.new;" id="jwe-profiles-pim-groups-new" oncommand="jwe_newAddressBookGroup();" />
+                      <button label="&jwe.profiles.pim.groups.modify;" id="jwe-profiles-pim-groups-modify" oncommand="jwe_modifyAddressBookGroup();" />
+                      <button label="&jwe.profiles.pim.groups.delete;" id="jwe-profiles-pim-groups-delete" oncommand="jwe_deleteAddressBookGroup();" /> 
+                    </hbox>
+                  </vbox>
+                </groupbox>
+              </vbox>     
+              
+              <vbox id="jwe-profiles-pim-panel-calendar" class="jwe-profiles-inner-panel" style="display: none;">
+                <groupbox>
+                  <caption label="&jwe.profiles.pim.calendar;" class="jwe-defaultText" />
+                  <vbox>      
+                    <listbox style="width: 500px;" id="jwe-profiles-pim-calendaritems" onselect="jwe_selectCalendarItem();" ondblclick="jwe_modifyCalendarItem();">
+                      <listhead>
+                        <listheader label="&jwe.profiles.pim.calendar.name;" />
+                        <listheader label="&jwe.profiles.pim.calendar.start;" />
+                        <listheader label="&jwe.profiles.pim.calendar.end;" />             
+                      </listhead>
+                      <listcols>
+                        <listcol flex="1" />
+                        <splitter class="tree-splitter" />
+                        <listcol flex="1" />
+                        <splitter class="tree-splitter" />
+                        <listcol flex="1" />
+                      </listcols>
+                    </listbox>
+                    <hbox pack="end" class="jwe-profiles-buttons">
+                      <button label="&jwe.profiles.pim.calendar.new;" id="jwe-profiles-pim-calendar-new" oncommand="jwe_newCalendarItem();" />
+                      <button label="&jwe.profiles.pim.calendar.modify;" id="jwe-profiles-pim-calendar-modify" oncommand="jwe_modifyCalendarItem();" />
+                      <button label="&jwe.profiles.pim.calendar.delete;" id="jwe-profiles-pim-calendar-delete" oncommand="jwe_deleteCalendarItem();" /> 
+                    </hbox>
+                  </vbox>
+                </groupbox>
+              </vbox>     
+              
+              <hbox pack="end" class="jwe-profiles-buttons" flex="1">
+                <button label="&jwe.profiles.pim.save;" id="jwe-profiles-pim-save" oncommand="saveForm('pim', '&jwe.profiles.pim.saveMessage;', '&jwe.profiles.save.successful;');" />
+                <button label="&jwe.profiles.pim.reset;" id="jwe-profiles-pim-reset" oncommand="resetForm('pim', '&jwe.profiles.pim.resetMessage;');" /> 
+              </hbox>
+            </vbox>
+          </hbox>
+        </tabpanel>  
+        
+        <!-- IMPORT DEFAULTS PANEL START -->
+        <tabpanel flex="1">
+          <hbox>          
+            
+            <vbox style="width: 181px;">
+              <label style="display: none;" value="Placeholder"/>
+            </vbox>
+            
+            <vbox class="jwe-profiles-panel-container">
+              <hbox style="height: 29px;">
+                <label style="display: none;" value="Placeholder"/>
+              </hbox>
+              
+              <vbox class="jwe-profiles-inner-panel" flex="1">
+                <description style="font-weight: bold;">&jwe.profiles.defaults.caption;</description>
+                <vbox id="jwe-profiles-defualts-container">      
+                </vbox>
+              </vbox>     
+              
+              <hbox pack="end" class="jwe-profiles-buttons">
+                <button label="&jwe.profiles.defaults.save;" id="jwe-profiles-defaults-save" oncommand="jwe_saveDefaults('&jwe.profiles.defaults.saveMessage;', '&jwe.profiles.save.successful;');" />
+              </hbox>
+            </vbox>
+          </hbox>
+        </tabpanel>  
+    
+      </tabpanels>
+    </tabbox>
+
+    <hbox pack="beginning" class="jwe-profiles-buttons" style="width: 100%;">
+      <button label="&jwe.profiles.import;" id="jwe-profiles-import" oncommand="jwe_importProfiles('&jwe.profiles.import.success;', '&jwe.profiles.import.failed;');"/> 
+      <button label="&jwe.profiles.export;" id="jwe-profiles-export" oncommand="jwe_exportProfiles();"/> 
+      <spacer flex="1"/>
+      <button label="&jwe.profiles.ok;" id="jwe-profiles-ok" oncommand="closeForm('&jwe.profiles.ok.confirm;');" /> 
+    </hbox>
+
+  </vbox>
+
+  <html:script>
+  <![CDATA[  
+    function resetForm(type, message)
+    {
+      if ( confirm(message) )
+        jwe_Profiles.reset(type);
+    }
+    
+    function saveForm(type, message, successMessage)
+    {
+      if ( confirm(message) )
+        jwe_Profiles.save(type, successMessage);
+    }
+    
+    function closeForm(message)
+    {
+      if ( jwe_Profiles.unsavedChanges() )
+      {
+        if ( confirm(message) )
+          window.close();
+        else
+          return(false);
+      }
+      window.close();
+    }
+  ]]>
+  </html:script>
+
+</window>

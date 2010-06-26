@@ -1,0 +1,14 @@
+#include "nsISupports.idl"
+
+
+[scriptable, uuid(62592130-be90-11de-8a39-0800200c9a66)]
+interface jilPositionInfo : nsISupports
+{
+  attribute long accuracy;
+  attribute long altitude;
+  attribute long altitudeAccuracy;
+  attribute unsigned long cellID;
+  attribute long latitude;
+  attribute long longitude;
+  attribute string timeStamp; // !DATE
+};

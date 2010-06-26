@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="clickIt.js"></script>
+<script type="text/javascript" src="PIM_run.js"></script>
+<link rel="stylesheet" type="text/css" href="../style.css" />
+</head>
+
+<body>
+<div id="showDetail" class="bodyStyle">
+	<div id="textdivshowName" class="Nameclass"></div>	
+	<div id="textdivshowExplanation" class="ExplanationClass"></div>	
+	<div id="textdivshowSampleCode" class="ExplanationClass"></div>	
+	<div id="textdivshowInitialCondition" class="ExplanationClass"></div>
+	<div onclick="clickItResult();" id="textdivshowClick" class="ClickClass"><img src="../res/run_light.png" /></div>
+	<div id="textdivshowResult" class="ExplanationClass"></div>
+	<table id="back_table">	
+		<tr>
+			<td><a class="goTop" onClick="showEventRecurrent();"><img src="../res/back.png" /></a></td>
+			<td><a class="goTop" href="../main.html"><img src="../res/gotop.png" /></a></td>
+		</tr>
+	</table>
+</div>
+<div id="EventRecurrenceTypestest"  class="bodyStyle">
+	<div id="textdivNOT_REPEAT" class="oBodyStyle obStyle" onclick="not_repeat();"><a href="#">NOT_REPEAT</a></div>
+	<div id="textdivDAILY" class="oBodyStyle obStyle" onclick="daily();"><a href="#">DAILY</a></div>
+	<div id="textdivEVERY_WEEKDAY" class="oBodyStyle obStyle" onclick="every_weekday();"><a href="#">EVERY_WEEKDAY</a></div>
+	<div id="textdivWEEKLY_ON_DAY" class="oBodyStyle obStyle" onclick="weekly_on_day();"><a href="#">WEEKLY_ON_DAY</a></div>
+	<div id="textdivMONTHLY_ON_DAY" class="oBodyStyle obStyle" onclick="monthly_on_day();"><a href="#">MONTHLY_ON_DAY</a></div>
+	<div id="textdivaMONTHLY_ON_DAY_COUNT" class="oBodyStyle obStyle" onclick="monthly_on_day_count();"><a href="#"> MONTHLY_ON_DAY_COUNT</a></div>
+	<div id="textdivYEARLY" class="oBodyStyle obStyle" onclick="yearly();"><a href="#"> YEARLY</a> </div>
+	<table id="back_table">	
+		<tr>
+			<td><a class="goTop"  href="PIM.html"><img src="../res/back.png" /></a></td>
+			<td><a class="goTop" href="../main.html"><img src="../res/gotop.png" /></a></td>
+		</tr>
+	</table>
+</div>
+</body>
+</html>

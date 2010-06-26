@@ -1,0 +1,64 @@
+#include "jilService.idl"
+
+#include "jilMessage.idl"
+#include "jilAccount.idl"
+#include "jilMessageQuantities.idl"
+#include "jilMessageFolderTypes.idl"
+#include "jilMessageTypes.idl"
+#include "jilAccount.idl"
+
+
+[scriptable, function, uuid(36979016-3e81-11df-9879-0800200c9a66)]
+interface jilMEOnMessageArrived : nsISupports
+{
+  void invoke(in jilMessage msg);
+};
+
+[scriptable, function, uuid(36979017-3e81-11df-9879-0800200c9a66)]
+interface jilMEOnMessageSendingFailure : nsISupports
+{
+  void invoke(in jilMessage msg, in string error);
+};
+
+[scriptable, function, uuid(36979018-3e81-11df-9879-0800200c9a66)]
+interface jilMEOnMessagesFound : nsISupports
+{
+  void invoke([array, size_is(count)] in jilMessage messagesFound, in string folderName, [optional] in unsigned long count);
+};
+
+
+[scriptable, uuid(9e558061-baa4-11de-8a39-0800200c9a66)]
+interface jilMessaging : jilService
+{
+  attribute jilAccount Account;
+  attribute jilMessageQuantities MessageQuantities;
+  attribute jilMessageFolderTypes MessageFolderTypes;
+  attribute jilMessage Message;
+  attribute jilAttachment Attachment;
+  attribute jilMessageTypes MessageTypes;
+
+  attribute jilMEOnMessageArrived onMessageArrived;
+  attribute jilMEOnMessageSendingFailure onMessageSendingFailure;
+  attribute jilMEOnMessagesFound onMessagesFound;
+
+  void copyMessageToFolder(in jilMessage msg, in string destinationFolder);
+  void createFolder(in string messageType, in string folderName);
+  jilMessage createMessage(in string messageType);
+  void deleteAllMessages(in string messageType, in string folderName);
+  void deleteEmailAccount(in string accountId);
+  void deleteFolder(in string messageType, in string folderName);
+  void deleteMessage(in string messageType, in string folderName, in string id);
+  void findMessages(in jilMessage comparisonMsg, in string folderName, in long startInx, in long endInx);
+  jilAccount getCurrentEmailAccount();
+  void getEmailAccounts([optional] out unsigned long count, [array, size_is(count), retval] out jilAccount retv);
+  void getFolderNames(in string messageType, [optional] out unsigned long count, [array, size_is(count), retval] out string retv);
+  jilMessage getMessage(in string messageType, in string folderName, in long index);
+  jilMessageQuantities getMessageQuantities(in string messageType, in string folderName);
+  void moveMessageToFolder(in jilMessage msg, in string destinationFolder);
+  void sendMessage(in jilMessage msg);
+  void setCurrentEmailAccount(in string accountId);
+
+  // added to help the wrapper get empty objects
+  jilMessage getNewMessage();
+  jilAttachment getNewAttachment();
+}; 

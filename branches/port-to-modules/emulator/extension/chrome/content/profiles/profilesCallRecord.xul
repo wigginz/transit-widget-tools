@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://transit-emulator/skin/skin.css" type="text/css"?>
+<!DOCTYPE jilemulator SYSTEM "chrome://transit-emulator/locale/translations.dtd">
+
+
+
+<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        xmlns:html="http://www.w3.org/1999/xhtml"
+        id="jwe-profiles-popup-crec"        
+        title="&jwe.profiles.popup.crec.title;"
+        buttons="accept,cancel"
+        onload="jwe_populateForm();"
+        ondialogaccept="return jwe_saveForm();"
+        ondialogcancel="return true;">
+
+  <vbox flex="1" style="background-color: #CCCCCC;">
+  
+    <dialogheader title="&jwe.profiles.popup.crec.caption;"/>
+
+    <vbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.crec.name;" class="jwe-defaultText" style="width: 10em;"/>
+        <textbox id="jwe-profiles-popup-crec-name" size="25"/>
+      </hbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.crec.address;" class="jwe-defaultText" style="width: 10em;"/>
+        <textbox id="jwe-profiles-popup-crec-address" size="25"/>
+      </hbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.crec.type;" class="jwe-defaultText" style="width: 10em;"/>
+        <menulist align="right" oncommand="" id="jwe-profiles-popup-crec-typelist">
+          <menupopup id="jwe-profiles-popup-crec-type">
+            <menuitem label="&jwe.profiles.popup.crec.outgoing;" value="OUTGOING"/>
+            <menuitem label="&jwe.profiles.popup.crec.received;" value="RECEIVED"/>
+            <menuitem label="&jwe.profiles.popup.crec.missed;" value="MISSED"/>
+          </menupopup>
+        </menulist>
+      </hbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.crec.duration;" class="jwe-defaultText" style="width: 10em;"/>
+        <textbox id="jwe-profiles-popup-crec-duration" size="10"/>
+      </hbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.crec.start;" class="jwe-defaultText" style="width: 10em;"/>
+        <datepicker type="popup" id="jwe-profiles-popup-crec-startdate"/> <timepicker id="jwe-profiles-popup-crec-starttime"/>
+      </hbox>
+    </vbox>
+
+    <hbox pack="right" class="jwe-profiles-buttons">
+      <spacer flex="1"/>
+      <button dlgtype="accept" label="&jwe.profiles.popup.crec.ok;"/>
+      <button dlgtype="cancel" label="&jwe.profiles.popup.crec.cancel;"/>
+    </hbox>
+    
+  </vbox>
+
+<html:script>
+<![CDATA[
+
+function jwe_populateForm()
+{
+  var profileId = window.arguments[0].inn.profileId;
+  var record = window.arguments[0].inn.record;
+    
+  if ( record != null )
+  {
+    document.getElementById("jwe-profiles-popup-crec-name").value = record.name;
+    document.getElementById("jwe-profiles-popup-crec-address").value = record.address;    
+    document.getElementById("jwe-profiles-popup-crec-duration").value = record.durationSeconds;
+    
+    var type = record.type;
+    if ( type == "OUTGOING" )
+      document.getElementById("jwe-profiles-popup-crec-typelist").selectedIndex = 0;
+    else if ( type == "RECEIVED" )
+      document.getElementById("jwe-profiles-popup-crec-typelist").selectedIndex = 1;
+    else if ( type == "MISSED" )
+      document.getElementById("jwe-profiles-popup-crec-typelist").selectedIndex = 2;
+  }
+}
+
+function jwe_saveForm()
+{
+  var record =
+  {
+    name: document.getElementById("jwe-profiles-popup-crec-name").value,
+    address: document.getElementById("jwe-profiles-popup-crec-address").value,
+    durationSeconds: document.getElementById("jwe-profiles-popup-crec-duration").value,
+    type: document.getElementById("jwe-profiles-popup-crec-typelist").getItemAtIndex(document.getElementById("jwe-profiles-popup-crec-typelist").selectedIndex).value,
+    profileId: window.arguments[0].inn.profileId,
+    startTime: document.getElementById("jwe-profiles-popup-crec-startdate").value +document.getElementById("jwe-profiles-popup-crec-starttime").value
+  };
+  
+  if ( window.arguments[0].inn.record )
+  {
+    record.id = window.arguments[0].inn.record.id;
+    record.isChanged = true;
+  }
+  else
+  {
+    record.id = new Date().getTime();
+    record.isNew = true;
+  }
+
+  window.arguments[0].out = {record: record};
+  return(true);
+}
+
+]]>
+</html:script>
+
+</dialog>

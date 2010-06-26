@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="MessageObject.js"></script>
+<script type="text/javascript" src="Messaging_run.js"></script>
+<script type="text/javascript" src="../js/util.js"></script>
+<link rel="stylesheet" type="text/css" href="../style.css" />
+</head>
+
+<body>
+<div id="showDetail" class="bodyStyle">
+	<div id="textdivshowName" class="Nameclass"></div>	
+	<div id="textdivshowExplanation" class="ExplanationClass"></div>	
+	<div id="textdivshowSampleCode" class="ExplanationClass"></div>	
+	<div id="textdivshowInitialCondition" class="ExplanationClass"></div>
+	<div onclick="clickItResult();" id="textdivshowClick" class="ClickClass"><img src="../res/run_light.png" /></div>
+	<div id="textdivshowResult" class="ExplanationClass"></div>
+	<table id="back_table">	
+		<tr>
+			<td><a class="goTop" onClick="showMessageObject();"><img src="../res/back.png" /></a></td>
+			<td><a class="goTop" href="../main.html"><img src="../res/gotop.png" /></a></td>
+		</tr>
+	</table>
+</div>
+<div id="MessageObject" class="bodyStyle">
+	<div id="textdivsourceAddress" class="oBodyStyle obStyle"	onclick="addSourceAddess();"><a href="#">sourceAddress</a></div>	
+	<div id="textdivattachments" class="oBodyStyle obStyle"	onclick="setattachments();"><a href="#">attachments</a></div> 
+	<div id="textdivbccAddress" class="oBodyStyle obStyle"	onclick="setbccAddress();"><a href="#">bccAddress</a></div>	
+	<div id="textdivbody" class="oBodyStyle obStyle"	onclick="setbody();"><a href="#">body</a></div>	
+	<div id="textdivcallbackNumber" class="oBodyStyle obStyle"	onclick="setcallbackNumber();"><a href="#">callbackNumber</a></div>	
+	<div id="textdivccAddress" class="oBodyStyle obStyle"	onclick="setccAddress();"><a href="#">ccAddress</a></div>	
+	<div id="textdivdestinationAddress" class="oBodyStyle obStyle"	onclick="setdestinationAddress();"><a href="#">destinationAddress</a></div>	
+	<div id="textdivisRead" class="oBodyStyle obStyle"	onclick="setisRead();"><a href="#">isRead</a></div>	
+	<div id="textdivmessageId" class="oBodyStyle obStyle"	onclick="setmessageId();"><a href="#">messageId</a></div>	
+	<div id="textdivmessagePriority" class="oBodyStyle obStyle"	onclick="setmessagePriority();"><a href="#">messagePriority</a></div>	
+	<div id="textdivmessageType" class="oBodyStyle obStyle"	onclick="setmessageType();"><a href="#">messageType</a></div>	
+	<div id="textdivsubject" class="oBodyStyle obStyle"	onclick="setsubject();"><a href="#">subject</a></div>
+	<div id="textdivvalidityPeriodHours" class="oBodyStyle obStyle"	onclick="setvalidityPeriodHours();"><a href="#">validityPeriodHours</a></div>
+		
+	<div id="textdivaddDestinationAddresses" class="mStyle"	onclick="addDestinationAddress();"><a href="#" class="method_style"> addAddress</a></div>	
+	<div id="textdivdeleteDestinationAddress" class="mStyle"	onclick="deleteDestinationAddress();"><a href="#" class="method_style"> deleteAddress</a></div>
+	<div id="textdivaddAttachment" class="mStyle"	onclick="addAttchment();"><a href="#" class="method_style"> addAttachment</a></div>
+	<div id="textdivdeleteAttachment" class="mStyle"	onclick="deleteAttchment();"><a href="#" class="method_style"> deleteAttachment</a></div>
+	<div id="textdivsaveAttachment" class="mStyle"	onclick="saveAttachment();"><a href="#" class="method_style"> saveAttachment</a></div>
+
+	<table id="back_table">	
+		<tr>
+			<td><a class="goTop"  href="Messaging.html"><img src="../res/back.png" /></a></td>
+			<td><a class="goTop" href="../main.html"><img src="../res/gotop.png" /></a></td>
+		</tr>
+	</table>
+</div>
+</body>
+</html>

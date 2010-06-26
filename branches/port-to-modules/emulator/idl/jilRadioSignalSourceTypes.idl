@@ -1,0 +1,14 @@
+#include "nsISupports.idl"
+
+
+[scriptable, uuid(b1b5e230-383a-11df-9879-0800200c9a66)]
+interface jilRadioSignalSourceTypes : nsISupports
+{
+  attribute string CDMA;
+  attribute string GSM;
+  attribute string LTE;
+  attribute string TDSCDMA;
+  attribute string WCDMA;
+};
+
+

@@ -1,0 +1,543 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://transit-emulator/skin/skin.css" type="text/css"?>
+<!DOCTYPE jilemulator SYSTEM "chrome://transit-emulator/locale/translations.dtd">
+
+<window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        xmlns:html="http://www.w3.org/1999/xhtml"
+        id="jwe-emulator"
+        onload="jwe_emulator.init();"
+        onready="alert('ready');"
+        onunload="jwe_emulator.unload();"
+        title="&jwe.emulator.title;"
+        windowtype="jwe-emulator">
+
+  <script src="chrome://global/content/nsDragAndDrop.js"/>
+  <script src="chrome://global/content/nsTransferable.js"/>
+
+  <script src="chrome://transit-emulator/content/utils/utils.js" />
+  <script src="chrome://transit-emulator/content/emulator/emulator.js" />
+  <script src="chrome://transit-emulator/content/emulator/workspace.js" />
+  
+  <vbox>
+
+    <hbox pack="center" id="jwe-emulator-title">
+      <label id="jwe-emulator-widget-press-start" value="&jwe-emulator-press-start-button;"/>
+      <label id="jwe-emulator-widget-started" value="&jwe.emulator.emulating;" style="display: none;"/>
+      <label id="jwe-emulator-widget-name"/>
+    </hbox>
+    
+    <hbox pack="center">
+      
+    </hbox>
+    
+    <hbox pack="center" id="jwe-emulator-version">
+      <label value="&jwe-emulator-widget-name-version;"/>
+      <label id="jwe-emulator-widget-name-version"/>
+    </hbox>
+    
+    <hbox>
+    
+      <hbox id="jwe-emulator-workspace-container" minheight="800px" minwidth="480px">
+        <hbox id="jwe-emulator-workspace" 
+          ondragover="nsDragAndDrop.dragOver(event, jwe_workspace.workspaceObserver);"
+          ondragdrop="nsDragAndDrop.drop(event, jwe_workspace.workspaceObserver);">
+          <hbox id="jwe-emulator-container" 
+            onmousedown="jwe_workspace.mouseClick(event);" 
+            onmouseup="jwe_workspace.mouseUnClick(event);" 
+            ondraggesture="nsDragAndDrop.startDrag(event, jwe_workspace.contentObserver);">
+            <iframe id="jwe-emulator-content" type="chrome"/>
+          </hbox>
+        </hbox>
+      </hbox>
+
+      <vbox id="jwe-emulator-tab-container" maxwidth="400px">
+
+        <tabbox>
+        
+          <tabs>
+            <tab label="&jwe.emulator.tab.settings;" style="padding-left: 10px; padding-right: 10px;"/>
+            <tab label="&jwe.emulator.tab.events;" style="padding-left: 10px; padding-right: 10px;" oncommand="jwe_emulator.loadWidgetEvents();"/>
+            <tab label="&jwe.emulator.tab.log;" style="padding-left: 10px; padding-right: 10px;"/>
+          </tabs>
+          
+          <tabpanels>
+          
+            <tabpanel>
+              <vbox>
+                <groupbox style="width: 100%;">
+                  <caption label="&jwe.emulator.tab.settings.displaylabel;"/>
+                  <vbox>
+                    <checkbox id="jwe-emulator-settings-overflow" label="&jwe.emulator.tab.settings.overflow;" oncommand="jwe_emulator.toggleOverflow();"/>        
+                    <checkbox id="jwe-emulator-settings-dragborder" label="&jwe.emulator.tab.settings.dragborder;" oncommand="jwe_emulator.toggleDragBorder();"/>      
+                    <checkbox id="jwe-emulator-settings-fullscreen" label="&jwe.emulator.tab.settings.fullscreen;" oncommand="jwe_emulator.toggleFullScreen();"/> 
+                  </vbox>
+                </groupbox>
+                <button label="&jwe.emulator.errorConsole;" oncommand="jwe_emulator.launchErrorConsole();"/>
+              </vbox>      
+            </tabpanel>
+            
+            <tabpanel>
+              <vbox flex="1">
+                <hbox align="center" pack="end">
+                  <menulist id="jwe-emulator-subtab-widget-event-list" label="&jwe.emulator.tab.events.list.caption;" align="right">
+                    <menupopup>
+                      <menuitem label="&jwe.emulator.tab.events.list.widget;" oncommand="jwe_emulator.switchEventPanel('widget');"/>
+                      <menuitem label="&jwe.emulator.tab.events.list.device;" oncommand="jwe_emulator.switchEventPanel('device');"/>
+                      <menuitem label="&jwe.emulator.tab.events.list.devicestate;" oncommand="jwe_emulator.switchEventPanel('devicestate');"/>
+                      <menuitem label="&jwe.emulator.tab.events.list.power;" oncommand="jwe_emulator.switchEventPanel('power');"/>
+                      <menuitem label="&jwe.emulator.tab.events.list.network;" oncommand="jwe_emulator.switchEventPanel('network');"/>
+                      <menuitem label="&jwe.emulator.tab.events.list.radio;" oncommand="jwe_emulator.switchEventPanel('radio');"/>
+                      <menuitem label="&jwe.emulator.tab.events.list.messaging;" oncommand="jwe_emulator.switchEventPanel('messaging');"/>
+                      <menuitem label="&jwe.emulator.tab.events.list.audio;" oncommand="jwe_emulator.switchEventPanel('audio');"/>
+                      <menuitem label="&jwe.emulator.tab.events.list.video;" oncommand="jwe_emulator.switchEventPanel('video');"/>
+                      <menuitem label="&jwe.emulator.tab.events.list.camera;" oncommand="jwe_emulator.switchEventPanel('camera');"/>
+                      <menuitem label="&jwe.emulator.tab.events.list.pim;" oncommand="jwe_emulator.switchEventPanel('pim');"/>
+                      <menuitem label="&jwe.emulator.tab.events.list.telephony;" oncommand="jwe_emulator.switchEventPanel('telephony');"/>
+                    </menupopup>
+                  </menulist>
+                  <button label="&jwe.emulator.controls.popout;" onclick="jwe_emulator.launchControls();"/>
+                </hbox>
+                
+                <vbox id="jwe-emulator-subtab-widget" style="display: none;">      
+                  <vbox class="jwe-emulator-events-panel">
+                    <groupbox>
+                      <caption label="&jwe.emulator.tab.events.widget;"/>
+                      <radiogroup id="jwe-emulator-subtab-widget-event">
+                        <radio label="&jwe.emulator.tab.events.widget.onfocus;" value="onFocus" oncommand="jwe_emulator.showEventContext('onfocus');"/>
+                        <radio label="&jwe.emulator.tab.events.widget.onmax;" value="onMaximize" oncommand="jwe_emulator.showEventContext('onmaximize');"/>
+                        <radio label="&jwe.emulator.tab.events.widget.onrestore;" value="onRestore" oncommand="jwe_emulator.showEventContext('onrestore');"/>
+                        <radio label="&jwe.emulator.tab.events.widget.onwakeup;" value="onWakeup" oncommand="jwe_emulator.showEventContext('onwakeup');"/>
+                      </radiogroup>
+                    </groupbox>
+                    <groupbox>
+                      <caption label="&jwe.emulator.tab.events.context;"/>
+                      <vbox id="jwe-emulator-subtab-event-context-onfocus">
+                        <label value="&jwe.emulator.tab.events.context.none;"/>
+                      </vbox>
+                      <vbox id="jwe-emulator-subtab-event-context-onmaximize" style="display: none;">
+                        <checkbox id="jwe-emulator-subtab-event-context-onmaximize-forcemax" label="&jwe.emulator.tab.events.widget.onmax.context.forcemax;" checked="true"/>
+                      </vbox>
+                      <vbox id="jwe-emulator-subtab-event-context-onrestore" style="display: none;">
+                        <label value="&jwe.emulator.tab.events.context.none;"/>
+                      </vbox>
+                      <vbox id="jwe-emulator-subtab-event-context-onwakeup" style="display: none;">
+                        <label value="&jwe.emulator.tab.events.context.none;"/>
+                      </vbox>
+                    </groupbox>
+                  </vbox>
+                  <button label="&jwe.emulator.tab.events.context.trigger;" oncommand="jwe_emulator.triggerWidgetEvent();"/>
+                </vbox>
+                
+                <vbox id="jwe-emulator-subtab-device" style="display: none;">
+                  <vbox class="jwe-emulator-events-panel">
+                    <groupbox>
+                      <caption label="&jwe.emulator.tab.events.device;"/>
+                      <radiogroup id="jwe-emulator-subtab-device-event">
+                        <radio label="&jwe.emulator.tab.events.device.onfilesfound;" value="onFilesFound" oncommand="jwe_emulator.showEventContext('onfilesfound');"/>
+                      </radiogroup>
+                    </groupbox>
+                    <groupbox>
+                      <caption label="&jwe.emulator.tab.events.context;"/>
+                      <vbox id="jwe-emulator-subtab-event-context-onfilesfound" minwidth="400px" maxwidth="400px">
+                          <description>&jwe.emulator.tab.events.context.nonevent;</description>
+                      </vbox> 
+                    </groupbox>
+                  </vbox>
+                  <button label="&jwe.emulator.tab.events.context.trigger;" oncommand="jwe_emulator.triggerDeviceEvent();"/>
+                </vbox>
+                
+                <vbox id="jwe-emulator-subtab-devicestate" style="display: none;">
+                  <vbox class="jwe-emulator-events-panel">
+                    <groupbox>
+                      <caption label="&jwe.emulator.tab.events.devicestate;"/>
+                      <radiogroup id="jwe-emulator-subtab-devicestate-event">
+                        <radio label="&jwe.emulator.tab.events.devicestate.onflip;" value="onFlipEvent" oncommand="jwe_emulator.showEventContext('onflip');"/>
+                        <radio label="&jwe.emulator.tab.events.devicestate.onposition;" value="onPositionRetrieved" oncommand="jwe_emulator.showEventContext('onposition');"/>
+                        <radio label="&jwe.emulator.tab.events.devicestate.onscreenchange;" value="onScreenChangeDimensions" oncommand="jwe_emulator.showEventContext('onscreenchange');"/>
+                      </radiogroup>
+                    </groupbox>                    
+                    <groupbox>
+                      <caption label="&jwe.emulator.tab.events.context;"/>
+                      <vbox id="jwe-emulator-subtab-event-context-onflip">
+                        <checkbox id="jwe-emulator-subtab-event-context-onflip-fliptrue" label="&jwe.emulator.tab.events.devicestate.onflip.context.fliptrue;" checked="false"/>
+                      </vbox>
+                      <vbox id="jwe-emulator-subtab-event-context-onposition" style="display: none;">
+                        <hbox align="center">
+                          <label value="&jwe.emulator.tab.events.devicestate.onposition.context.accuracy;" style="width: 14em;"/>
+                          <textbox id="jwe-emulator-subtab-event-context-onposition-accuracy" size="5"/>
+                        </hbox>
+                        <hbox align="center">
+                          <label value="&jwe.emulator.tab.events.devicestate.onposition.context.altitude;" style="width: 14em;"/>
+                          <textbox id="jwe-emulator-subtab-event-context-onposition-altitude" size="5"/>
+                        </hbox>
+                        <hbox align="center">
+                          <label value="&jwe.emulator.tab.events.devicestate.onposition.context.altitudeaccuracy;" style="width: 14em;"/>
+                          <textbox id="jwe-emulator-subtab-event-context-onposition-altitudeaccuracy" size="5"/>
+                        </hbox>
+                        <hbox align="center">
+                          <label value="&jwe.emulator.tab.events.devicestate.onposition.context.cellid;" style="width: 14em;"/>
+                          <textbox id="jwe-emulator-subtab-event-context-onposition-cellid" size="15"/>
+                        </hbox>
+                        <hbox align="center">
+                          <label value="&jwe.emulator.tab.events.devicestate.onposition.context.latitude;" style="width: 14em;"/>
+                          <textbox id="jwe-emulator-subtab-event-context-onposition-latitude" size="15"/>
+                        </hbox>
+                        <hbox align="center">
+                          <label value="&jwe.emulator.tab.events.devicestate.onposition.context.longitude;" style="width: 14em;"/>
+                          <textbox id="jwe-emulator-subtab-event-context-onposition-longitude" size="15"/>
+                        </hbox>
+                        <checkbox id="jwe-emulator-subtab-event-context-onposition-failure" label="&jwe.emulator.tab.events.devicestate.onposition.context.failure;" checked="false" oncommand="jwe_emulator.togglePositionContext();"/>
+                      </vbox>
+                      <vbox id="jwe-emulator-subtab-event-context-onscreenchange" style="display: none;">
+                        <hbox align="center">
+                          <label value="&jwe.emulator.tab.events.devicestate.onscreenchange.context.newwidth;" style="width: 14em;"/>
+                          <textbox id="jwe-emulator-subtab-event-context-onscreenchange-newwidth" size="5"/>
+                        </hbox> 
+                        <hbox align="center">
+                          <label value="&jwe.emulator.tab.events.devicestate.onscreenchange.context.newheight;" style="width: 14em;"/>
+                          <textbox id="jwe-emulator-subtab-event-context-onscreenchange-newheight" size="5"/>
+                        </hbox> 
+                        <checkbox id="jwe-emulator-subtab-event-context-onscreenchange-resize" label="&jwe.emulator.tab.events.devicestate.onscreenchange.context.resize;" checked="false" oncommand="jwe_emulator.togglePositionContext();"/>
+                      </vbox>
+                    </groupbox>
+                  </vbox>
+                  <button label="&jwe.emulator.tab.events.context.trigger;" oncommand="jwe_emulator.triggerDeviceStateEvent();"/>
+                </vbox>
+                
+                <vbox id="jwe-emulator-subtab-power" style="display: none;">
+                  <vbox class="jwe-emulator-events-panel">
+                    <groupbox>
+                      <caption label="&jwe.emulator.tab.events.power;"/>
+                      <radiogroup id="jwe-emulator-subtab-power-event">
+                        <radio label="&jwe.emulator.tab.events.power.onchargelevel;" value="onChargeLevelChange" oncommand="jwe_emulator.showEventContext('onchargelevel');"/>
+                        <radio label="&jwe.emulator.tab.events.power.onchargestate;" value="onChargeStateChange" oncommand="jwe_emulator.showEventContext('onchargestate');"/>
+                        <radio label="&jwe.emulator.tab.events.power.onlowbattery;" value="onLowBattery" oncommand="jwe_emulator.showEventContext('onlowbattery');"/>
+                      </radiogroup>
+                    </groupbox>
+                    <groupbox>
+                      <caption label="&jwe.emulator.tab.events.context;"/>
+                      <vbox id="jwe-emulator-subtab-event-context-onchargelevel">
+                        <hbox align="center">
+                          <label value="&jwe.emulator.tab.events.power.onchargelevel.context.newlevel;" style="width: 14em;"/>
+                          <textbox type="number" size="3" id="jwe-emulator-subtab-event-context-onchargelevel-newlevel" min="0" max="100"/> %
+                        </hbox> 
+                      </vbox>
+                      <vbox id="jwe-emulator-subtab-event-context-onchargestate" style="display: none;">
+                        <hbox align="center">
+                          <label value="&jwe.emulator.tab.events.power.onchargestate.context.state;" style="width: 14em;"/>
+                          <menulist id="jwe-emulator-subtab-event-context-onchargestate-state">
+                            <menupopup>
+                              <menuitem label="&jwe.emulator.tab.events.power.onchargestate.context.state.charging;" value="charging"/>
+                              <menuitem label="&jwe.emulator.tab.events.power.onchargestate.context.state.discharging;" value="discharging"/>
+                              <menuitem label="&jwe.emulator.tab.events.power.onchargestate.context.state.full;" value="full"/>
+                            </menupopup>
+                          </menulist>
+                        </hbox> 
+                      </vbox>
+                      <vbox id="jwe-emulator-subtab-event-context-onlowbattery" style="display: none;">
+                        <hbox align="center">
+                          <label value="&jwe.emulator.tab.events.power.onlowbattery.context.remaining;" style="width: 14em;"/>
+                          <textbox type="number" size="3" id="jwe-emulator-subtab-event-context-onlowbattery-remaining" min="0" max="100"/> %
+                        </hbox>
+                      </vbox>
+                    </groupbox>
+                  </vbox>
+                  <button label="&jwe.emulator.tab.events.context.trigger;" oncommand="jwe_emulator.triggerPowerInfoEvent();"/>
+                </vbox>
+
+                <vbox id="jwe-emulator-subtab-network" style="display: none;">
+                  <vbox class="jwe-emulator-events-panel">
+                    <groupbox>
+                      <caption label="&jwe.emulator.tab.events.network;"/>
+                      <radiogroup id="jwe-emulator-subtab-network-event">
+                        <radio label="&jwe.emulator.tab.events.network.onnetworkchange;" value="onNetworkConnectionChanged" oncommand="jwe_emulator.showEventContext('onnetworkchange');"/>
+                      </radiogroup>
+                    </groupbox>
+                    <groupbox>
+                      <caption label="&jwe.emulator.tab.events.context;"/>
+                      <vbox id="jwe-emulator-subtab-event-context-onnetworkchange">
+                        <hbox align="center">
+                          <label value="&jwe.emulator.tab.events.power.onnetworkchange.context.name;" style="width: 14em;"/>
+                          <menulist id="jwe-emulator-subtab-event-context-onnetworkchange-type"/>
+                        </hbox> 
+                      </vbox>
+                    </groupbox>
+                  </vbox>
+                  <button label="&jwe.emulator.tab.events.context.trigger;" oncommand="jwe_emulator.triggerDataNetworkEvent();"/>
+                </vbox>
+                
+                <vbox id="jwe-emulator-subtab-radio" style="display: none;">
+                  <vbox class="jwe-emulator-events-panel">
+                    <groupbox>
+                      <caption label="&jwe.emulator.tab.events.radio;"/>
+                      <radiogroup id="jwe-emulator-subtab-radio-event">
+                        <radio label="&jwe.emulator.tab.events.radio.onsignalchange;" value="onSignalSourceChange" oncommand="jwe_emulator.showEventContext('onsignalchange');"/>
+                      </radiogroup>
+                    </groupbox>
+                    <groupbox>
+                      <caption label="&jwe.emulator.tab.events.context;"/>
+                      <vbox id="jwe-emulator-subtab-event-context-onsignalchange">
+                        <hbox align="center">
+                          <label value="&jwe.emulator.tab.events.radio.onsignalchange.context.source;" style="width: 14em;"/>
+                          <menulist id="jwe-emulator-subtab-event-context-onsignalchange-source">
+                            <menupopup>
+                              <menuitem label="&jwe.emulator.tab.events.radio.onsignalchange.context.source.cdma;" value="CDMA"/>
+                              <menuitem label="&jwe.emulator.tab.events.radio.onsignalchange.context.source.gsm;" value="GSM"/>
+                              <menuitem label="&jwe.emulator.tab.events.radio.onsignalchange.context.source.lte;" value="LTE"/>
+                              <menuitem label="&jwe.emulator.tab.events.radio.onsignalchange.context.source.tdscdma;" value="TDSCDMA"/>
+                              <menuitem label="&jwe.emulator.tab.events.radio.onsignalchange.context.source.wcdma;" value="WCDMA"/>
+                            </menupopup>
+                          </menulist>
+                        </hbox> 
+                        <checkbox id="jwe-emulator-subtab-event-context-onsignalchange-roaming" label="&jwe.emulator.tab.events.radio.onsignalchange.context.roaming;" checked="false"/>
+                      </vbox>
+                    </groupbox>
+                  </vbox>
+                  <button label="&jwe.emulator.tab.events.context.trigger;" oncommand="jwe_emulator.triggerRadioEvent();"/>
+                </vbox>
+                
+                <vbox id="jwe-emulator-subtab-messaging" style="display: none;">
+                  <vbox class="jwe-emulator-events-panel">
+                    <groupbox>
+                      <caption label="&jwe.emulator.tab.events.messaging;"/>
+                      <radiogroup id="jwe-emulator-subtab-messaging-event">
+                        <radio label="&jwe.emulator.tab.events.messaging.onmsgarrived;" value="onMessageArrived" oncommand="jwe_emulator.showEventContext('onmessagearrived');"/>
+                        <radio label="&jwe.emulator.tab.events.messaging.onmsgsendfail;" value="onMessageSendingFailure" oncommand="jwe_emulator.showEventContext('onmessagesendingfailure');"/>
+                        <radio label="&jwe.emulator.tab.events.messaging.onmsgsfound;" value="onMessagesFound" oncommand="jwe_emulator.showEventContext('onmessagesfound');"/>
+                      </radiogroup>
+                    </groupbox>
+                    <groupbox>
+                      <caption label="&jwe.emulator.tab.events.context;"/>
+                      <vbox id="jwe-emulator-subtab-event-context-onmessagearrived">
+                        <hbox align="center">
+                          <label value="&jwe.emulator.tab.events.messaging.onmessagearrived.context.subject;" style="width: 14em;"/>
+                          <menulist id="jwe-emulator-subtab-event-context-onmessagearrived-messages"/>
+                        </hbox> 
+                      </vbox>
+                      <vbox id="jwe-emulator-subtab-event-context-onmessagesendingfailure" style="display: none;">
+                        <hbox align="center">
+                          <label value="&jwe.emulator.tab.events.messaging.onmessagefailure.context.subject;" style="width: 14em;"/>
+                          <menulist id="jwe-emulator-subtab-event-context-onmessagefailure-messages"/>
+                        </hbox> 
+                        <hbox align="center">
+                          <label value="&jwe.emulator.tab.events.messaging.onmessagefailure.context.error;" style="width: 14em;"/>
+                          <textbox size="25" id="jwe-emulator-subtab-event-context-onmessagefailure-error"/>
+                        </hbox> 
+                      </vbox>
+                      <vbox id="jwe-emulator-subtab-event-context-onmessagesfound" style="display: none;" minwidth="400px" maxwidth="400px">
+                          <description>&jwe.emulator.tab.events.context.nonevent;</description>
+                      </vbox> 
+                    </groupbox>
+                  </vbox>
+                  <button id="" label="&jwe.emulator.tab.events.context.trigger;" oncommand="jwe_emulator.triggerMessagingEvent();"/>
+                </vbox>
+                
+                <vbox id="jwe-emulator-subtab-audio" style="display: none;">
+                  <vbox class="jwe-emulator-events-panel">
+                    <groupbox>
+                    <caption label="&jwe.emulator.tab.events.audio;"/>
+                      <radiogroup id="jwe-emulator-subtab-audio-event">
+                        <radio label="&jwe.emulator.tab.events.audio.onstatechange;" value="onStateChange" oncommand="jwe_emulator.showEventContext('audioonstatechange');"/>
+                      </radiogroup>
+                    </groupbox>
+                    <groupbox>
+                      <caption label="&jwe.emulator.tab.events.context;"/>
+                      <vbox id="jwe-emulator-subtab-event-context-audioonstatechange">
+                        <hbox align="center">
+                          <label value="&jwe.emulator.tab.events.audio.onstatechange.context.state;" style="width: 14em;"/>
+                          <menulist id="jwe-emulator-subtab-event-context-audioonstatechange-state">
+                            <menupopup>
+                              <menuitem label="&jwe.emulator.tab.events.audio.onstatechange.context.state.opened;" value="opened"/>
+                              <menuitem label="&jwe.emulator.tab.events.audio.onstatechange.context.state.playing;" value="playing"/>
+                              <menuitem label="&jwe.emulator.tab.events.audio.onstatechange.context.state.paused;" value="paused"/>
+                              <menuitem label="&jwe.emulator.tab.events.audio.onstatechange.context.state.stopped;" value="stopped"/>
+                              <menuitem label="&jwe.emulator.tab.events.audio.onstatechange.context.state.completed;" value="completed"/>
+                            </menupopup>
+                          </menulist>
+                        </hbox> 
+                      </vbox>
+                    </groupbox>
+                  </vbox>
+                  <button id="" label="&jwe.emulator.tab.events.context.trigger;" oncommand="jwe_emulator.triggerAudioEvent();"/>
+                </vbox>
+                
+                <vbox id="jwe-emulator-subtab-video" style="display: none;">
+                  <vbox class="jwe-emulator-events-panel">
+                    <groupbox>
+                      <caption label="&jwe.emulator.tab.events.video;"/>
+                      <radiogroup id="jwe-emulator-subtab-video-event">
+                        <radio label="&jwe.emulator.tab.events.video.onstatechange;" value="onStateChange" oncommand="jwe_emulator.showEventContext('videoonstatechange');"/>
+                      </radiogroup>
+                    </groupbox>
+                    <groupbox>
+                      <caption label="&jwe.emulator.tab.events.context;"/>
+                      <vbox id="jwe-emulator-subtab-event-context-videoonstatechange">
+                        <hbox align="center">
+                          <label value="&jwe.emulator.tab.events.video.onstatechange.context.state;" style="width: 14em;"/>
+                          <menulist id="jwe-emulator-subtab-event-context-videoonstatechange-state">
+                            <menupopup>
+                              <menuitem label="&jwe.emulator.tab.events.video.onstatechange.context.state.opened;" value="opened"/>
+                              <menuitem label="&jwe.emulator.tab.events.video.onstatechange.context.state.playing;" value="playing"/>
+                              <menuitem label="&jwe.emulator.tab.events.video.onstatechange.context.state.paused;" value="paused"/>
+                              <menuitem label="&jwe.emulator.tab.events.video.onstatechange.context.state.stopped;" value="stopped"/>
+                              <menuitem label="&jwe.emulator.tab.events.video.onstatechange.context.state.completed;" value="completed"/>
+                            </menupopup>
+                          </menulist>
+                        </hbox> 
+                      </vbox>
+                    </groupbox>
+                  </vbox>
+                  <button id="" label="&jwe.emulator.tab.events.context.trigger;" oncommand="jwe_emulator.triggerVideoEvent();"/>
+                </vbox>
+                
+                <vbox id="jwe-emulator-subtab-camera" style="display: none;">
+                  <vbox class="jwe-emulator-events-panel">
+                    <groupbox>
+                      <caption label="&jwe.emulator.tab.events.camera;"/>
+                      <radiogroup id="jwe-emulator-subtab-camera-event">
+                        <radio label="&jwe.emulator.tab.events.camera.oncaptured;" value="onCameraCaptured" oncommand="jwe_emulator.showEventContext('oncameracaptured');"/>
+                      </radiogroup>
+                    </groupbox>
+                    <groupbox>
+                      <caption label="&jwe.emulator.tab.events.context;"/>
+                      <vbox id="jwe-emulator-subtab-event-context-oncameracaptured">
+                        <hbox align="center">
+                          <label value="&jwe.emulator.tab.events.camera.oncameracaptured.context.rootpath;" style="width: 14em;"/>
+                          <menulist id="jwe-emulator-subtab-event-context-oncameracaptured-rootpaths" onselect="jwe_emulator.changeCameraPaths();"/>
+                        </hbox>
+                        <hbox align="center">
+                          <label value="&jwe.emulator.tab.events.camera.oncameracaptured.context.localpath;" style="width: 14em;"/>
+                          <textbox size="25" id="jwe-emulator-subtab-event-context-oncameracaptured-localpath" readonly="true"/>
+                        </hbox> 
+                        <hbox align="center">
+                          <label value="&jwe.emulator.tab.events.camera.oncameracaptured.context.filename;" style="width: 14em;"/>
+                          <textbox size="25" id="jwe-emulator-subtab-event-context-oncameracaptured-filename" oninput="jwe_emulator.changeCameraPaths();"/>
+                        </hbox> 
+                        <hbox align="center">
+                          <label value="&jwe.emulator.tab.events.camera.oncameracaptured.context.localfile;" style="width: 14em;"/>
+                          <textbox size="25" id="jwe-emulator-subtab-event-context-oncameracaptured-localfile" readonly="true"/>
+                        </hbox>
+                        <hbox align="center">
+                          <label value="&jwe.emulator.tab.events.camera.oncameracaptured.context.sentfile;" style="width: 14em;"/>
+                          <textbox size="25" id="jwe-emulator-subtab-event-context-oncameracaptured-sentfile" readonly="true"/>
+                        </hbox> 
+                        <hbox align="center">
+                          <label value="&jwe.emulator.tab.events.camera.oncameracaptured.context.pathwarning;" style="font-style: italic;"/>
+                        </hbox> 
+                      </vbox>
+                    </groupbox>
+                  </vbox>
+                  <button id="" label="&jwe.emulator.tab.events.context.trigger;" oncommand="jwe_emulator.triggerCameraEvent();"/>
+                </vbox>
+                
+                <vbox id="jwe-emulator-subtab-pim" style="display: none;">
+                  <vbox class="jwe-emulator-events-panel">
+                    <groupbox>
+                      <caption label="&jwe.emulator.tab.events.pim;"/>
+                      <radiogroup id="jwe-emulator-subtab-pim-event">
+                        <radio label="&jwe.emulator.tab.events.pim.onaddrfound;" value="onAddressBookItemsFound" oncommand="jwe_emulator.showEventContext('onaddressbookitemsfound');"/>
+                        <radio label="&jwe.emulator.tab.events.pim.oncalendaralert;" value="onCalendarItemAlert" oncommand="jwe_emulator.showEventContext('oncalendaritemalert');"/>
+                        <radio label="&jwe.emulator.tab.events.pim.oncalfound;" value="onCalendarItemsFound" oncommand="jwe_emulator.showEventContext('oncalendaritemsfound');"/>
+                        <radio label="&jwe.emulator.tab.events.pim.onvcardexport;" value="onVCardExportingFinish" oncommand="jwe_emulator.showEventContext('onvcardexportingfinish');"/>
+                      </radiogroup>
+                    </groupbox>
+                    <groupbox>
+                      <caption label="&jwe.emulator.tab.events.context;"/>
+                      <vbox id="jwe-emulator-subtab-event-context-onaddressbookitemsfound" minwidth="400px" maxwidth="400px">
+                          <description>&jwe.emulator.tab.events.context.nonevent;</description>
+                      </vbox> 
+                      <vbox id="jwe-emulator-subtab-event-context-oncalendaritemalert" style="display: none;">
+                        <hbox align="center">
+                          <label value="&jwe.emulator.tab.events.pim.oncalendaritemalert.context.calitems;" style="width: 14em;"/>
+                          <menulist id="jwe-emulator-subtab-event-context-oncalendaritemalert-calitems"/>
+                        </hbox>
+                      </vbox> 
+                      <vbox id="jwe-emulator-subtab-event-context-oncalendaritemsfound" style="display: none;" minwidth="400px" maxwidth="400px">
+                          <description>&jwe.emulator.tab.events.context.nonevent;</description>
+                      </vbox>
+                      <vbox id="jwe-emulator-subtab-event-context-onvcardexportingfinish" style="display: none;" minwidth="400px" maxwidth="400px">
+                          <description>&jwe.emulator.tab.events.context.nonevent;</description>
+                      </vbox> 
+                    </groupbox>
+                  </vbox>
+                  <button id="" label="&jwe.emulator.tab.events.context.trigger;" oncommand="jwe_emulator.triggerPIMEvent();"/>
+                </vbox>
+
+                <vbox id="jwe-emulator-subtab-telephony" style="display: none;">
+                  <vbox class="jwe-emulator-events-panel">
+                    <groupbox>
+                      <caption label="&jwe.emulator.tab.events.telephony;"/>
+                      <radiogroup id="jwe-emulator-subtab-telephony-event">
+                        <radio label="&jwe.emulator.tab.events.telephony.oncall;" value="onCallEvent" oncommand="jwe_emulator.showEventContext('oncallevent');"/>
+                        <radio label="&jwe.emulator.tab.events.telephony.oncallrecfound;" value="onCallRecordsFound" oncommand="jwe_emulator.showEventContext('oncallrecordsfound');"/>
+                      </radiogroup>
+                    </groupbox>
+                    <groupbox>
+                      <caption label="&jwe.emulator.tab.events.context;"/>
+                      <vbox id="jwe-emulator-subtab-event-context-oncallevent">
+                        <hbox align="center">
+                          <label value="&jwe.emulator.tab.events.telephony.oncallevent.context.type;" style="width: 14em;"/>
+                          <menulist id="jwe-emulator-subtab-event-context-oncallevent-type">
+                            <menupopup>
+                              <menuitem label="&jwe.emulator.tab.events.telephony.oncallevent.context.missed;" value="MISSED"/>
+                              <menuitem label="&jwe.emulator.tab.events.telephony.oncallevent.context.outgoing;" value="OUTGOING"/>
+                              <menuitem label="&jwe.emulator.tab.events.telephony.oncallevent.context.received;" value="RECEIVED"/>
+                            </menupopup>
+                          </menulist>
+                        </hbox>
+                        <hbox align="center">
+                          <label value="&jwe.emulator.tab.events.telephony.oncall.context.number;" style="width: 14em;"/>
+                          <textbox size="25" id="jwe-emulator-subtab-event-context-oncallevent-number"/>
+                        </hbox>
+                      </vbox> 
+                      <vbox id="jwe-emulator-subtab-event-context-oncallrecordsfound" style="display: none;" minwidth="400px" maxwidth="400px">
+                          <description>&jwe.emulator.tab.events.context.nonevent;</description>
+                      </vbox> 
+                    </groupbox>
+                  </vbox>
+                  <button id="" label="&jwe.emulator.tab.events.context.trigger;" oncommand="jwe_emulator.triggerTelephonyEvent();"/>
+                </vbox>  
+                
+                <label value="&jwe.emulator.tab.events.context.warning;" style="font-style: italic;"/>
+              </vbox>
+                         
+            </tabpanel>
+            
+            <tabpanel>
+              <groupbox>
+                <caption label="&jwe.emulator.log.status.label;"/>
+                <vbox>
+                  <label value="&jwe.emulator.log.warning.caption;"/>
+                  <textbox id="jwe-log" readonly="false" multiline="true" cols="50" rows="30" wrap="off" />
+                  <hbox>
+                    <button label="&jwe.emulator.log.clear;" id="jwe-log-clear" oncommand="jwe_emulator.clearLog();" />
+                    <button label="&jwe.emulator.log.copy;" id="jwe-log-copy" oncommand="jwe_emulator.copyLog();" />                    
+                  </hbox>
+                </vbox>
+              </groupbox>
+            </tabpanel>
+            
+          </tabpanels>
+          
+        </tabbox>
+        
+        <hbox align="center" pack="center">
+          <label value="&jwe.emulator.pickprofile;" style="width: 7em;"/>
+          <menulist align="right" oncommand="" id="jwe-emulator-loadedprofile"/>
+          <button label="&jwe.emulator.reload;" id="jwe-emulator-reload" oncommand="jwe_emulator.reload();" disabled="true"/>
+          <button label="&jwe.emulator.start;" id="jwe-emulator-start" oncommand="jwe_emulator.startEmulation();" />
+          
+        </hbox>  
+        
+      </vbox>
+        
+    </hbox>
+
+  </vbox>
+  
+  <hbox style="display: none;">
+    <html:audio id="jwe-audioplayer" controls="controls" style="display: none;" />
+  </hbox>
+ 
+</window>

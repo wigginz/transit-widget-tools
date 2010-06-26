@@ -1,0 +1,58 @@
+#include "jilService.idl"
+
+#include "jilDevice.idl"
+#include "jilException.idl"
+#include "jilExceptionTypes.idl"
+#include "jilMessaging.idl"
+#include "jilMultimedia.idl"
+#include "jilPIM.idl"
+#include "jilTelephony.idl"
+
+
+// we could get away with only one event definition since the number of params
+// is the same, but in case that changes, we'll just do one interface for each event.
+[scriptable, function, uuid(3697902b-3e81-11df-9879-0800200c9a66)]
+interface jilWIOnFocus : nsISupports
+{
+  void invoke();
+};
+
+[scriptable, function, uuid(3697902c-3e81-11df-9879-0800200c9a66)]
+interface jilWIOnMaximize : nsISupports
+{
+  void invoke();
+};
+
+[scriptable, function, uuid(3697902d-3e81-11df-9879-0800200c9a66)]
+interface jilWIOnRestore : nsISupports
+{
+  void invoke();
+};
+
+[scriptable, function, uuid(3697902e-3e81-11df-9879-0800200c9a66)]
+interface jilWIOnWakeup : nsISupports
+{
+  void invoke();
+};
+
+
+[scriptable, uuid(a56d3b40-b9d7-11de-8a39-0800200c9a66)]
+interface jilWidget : jilService
+{
+  attribute jilDevice Device;
+  attribute jilException Exception;
+  attribute jilExceptionTypes ExceptionTypes;
+  attribute jilMessaging Messaging;
+  attribute jilMultimedia Multimedia;
+  attribute jilPIM PIM;
+  attribute jilTelephony Telephony;
+  
+  attribute jilWIOnFocus onFocus;
+  attribute jilWIOnMaximize onMaximize;
+  attribute jilWIOnRestore onRestore;
+  attribute jilWIOnWakeup onWakeup;
+
+  void openURL(in string url);
+  string preferenceForKey(in string key);
+  void setPreferenceForKey(in string preference, in string key);
+};

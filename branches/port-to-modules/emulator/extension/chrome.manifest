@@ -1,0 +1,9 @@
+content     transit-emulator    chrome/content/  xpcnativewrappers=no contentaccessible=yes
+
+overlay chrome://browser/content/browser.xul chrome://transit-emulator/content/browser.xul
+
+locale  transit-emulator  en-US locale/en-US/
+
+skin  transit-emulator  classic/1.0 skin/
+
+style chrome://global/content/customizeToolbar.xul  chrome://transit-emulator/skin/skin.css
