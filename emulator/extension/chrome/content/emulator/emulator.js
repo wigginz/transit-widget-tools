@@ -1,17 +1,55 @@
+const STATE_START = Components.interfaces.nsIWebProgressListener.STATE_START;
+const STATE_STOP = Components.interfaces.nsIWebProgressListener.STATE_STOP;
+var injector =
+{
+  isLoaded : false,
+  
+  QueryInterface: function(aIID)
+  {
+   if (aIID.equals(Components.interfaces.nsIWebProgressListener) ||
+       aIID.equals(Components.interfaces.nsISupportsWeakReference) ||
+       aIID.equals(Components.interfaces.nsISupports))
+     return this;
+   throw Components.results.NS_NOINTERFACE;
+  },
+
+  onStateChange: function(aWebProgress, aRequest, aFlag, aStatus)
+  {
+   if(aFlag & STATE_START)
+   {
+    if ( !this.isLoaded )
+    {
+      this.isLoaded = true;
+      Components.utils.import("resource://transit-emulator/JIL122aWrapper.jsm");
+      aWebProgress.DOMWindow["Widget"] = Widget;
+      aWebProgress.DOMWindow["WidgetManager"] = WidgetManager;
+    }
+   }
+  },
+  onProgressChange: function(aWebProgress, aRequest, curSelf, maxSelf, curTot, maxTot) { },
+  onStatusChange: function(aWebProgress, aRequest, aStatus, aMessage) { },
+  onSecurityChange: function(aWebProgress, aRequest, aState) { }
+}
+
+
+
+
+
+
 function jwe_injectScripts()
 {
-  var iframeEl = document.getElementById("jwe-emulator-content");   
+  
   
 //   var element = iframeEl.contentDocument.createElement("widget-reference"); 
 //   element.setAttribute("id", "widget-reference-data");
 //   element.setAttribute("device", Components.classes["@jil.org/jilapi-device;1"].createInstance(Components.interfaces.jilDevice));
 //   iframeEl.contentDocument.documentElement.appendChild(element);
-  
-  var script = iframeEl.contentDocument.createElement('script');
-  script.id = 'apiWrapper';
-  script.type = 'text/javascript';
-  script.src = "chrome://transit-emulator/content/emulator/JIL122aWrapper.js";
-  iframeEl.contentDocument.documentElement.appendChild(script);
+//   var iframeEl = document.getElementById("jwe-emulator-content");
+//   var script = iframeEl.contentDocument.createElement('script');
+//   script.id = 'apiWrapper';
+//   script.type = 'text/javascript';
+//   script.src = "chrome://transit-emulator/content/emulator/JIL122aWrapper.js";
+//   iframeEl.contentDocument.documentElement.appendChild(script);
 }
 
 var jwe_emulator = 
@@ -28,6 +66,8 @@ var jwe_emulator =
 
   init : function()
   {
+    document.getElementById("jwe-emulator-content").addProgressListener(injector); 
+    
     this.deviceWidth = this.emulator.getDeviceInfo().screenWidth;
     this.deviceHeight = this.emulator.getDeviceInfo().screenHeight;
     this.widgetWidth = this.emulator.getWidget().maxWidth;
@@ -40,7 +80,7 @@ var jwe_emulator =
      
     $("jwe-emulator-content").attr("src", this.emulator.getWidget().contentSrc);
 
-    $("jwe-emulator-content").hide();
+    //$("jwe-emulator-content").hide();
 
     $("jwe-emulator-loadedprofile").node.removeAllItems();
     var menupopup = document.createElement("menupopup");
@@ -60,8 +100,6 @@ var jwe_emulator =
     $("jwe-emulator-loadedprofile").sel(profileIndex);
 
     $("jwe-log").val(this.emulator.getLog());
-    
-    
   },
    
   loadWidgetEvents : function()

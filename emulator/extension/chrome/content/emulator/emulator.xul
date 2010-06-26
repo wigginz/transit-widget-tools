@@ -46,7 +46,7 @@
             onmousedown="jwe_workspace.mouseClick(event);" 
             onmouseup="jwe_workspace.mouseUnClick(event);" 
             ondraggesture="nsDragAndDrop.startDrag(event, jwe_workspace.contentObserver);">
-            <iframe id="jwe-emulator-content" type="chrome"/>
+            <browser id="jwe-emulator-content" type="chrome"/>
           </hbox>
         </hbox>
       </hbox>
