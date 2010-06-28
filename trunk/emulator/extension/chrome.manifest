@@ -7,3 +7,5 @@ locale  transit-emulator  en-US locale/en-US/
 skin  transit-emulator  classic/1.0 skin/
 
 style chrome://global/content/customizeToolbar.xul  chrome://transit-emulator/skin/skin.css
+
+resource transit-emulator modules/

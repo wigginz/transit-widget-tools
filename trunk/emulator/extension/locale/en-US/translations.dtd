@@ -144,7 +144,7 @@
 
 <!ENTITY jwe.emulator.tab.settings.overflow "Hide overflow">
 <!ENTITY jwe.emulator.tab.settings.dragborder "Hide drag border">
-<!ENTITY jwe.emulator.tab.settings.fullscreen "Full screen mode">
+<!ENTITY jwe.emulator.tab.settings.fullscreen "Full screen mode (forces refresh)">
 
 
 <!ENTITY jwe.emulator.start "Start">

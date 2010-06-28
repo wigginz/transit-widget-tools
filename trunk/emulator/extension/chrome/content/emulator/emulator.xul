@@ -22,8 +22,7 @@
   <vbox>
 
     <hbox pack="center" id="jwe-emulator-title">
-      <label id="jwe-emulator-widget-press-start" value="&jwe-emulator-press-start-button;"/>
-      <label id="jwe-emulator-widget-started" value="&jwe.emulator.emulating;" style="display: none;"/>
+      <label id="jwe-emulator-widget-started" value="&jwe.emulator.emulating;"/>
       <label id="jwe-emulator-widget-name"/>
     </hbox>
     
@@ -46,7 +45,7 @@
             onmousedown="jwe_workspace.mouseClick(event);" 
             onmouseup="jwe_workspace.mouseUnClick(event);" 
             ondraggesture="nsDragAndDrop.startDrag(event, jwe_workspace.contentObserver);">
-            <iframe id="jwe-emulator-content" type="chrome"/>
+            <browser id="jwe-emulator-content" type="chrome" disablehistory="true"/>
           </hbox>
         </hbox>
       </hbox>
@@ -525,9 +524,7 @@
         <hbox align="center" pack="center">
           <label value="&jwe.emulator.pickprofile;" style="width: 7em;"/>
           <menulist align="right" oncommand="" id="jwe-emulator-loadedprofile"/>
-          <button label="&jwe.emulator.reload;" id="jwe-emulator-reload" oncommand="jwe_emulator.reload();" disabled="true"/>
-          <button label="&jwe.emulator.start;" id="jwe-emulator-start" oncommand="jwe_emulator.startEmulation();" />
-          
+          <button label="&jwe.emulator.reload;" id="jwe-emulator-reload" oncommand="jwe_emulator.reload();"/>
         </hbox>  
         
       </vbox>

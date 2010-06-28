@@ -1,3 +1,30 @@
+var EXPORTED_SYMBOLS = ["Widget_122", "WidgetManager_122"];
+
+var _WidgetManager_122a = Components.classes["@jil.org/jilapi-widgetmanager;1"].getService(Components.interfaces.jilWidgetManager);
+var _Device_122a = Components.classes["@jil.org/jilapi-device;1"].getService(Components.interfaces.jilDevice);
+var _AccountInfo_122a = Components.classes["@jil.org/jilapi-accountinfo;1"].getService(Components.interfaces.jilAccountInfo);
+var _ApplicationTypes_122a = Components.classes["@jil.org/jilapi-applicationtypes;1"].getService(Components.interfaces.jilApplicationTypes);
+var _DataNetworkConnectionTypes_122a = Components.classes["@jil.org/jilapi-datanetworkconnectiontypes;1"].getService(Components.interfaces.jilDataNetworkConnectionTypes);
+var _DataNetworkInfo_122a = Components.classes["@jil.org/jilapi-datanetworkinfo;1"].getService(Components.interfaces.jilDataNetworkInfo);
+var _DeviceInfo_122a = Components.classes["@jil.org/jilapi-deviceinfo;1"].getService(Components.interfaces.jilDeviceInfo);
+var _AccelerometerInfo_122a = Components.classes["@jil.org/jilapi-accelerometerinfo;1"].createInstance(Components.interfaces.jilAccelerometerInfo);
+var _Config_122a = Components.classes["@jil.org/jilapi-config;1"].getService(Components.interfaces.jilConfig);
+var _DeviceStateInfo_122a = Components.classes["@jil.org/jilapi-devicestateinfo;1"].getService(Components.interfaces.jilDeviceStateInfo);
+var _PowerInfo_122a = Components.classes["@jil.org/jilapi-powerinfo;1"].getService(Components.interfaces.jilPowerInfo);
+var _RadioSignalSourceTypes_122a = Components.classes["@jil.org/jilapi-radiosignalsourcetypes;1"].createInstance(Components.interfaces.jilRadioSignalSourceTypes);
+var _RadioInfo_122a = Components.classes["@jil.org/jilapi-radioinfo;1"].getService(Components.interfaces.jilRadioInfo);
+var _ExceptionTypes_122a = Components.classes["@jil.org/jilapi-exceptiontypes;1"].createInstance(Components.interfaces.jilExceptionTypes);
+var _MessageFolderTypes_122a = Components.classes["@jil.org/jilapi-messagefoldertypes;1"].createInstance(Components.interfaces.jilMessageFolderTypes);
+var _MessageTypes_122a = Components.classes["@jil.org/jilapi-messagetypes;1"].createInstance(Components.interfaces.jilMessageTypes);
+var _Multimedia_122a = Components.classes["@jil.org/jilapi-multimedia;1"].getService(Components.interfaces.jilMultimedia);
+var _EventRecurrenceTypes_122a = Components.classes["@jil.org/jilapi-eventrecurrencetypes;1"].createInstance(Components.interfaces.jilEventRecurrenceTypes);
+var _CallRecordTypes_122a = Components.classes["@jil.org/jilapi-callrecordtypes;1"].createInstance(Components.interfaces.jilCallRecordTypes);
+var _AudioPlayer_122a = Components.classes["@jil.org/jilapi-audioplayer;1"].getService(Components.interfaces.jilAudioPlayer);
+var _Camera_122a = Components.classes["@jil.org/jilapi-camera;1"].getService(Components.interfaces.jilCamera);
+var _Messaging_122a = Components.classes["@jil.org/jilapi-messaging;1"].getService(Components.interfaces.jilMessaging);
+var _Telephony_122a = Components.classes["@jil.org/jilapi-telephony;1"].getService(Components.interfaces.jilTelephony);
+var _VideoPlayer_122a = Components.classes["@jil.org/jilapi-videoplayer;1"].getService(Components.interfaces.jilVideoPlayer);
+var _Widget_122a = Components.classes["@jil.org/jilapi-widget;1"].getService(Components.interfaces.jilWidget);
 
 var WidgetManager = 
 {
@@ -1282,6 +1309,10 @@ var Widget =
 };
 
 Widget.init();
+
+// another wrapper :(
+var Widget_122 = Widget;
+var WidgetManager_122 = WidgetManager;
 
 
 

@@ -1,18 +1,27 @@
-function jwe_injectScripts()
+
+// progress listener to inject the widget script as quickly as possible for the widget's browser
+var jweInjector =
 {
-  var iframeEl = document.getElementById("jwe-emulator-content");   
+  isLoaded : false,
   
-//   var element = iframeEl.contentDocument.createElement("widget-reference"); 
-//   element.setAttribute("id", "widget-reference-data");
-//   element.setAttribute("device", Components.classes["@jil.org/jilapi-device;1"].createInstance(Components.interfaces.jilDevice));
-//   iframeEl.contentDocument.documentElement.appendChild(element);
-  
-  var script = iframeEl.contentDocument.createElement('script');
-  script.id = 'apiWrapper';
-  script.type = 'text/javascript';
-  script.src = "chrome://transit-emulator/content/emulator/JIL122aWrapper.js";
-  iframeEl.contentDocument.documentElement.appendChild(script);
-}
+  QueryInterface: function(aIID)
+  {
+   if (aIID.equals(Components.interfaces.nsIWebProgressListener) ||
+       aIID.equals(Components.interfaces.nsISupportsWeakReference) ||
+       aIID.equals(Components.interfaces.nsISupports))
+     return this;
+   throw Components.results.NS_NOINTERFACE;
+  },
+
+  onStateChange: function(aWebProgress, aRequest, aFlag, aStatus)
+  {
+    if (aFlag & Components.interfaces.nsIWebProgressListener.STATE_START)
+      jwe_emulator.injectScripts();
+  },
+  onProgressChange: function(aWebProgress, aRequest, curSelf, maxSelf, curTot, maxTot) { },
+  onStatusChange: function(aWebProgress, aRequest, aStatus, aMessage) { },
+  onSecurityChange: function(aWebProgress, aRequest, aState) { }
+};
 
 var jwe_emulator = 
 {
@@ -27,7 +36,9 @@ var jwe_emulator =
   fileSystemMap : new Array(),
 
   init : function()
-  {
+  {    
+    document.getElementById("jwe-emulator-content").addProgressListener(jweInjector);
+    
     this.deviceWidth = this.emulator.getDeviceInfo().screenWidth;
     this.deviceHeight = this.emulator.getDeviceInfo().screenHeight;
     this.widgetWidth = this.emulator.getWidget().maxWidth;
@@ -39,8 +50,6 @@ var jwe_emulator =
     $("jwe-emulator-widget-name-version").attr("value", this.emulator.getWidget().version);
      
     $("jwe-emulator-content").attr("src", this.emulator.getWidget().contentSrc);
-
-    $("jwe-emulator-content").hide();
 
     $("jwe-emulator-loadedprofile").node.removeAllItems();
     var menupopup = document.createElement("menupopup");
@@ -60,8 +69,6 @@ var jwe_emulator =
     $("jwe-emulator-loadedprofile").sel(profileIndex);
 
     $("jwe-log").val(this.emulator.getLog());
-    
-    
   },
    
   loadWidgetEvents : function()
@@ -169,25 +176,7 @@ var jwe_emulator =
     $("jwe-emulator-subtab-event-context-oncalendaritemalert-calitems").add(ciMenupopup);
     $("jwe-emulator-subtab-event-context-oncalendaritemalert-calitems").sel(0);
   },
-    
-  startEmulation : function()
-  {
-    // inject scripts into the iframe
-    jwe_injectScripts();
-    
-    $("jwe-emulator-content").show();
-    
-    // set the event listener
-    var iframeEl = document.getElementById("jwe-emulator-content");
-    iframeEl.addEventListener("load", jwe_injectScripts, true);
-    
-    $("jwe-emulator-reload").disable(false);
-    $("jwe-emulator-start").disable(true);
-    
-    $("jwe-emulator-widget-press-start").hide();
-    $("jwe-emulator-widget-started").show();
-  },
-  
+
   resizeScreen : function()
   {
     $("jwe-emulator-workspace").attr("maxheight", this.deviceHeight);
@@ -251,6 +240,9 @@ var jwe_emulator =
       $("jwe-emulator-content").css("height", this.emulator.getWidget().maxHeight+"px");
       $("jwe-emulator-content").css("width", this.emulator.getWidget().maxWidth+"px");
     }
+    
+    // resizing the widget reloads page scope, need to re-inject widget API
+    this.injectScripts();
   },
 
   restoreDragBorder : function()
@@ -309,7 +301,7 @@ var jwe_emulator =
     this.emulator.reload($("jwe-emulator-loadedprofile").selValue());
     this.init();
     
-    this.startEmulation();
+    //this.startEmulation();
   },
 
   clearLog : function ()
@@ -542,8 +534,11 @@ var jwe_emulator =
   {
     Components.classes["@mozilla.org/widget/clipboardhelper;1"].getService(Components.interfaces.nsIClipboardHelper).copyString($("jwe-log").val());  
   },
+  
+  injectScripts : function()
+  {
+    Components.utils.import("resource://transit-emulator/1.2.2/JIL122aWrapper.jsm");
+    $("jwe-emulator-content").node.contentWindow["Widget"] = Widget_122;
+    $("jwe-emulator-content").node.contentWindow["WidgetManager"] = WidgetManager_122;
+  }
 };
-
-
-
-
