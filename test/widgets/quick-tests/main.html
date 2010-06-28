@@ -11,7 +11,7 @@ function quickTest()
 {
   //var aTest = new Widget.Device.PositionInfo();
   //aTest.cellID = "file name";
-  Widget.Device.DataNetworkInfo.onNetworkConnectionChanged = function(){alert("in test");};
+  //Widget.Device.DataNetworkInfo.onNetworkConnectionChanged = function(){alert("in test");};
   var breakpoint = "";
   //alert(aTest instanceof Widget.Device.PositionInfo);
 }
@@ -62,7 +62,7 @@ a
 
 </head>
 
-<body bgcolor="white" id="widget-body">
+<body bgcolor="white" id="widget-body" onload="Widget.Device.widgetEngineName">
 
 <h2>Tests</h2>
 

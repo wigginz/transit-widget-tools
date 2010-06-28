@@ -1,36 +1,16 @@
 var EXPORTED_SYMBOLS = ["Device"];
 
-function Device()
+var Device =
 {
-  this.DeviceInfo  = Components.classes["@jil.org/jilapi-deviceinfo;1"].createInstance(Components.interfaces.jilDeviceInfo);
-  //this.File  = Components.classes["@jil.org/jilapi-file;1"].createInstance(Components.interfaces.jilFile);
-  this.DataNetworkInfo  = Components.classes["@jil.org/jilapi-datanetworkinfo;1"].createInstance(Components.interfaces.jilDataNetworkInfo);
-  this.DeviceStateInfo  = Components.classes["@jil.org/jilapi-devicestateinfo;1"].createInstance(Components.interfaces.jilDeviceStateInfo);
-  this.File  = Components.classes["@jil.org/jilapi-file;1"].createInstance(Components.interfaces.jilFile);
-  this.AccountInfo  = Components.classes["@jil.org/jilapi-accountinfo;1"].createInstance(Components.interfaces.jilAccountInfo);
-  this.ApplicationTypes  = Components.classes["@jil.org/jilapi-applicationtypes;1"].createInstance(Components.interfaces.jilApplicationTypes);
-  this.RadioInfo  = Components.classes["@jil.org/jilapi-radioinfo;1"].createInstance(Components.interfaces.jilRadioInfo);
-  this.PowerInfo  = Components.classes["@jil.org/jilapi-powerinfo;1"].createInstance(Components.interfaces.jilPowerInfo);
-  this.PositionInfo  = Components.classes["@jil.org/jilapi-positioninfo;1"].createInstance(Components.interfaces.jilPositionInfo);
-
-  this.runtime = Components.classes["@jil.org/jilapi-emulatorruntime;1"].getService().wrappedJSObject;
-
-  this.reload();
-}
-
-/***********************************************************/
-
-Device.prototype =
-{
-  DeviceInfo           : null,
-  File                 : null,
-  DataNetworkInfo      : null,
-  DeviceStateInfo      : null,
-  AccountInfo          : null,
-  ApplicationTypes     : null,
-  RadioInfo            : null,
-  PowerInfo            : null,
-  PositionInfo         : null,
+  DeviceInfo           : Components.classes["@jil.org/jilapi-deviceinfo;1"].createInstance(Components.interfaces.jilDeviceInfo),
+  File                 : Components.classes["@jil.org/jilapi-file;1"].createInstance(Components.interfaces.jilFile),
+  DataNetworkInfo      : Components.classes["@jil.org/jilapi-datanetworkinfo;1"].createInstance(Components.interfaces.jilDataNetworkInfo),
+  DeviceStateInfo      : Components.classes["@jil.org/jilapi-devicestateinfo;1"].createInstance(Components.interfaces.jilDeviceStateInfo),
+  AccountInfo          : Components.classes["@jil.org/jilapi-accountinfo;1"].createInstance(Components.interfaces.jilAccountInfo),
+  ApplicationTypes     : Components.classes["@jil.org/jilapi-applicationtypes;1"].createInstance(Components.interfaces.jilApplicationTypes),
+  RadioInfo            : Components.classes["@jil.org/jilapi-radioinfo;1"].createInstance(Components.interfaces.jilRadioInfo),
+  PowerInfo            : Components.classes["@jil.org/jilapi-powerinfo;1"].createInstance(Components.interfaces.jilPowerInfo),
+  PositionInfo         : Components.classes["@jil.org/jilapi-positioninfo;1"].createInstance(Components.interfaces.jilPositionInfo),
 
   onFilesFound         : null,
 
@@ -39,7 +19,7 @@ Device.prototype =
   widgetEngineProvider : null,
   widgetEngineVersion  : null,
 
-  runtime : null,
+  runtime : Components.classes["@jil.org/jilapi-emulatorruntime;1"].getService().wrappedJSObject,
   
   fileCache : null,
 
@@ -230,8 +210,9 @@ Device.prototype =
     return(Components.classes["@jil.org/jilapi-file;1"].createInstance(Components.interfaces.jilFile));
   },
   
-  reload : function()
+  constructor : function()
   {
+    alert("in constructor");
     var deviceData = this.runtime.getDeviceData();
     
     this.clipboardString = deviceData.clipboardString;
