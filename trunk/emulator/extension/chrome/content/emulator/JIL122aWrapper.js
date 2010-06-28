@@ -1280,11 +1280,8 @@ var Widget =
       _Telephony_122a.onCallRecordsFound = newValue; });
   },
 };
-alert("hello 1");
+
 Widget.init();
-alert("hello 2");
-
-
 
 
 
