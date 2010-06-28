@@ -50,7 +50,8 @@ JILEmulatorRuntime.prototype = //#
     Components.classes["@jil.org/jilapi-telephony;1"].getService(Components.interfaces.jilTelephony).reload();
     Components.classes["@jil.org/jilapi-videoplayer;1"].getService(Components.interfaces.jilVideoPlayer).reload();
     Components.classes["@jil.org/jilapi-widget;1"].getService(Components.interfaces.jilWidget).reload();
-    Components.classes["@jil.org/jilapi-widgetmanager;1"].getService(Components.interfaces.jilWidgetManager).reload();    
+    Components.classes["@jil.org/jilapi-widgetmanager;1"].getService(Components.interfaces.jilWidgetManager).reload();  
+    Components.classes["@jil.org/jilapi-camera;1"].getService(Components.interfaces.jilCamera).reload();
   },
   
   reload : function(profileId)
