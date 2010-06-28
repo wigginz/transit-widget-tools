@@ -1,5 +1,7 @@
 var EXPORTED_SYMBOLS = ["Widget", "WidgetManager"]; 
 
+Components.utils.import("resource://transit-emulator/Device.jsm");
+
 var WidgetManager = 
 {
   checkWidgetInstallationStatus: function(widgetId, widgetName, widgetVersion)
@@ -8,36 +10,12 @@ var WidgetManager =
   },
 };
 
-
-
-
-_Device_122a : Components.classes["@jil.org/jilapi-device;1"].createInstance(Components.interfaces.jilDevice),
-
-_AccountInfo_122a : Components.classes["@jil.org/jilapi-accountinfo;1"].createInstance(Components.interfaces.jilAccountInfo),
-
-_ApplicationTypes_122a : Components.classes["@jil.org/jilapi-device;1"].createInstance(Components.interfaces.jilDevice),
-
-_DataNetworkConnectionTypes_122a : Components.classes["@jil.org/jilapi-device;1"].createInstance(Components.interfaces.jilDevice),
-
-_DeviceInfo_122a : Components.classes["@jil.org/jilapi-device;1"].createInstance(Components.interfaces.jilDevice),
-
-_AccelerometerInfo_122a_AccelerometerInfo_122a : Components.classes["@jil.org/jilapi-device;1"].createInstance(Components.interfaces.jilDevice),
-
-_DeviceStateInfo_122a : Components.classes["@jil.org/jilapi-device;1"].createInstance(Components.interfaces.jilDevice),
-
-_PowerInfo_122a : Components.classes["@jil.org/jilapi-device;1"].createInstance(Components.interfaces.jilDevice),
-
-
 var Widget = 
 {
-
-
-
-
   Device : 
   {
     clipboardString : _Device_122a.clipboardString,
-    widgetEngineName : _Device_122a.widgetEngineName,
+    widgetEngineName : Device.widgetEngineName,
     widgetEngineProvider : _Device_122a.widgetEngineProvider,
     widgetEngineVersion : _Device_122a.widgetEngineVersion,
     onFilesFound : null,
@@ -1310,7 +1288,7 @@ var Widget =
 
 Widget.init();
 
-
+alert(Device.widgetEngineName);
 
 
 
