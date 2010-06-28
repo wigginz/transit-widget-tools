@@ -36,8 +36,15 @@ var jwe_emulator =
   fileSystemMap : new Array(),
 
   init : function()
-  {    
-    document.getElementById("jwe-emulator-content").addProgressListener(jweInjector);
+  {
+    try
+    {
+      document.getElementById("jwe-emulator-content").addProgressListener(jweInjector);
+    }
+    catch(ex)
+    {
+      // ignore, probably already registered
+    }
     
     this.deviceWidth = this.emulator.getDeviceInfo().screenWidth;
     this.deviceHeight = this.emulator.getDeviceInfo().screenHeight;
