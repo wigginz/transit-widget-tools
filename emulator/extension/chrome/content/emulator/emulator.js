@@ -44,6 +44,7 @@ var jwe_emulator =
     catch(ex)
     {
       // ignore, probably already registered
+      dump("Could not load progress listener. Message: "+ex.message);
     }
     
     this.deviceWidth = this.emulator.getDeviceInfo().screenWidth;
@@ -54,8 +55,8 @@ var jwe_emulator =
     this.resizeScreen();
 
     $("jwe-emulator-widget-name").attr("value", this.emulator.getWidget().name);
-    $("jwe-emulator-widget-name-version").attr("value", this.emulator.getWidget().version);
-     
+    $("jwe-emulator-widget-name-version").attr("value", this.emulator.getWidget().version);    
+    
     $("jwe-emulator-content").attr("src", this.emulator.getWidget().contentSrc);
 
     $("jwe-emulator-loadedprofile").node.removeAllItems();
@@ -76,6 +77,7 @@ var jwe_emulator =
     $("jwe-emulator-loadedprofile").sel(profileIndex);
 
     $("jwe-log").val(this.emulator.getLog());
+
   },
    
   loadWidgetEvents : function()
@@ -307,8 +309,6 @@ var jwe_emulator =
 
     this.emulator.reload($("jwe-emulator-loadedprofile").selValue());
     this.init();
-    
-    //this.startEmulation();
   },
 
   clearLog : function ()
@@ -353,6 +353,38 @@ var jwe_emulator =
       $("jwe-emulator-subtab-event-context-"+this.eventContexts[i]).css("display", "none");
     
     $("jwe-emulator-subtab-event-context-"+context).css("display", "block");
+  },
+  
+  triggerEvent : function()
+  {
+    var selected = $("jwe-emulator-subtab-widget-event-list").val();
+    // wait x milliseconds before triggering the event
+    jwe_waitForDelay($("jwe-emulator-subtab-event-context-delay").val());
+    
+    if ( selected == "widget" )
+      this.triggerWidgetEvent();
+    else if ( selected == "device" )
+      this.triggerDeviceEvent();
+    else if ( selected == "devicestate" )
+      this.triggerDeviceStateEvent();
+    else if ( selected == "power" )
+      this.triggerPowerInfoEvent();
+    else if ( selected == "network" )
+      this.triggerDataNetworkEvent();
+    else if ( selected == "radio" )
+      this.triggerRadioEvent();
+    else if ( selected == "messaging" )
+      this.triggerMessagingEvent();
+    else if ( selected == "audio" )
+      this.triggerAudioEvent();
+    else if ( selected == "video" )
+      this.triggerVideoEvent();
+    else if ( selected == "camera" )
+      this.triggerCameraEvent();
+    else if ( selected == "pim" )
+      this.triggerPIMEvent();
+    else if ( selected == "telephony" )
+      this.triggerTelephonyEvent();
   },
 
   triggerWidgetEvent : function()
@@ -547,5 +579,38 @@ var jwe_emulator =
     Components.utils.import("resource://transit-emulator/1.2.2/JIL122aWrapper.jsm");
     $("jwe-emulator-content").node.contentWindow["Widget"] = Widget_122;
     $("jwe-emulator-content").node.contentWindow["WidgetManager"] = WidgetManager_122;
-  }
+  },
 };
+
+function jwe_waitForDelay(delay) 
+{
+  try
+  {
+    /**
+    * Just uncomment this code if you're building an extention for Firefox.
+    * Since FF3, we'll have to ask for user permission to execute XPCOM objects.
+    */
+    netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+
+    // Get the current thread.
+    var thread = Components.classes["@mozilla.org/thread-manager;1"].getService(Components.interfaces.nsIThreadManager).currentThread;
+
+    // Create an inner property to be used later as a notifier.
+    this.delayed = true;
+
+    /* Call JavaScript setTimeout function
+     * to execute this.delayed = false
+     * after it finish.
+     */
+    setTimeout("this.delayed = false;", delay);
+
+    /**
+     * Keep looping until this.delayed = false
+    */
+    while (this.delayed)
+      thread.processNextEvent(true);
+  }
+  catch(e) 
+  {  
+  } 
+}
