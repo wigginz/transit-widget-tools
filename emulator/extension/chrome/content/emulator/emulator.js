@@ -16,11 +16,14 @@ var jweInjector =
   onStateChange: function(aWebProgress, aRequest, aFlag, aStatus)
   {
     if (aFlag & Components.interfaces.nsIWebProgressListener.STATE_START)
+    {
+      dump("injecting");
       jwe_emulator.injectScripts();
+    }
   },
-  onProgressChange: function(aWebProgress, aRequest, curSelf, maxSelf, curTot, maxTot) { },
-  onStatusChange: function(aWebProgress, aRequest, aStatus, aMessage) { },
-  onSecurityChange: function(aWebProgress, aRequest, aState) { }
+  onProgressChange: function(aWebProgress, aRequest, curSelf, maxSelf, curTot, maxTot) {},
+  onStatusChange: function(aWebProgress, aRequest, aStatus, aMessage) {},
+  onSecurityChange: function(aWebProgress, aRequest, aState) {}
 };
 
 var jwe_emulator = 
@@ -56,9 +59,12 @@ var jwe_emulator =
 
     $("jwe-emulator-widget-name").attr("value", this.emulator.getWidget().name);
     $("jwe-emulator-widget-name-version").attr("value", this.emulator.getWidget().version);    
+        
+    //$("jwe-emulator-content").attr("src", this.emulator.getWidget().contentSrc);
+    //$("jwe-emulator-content").node.loadURI(this.emulator.getWidget().contentSrc);
+    //$("jwe-emulator-content").node.stop();
+    $("jwe-emulator-content").node.loadURI(this.emulator.getWidget().contentSrc);
     
-    $("jwe-emulator-content").attr("src", this.emulator.getWidget().contentSrc);
-
     $("jwe-emulator-loadedprofile").node.removeAllItems();
     var menupopup = document.createElement("menupopup");
     menupopup.setAttribute("id", "jwe-emulator-loadedprofile-list");
@@ -358,8 +364,14 @@ var jwe_emulator =
   triggerEvent : function()
   {
     var selected = $("jwe-emulator-subtab-widget-event-list").val();
+    var delay = $("jwe-emulator-subtab-event-context-delay").val();
+    
+    // if there is a delay, disable the trigger button until the event is executed
+    if ( delay > 0 )
+      $("jwe-emulator-subtab-event-trigger-button").disable(true);
+    
     // wait x milliseconds before triggering the event
-    jwe_waitForDelay($("jwe-emulator-subtab-event-context-delay").val());
+    jwe_waitForDelay(delay);
     
     if ( selected == "widget" )
       this.triggerWidgetEvent();
@@ -385,6 +397,9 @@ var jwe_emulator =
       this.triggerPIMEvent();
     else if ( selected == "telephony" )
       this.triggerTelephonyEvent();
+    
+    if ( delay > 0 )
+      $("jwe-emulator-subtab-event-trigger-button").disable(false);
   },
 
   triggerWidgetEvent : function()
@@ -579,6 +594,8 @@ var jwe_emulator =
     Components.utils.import("resource://transit-emulator/1.2.2/JIL122aWrapper.jsm");
     $("jwe-emulator-content").node.contentWindow["Widget"] = Widget_122;
     $("jwe-emulator-content").node.contentWindow["WidgetManager"] = WidgetManager_122;
+    window["Widget"] = Widget_122;
+    window["WidgetManager"] = WidgetManager_122;
   },
 };
 

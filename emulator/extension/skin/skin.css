@@ -6,8 +6,11 @@
 #jwe-emulator-workspace
 {
   border: 1px solid black; 
-  background-image: url(chrome://transit-emulator/skin/images/emu-large-bg.png);
+  background-image: url('chrome://transit-emulator/skin/images/jil-bg.png'); /*emu-large-bg.png);*/
+  background-repeat: no-repeat;
+  background-position: center center;
   overflow: hidden;
+  background-color: black;
   z-index: 1000;
 }
 
@@ -18,7 +21,7 @@
   cursor: move;
   padding: 10px;
   -moz-border-radius: 10px;
-  background-image: url(chrome://transit-emulator/skin/images/border-bg.png);
+  background-image: url('chrome://transit-emulator/skin/images/border-bg.png');
   z-index: 100;
   height: auto;
   width: auto;
@@ -60,6 +63,18 @@
 }
 
 .jwe-emulator-events-panel
+{
+  width: 98%;
+  margin: 5px;
+  height: 450px;
+  padding: 10px;
+  border: 1px solid #666666;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  overflow-y: auto;
+}
+
+.jwe-emulator-general-settings-panel
 {
   width: 98%;
   margin: 5px;
