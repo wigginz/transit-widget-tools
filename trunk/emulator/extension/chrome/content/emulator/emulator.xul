@@ -45,7 +45,8 @@
             onmousedown="jwe_workspace.mouseClick(event);" 
             onmouseup="jwe_workspace.mouseUnClick(event);" 
             ondraggesture="nsDragAndDrop.startDrag(event, jwe_workspace.contentObserver);">
-            <browser id="jwe-emulator-content" type="chrome" disablehistory="true"/>
+            <browser id="jwe-emulator-content" type="chrome" disablehistory="true">
+            </browser>
           </hbox>
         </hbox>
       </hbox>
@@ -63,7 +64,8 @@
           <tabpanels>
           
             <tabpanel>
-              <vbox>
+              <vbox flex="1">
+              <vbox flex="1" class="jwe-emulator-general-settings-panel">
                 <groupbox style="width: 100%;">
                   <caption label="&jwe.emulator.tab.settings.displaylabel;"/>
                   <vbox>
@@ -72,8 +74,26 @@
                     <checkbox id="jwe-emulator-settings-fullscreen" label="&jwe.emulator.tab.settings.fullscreen;" oncommand="jwe_emulator.toggleFullScreen();"/> 
                   </vbox>
                 </groupbox>
-                <button label="&jwe.emulator.errorConsole;" oncommand="jwe_emulator.launchErrorConsole();"/>
-              </vbox>      
+                <groupbox style="width: 100%;">
+                  <caption label="&jwe.emulator.tab.settings.securitylabel;"/>
+                  <vbox>
+                    <hbox align="center">
+                      <label value="&jwe.emulator.tab.settings.security.level;"/>
+                      <menulist id="jwe-emulator-settings-security-level" oncommand="jwe_emulator.toggleSecurityLevel();">
+                        <menupopup>
+                          <menuitem label="&jwe.emulator.tab.settings.security.level.operator;" value="operator"/>
+                          <menuitem label="&jwe.emulator.tab.settings.security.level.identified;" value="identified"/>
+                          <menuitem label="&jwe.emulator.tab.settings.security.level.unidentified;" value="unidentified"/>
+                        </menupopup>
+                      </menulist>
+                    </hbox>
+                  </vbox>
+                </groupbox>
+              </vbox>  
+              <hbox style="padding-top: 100px;">
+                <button label="&jwe.emulator.errorConsole;" oncommand="jwe_emulator.launchErrorConsole();" style="width: 100px;"/>
+              </hbox>    
+              </vbox>              
             </tabpanel>
             
             <tabpanel>
@@ -95,7 +115,7 @@
                       <menuitem label="&jwe.emulator.tab.events.list.telephony;" oncommand="jwe_emulator.switchEventPanel('telephony');" value="telephony"/>
                     </menupopup>
                   </menulist>
-                  <button label="&jwe.emulator.controls.popout;" onclick="jwe_emulator.launchControls();"/>
+                  <!--button label="&jwe.emulator.controls.popout;" onclick="jwe_emulator.launchControls();"/-->
                 </hbox>
                 
                 <vbox id="jwe-emulator-subtab-widget" style="display: none;">      
@@ -489,7 +509,7 @@
                 <hbox align="center">
                   <label value="&jwe.emulator.tab.events.context.delay;"/> 
                   <textbox type="number" size="5" id="jwe-emulator-subtab-event-context-delay" min="0"/> 
-                  <button id="" label="&jwe.emulator.tab.events.context.trigger;" oncommand="jwe_emulator.triggerEvent();"/>
+                  <button id="jwe-emulator-subtab-event-trigger-button" label="&jwe.emulator.tab.events.context.trigger;" oncommand="jwe_emulator.triggerEvent();"/>
                 </hbox>
                 <label value="&jwe.emulator.tab.events.context.warning;" style="font-style: italic;"/>
               </vbox>

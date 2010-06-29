@@ -16,7 +16,7 @@
 <!ENTITY jwe.emulator.tab.events.context.nonevent "Event will be triggered when the associated API call is complete (search, export, etc.).">
 <!ENTITY jwe.emulator.tab.events.context "Event Context">
 <!ENTITY jwe.emulator.tab.events.context.trigger "Trigger Event">
-<!ENTITY jwe.emulator.tab.events.context.delay "Asynchronous Delay: (milliseconds): ">
+<!ENTITY jwe.emulator.tab.events.context.delay "Delay: (milliseconds): ">
 <!ENTITY jwe.emulator.tab.events.context.warning "Note: values will not be saved to the device profile.">
 
 <!ENTITY jwe.emulator.tab.events "API Events">
@@ -147,6 +147,11 @@
 <!ENTITY jwe.emulator.tab.settings.dragborder "Hide drag border">
 <!ENTITY jwe.emulator.tab.settings.fullscreen "Full screen mode (forces refresh)">
 
+<!ENTITY jwe.emulator.tab.settings.securitylabel "Security">
+<!ENTITY jwe.emulator.tab.settings.security.level "Security Context: ">
+<!ENTITY jwe.emulator.tab.settings.security.level.unidentified "Unidentified">
+<!ENTITY jwe.emulator.tab.settings.security.level.identified "Identified">
+<!ENTITY jwe.emulator.tab.settings.security.level.operator "Operator">
 
 <!ENTITY jwe.emulator.start "Start">
 <!ENTITY jwe.emulator.reload "Reload">
@@ -489,7 +494,7 @@
 <!ENTITY jwe.profiles.popup.fsys.caption "File System">
 <!ENTITY jwe.profiles.popup.fsys.path "Root Path: ">
 <!ENTITY jwe.profiles.popup.fsys.localpath "Local Path: ">
-<!ENTITY jwe.profiles.popup.fsys.size "Size (bytes)">
+<!ENTITY jwe.profiles.popup.fsys.size "Size (bytes): ">
 <!ENTITY jwe.profiles.popup.fsys.ok "OK">
 <!ENTITY jwe.profiles.popup.fsys.cancel "Cancel">
 <!ENTITY jwe.profiles.popup.fsys.error "Root path cannot be blank or start with a space.">
