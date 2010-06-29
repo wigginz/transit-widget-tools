@@ -81,18 +81,18 @@
                 <hbox align="center" pack="end">
                   <menulist id="jwe-emulator-subtab-widget-event-list" label="&jwe.emulator.tab.events.list.caption;" align="right">
                     <menupopup>
-                      <menuitem label="&jwe.emulator.tab.events.list.widget;" oncommand="jwe_emulator.switchEventPanel('widget');"/>
-                      <menuitem label="&jwe.emulator.tab.events.list.device;" oncommand="jwe_emulator.switchEventPanel('device');"/>
-                      <menuitem label="&jwe.emulator.tab.events.list.devicestate;" oncommand="jwe_emulator.switchEventPanel('devicestate');"/>
-                      <menuitem label="&jwe.emulator.tab.events.list.power;" oncommand="jwe_emulator.switchEventPanel('power');"/>
-                      <menuitem label="&jwe.emulator.tab.events.list.network;" oncommand="jwe_emulator.switchEventPanel('network');"/>
-                      <menuitem label="&jwe.emulator.tab.events.list.radio;" oncommand="jwe_emulator.switchEventPanel('radio');"/>
-                      <menuitem label="&jwe.emulator.tab.events.list.messaging;" oncommand="jwe_emulator.switchEventPanel('messaging');"/>
-                      <menuitem label="&jwe.emulator.tab.events.list.audio;" oncommand="jwe_emulator.switchEventPanel('audio');"/>
-                      <menuitem label="&jwe.emulator.tab.events.list.video;" oncommand="jwe_emulator.switchEventPanel('video');"/>
-                      <menuitem label="&jwe.emulator.tab.events.list.camera;" oncommand="jwe_emulator.switchEventPanel('camera');"/>
-                      <menuitem label="&jwe.emulator.tab.events.list.pim;" oncommand="jwe_emulator.switchEventPanel('pim');"/>
-                      <menuitem label="&jwe.emulator.tab.events.list.telephony;" oncommand="jwe_emulator.switchEventPanel('telephony');"/>
+                      <menuitem label="&jwe.emulator.tab.events.list.widget;" oncommand="jwe_emulator.switchEventPanel('widget');" value="widget"/>
+                      <menuitem label="&jwe.emulator.tab.events.list.device;" oncommand="jwe_emulator.switchEventPanel('device');" value="device"/>
+                      <menuitem label="&jwe.emulator.tab.events.list.devicestate;" oncommand="jwe_emulator.switchEventPanel('devicestate');" value="devicestate"/>
+                      <menuitem label="&jwe.emulator.tab.events.list.power;" oncommand="jwe_emulator.switchEventPanel('power');" value="power"/>
+                      <menuitem label="&jwe.emulator.tab.events.list.network;" oncommand="jwe_emulator.switchEventPanel('network');" value="network"/>
+                      <menuitem label="&jwe.emulator.tab.events.list.radio;" oncommand="jwe_emulator.switchEventPanel('radio');" value="radio"/>
+                      <menuitem label="&jwe.emulator.tab.events.list.messaging;" oncommand="jwe_emulator.switchEventPanel('messaging');" value="messaging"/>
+                      <menuitem label="&jwe.emulator.tab.events.list.audio;" oncommand="jwe_emulator.switchEventPanel('audio');" value="audio"/>
+                      <menuitem label="&jwe.emulator.tab.events.list.video;" oncommand="jwe_emulator.switchEventPanel('video');" value="video"/>
+                      <menuitem label="&jwe.emulator.tab.events.list.camera;" oncommand="jwe_emulator.switchEventPanel('camera');" value="camera"/>
+                      <menuitem label="&jwe.emulator.tab.events.list.pim;" oncommand="jwe_emulator.switchEventPanel('pim');" value="pim"/>
+                      <menuitem label="&jwe.emulator.tab.events.list.telephony;" oncommand="jwe_emulator.switchEventPanel('telephony');" value="telephony"/>
                     </menupopup>
                   </menulist>
                   <button label="&jwe.emulator.controls.popout;" onclick="jwe_emulator.launchControls();"/>
@@ -125,7 +125,6 @@
                       </vbox>
                     </groupbox>
                   </vbox>
-                  <button label="&jwe.emulator.tab.events.context.trigger;" oncommand="jwe_emulator.triggerWidgetEvent();"/>
                 </vbox>
                 
                 <vbox id="jwe-emulator-subtab-device" style="display: none;">
@@ -143,7 +142,6 @@
                       </vbox> 
                     </groupbox>
                   </vbox>
-                  <button label="&jwe.emulator.tab.events.context.trigger;" oncommand="jwe_emulator.triggerDeviceEvent();"/>
                 </vbox>
                 
                 <vbox id="jwe-emulator-subtab-devicestate" style="display: none;">
@@ -201,7 +199,6 @@
                       </vbox>
                     </groupbox>
                   </vbox>
-                  <button label="&jwe.emulator.tab.events.context.trigger;" oncommand="jwe_emulator.triggerDeviceStateEvent();"/>
                 </vbox>
                 
                 <vbox id="jwe-emulator-subtab-power" style="display: none;">
@@ -242,7 +239,6 @@
                       </vbox>
                     </groupbox>
                   </vbox>
-                  <button label="&jwe.emulator.tab.events.context.trigger;" oncommand="jwe_emulator.triggerPowerInfoEvent();"/>
                 </vbox>
 
                 <vbox id="jwe-emulator-subtab-network" style="display: none;">
@@ -263,7 +259,6 @@
                       </vbox>
                     </groupbox>
                   </vbox>
-                  <button label="&jwe.emulator.tab.events.context.trigger;" oncommand="jwe_emulator.triggerDataNetworkEvent();"/>
                 </vbox>
                 
                 <vbox id="jwe-emulator-subtab-radio" style="display: none;">
@@ -293,7 +288,6 @@
                       </vbox>
                     </groupbox>
                   </vbox>
-                  <button label="&jwe.emulator.tab.events.context.trigger;" oncommand="jwe_emulator.triggerRadioEvent();"/>
                 </vbox>
                 
                 <vbox id="jwe-emulator-subtab-messaging" style="display: none;">
@@ -329,7 +323,6 @@
                       </vbox> 
                     </groupbox>
                   </vbox>
-                  <button id="" label="&jwe.emulator.tab.events.context.trigger;" oncommand="jwe_emulator.triggerMessagingEvent();"/>
                 </vbox>
                 
                 <vbox id="jwe-emulator-subtab-audio" style="display: none;">
@@ -358,7 +351,6 @@
                       </vbox>
                     </groupbox>
                   </vbox>
-                  <button id="" label="&jwe.emulator.tab.events.context.trigger;" oncommand="jwe_emulator.triggerAudioEvent();"/>
                 </vbox>
                 
                 <vbox id="jwe-emulator-subtab-video" style="display: none;">
@@ -387,7 +379,6 @@
                       </vbox>
                     </groupbox>
                   </vbox>
-                  <button id="" label="&jwe.emulator.tab.events.context.trigger;" oncommand="jwe_emulator.triggerVideoEvent();"/>
                 </vbox>
                 
                 <vbox id="jwe-emulator-subtab-camera" style="display: none;">
@@ -427,7 +418,6 @@
                       </vbox>
                     </groupbox>
                   </vbox>
-                  <button id="" label="&jwe.emulator.tab.events.context.trigger;" oncommand="jwe_emulator.triggerCameraEvent();"/>
                 </vbox>
                 
                 <vbox id="jwe-emulator-subtab-pim" style="display: none;">
@@ -460,7 +450,6 @@
                       </vbox> 
                     </groupbox>
                   </vbox>
-                  <button id="" label="&jwe.emulator.tab.events.context.trigger;" oncommand="jwe_emulator.triggerPIMEvent();"/>
                 </vbox>
 
                 <vbox id="jwe-emulator-subtab-telephony" style="display: none;">
@@ -494,10 +483,14 @@
                           <description>&jwe.emulator.tab.events.context.nonevent;</description>
                       </vbox> 
                     </groupbox>
-                  </vbox>
-                  <button id="" label="&jwe.emulator.tab.events.context.trigger;" oncommand="jwe_emulator.triggerTelephonyEvent();"/>
+                  </vbox>                  
                 </vbox>  
                 
+                <hbox align="center">
+                  <label value="&jwe.emulator.tab.events.context.delay;"/> 
+                  <textbox type="number" size="5" id="jwe-emulator-subtab-event-context-delay" min="0"/> 
+                  <button id="" label="&jwe.emulator.tab.events.context.trigger;" oncommand="jwe_emulator.triggerEvent();"/>
+                </hbox>
                 <label value="&jwe.emulator.tab.events.context.warning;" style="font-style: italic;"/>
               </vbox>
                          
