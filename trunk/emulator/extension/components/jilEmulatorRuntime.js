@@ -456,15 +456,12 @@ JILEmulatorRuntime.prototype = //#
       onFlipEvent.invoke(flipClosed);
   },
 
-  invokeDSOnPositionRetrieved : function(positionInfo, failure)
+  invokeDSOnPositionRetrieved : function(positionInfo)
   {
     var onPositionRetrieved = Components.classes["@jil.org/jilapi-devicestateinfo;1"].getService(Components.interfaces.jilDeviceStateInfo).onPositionRetrieved;
 
     var positionMethod = Components.classes["@jil.org/jilapi-devicestateinfo;1"].getService(Components.interfaces.jilDeviceStateInfo).positionMethod;
 
-    if ( failure )
-      positionInfo.failure = true;
-    
     if ( onPositionRetrieved != null )
       onPositionRetrieved.invoke(positionInfo, positionMethod);
   },

@@ -1257,12 +1257,12 @@ var Widget =
       _DeviceStateInfo_122a.onPositionRetrieved = function(position, method)
       {
         var jilPosition = new Widget.Device.PositionInfo();
-        
-        if ( position.failure != true )
+dump(position.failure);
+        if ( position.failure == true )
           jilPosition = {};
         else
-          jilPosition.latitude = undefined;
-        
+          jilPosition.setJIL(position);
+      
         newValue(jilPosition, method);
       };
     });
@@ -1325,57 +1325,3 @@ Widget.init();
 // another wrapper :(
 var Widget_122 = Widget;
 var WidgetManager_122 = WidgetManager;
-
-
-
-
-
-// Utility function, dump an object by reflexion up to niv level
-function jwe_dumpall(name,obj,niv) {
-  if (!niv) niv=1;
-  var dumpdict=new Object();
-
-  dump ("\n\n-------------------------------------------------------\n");
-  dump ("Dump of the objet: " + name + " (" + niv + " levels)\n");
-  dump ("Address: " + obj + "\n");
-  dump ("Interfaces: ");
-  for (var i in Components.interfaces) {
-    try {
-      obj.QueryInterface(Components.interfaces[i]);
-      dump(""+Components.interfaces[i]+", ");
-    } catch (ex) {}
-  }
-  dump("\n");
-  _jwe_dumpall(dumpdict,obj,niv,"","");
-  dump ("\n\n-------------------------------------------------------\n\n");
-  
-  for (i in dumpdict) {
-    delete dumpdict[i];
-  }
-}
-function _jwe_dumpall(dumpdict,obj,niv,tab,path) {
-
-  if (obj in dumpdict) {
-    dump(" (Already dumped)");
-  } else {
-    dumpdict[obj]=1;
-    
-    var i,r,str,typ;
-    for (i in obj) {
-      try {
-        str = String(obj[i]).replace(/\n/g,"\n"+tab);
-      } catch (ex) {
-        str = String(ex);
-      }
-      try {
-        typ = ""+typeof(obj[i]);
-      } catch (ex) {
-        typ = "unknown";
-      }
-      dump ("\n" + tab + i + " (" + typ + (path?", " + path:"") +"): " + str);
-      if ((niv>1) && (typ=="object")) {
-        _jwe_dumpall(dumpdict,obj[i],niv-1,tab+"\t",(path?path+"->"+i:i));
-      }
-    }
-  }
-}

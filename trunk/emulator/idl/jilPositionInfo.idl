@@ -11,4 +11,5 @@ interface jilPositionInfo : nsISupports
   attribute long latitude;
   attribute long longitude;
   attribute string timeStamp; // !DATE
+  attribute boolean failure;
 };

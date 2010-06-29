@@ -65,34 +65,34 @@
           
             <tabpanel>
               <vbox flex="1">
-              <vbox flex="1" class="jwe-emulator-general-settings-panel">
-                <groupbox style="width: 100%;">
-                  <caption label="&jwe.emulator.tab.settings.displaylabel;"/>
-                  <vbox>
-                    <checkbox id="jwe-emulator-settings-overflow" label="&jwe.emulator.tab.settings.overflow;" oncommand="jwe_emulator.toggleOverflow();"/>        
-                    <checkbox id="jwe-emulator-settings-dragborder" label="&jwe.emulator.tab.settings.dragborder;" oncommand="jwe_emulator.toggleDragBorder();"/>      
-                    <checkbox id="jwe-emulator-settings-fullscreen" label="&jwe.emulator.tab.settings.fullscreen;" oncommand="jwe_emulator.toggleFullScreen();"/> 
-                  </vbox>
-                </groupbox>
-                <groupbox style="width: 100%;">
-                  <caption label="&jwe.emulator.tab.settings.securitylabel;"/>
-                  <vbox>
-                    <hbox align="center">
-                      <label value="&jwe.emulator.tab.settings.security.level;"/>
-                      <menulist id="jwe-emulator-settings-security-level" oncommand="jwe_emulator.toggleSecurityLevel();">
-                        <menupopup>
-                          <menuitem label="&jwe.emulator.tab.settings.security.level.operator;" value="operator"/>
-                          <menuitem label="&jwe.emulator.tab.settings.security.level.identified;" value="identified"/>
-                          <menuitem label="&jwe.emulator.tab.settings.security.level.unidentified;" value="unidentified"/>
-                        </menupopup>
-                      </menulist>
-                    </hbox>
-                  </vbox>
-                </groupbox>
-              </vbox>  
-              <hbox style="padding-top: 100px;">
-                <button label="&jwe.emulator.errorConsole;" oncommand="jwe_emulator.launchErrorConsole();" style="width: 100px;"/>
-              </hbox>    
+                <vbox flex="1" class="jwe-emulator-general-settings-panel">
+                  <groupbox style="width: 100%;">
+                    <caption label="&jwe.emulator.tab.settings.displaylabel;"/>
+                    <vbox>
+                      <checkbox id="jwe-emulator-settings-overflow" label="&jwe.emulator.tab.settings.overflow;" oncommand="jwe_emulator.toggleOverflow();"/>        
+                      <checkbox id="jwe-emulator-settings-dragborder" label="&jwe.emulator.tab.settings.dragborder;" oncommand="jwe_emulator.toggleDragBorder();"/>      
+                      <checkbox id="jwe-emulator-settings-fullscreen" label="&jwe.emulator.tab.settings.fullscreen;" oncommand="jwe_emulator.toggleFullScreen();"/> 
+                    </vbox>
+                  </groupbox>
+                  <groupbox style="width: 100%;">
+                    <caption label="&jwe.emulator.tab.settings.securitylabel;"/>
+                    <vbox>
+                      <hbox align="center">
+                        <label value="&jwe.emulator.tab.settings.security.level;"/>
+                        <menulist id="jwe-emulator-settings-security-level" oncommand="jwe_emulator.toggleSecurityLevel();">
+                          <menupopup>
+                            <menuitem label="&jwe.emulator.tab.settings.security.level.operator;" value="operator"/>
+                            <menuitem label="&jwe.emulator.tab.settings.security.level.identified;" value="identified"/>
+                            <menuitem label="&jwe.emulator.tab.settings.security.level.unidentified;" value="unidentified"/>
+                          </menupopup>
+                        </menulist>
+                      </hbox>
+                    </vbox>
+                  </groupbox>
+                </vbox>  
+                <hbox style="padding-top: 100px;">
+                  <button label="&jwe.emulator.errorConsole;" oncommand="jwe_emulator.launchErrorConsole();" style="width: 100px;"/>
+                </hbox>    
               </vbox>              
             </tabpanel>
             

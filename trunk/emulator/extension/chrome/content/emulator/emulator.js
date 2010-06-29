@@ -16,10 +16,7 @@ var jweInjector =
   onStateChange: function(aWebProgress, aRequest, aFlag, aStatus)
   {
     if (aFlag & Components.interfaces.nsIWebProgressListener.STATE_START)
-    {
-      dump("injecting");
       jwe_emulator.injectScripts();
-    }
   },
   onProgressChange: function(aWebProgress, aRequest, curSelf, maxSelf, curTot, maxTot) {},
   onStatusChange: function(aWebProgress, aRequest, aStatus, aMessage) {},
@@ -455,7 +452,7 @@ var jwe_emulator =
         positionInfo.timeStamp = new Date();
       }
       else
-        positionInfo = {};
+        positionInfo.failure = true;
 
       this.emulator.invokeDSOnPositionRetrieved(positionInfo);
     }
