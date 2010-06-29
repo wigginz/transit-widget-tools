@@ -19,5 +19,11 @@
         </menupopup>
       </menu>
     </menupopup>
+    
+    <statusbar id="status-bar">
+      <statusbarpanel id="jwe-status-bar" role="button" onmouseup="jwe_emulator.readConfig(false);" tooltiptext="&jwe.status.bar.launch;">
+        <image id="jwe-status-icon" src="chrome://transit-emulator/skin/images/transit-enabled.ico"/>
+      </statusbarpanel>
+    </statusbar>
 
 </overlay>

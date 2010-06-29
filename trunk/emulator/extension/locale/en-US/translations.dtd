@@ -1,10 +1,11 @@
 <!ENTITY jwe.menu.group "Transit Widget Emulator">
 <!ENTITY jwe.menu.emulate "Emulate Widget">
 <!ENTITY jwe.menu.emulateintab "Emulate Widget (debug)">
+<!ENTITY jwe.status.bar.launch "Launch Transit Emulator">
 <!ENTITY jwe.menu.logviewer "Log Viewer">
 <!ENTITY jwe.emulator.title "Transit Widget Emulator">
 <!ENTITY jwe.emulator.emulating "Emulating: ">
-<!ENTITY jwe-emulator-widget-name-version "Version: ">
+<!ENTITY jwe-emulator-widget-name-version "Widget Version: ">
 <!ENTITY jwe.emulator.pickprofile "Device Profile: ">
 <!ENTITY jwe.emulator.controls.popout "Pop-out">
 <!ENTITY jwe.menu.profiles "Manage Profiles">
