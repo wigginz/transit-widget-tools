@@ -1252,9 +1252,21 @@ var Widget =
     Widget.Device.DeviceStateInfo.watch("onFlipEvent", function(id, oldValue, newValue) {
       _DeviceStateInfo_122a.onFlipEvent = newValue; });
       
-    Widget.Device.DeviceStateInfo.watch("onPositionRetrieved", function(id, oldValue, newValue) {
-      _DeviceStateInfo_122a.onPositionRetrieved = newValue; });
-      
+    Widget.Device.DeviceStateInfo.watch("onPositionRetrieved", function(id, oldValue, newValue) 
+    {
+      _DeviceStateInfo_122a.onPositionRetrieved = function(position, method)
+      {
+        var jilPosition = new Widget.Device.PositionInfo();
+        
+        if ( position.failure != true )
+          jilPosition = {};
+        else
+          jilPosition.latitude = undefined;
+        
+        newValue(jilPosition, method);
+      };
+    });
+    
     Widget.Device.DeviceStateInfo.watch("onScreenChangeDimensions", function(id, oldValue, newValue) {
       _DeviceStateInfo_122a.onScreenChangeDimensions = newValue; });
       
