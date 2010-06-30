@@ -17,7 +17,7 @@
 <!ENTITY jwe.emulator.tab.events.context.nonevent "Event will be triggered when the associated API call is complete (search, export, etc.).">
 <!ENTITY jwe.emulator.tab.events.context "Event Context">
 <!ENTITY jwe.emulator.tab.events.context.trigger "Trigger Event">
-<!ENTITY jwe.emulator.tab.events.context.delay "Delay: (milliseconds): ">
+<!ENTITY jwe.emulator.tab.events.context.delay "Delay (milliseconds): ">
 <!ENTITY jwe.emulator.tab.events.context.warning "Note: values will not be saved to the device profile.">
 
 <!ENTITY jwe.emulator.tab.events "API Events">
