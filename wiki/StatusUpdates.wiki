@@ -1,14 +1,17 @@
 #labels Featured
-#list of latest updates for the project
-
 = Project Updates =
 
 Check here for all the latest details on milestone releases, what's being worked on and committed, and future plans.
 
 
-= Details =
+== Tuesday June 28, 2010 ==
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+Some usability enhancements have been added as well as the beginnings of the security context implementation.
+
+Quick list of what's new in the 20100628 build:
+
+ * Changed emulator container background to the JIL logo to reduce the size of the image (previous was 1+ MB).
+ * Tweaked the general settings tab to look more consistent with the others. Moved the error console button to the bottom and added security controls (not actually working yet though).
+ * Added an optional delay time to triggering events to better simulate callbacks that may take a while to be executed (location, searches, etc.).
+
+Download the development build [http://transit-widget-tools.googlecode.com/files/transit-emulator-20100629.xpi transit-emulator-20100629.xpi].
