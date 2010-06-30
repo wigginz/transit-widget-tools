@@ -1,0 +1,14 @@
+#labels Featured
+#list of latest updates for the project
+
+= Project Updates =
+
+Check here for all the latest details on milestone releases, what's being worked on and committed, and future plans.
+
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
