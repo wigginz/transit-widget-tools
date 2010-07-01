@@ -229,6 +229,7 @@ var jwe_emulator =
     }
     
     // resizing the widget reloads page scope, need to re-inject widget API
+    // actually I dont think it does anymore, need to double check
     this.injectScripts();
   },
 
@@ -518,8 +519,18 @@ var jwe_emulator =
   injectScripts : function()
   {
     Components.utils.import("resource://transit-emulator/1.2.2/JIL122aWrapper.jsm");
+    // pass the show yes/no dialog to the widget wrapper so it can activate the prompt
+    SecurityManager.showYesNoDialog = jwe_emulator.showYesNoDialog;
+    SecurityManager.securityContext = $("jwe-emulator-settings-security-level").val();
+    
     $("jwe-emulator-content").node.contentWindow["Widget"] = Widget_122;
     $("jwe-emulator-content").node.contentWindow["WidgetManager"] = WidgetManager_122;
+  },
+  
+  toggleSecurityLevel : function()
+  {
+    SecurityManager.securityContext = $("jwe-emulator-settings-security-level").val();
+    SecurityManager.sessionConfirmed = false;
   },
   
   showYesNoDialog : function(title, body, yesCallback, noCallback)

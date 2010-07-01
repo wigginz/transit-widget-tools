@@ -147,10 +147,11 @@
 
 <!ENTITY jwe.emulator.tab.settings.overflow "Hide overflow">
 <!ENTITY jwe.emulator.tab.settings.dragborder "Show drag handle">
-<!ENTITY jwe.emulator.tab.settings.fullscreen "Full screen mode (forces refresh)">
+<!ENTITY jwe.emulator.tab.settings.fullscreen "Full screen mode">
 
 <!ENTITY jwe.emulator.tab.settings.securitylabel "Security">
 <!ENTITY jwe.emulator.tab.settings.security.level "Security Context: ">
+<!ENTITY jwe.emulator.tab.settings.security.warning "Changes will clear session scope responses. 'blanket' type confirmation is always treated as 'session' type.">
 <!ENTITY jwe.emulator.tab.settings.security.level.unidentified "Unidentified">
 <!ENTITY jwe.emulator.tab.settings.security.level.identified "Identified">
 <!ENTITY jwe.emulator.tab.settings.security.level.operator "Operator">

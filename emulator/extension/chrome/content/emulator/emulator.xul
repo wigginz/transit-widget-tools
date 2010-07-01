@@ -48,7 +48,7 @@
       </hbox>
 
       <vbox id="jwe-emulator-tab-container" maxwidth="400px">
-<button label="asd" oncommand="jwe_emulator.showYesNoDialog('Priviledged Resource Access', 'This widget is attempting to use a priviledged resource, would you like to allow the widget to proceed?', function(){}, function(){});"/>
+
         <hbox pack="center" id="jwe-emulator-title">
           <label id="jwe-emulator-widget-started" value="&jwe.emulator.emulating;"/>
           <label id="jwe-emulator-widget-name"/>
@@ -92,6 +92,7 @@
                           </menupopup>
                         </menulist>
                       </hbox>
+                      <textbox value="&jwe.emulator.tab.settings.security.warning;" class="plain" style="background-color: transparent;font-style: italic;" flex="1" multiline="true" readonly="true" onoverflow="this.height = this.inputField.scrollHeight;" DOMAttrModified="if(event.attrName == 'value') this.value = event.newValue; return true;"/>
                     </vbox>
                   </groupbox>
                 </vbox>  
