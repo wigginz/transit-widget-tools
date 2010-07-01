@@ -1,4 +1,4 @@
-var EXPORTED_SYMBOLS = ["Widget_122", "WidgetManager_122"];
+var EXPORTED_SYMBOLS = ["Widget_122", "WidgetManager_122", "SecurityManager"];
 
 var _WidgetManager_122a = Components.classes["@jil.org/jilapi-widgetmanager;1"].getService(Components.interfaces.jilWidgetManager);
 var _Device_122a = Components.classes["@jil.org/jilapi-device;1"].getService(Components.interfaces.jilDevice);
@@ -56,11 +56,10 @@ var Widget =
     
     findFiles : function(matchFile, startInx, endInx)
     {
-      if ( Widget.sessionConfirmed || confirm("This widget is attempting to use a priviledged resource, would you like to allow the widget to proceed?") )
+      SecurityManager.checkSecurity(SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
       {
-        Widget.sessionConfirmed = true;
         _Device_122a.findFiles(matchFile.updateJIL(), startInx, endInx);
-      }
+      });
     },
     
     getAvailableApplications : function()
@@ -1322,8 +1321,6 @@ var Widget =
     Widget.Telephony.watch("onCallRecordsFound", function(id, oldValue, newValue) {
       _Telephony_122a.onCallRecordsFound = newValue; });
   },
-  
-  sessionConfirmed : false,
 };
 
 Widget.init();
@@ -1331,3 +1328,117 @@ Widget.init();
 // another wrapper :(
 var Widget_122 = Widget;
 var WidgetManager_122 = WidgetManager;
+
+SecurityManager = 
+{
+  sessionConfirmed : false,
+  
+  securityContext : null,
+  
+  showYesNoDialog : null,
+  
+  OP_ONE_SHOT : 0,
+  
+  OP_SESSION : 1, 
+  
+  OP_BLANKET : 1, // session and blanket are treated the same in the emulator, no point in emulating blanket
+  
+  OP_ALLOWED : 2,
+  
+  OP_DISALLOWED : 3,
+  
+  checkSecurity : function(unidentifiedOp, identifiedOp, operatorOp, executeIfYes)
+  {
+    // this is an ugly function
+        dump("context: "+this.securityContext+", conf: "+this.sessionConfirmed+", "+identifiedOp+", "+unidentifiedOp+", "+operatorOp);
+    if ( this.securityContext == "identified" )
+    {
+      if ( identifiedOp == this.OP_ALLOWED )
+      {
+        executeIfYes();
+        return;
+      }
+      if ( (identifiedOp == this.OP_SESSION) )
+      {
+        if ( !this.sessionConfirmed )
+        {
+          this.showPrompt(executeIfYes);
+          return;
+        }
+        else
+        {
+          executeIfYes();
+          return;
+        }
+      }
+      if ( (identifiedOp == this.OP_ONE_SHOT) )
+      {
+        this.showPrompt(executeIfYes);
+        return;
+      }
+    }
+    
+    else if ( this.securityContext == "unidentified" )
+    {
+      if ( unidentifiedOp == this.OP_ALLOWED )
+      {
+        executeIfYes();
+        return;
+      }
+      if ( (unidentifiedOp == this.OP_SESSION) )
+      {
+        if ( !this.sessionConfirmed )
+        {
+          this.showPrompt(executeIfYes);
+          return;
+        }
+        else
+        {
+          executeIfYes();
+          return;
+        }
+      }
+      if ( (unidentifiedOp == this.OP_ONE_SHOT) )
+      {
+        this.showPrompt(executeIfYes);
+        return;
+      }
+    }
+    
+    else if ( this.securityContext == "operator" )
+    {
+      if ( operatorOp == this.OP_ALLOWED )
+      {
+        executeIfYes();
+        return;
+      }
+      if ( (operatorOp == this.OP_SESSION) )
+      {
+        if ( !this.sessionConfirmed )
+        {
+          this.showPrompt(executeIfYes);
+          return;
+        }
+        else
+        {
+          executeIfYes();
+          return;
+        }
+      }
+      if ( (operatorOp == this.OP_ONE_SHOT) )
+      {
+        this.showPrompt(executeIfYes);
+        return;
+      }
+    }
+  },
+  
+  showPrompt : function(executeIfYes)
+  {
+    this.showYesNoDialog("Priviledged Resource Access", "This widget is attempting to use a priviledged resource, would you like to allow the widget to proceed?", function()
+    {
+      SecurityManager.sessionConfirmed = true;
+        executeIfYes();
+    }, function(){});
+  },
+};
