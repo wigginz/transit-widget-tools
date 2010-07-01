@@ -56,7 +56,11 @@ var Widget =
     
     findFiles : function(matchFile, startInx, endInx)
     {
-      _Device_122a.findFiles(matchFile.updateJIL(), startInx, endInx);
+      if ( Widget.sessionConfirmed || confirm("This widget is attempting to use a priviledged resource, would you like to allow the widget to proceed?") )
+      {
+        Widget.sessionConfirmed = true;
+        _Device_122a.findFiles(matchFile.updateJIL(), startInx, endInx);
+      }
     },
     
     getAvailableApplications : function()
@@ -1257,7 +1261,7 @@ var Widget =
       _DeviceStateInfo_122a.onPositionRetrieved = function(position, method)
       {
         var jilPosition = new Widget.Device.PositionInfo();
-dump(position.failure);
+
         if ( position.failure == true )
           jilPosition = {};
         else
@@ -1318,6 +1322,8 @@ dump(position.failure);
     Widget.Telephony.watch("onCallRecordsFound", function(id, oldValue, newValue) {
       _Telephony_122a.onCallRecordsFound = newValue; });
   },
+  
+  sessionConfirmed : false,
 };
 
 Widget.init();

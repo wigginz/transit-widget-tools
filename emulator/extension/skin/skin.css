@@ -6,25 +6,30 @@
 #jwe-emulator-workspace
 {
   border: 1px solid black; 
-  background-image: url('chrome://transit-emulator/skin/images/jil-bg.png'); /*emu-large-bg.png);*/
+  background-image: url('chrome://transit-emulator/skin/images/jil-bg.png');
   background-repeat: no-repeat;
   background-position: center center;
   overflow: hidden;
   background-color: black;
-  z-index: 1000;
+  z-index: 101;
 }
 
 #jwe-emulator-container
 {
   position:fixed;
-  border: 2px solid #444444;
-  cursor: move;
-  padding: 10px;
-  -moz-border-radius: 10px;
-  background-image: url('chrome://transit-emulator/skin/images/border-bg.png');
   z-index: 100;
   height: auto;
   width: auto;
+}
+
+#jwe-emulator-container-drag-handle
+{
+  float: right;
+  cursor: move;
+  display: none;
+  height: 20px;
+  width: 20px;
+  background-image: url('chrome://transit-emulator/skin/images/drag-handle.png');
 }
 
 #jwe-emulator-title
@@ -53,6 +58,7 @@
 
 #jwe-emulator-content
 {
+  position: absolute;
   cursor: auto;
   overflow: auto;
 }
@@ -84,6 +90,68 @@
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   overflow-y: auto;
+}
+
+.runtime-dialog-bg
+{
+  display: none;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+  z-index: 1101;
+  padding: 10px;
+  -moz-border-radius: 10px;
+  background-image: url('chrome://transit-emulator/skin/images/border-bg-darker.png');
+}
+
+.runtime-dialog-container
+{
+  position: relative;
+  background-color: #FFFFFF;
+  width: 100%;
+  height: 100%;
+  -moz-border-radius: 10px;
+  padding: 5px;
+} 
+
+.runtime-dialog-title-bar
+{
+  background-color: #AEAEAE;
+  height: 35px;
+  -moz-border-radius: 10px;
+  position: relative;
+}
+
+.runtime-dialog-title
+{
+  color: #FFFFFF;
+  font-size: 1.5em;
+  font-weight: bold;
+  padding: 6px 0px 0px 0px;
+  position: relative;
+}
+
+.runtime-dialog-button
+{
+  position: absolute;
+  background-color: #EDEDED;
+  -moz-border-radius: 10px;
+  color: #777777;
+  height: 35px; 
+  font-size: 1.5em;
+  font-weight: bold;
+  padding: 6px;
+  margin: 3px;
+  cursor: pointer;
+}
+
+.runtime-dialog-body
+{
+  padding: 5px;
+  font-size: 1.2em;
+  font-weight: bold;
 }
 
 /** Manage Profile Window Styles **/
