@@ -30,7 +30,6 @@ var jwe_emulator =
   deviceHeight : null,
   widgetWidth : null,
   widgetHeight : null,
-  roomForDragBorder : true,
   eventpanels : null,
   eventContexts : null,
   fileSystemMap : new Array(),
@@ -57,10 +56,7 @@ var jwe_emulator =
     $("jwe-emulator-widget-name").attr("value", this.emulator.getWidget().name);
     $("jwe-emulator-widget-name-version").attr("value", this.emulator.getWidget().version);    
         
-    //$("jwe-emulator-content").attr("src", this.emulator.getWidget().contentSrc);
-    //$("jwe-emulator-content").node.loadURI(this.emulator.getWidget().contentSrc);
-    //$("jwe-emulator-content").node.stop();
-    $("jwe-emulator-content").node.loadURI(this.emulator.getWidget().contentSrc);
+    $("jwe-emulator-content").attr("src", this.emulator.getWidget().contentSrc);
     
     $("jwe-emulator-loadedprofile").node.removeAllItems();
     var menupopup = document.createElement("menupopup");
@@ -80,7 +76,6 @@ var jwe_emulator =
     $("jwe-emulator-loadedprofile").sel(profileIndex);
 
     $("jwe-log").val(this.emulator.getLog());
-
   },
    
   loadWidgetEvents : function()
@@ -197,21 +192,8 @@ var jwe_emulator =
     $("jwe-emulator-workspace").attr("maxwidth", this.deviceWidth);
     $("jwe-emulator-workspace").attr("minwidth", this.deviceWidth);
 
-    var containerHeight = this.widgetHeight+25;
-    var containerWidth = this.widgetWidth+25;
-    $("jwe-emulator-container").css("height", containerHeight+"px");
-    $("jwe-emulator-container").css("width", containerWidth+"px");
-
     var contentHeight = this.widgetHeight;
     var contentWidth = this.widgetWidth;
-
-    // if the drag container is larger than the screen size, don't show it
-    if ( (contentHeight >= this.deviceHeight) ||
-         (contentWidth >= this.deviceWidth) )
-    {
-      this.removeDragBorder();
-      this.roomForDragBorder = false;
-    }
 
     $("jwe-emulator-content").css("height", contentHeight+"px");
     $("jwe-emulator-content").css("width", contentWidth+"px");
@@ -233,73 +215,21 @@ var jwe_emulator =
       $("jwe-emulator-content").css("overflow", "auto");
   },
 
-  dragBorder : null,
-
   toggleFullScreen : function()
   {
-    // detatch drag border
     if ( $("jwe-emulator-settings-fullscreen").chk() )
     { 
-      this.removeDragBorder();
-
       $("jwe-emulator-content").css("height", this.deviceHeight+"px");
       $("jwe-emulator-content").css("width", this.deviceWidth+"px");
     }
     else
     {
-      this.restoreDragBorder();
-
       $("jwe-emulator-content").css("height", this.emulator.getWidget().maxHeight+"px");
       $("jwe-emulator-content").css("width", this.emulator.getWidget().maxWidth+"px");
     }
     
     // resizing the widget reloads page scope, need to re-inject widget API
     this.injectScripts();
-  },
-
-  restoreDragBorder : function()
-  {
-    if ( this.roomForDragBorder == false )
-      return;
-
-    var contentNode = $("jwe-emulator-content").node;
-    $("jwe-emulator-workspace").node.removeChild(contentNode);
-    $("jwe-emulator-workspace").node.appendChild(this.dragBorder);
-    this.dragBorder.appendChild(contentNode);
-
-    this.dragBorder = null;
-
-    $("jwe-emulator-settings-dragborder").chk(false);
-    $("jwe-emulator-settings-dragborder").disable(false);
-  },
-
-  removeDragBorder : function()
-  {
-    if ( this.dragBorder != null )
-      return;
-
-    this.dragBorder = $("jwe-emulator-container").node;
-    $("jwe-emulator-settings-dragborder").chk(true);
-    $("jwe-emulator-settings-dragborder").disable(true);
-
-    var contentNode = $("jwe-emulator-content").node;
-
-    $("jwe-emulator-workspace").node.removeChild($("jwe-emulator-container").node);
-    $("jwe-emulator-workspace").node.appendChild(contentNode);
-  },
-
-  toggleDragBorder : function()
-  {
-    if ( $("jwe-emulator-settings-dragborder").chk() )
-    {
-      $("jwe-emulator-container").css("background", "url(chrome://transit-emulator/skin/images/border-bg-none.png)");
-      $("jwe-emulator-container").css("border", "none");
-    }
-    else
-    {
-      $("jwe-emulator-container").css("background", "url(chrome://transit-emulator/skin/images/border-bg.png)");
-      $("jwe-emulator-container").css("border", " 2px solid #444444");
-    }
   },
 
   reload: function()
@@ -410,7 +340,6 @@ var jwe_emulator =
       {
         if ( ! $("jwe-emulator-settings-fullscreen").chk() )
         {
-          this.removeDragBorder();
           $("jwe-emulator-content").css("height", this.deviceHeight+"px");
           $("jwe-emulator-content").css("width", this.deviceWidth+"px");
           $("jwe-emulator-settings-fullscreen").chk(true);
@@ -591,8 +520,31 @@ var jwe_emulator =
     Components.utils.import("resource://transit-emulator/1.2.2/JIL122aWrapper.jsm");
     $("jwe-emulator-content").node.contentWindow["Widget"] = Widget_122;
     $("jwe-emulator-content").node.contentWindow["WidgetManager"] = WidgetManager_122;
-    window["Widget"] = Widget_122;
-    window["WidgetManager"] = WidgetManager_122;
+  },
+  
+  showYesNoDialog : function(title, body, yesCallback, noCallback)
+  {
+    $("jwe-runtime-dialog-yes").node.onclick = function()
+    {
+      //$("jwe-runtime-dialog").css("visibility", "hidden");
+      $("jwe-runtime-dialog-bg").css("display", "none");
+      
+      yesCallback();
+    };
+        
+    $("jwe-runtime-dialog-no").node.onclick = function()
+    {
+      //$("jwe-runtime-dialog").css("visibility", "hidden");
+      $("jwe-runtime-dialog-bg").css("display", "none");
+      
+      noCallback();
+    };
+    
+    $("jwe-runtime-dialog-title-text").val(title);
+    $("jwe-runtime-dialog-body-text").val(body);
+    
+    $("jwe-runtime-dialog-bg").css("display", "block");
+    //$("jwe-runtime-dialog").css("visibility", "visible");
   },
 };
 

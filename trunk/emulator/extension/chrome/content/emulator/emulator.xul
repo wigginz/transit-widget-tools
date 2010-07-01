@@ -18,40 +18,46 @@
   <script src="chrome://transit-emulator/content/utils/utils.js" />
   <script src="chrome://transit-emulator/content/emulator/emulator.js" />
   <script src="chrome://transit-emulator/content/emulator/workspace.js" />
-  
-  <vbox>
 
-    <hbox pack="center" id="jwe-emulator-title">
-      <label id="jwe-emulator-widget-started" value="&jwe.emulator.emulating;"/>
-      <label id="jwe-emulator-widget-name"/>
-    </hbox>
-    
-    <hbox pack="center">
-      
-    </hbox>
-    
-    <hbox pack="center" id="jwe-emulator-version">
-      <label value="&jwe-emulator-widget-name-version;"/>
-      <label id="jwe-emulator-widget-name-version"/>
-    </hbox>
+  <vbox> 
     
     <hbox>
-    
+     
       <hbox id="jwe-emulator-workspace-container" minheight="800px" minwidth="480px">
-        <hbox id="jwe-emulator-workspace" 
-          ondragover="nsDragAndDrop.dragOver(event, jwe_workspace.workspaceObserver);"
-          ondragdrop="nsDragAndDrop.drop(event, jwe_workspace.workspaceObserver);">
-          <hbox id="jwe-emulator-container" 
-            onmousedown="jwe_workspace.mouseClick(event);" 
-            onmouseup="jwe_workspace.mouseUnClick(event);" 
-            ondraggesture="nsDragAndDrop.startDrag(event, jwe_workspace.contentObserver);">
+        <hbox id="jwe-emulator-workspace">
+         
+          <hbox id="jwe-emulator-container">
             <browser id="jwe-emulator-content" type="chrome" disablehistory="true">
             </browser>
           </hbox>
-        </hbox>
+          <vbox class="runtime-dialog-bg" flex="1" id="jwe-runtime-dialog-bg"> 
+            <vbox class="runtime-dialog-container" id="jwe-runtime-dialog">
+              <hbox class="runtime-dialog-title-bar">
+                <description class="runtime-dialog-title" id="jwe-runtime-dialog-title-text"/> 
+              </hbox>  
+              <hbox class="runtime-dialog-body" style="overflow: hidden;">
+                <textbox id="jwe-runtime-dialog-body-text" class="plain" style="background-color: transparent;" flex="1" multiline="true" readonly="true" onoverflow="this.height = this.inputField.scrollHeight;" DOMAttrModified="if(event.attrName == 'value') this.value = event.newValue; return true;"/>
+              </hbox>
+              <hbox pack="center">
+                <label class="runtime-dialog-button" id="jwe-runtime-dialog-yes" value="Yes"/>
+                <label class="runtime-dialog-button" id="jwe-runtime-dialog-no" value="No"/>
+             </hbox>
+            </vbox>  
+          </vbox> 
+        </hbox>          
       </hbox>
 
       <vbox id="jwe-emulator-tab-container" maxwidth="400px">
+<button label="asd" oncommand="jwe_emulator.showYesNoDialog('Priviledged Resource Access', 'This widget is attempting to use a priviledged resource, would you like to allow the widget to proceed?', function(){}, function(){});"/>
+        <hbox pack="center" id="jwe-emulator-title">
+          <label id="jwe-emulator-widget-started" value="&jwe.emulator.emulating;"/>
+          <label id="jwe-emulator-widget-name"/>
+        </hbox>
+        
+        <hbox pack="center" id="jwe-emulator-version" style="padding-bottom: 20px;">
+          <label value="&jwe-emulator-widget-name-version;"/>
+          <label id="jwe-emulator-widget-name-version"/>
+        </hbox>
 
         <tabbox>
         
@@ -70,7 +76,6 @@
                     <caption label="&jwe.emulator.tab.settings.displaylabel;"/>
                     <vbox>
                       <checkbox id="jwe-emulator-settings-overflow" label="&jwe.emulator.tab.settings.overflow;" oncommand="jwe_emulator.toggleOverflow();"/>        
-                      <checkbox id="jwe-emulator-settings-dragborder" label="&jwe.emulator.tab.settings.dragborder;" oncommand="jwe_emulator.toggleDragBorder();"/>      
                       <checkbox id="jwe-emulator-settings-fullscreen" label="&jwe.emulator.tab.settings.fullscreen;" oncommand="jwe_emulator.toggleFullScreen();"/> 
                     </vbox>
                   </groupbox>
@@ -99,6 +104,7 @@
             <tabpanel>
               <vbox flex="1">
                 <hbox align="center" pack="end">
+                  <label value="&jwe.emulator.tab.events.list.caption;"/>
                   <menulist id="jwe-emulator-subtab-widget-event-list" label="&jwe.emulator.tab.events.list.caption;" align="right">
                     <menupopup>
                       <menuitem label="&jwe.emulator.tab.events.list.widget;" oncommand="jwe_emulator.switchEventPanel('widget');" value="widget"/>

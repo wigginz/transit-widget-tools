@@ -13,6 +13,7 @@
 <!ENTITY jwe.emulator.tab.settings "General Settings">
 <!ENTITY jwe.emulator.tab.settings.displaylabel "Display">
 
+<!ENTITY jwe.emulator.tab.events.list.caption "API: ">
 <!ENTITY jwe.emulator.tab.events.context.none "N/A">
 <!ENTITY jwe.emulator.tab.events.context.nonevent "Event will be triggered when the associated API call is complete (search, export, etc.).">
 <!ENTITY jwe.emulator.tab.events.context "Event Context">
@@ -145,7 +146,7 @@
 <!ENTITY jwe.emulator.tab.log "Log">
 
 <!ENTITY jwe.emulator.tab.settings.overflow "Hide overflow">
-<!ENTITY jwe.emulator.tab.settings.dragborder "Hide drag border">
+<!ENTITY jwe.emulator.tab.settings.dragborder "Show drag handle">
 <!ENTITY jwe.emulator.tab.settings.fullscreen "Full screen mode (forces refresh)">
 
 <!ENTITY jwe.emulator.tab.settings.securitylabel "Security">

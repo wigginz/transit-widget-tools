@@ -5,16 +5,16 @@ var jwe_workspace =
 
   mouseClick : function(event)
   {
-    if ( event.target.id != "jwe-emulator-container" )
+    if ( event.target.id != "jwe-emulator-container-drag-handle" )
       return(false);
-    $("jwe-emulator-content").hide();
+    //$("jwe-emulator-content").hide();
   },
 
   mouseUnClick : function(event)
   {
-    if ( event.target.id != "jwe-emulator-container" )
+    if ( event.target.id != "jwe-emulator-container-drag-handle" )
       return(false);
-    $("jwe-emulator-content").show();
+    //$("jwe-emulator-content").show();
   },
 
   contentObserver : 
@@ -52,7 +52,7 @@ var jwe_workspace =
         elem.style.top = "" + offsetY+"px";
         elem.style.left = "" + offsetX+"px";  
       }
-      $("jwe-emulator-content").show();
+      //$("jwe-emulator-content").show();
     }
   },
 };
