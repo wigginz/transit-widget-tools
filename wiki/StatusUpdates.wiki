@@ -4,6 +4,17 @@
 Check here for all the latest details on milestone releases, what's being worked on and committed, and future plans.
 
 
+== Thursday July 1, 2010 ==
+
+More progress made on the security context implementation. Prompts are correctly being displayed, responses are being tracked. Since the emulator is meant for developers and not end users, the "blanket" mode is treated the same as "session" mode. I doubt developers wont want responses saved forever. Only the Device.findFiles API is being monitored by the security manager in this build, full API integration to come in the next couple days.
+
+Also added a JIL image to the status bar (similar to FireBug's) to do a quick launch of the emulator instead of having to navigate to the Tools menu. The config.xml file still needs to be loaded in the current tab. Planning on adding a right click menu to allow launching of the profiles and debug windows.
+
+I recommend installing this build as the June 28 build had an issue with full screen mode which is now resolved. 
+
+Download the development build [http://transit-widget-tools.googlecode.com/files/transit-emulator-20100701.xpi transit-emulator-20100701.xpi].
+
+
 == Tuesday June 28, 2010 ==
 
 Some usability enhancements have been added as well as the beginnings of the security context implementation.
