@@ -147,6 +147,7 @@ var _Messaging_122a = Components.classes["@jil.org/jilapi-messaging;1"].getServi
 var _Telephony_122a = Components.classes["@jil.org/jilapi-telephony;1"].getService(Components.interfaces.jilTelephony);
 var _VideoPlayer_122a = Components.classes["@jil.org/jilapi-videoplayer;1"].getService(Components.interfaces.jilVideoPlayer);
 var _Widget_122a = Components.classes["@jil.org/jilapi-widget;1"].getService(Components.interfaces.jilWidget);
+var _PIM_122a = Components.classes["@jil.org/jilapi-pim;1"].getService(Components.interfaces.jilPIM);
 
 var WidgetManager = 
 {
@@ -1328,6 +1329,9 @@ var Widget =
       
       this.updateJIL = function()
       {
+        if ( this._jilCalItem == null )
+          this._jilCalItem = _PIM_122a.getNewCalendarItem();
+          
         this._jilCalItem.alarmDate = this.alarmDate;
         this._jilCalItem.alarmed = this.alarmed;
         this._jilCalItem.calendarItemId = this.calendarItemId;
