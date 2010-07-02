@@ -3,6 +3,15 @@
 
 Check here for all the latest details on milestone releases, what's being worked on and committed, and future plans.
 
+<wiki:comment>
+== Friday July 2, 2010 ==
+
+Security manager checks have been extended to all API functions. Current limitations:
+
+ * Security checks are done after argument validation (makes more sense for developers)
+ * Object properties (non-function members like Widget.Device.AccountInfo.phoneMSISDN, etc.) and XMLHttpRequest are not yet being checked by the security manager.
+</wiki:comment>
+
 
 == Thursday July 1, 2010 ==
 
