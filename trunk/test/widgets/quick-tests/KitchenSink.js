@@ -604,7 +604,7 @@ var testPIM =
       showResult("Widget.PIM.getCalendarItem()", result+"Retrieved calendar item with id: "+item.calendarItemId);
     };
     
-    var comparison = Widget.PIM.createCalendarItem();
+    var comparison = new Widget.PIM.CalendarItem();
     comparison.eventName = "Test Event 4";
     Widget.PIM.findCalendarItems(comparison, 0, 10);
   },
@@ -774,7 +774,7 @@ var common =
     ci.eventEndTime = new Date();
     ci.eventName = eventName;
     ci.eventNotes = "Some event notes.";
-    ci.eventRecurrence = EventRecurrenceTypes.DAILY;
+    ci.eventRecurrence = Widget.PIM.EventRecurrenceTypes.DAILY;
     ci.eventStartTime = new Date();    
     Widget.PIM.addCalendarItem(ci);
   },
