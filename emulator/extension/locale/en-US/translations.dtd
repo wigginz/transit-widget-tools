@@ -151,7 +151,7 @@
 
 <!ENTITY jwe.emulator.tab.settings.securitylabel "Security">
 <!ENTITY jwe.emulator.tab.settings.security.level "Security Context: ">
-<!ENTITY jwe.emulator.tab.settings.security.warning "Changes will clear session scope responses. 'blanket' type confirmation is always treated as 'session' type.">
+<!ENTITY jwe.emulator.tab.settings.security.warning "Changes or reload will clear session scope responses. 'blanket' type confirmation is always treated as 'session' type.">
 <!ENTITY jwe.emulator.tab.settings.security.level.unidentified "Unidentified">
 <!ENTITY jwe.emulator.tab.settings.security.level.identified "Identified">
 <!ENTITY jwe.emulator.tab.settings.security.level.operator "Operator">

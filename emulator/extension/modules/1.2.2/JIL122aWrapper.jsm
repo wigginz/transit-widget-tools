@@ -1,5 +1,127 @@
 var EXPORTED_SYMBOLS = ["Widget_122", "WidgetManager_122", "SecurityManager"];
 
+var SecurityManager = 
+{
+  sessionConfirmed : new Array(),
+  
+  securityContext : null,
+  
+  showYesNoDialog : null,
+  
+  OP_ONE_SHOT : 0,
+  
+  OP_SESSION : 1, 
+  
+  OP_BLANKET : 1, // session and blanket are treated the same in the emulator, no point in emulating blanket
+  
+  OP_ALLOWED : 2,
+  
+  OP_DISALLOWED : 3,
+  
+  checkSecurity : function(apiKey, unidentifiedOp, identifiedOp, operatorOp, executeIfYes)
+  {
+    // this is an ugly function
+    //dump("context: "+this.securityContext+", api: "+apiKey+"conf: "+SecurityManager.sessionConfirmed[apiKey]+", "+identifiedOp+", "+unidentifiedOp+", "+operatorOp);
+    if ( this.securityContext == "identified" )
+    {
+      if ( identifiedOp == this.OP_ALLOWED )
+      {
+        executeIfYes();
+        return;
+      }
+      if ( (identifiedOp == this.OP_SESSION) )
+      {
+        if ( !this.sessionConfirmed[apiKey] )
+        {
+          this.showPrompt(executeIfYes, apiKey);
+          return;
+        }
+        else
+        {
+          executeIfYes();
+          return;
+        }
+      }
+      if ( (identifiedOp == this.OP_ONE_SHOT) )
+      {
+        this.showPrompt(executeIfYes, apiKey);
+        return;
+      }
+    }
+    
+    else if ( this.securityContext == "unidentified" )
+    {
+      if ( identifiedOp == this.OP_DISALLOWED )
+        return;
+      if ( unidentifiedOp == this.OP_ALLOWED )
+      {
+        executeIfYes();
+        return;
+      }
+      if ( (unidentifiedOp == this.OP_SESSION) )
+      {
+        if ( !this.sessionConfirmed[apiKey] )
+        {
+          this.showPrompt(executeIfYes, apiKey);
+          return;
+        }
+        else
+        {
+          executeIfYes();
+          return;
+        }
+      }
+      if ( (unidentifiedOp == this.OP_ONE_SHOT) )
+      {
+        this.showPrompt(executeIfYes, apiKey);
+        return;
+      }
+    }
+    
+    else if ( this.securityContext == "operator" )
+    {
+      if ( operatorOp == this.OP_ALLOWED )
+      {
+        executeIfYes();
+        return;
+      }
+      if ( (operatorOp == this.OP_SESSION) )
+      {
+        if ( !this.sessionConfirmed[apiKey] )
+        {
+          this.showPrompt(executeIfYes, apiKey);
+          return;
+        }
+        else
+        {
+          executeIfYes();
+          return;
+        }
+      }
+      if ( (operatorOp == this.OP_ONE_SHOT) )
+      {
+        this.showPrompt(executeIfYes, apiKey);
+        return;
+      }
+    }
+  },
+  
+  showPrompt : function(executeIfYes, apiKey)
+  {
+    this.showYesNoDialog("Priviledged Resource Access", "This application is attempting to use the following priviledged resource: \n\n"+apiKey+"\n\nWould you like to allow the application to proceed?", function()
+    {
+      SecurityManager.sessionConfirmed[apiKey] = true;
+      executeIfYes();
+    }, function(){});
+  },
+  
+  reset : function()
+  {
+    this.sessionConfirmed = new Array();  
+    this.securityContext = null;
+  },
+};
+
 var _WidgetManager_122a = Components.classes["@jil.org/jilapi-widgetmanager;1"].getService(Components.interfaces.jilWidgetManager);
 var _Device_122a = Components.classes["@jil.org/jilapi-device;1"].getService(Components.interfaces.jilDevice);
 var _AccountInfo_122a = Components.classes["@jil.org/jilapi-accountinfo;1"].getService(Components.interfaces.jilAccountInfo);
@@ -46,17 +168,23 @@ var Widget =
     
     copyFile : function(originalFile, destinationFullName)
     {
-      return(_Device_122a.copyFile(originalFile, destinationFullName));
+      SecurityManager.checkSecurity("Copy File (Device.copyFile)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+      {
+        return(_Device_122a.copyFile(originalFile, destinationFullName));
+      });
     },
     
     deleteFile : function(destinationFullName)
     {
-      return(_Device_122a.deleteFile(destinationFullName));
+      SecurityManager.checkSecurity("Delete File (Device.deleteFile)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+      {
+        return(_Device_122a.deleteFile(destinationFullName));
+      });
     },
     
     findFiles : function(matchFile, startInx, endInx)
     {
-      SecurityManager.checkSecurity(SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+      SecurityManager.checkSecurity("File Search (Device.findFiles)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
       {
         _Device_122a.findFiles(matchFile.updateJIL(), startInx, endInx);
       });
@@ -64,35 +192,47 @@ var Widget =
     
     getAvailableApplications : function()
     {
-      return(_Device_122a.getAvailableApplications());
+      SecurityManager.checkSecurity("Get Available Applications (Device.getAvailableApplications)", SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, SecurityManager.OP_ALLOWED, function()
+      {
+        return(_Device_122a.getAvailableApplications());
+      });
     },
     
     getDirectoryFileNames : function(sourceDirectory)
     {
-      return(_Device_122a.getDirectoryFileNames(sourceDirectory));
+      SecurityManager.checkSecurity("List Files in a Folder (Device.getDirectoryFileNames)", SecurityManager.OP_BLANKET, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+      {
+        return(_Device_122a.getDirectoryFileNames(sourceDirectory));
+      });
     },
     
     getFile : function(fullName)
     {
-      var jilFile = _Device_122a.getFile(fullName);
-      
-      if ( jilFile == null )
+      SecurityManager.checkSecurity("Access a File (Device.getFile)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
       {
-        var exc = new Widget.Exception();
-        exc.message = "Invalid file name";
-        exc.type = Widget.ExceptionTypes.INVALID_PARAMETER;
-        throw(exc);
-      }
-      
-      var wrappedFile = new Widget.Device.File();
-      wrappedFile.setJIL(jilFile);
-      
-      return(wrappedFile);
+        var jilFile = _Device_122a.getFile(fullName);
+        
+        if ( jilFile == null )
+        {
+          var exc = new Widget.Exception();
+          exc.message = "Invalid file name";
+          exc.type = Widget.ExceptionTypes.INVALID_PARAMETER;
+          throw(exc);
+        }
+        
+        var wrappedFile = new Widget.Device.File();
+        wrappedFile.setJIL(jilFile);
+        
+        return(wrappedFile);
+      });
     },
     
     getFileSystemRoots : function()
     {
-      return(_Device_122a.getFileSystemRoots);
+      SecurityManager.checkSecurity("List File Systems (Device.getFileSystemRoots)", SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, SecurityManager.OP_ALLOWED, function()
+      {
+        return(_Device_122a.getFileSystemRoots());
+      });
     },
     
     getFileSystemSize : function(fileSystemRoot)
@@ -102,12 +242,18 @@ var Widget =
     
     launchApplication : function(application, startParameter)
     {
-      _Device_122a.launchApplication(application, startParameter);
+      SecurityManager.checkSecurity("Launch Application (Device.launchApplication)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+      {
+        _Device_122a.launchApplication(application, startParameter);
+      });
     },
     
     moveFile : function(originalFile, destinationFullName)
     {
-      return(_Device_122a.moveFile(originalFile, destinationFullName));
+      SecurityManager.checkSecurity("Move File (Device.moveFile)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+      {
+        return(_Device_122a.moveFile(originalFile, destinationFullName));
+      });
     },
     
     setRingtone : function(ringtoneFileUrl, addressBookItem)
@@ -118,7 +264,10 @@ var Widget =
       if ( (addressBookItem == null) || !(addressBookItem instanceof Widget.PIM.AddressBookItem) )
         Widget.throwIPException("Invalid argument type for addressBookItem in Device.setRingtone");
     
-      _Device_122a.setRingtone(ringtoneFileUrl, addressBookItem.updateJIL());
+      SecurityManager.checkSecurity("Set Contact Ringtone (Device.setRingtone)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+      {
+        _Device_122a.setRingtone(ringtoneFileUrl, addressBookItem.updateJIL());
+      });
     },
     
     vibrate : function(durationSeconds)
@@ -237,8 +386,11 @@ var Widget =
         {
           if ( (wallpaperFileUrl == null) || (wallpaperFileUrl.constructor != String) )
             Widget.throwIPException("Invalid argument type for wallpaperFileUrl in Config.setAsWallpaper");
-
-          _Config_122a.setAsWallpaper(wallpaperFileUrl);
+          
+          SecurityManager.checkSecurity("Set Wallpaper (Config.setAsWallpaper)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_BLANKET, function()
+          {
+            _Config_122a.setAsWallpaper(wallpaperFileUrl);
+          });
         },
         
         setDefaultRingtone : function(ringtoneFileUrl)
@@ -246,7 +398,10 @@ var Widget =
           if ( (ringtoneFileUrl == null) || (ringtoneFileUrl.constructor != String) )
             Widget.throwIPException("Invalid argument type for ringtoneFileUrl in Config.setDefaultRingtone");
 
-           _Config_122a.setDefaultRingtone(ringtoneFileUrl);
+          SecurityManager.checkSecurity("Set Default Ringtone (Config.setDefaultRingtone)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_BLANKET, function()
+          {
+            _Config_122a.setDefaultRingtone(ringtoneFileUrl);
+          });
         },
       },
       
@@ -266,8 +421,11 @@ var Widget =
       {
         if ( ! this.testPositionInfoMethods(method) )
           Widget.throwIPException("Invalid argument type for method in DeviceStateInfo.requestPositionInfo");
-
-        _DeviceStateInfo_122a.requestPositionInfo(method);
+        
+        SecurityManager.checkSecurity("Determine Location (DeviceStateInfo.requestPositionInfo)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_SESSION, SecurityManager.OP_ALLOWED, function()
+        {
+          _DeviceStateInfo_122a.requestPositionInfo(method);
+        });
       },
       
       testPositionInfoMethods : function(type)
@@ -502,23 +660,32 @@ var Widget =
       
       this.deleteAddress = function(type, address)
       {
-        this.updateJIL();
-        this._jilMessage.deleteAddress(type, address);
-        this.updateAddress(type);
+        SecurityManager.checkSecurity("Remove Message Recipient (Message.deleteAddress)", SecurityManager.OP_DISALLOWED, SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, function()
+        {
+          this.updateJIL();
+          this._jilMessage.deleteAddress(type, address);
+          this.updateAddress(type);
+        });
       };
       
       this.deleteAttachment = function(attachment)
       {
-        this.updateJIL();
-        this._jilMessage.deleteAttachment(attachment.updateJIL());
-        this.attachments = this._jilMessage().getAttachments();
+        SecurityManager.checkSecurity("Remove Message Attachment (Message.deleteAttachment)", SecurityManager.OP_DISALLOWED, SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, function()
+        {
+          this.updateJIL();
+          this._jilMessage.deleteAttachment(attachment.updateJIL());
+          this.attachments = this._jilMessage().getAttachments();
+        });
       };
       
       this.saveAttachment = function(fileFullName, attachment)
       {
-        this.updateJIL();
-        this._jilMessage.saveAttachment(fileFullName, attachment.updateJIL());
-        this.attachments = this._jilMessage.getAttachments();
+        SecurityManager.checkSecurity("Save Message Attachment (Message.saveAttachment)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, function()
+        {
+          this.updateJIL();
+          this._jilMessage.saveAttachment(fileFullName, attachment.updateJIL());
+          this.attachments = this._jilMessage.getAttachments();
+        });
       };
       
       this.update = function()
@@ -622,12 +789,18 @@ var Widget =
 
     copyMessageToFolder : function(msg, destinationFolder)
     {
-      _Messaging_122a.copyMessageToFolder(msg.updateJIL(), destinationFolder);
+      SecurityManager.checkSecurity("Copy Message to Folder (Messaging.copyMessageToFolder)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+      {
+        _Messaging_122a.copyMessageToFolder(msg.updateJIL(), destinationFolder);
+      });
     },
     
     createFolder : function(messageType, folderName)
     {
-      _Messaging_122a.createFolder(messageType, folderName);
+      SecurityManager.checkSecurity("Create Message Folder (Messaging.createFolder)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+      {
+        _Messaging_122a.createFolder(messageType, folderName);
+      });
     },
     
     createMessage : function(messageType)
@@ -640,53 +813,80 @@ var Widget =
     
     deleteAllMessages : function(messageType, folderName)
     {
-      _Messaging_122a.deleteAllMessages(messageType, folderName);
+      SecurityManager.checkSecurity("Delete All Messages in Folder (Messaging.deleteAllMessages)", SecurityManager.OP_DISALLOWED, SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, function()
+      {
+        _Messaging_122a.deleteAllMessages(messageType, folderName);
+      });
     },
     
     deleteEmailAccount : function(accountId)
     {
-      _Messaging_122a.deleteEmailAccount(accountId);
+      SecurityManager.checkSecurity("Delete Email Account (Messaging.deleteEmailAccount)", SecurityManager.OP_DISALLOWED, SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, function()
+      {
+        _Messaging_122a.deleteEmailAccount(accountId);
+      });
     },
     
     deleteFolder : function(messageType, folderName)
     {
-      _Messaging_122a.deleteFolder(messageType, folderName);
+      SecurityManager.checkSecurity("Delete Message Folder (Messaging.deleteFolder)", SecurityManager.OP_DISALLOWED, SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, function()
+      {
+        _Messaging_122a.deleteFolder(messageType, folderName);
+      });
     },
     
     deleteMessage : function(messageType, folderName, id)
     {
-      _Messaging_122a.deleteMessage(messageType, folderName, id);
+      SecurityManager.checkSecurity("Delete Message (Messaging.deleteMessage)", SecurityManager.OP_DISALLOWED, SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, function()
+      {
+        _Messaging_122a.deleteMessage(messageType, folderName, id);
+      });
     },
     
     findMessages : function(comparisonMsg, folderName, startInx, endInx)
     {
-      _Messaging_122a.findMessages(comparisonMsg.updateJIL(), folderName, startInx, endInx);
+      SecurityManager.checkSecurity("Search Messages (Messaging.findMessages)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+      {
+        _Messaging_122a.findMessages(comparisonMsg.updateJIL(), folderName, startInx, endInx);
+      });
     },
     
     getCurrentEmailAccount : function()
     {
-      var jilAccount = _Messaging_122a.getCurrentEmailAccount();
-      var wrappedAccount = new Widget.Messaging.Account();
-      wrappedAccount.setJIL(jilAccount);
-      return(wrappedAccount);
+      SecurityManager.checkSecurity("Access Current Email Account (Messaging.getCurrentEmailAccount)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+      {
+        var jilAccount = _Messaging_122a.getCurrentEmailAccount();
+        var wrappedAccount = new Widget.Messaging.Account();
+        wrappedAccount.setJIL(jilAccount);
+        return(wrappedAccount);
+      });
     },
     
     getEmailAccounts : function()
     {
-      return(_Messaging_122a.getEmailAccounts());
+      SecurityManager.checkSecurity("Access All Email Accounts (Messaging.getEmailAccounts)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+      {
+        return(_Messaging_122a.getEmailAccounts());
+      });
     },
     
     getFolderNames : function(messageType)
     {
-      return(_Messaging_122a.getFolderNames(messageType));
+      SecurityManager.checkSecurity("Access All Message Folders (Messaging.getFolderNames)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+      {
+        return(_Messaging_122a.getFolderNames(messageType));
+      });
     },
     
     getMessage : function(messageType, folderName, index)
     {
-      var jilMessage = _Messaging_122a.getMessage(messageType, folderName, index);
-      var wrappedMessage = new Widget.Messaging.Message();
-      wrappedMessage.setJIL(jilMessage);
-      return(wrappedMessage);
+      SecurityManager.checkSecurity("Access Message (Messaging.getMessage)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+      {
+        var jilMessage = _Messaging_122a.getMessage(messageType, folderName, index);
+        var wrappedMessage = new Widget.Messaging.Message();
+        wrappedMessage.setJIL(jilMessage);
+        return(wrappedMessage);
+      });
     },
     
     getMessageQuantities : function(messageType, folderName)
@@ -699,17 +899,26 @@ var Widget =
     
     moveMessageToFolder : function(msg, destinationFolder)
     {
-      _Messaging_122a.moveMessageToFolder(msg.updateJIL(), destinationFolder);
+      SecurityManager.checkSecurity("Move Message to Folder (Messaging.moveMessageToFolder)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+      {
+        _Messaging_122a.moveMessageToFolder(msg.updateJIL(), destinationFolder);
+      });
     },
     
     sendMessage : function(msg)
     {
-      _Messaging_122a.sendMessage(msg.updateJIL());
+      SecurityManager.checkSecurity("Send Message (Messaging.sendMessage)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+      {
+        _Messaging_122a.sendMessage(msg.updateJIL());
+      });
     },
     
     setCurrentEmailAccount : function(accountId)
     {
-      _Messaging_122a.setCurrentEmailAccount(accountId);
+      SecurityManager.checkSecurity("Set Current Email Account (Messaging.setCurrentEmailAccount)", SecurityManager.OP_SESSION, SecurityManager.OP_ALLOWED, SecurityManager.OP_ALLOWED, function()
+      {
+        _Messaging_122a.setCurrentEmailAccount(accountId);
+      });
     },
   },
   
@@ -721,12 +930,18 @@ var Widget =
 
       captureImage : function(fileName, lowRes)
       {
-        return(_Camera_122a.captureImage(fileName, lowRes));
+        SecurityManager.checkSecurity("Capture Camera Image (Camera.captureImage)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+        {
+          return(_Camera_122a.captureImage(fileName, lowRes));
+        });
       },
       
       startVideoCapture : function(fileName, lowRes, maxDurationSeconds, showDefaultControls)
       {
-        return(_Camera_122a.startVideoCapture(fileName, lowRes, maxDurationSeconds, showDefaultControls));
+        SecurityManager.checkSecurity("Capture Camera Video (Camera.startVideoCapture)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+        {
+          return(_Camera_122a.startVideoCapture(fileName, lowRes, maxDurationSeconds, showDefaultControls));
+        });
       },
       
       setWindow : function(domObj)
@@ -832,17 +1047,26 @@ var Widget =
 
     addAddressBookItem : function(contact)
     {
-      _PIM_122a.addAddressBookItem(contact.updateJIL());
+      SecurityManager.checkSecurity("Add Contact (PIM.addAddressBookItem)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+      {
+        _PIM_122a.addAddressBookItem(contact.updateJIL());
+      });
     },
     
     addCalendarItem : function(item)
     {
-      _PIM_122a.addCalendarItem(item.updateJIL());
+      SecurityManager.checkSecurity("Add Calendar Entry (PIM.addCalendarItem)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+      {
+        _PIM_122a.addCalendarItem(item.updateJIL());
+      });
     },
     
     createAddressBookGroup : function(groupName)
     {
-      _PIM_122a.createAddressBookGroup(groupName);
+      SecurityManager.checkSecurity("Add Contact Group (PIM.createAddressBookGroup)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+      {
+        _PIM_122a.createAddressBookGroup(groupName);
+      });
     },
     
     createAddressBookItem : function()
@@ -854,82 +1078,118 @@ var Widget =
     
     deleteAddressBookGroup : function(groupName)
     {
-      _PIM_122a.deleteAddressBookGroup(groupName);
+      SecurityManager.checkSecurity("Remove Contact Group (PIM.deleteAddressBookGroup)", SecurityManager.OP_DISALLOWED, SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, function()
+      {
+        _PIM_122a.deleteAddressBookGroup(groupName);
+      });
     },
     
     deleteAddressBookItem : function(id)
     {
-      _PIM_122a.deleteAddressBookItem(id);
+      SecurityManager.checkSecurity("Remove Contact (PIM.deleteAddressBookItem)", SecurityManager.OP_DISALLOWED, SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, function()
+      {
+        _PIM_122a.deleteAddressBookItem(id);
+      });
     },
     
     deleteCalendarItem : function(calendarId)
     {
-      _PIM_122a.deleteCalendarItem(calendarId);
+      SecurityManager.checkSecurity("Remove Calendar Entry (PIM.deleteCalendarItem)", SecurityManager.OP_DISALLOWED, SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, function()
+      {
+        _PIM_122a.deleteCalendarItem(calendarId);
+      });
     },
     
     exportAsVCard : function(addressBookItems)
     {
-      _PIM_122a.exportAsVCard(addressBookItems, addressBookItems.length);
+      SecurityManager.checkSecurity("Export Contact VCard (PIM.exportAsVCard)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+      {
+        _PIM_122a.exportAsVCard(addressBookItems, addressBookItems.length);
+      });
     },
     
     findAddressBookItems : function(comparisonContact, startInx, endInx)
     {
-      var jilContact = null;
-      if ( comparisonContact instanceof Widget.PIM.AddressBookItem )
-        jilContact = comparisonContact.updateJIL();
-      else
-        jilContact = comparisonContact;
-        
-        _PIM_122a.findAddressBookItems(jilContact, startInx, endInx);
+      SecurityManager.checkSecurity("Search Contacts (PIM.findAddressBookItems)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+      {
+        var jilContact = null;
+        if ( comparisonContact instanceof Widget.PIM.AddressBookItem )
+          jilContact = comparisonContact.updateJIL();
+        else
+          jilContact = comparisonContact;
+          
+          _PIM_122a.findAddressBookItems(jilContact, startInx, endInx);
+      });
     },
     
     findCalendarItems : function(itemToMatch, startInx, endInx)
     {
-      _PIM_122a.findCalendarItems(itemToMatch.updateJIL(), startInx, endInx);
+      SecurityManager.checkSecurity("Search Calendar Entries (PIM.findCalendarItems)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+      {
+        _PIM_122a.findCalendarItems(itemToMatch.updateJIL(), startInx, endInx);
+      });
     },
     
     getAddressBookGroupMembers : function(groupName)
     {
-      return(_PIM_122a.getAddressBookGroupMembers(groupName));
+      SecurityManager.checkSecurity("Add Contact Group Members (PIM.getAddressBookGroupMembers)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+      {
+        return(_PIM_122a.getAddressBookGroupMembers(groupName));
+      });
     },
     
     getAddressBookItem : function(id)
     {
-      var jilItem = _PIM_122a.getAddressBookItem(id);
-      var wrappedItem = new Widget.PIM.AddressBookItem();
-      wrappedItem.setJIL(jilItem);
-      return(wrappedItem);
+      SecurityManager.checkSecurity("Get Contact (PIM.getAddressBookItem)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+      {
+        var jilItem = _PIM_122a.getAddressBookItem(id);
+        var wrappedItem = new Widget.PIM.AddressBookItem();
+        wrappedItem.setJIL(jilItem);
+        return(wrappedItem);
+      });
     },
     
     getAddressBookItemsCount : function()
     {
-      return(_PIM_122a.getAddressBookItemsCount());
+      SecurityManager.checkSecurity("Count Contacts (PIM.getAddressBookItemsCount)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+      {
+        return(_PIM_122a.getAddressBookItemsCount());
+      });
     },
     
     getAvailableAddressGroupNames : function()
     {
-      return(_PIM_122a.getAvailableAddressGroupNames());
+      SecurityManager.checkSecurity("Get Contact Groups (PIM.getAvailableAddressGroupNames)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+      {
+        return(_PIM_122a.getAvailableAddressGroupNames());
+      });
     },
     
     getCalendarItem : function(calendarId)
     {
-      var jilItem = _PIM_122a.getCalendarItem(calendarId);
-      var wrappedItem = new Widget.PIM.CalendarItem();
-      wrappedItem.setJIL(jilItem);
-      return(wrappedItem);
+      SecurityManager.checkSecurity("Get Calendar Entry (PIM.getCalendarItem)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+      {
+        var jilItem = _PIM_122a.getCalendarItem(calendarId);
+        var wrappedItem = new Widget.PIM.CalendarItem();
+        wrappedItem.setJIL(jilItem);
+        return(wrappedItem);
+      });
     },
     
     getCalendarItems : function(startTime, endTime)
     {
-      var jilArray = _PIM_122a.getCalendarItems(startTime, endTime);
-      var wrappedArray = new Array();
-      for ( var i = 0; i < jilArray.length; i++ )
+      SecurityManager.checkSecurity("Get Calendar Entries (PIM.getCalendarItems)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
       {
-        var wrappedItem = new Widget.PIM.CalendarItem();
-        wrappedItem.setJIL(jilArray[i]);
-        wrappedArray.push(wrappedItem);
-      }
-      return(wrappedArray);
+        var jilArray = _PIM_122a.getCalendarItems(startTime, endTime);
+        var wrappedArray = new Array();
+        for ( var i = 0; i < jilArray.length; i++ )
+        {
+          var wrappedItem = new Widget.PIM.CalendarItem();
+          wrappedItem.setJIL(jilArray[i]);
+          wrappedArray.push(wrappedItem);
+        }
+        return(wrappedArray);
+      });
     },
     
     AddressBookItem : function() //object
@@ -979,8 +1239,11 @@ var Widget =
       
       this.update = function()     
       {
-        this.updateJIL();
-        this._jilAddrItem.update();
+        SecurityManager.checkSecurity("Update Contact (AddressBookItem.update)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+        {
+          this.updateJIL();
+          this._jilAddrItem.update();
+        });
       };
       
       this.setJIL = function(jilAddrItem)
@@ -1043,8 +1306,11 @@ var Widget =
 
       this.update = function()
       {
-        this.updateJIL();
-        this._jilCalItem.update();
+        SecurityManager.checkSecurity("Update Calendar Entry (CalendarItem.update)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+        {
+          this.updateJIL();
+          this._jilCalItem.update();
+        });
       };
       
       this.setJIL = function(jilCalItem)
@@ -1126,12 +1392,18 @@ var Widget =
 
     deleteAllCallRecords : function(callRecordType)
     {
-      _Telephony_122a.deleteAllCallRecords(callRecordType);
+      SecurityManager.checkSecurity("Remove Call Records (Telephony.deleteAllCallRecords)", SecurityManager.OP_DISALLOWED, SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, function()
+      {
+        _Telephony_122a.deleteAllCallRecords(callRecordType);
+      });
     },
     
     deleteCallRecord : function(callRecordType, id)
     {
-      _Telephony_122a.deleteCallRecord(callRecordType, id);
+      SecurityManager.checkSecurity("Remove Call Record (Telephony.deleteCallRecord)", SecurityManager.OP_DISALLOWED, SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, function()
+      {
+        _Telephony_122a.deleteCallRecord(callRecordType, id);
+      });
     },
     
     findCallRecords : function(comparisonRecord, startInx, endInx)
@@ -1143,7 +1415,10 @@ var Widget =
       if ( !(endInx > -1) )
         Widget.throwIPException("Invalid argument type for endIdx in Telephony.findCallRecords");
       
-      _Telephony_122a.findCallRecords(comparisonRecord.updateJIL(), startInx, endInx);
+      SecurityManager.checkSecurity("Search Call Records (Telephony.findCallRecords)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+      {
+        _Telephony_122a.findCallRecords(comparisonRecord.updateJIL(), startInx, endInx);
+      });
     },
     
     getCallRecord : function(callRecordType, id)
@@ -1154,10 +1429,13 @@ var Widget =
       if ( id == null )
         Widget.throwIPException("Invalid argument type for id in Telephony.getCallRecord");
       
-      var jilRecord = _Telephony_122a.getCallRecord(callRecordType, id);
-      var wrappedRecord = new Widget.Telephony.CallRecord();
-      wrappedRecord.setJIL(jilRecord);
-      return(wrappedRecord);
+      SecurityManager.checkSecurity("Search Call Records (Telephony.findCallRecords)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+      {
+        var jilRecord = _Telephony_122a.getCallRecord(callRecordType, id);
+        var wrappedRecord = new Widget.Telephony.CallRecord();
+        wrappedRecord.setJIL(jilRecord);
+        return(wrappedRecord);
+      });
     },
     
     getCallRecordCnt : function(callRecordType)
@@ -1165,7 +1443,10 @@ var Widget =
       if ( ! this.testCallRecordType(callRecordType) )
         Widget.throwIPException("Invalid argument type for callRecordType in Telephony.getCallRecordCnt");
       
-      return(_Telephony_122a.getCallRecordCnt(callRecordType));
+      SecurityManager.checkSecurity("Count Call Records (Telephony.getCallRecordCnt)", SecurityManager.OP_SESSION, SecurityManager.OP_ALLOWED, SecurityManager.OP_ALLOWED, function()
+      {
+        return(_Telephony_122a.getCallRecordCnt(callRecordType));
+      });
     },
     
     initiateVoiceCall : function(phoneNumber)
@@ -1177,7 +1458,10 @@ var Widget =
       if ( !(phoneNumberPattern.test(phoneNumber)) )
         Widget.throwIPException("Invalid argument type (format) for phoneNumber in Telephony.initiateVoiceCall");
         
-      _Telephony_122a.initiateVoiceCall(phoneNumber);
+      SecurityManager.checkSecurity("Initiate Phone Call (Telephony.initiateVoiceCall)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, function()
+      {
+        _Telephony_122a.initiateVoiceCall(phoneNumber);
+      });
     },
     
     createCallRecord : function()
@@ -1329,116 +1613,4 @@ Widget.init();
 var Widget_122 = Widget;
 var WidgetManager_122 = WidgetManager;
 
-SecurityManager = 
-{
-  sessionConfirmed : false,
-  
-  securityContext : null,
-  
-  showYesNoDialog : null,
-  
-  OP_ONE_SHOT : 0,
-  
-  OP_SESSION : 1, 
-  
-  OP_BLANKET : 1, // session and blanket are treated the same in the emulator, no point in emulating blanket
-  
-  OP_ALLOWED : 2,
-  
-  OP_DISALLOWED : 3,
-  
-  checkSecurity : function(unidentifiedOp, identifiedOp, operatorOp, executeIfYes)
-  {
-    // this is an ugly function
-        dump("context: "+this.securityContext+", conf: "+this.sessionConfirmed+", "+identifiedOp+", "+unidentifiedOp+", "+operatorOp);
-    if ( this.securityContext == "identified" )
-    {
-      if ( identifiedOp == this.OP_ALLOWED )
-      {
-        executeIfYes();
-        return;
-      }
-      if ( (identifiedOp == this.OP_SESSION) )
-      {
-        if ( !this.sessionConfirmed )
-        {
-          this.showPrompt(executeIfYes);
-          return;
-        }
-        else
-        {
-          executeIfYes();
-          return;
-        }
-      }
-      if ( (identifiedOp == this.OP_ONE_SHOT) )
-      {
-        this.showPrompt(executeIfYes);
-        return;
-      }
-    }
-    
-    else if ( this.securityContext == "unidentified" )
-    {
-      if ( unidentifiedOp == this.OP_ALLOWED )
-      {
-        executeIfYes();
-        return;
-      }
-      if ( (unidentifiedOp == this.OP_SESSION) )
-      {
-        if ( !this.sessionConfirmed )
-        {
-          this.showPrompt(executeIfYes);
-          return;
-        }
-        else
-        {
-          executeIfYes();
-          return;
-        }
-      }
-      if ( (unidentifiedOp == this.OP_ONE_SHOT) )
-      {
-        this.showPrompt(executeIfYes);
-        return;
-      }
-    }
-    
-    else if ( this.securityContext == "operator" )
-    {
-      if ( operatorOp == this.OP_ALLOWED )
-      {
-        executeIfYes();
-        return;
-      }
-      if ( (operatorOp == this.OP_SESSION) )
-      {
-        if ( !this.sessionConfirmed )
-        {
-          this.showPrompt(executeIfYes);
-          return;
-        }
-        else
-        {
-          executeIfYes();
-          return;
-        }
-      }
-      if ( (operatorOp == this.OP_ONE_SHOT) )
-      {
-        this.showPrompt(executeIfYes);
-        return;
-      }
-    }
-  },
-  
-  showPrompt : function(executeIfYes)
-  {
-    this.showYesNoDialog("Priviledged Resource Access", "This widget is attempting to use a priviledged resource, would you like to allow the widget to proceed?", function()
-    {
-      SecurityManager.sessionConfirmed = true;
-        executeIfYes();
-    }, function(){});
-  },
-};
+

@@ -1,3 +1,25 @@
+
+var Case = 
+{
+    testFn : function() 
+    {
+      alert("1");
+      return("hello");
+    },
+};
+
+
+var testAccountInfo =
+{
+  phoneMSISDN : function()
+  {
+    
+    alert(Case.testWatch);
+    Case.testWatch = "watch2";
+    //showResult("AccountInfo.phoneMSISDN", Widget.Device.AccountInfo.phoneMSISDN);
+  },
+};
+
 var testDevice =
 {
   getFile : function()
