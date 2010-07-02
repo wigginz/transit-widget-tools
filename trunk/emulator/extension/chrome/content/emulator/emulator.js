@@ -242,6 +242,7 @@ var jwe_emulator =
     this.clearLog();
 
     this.emulator.reload($("jwe-emulator-loadedprofile").selValue());
+    SecurityManager.reset();
     this.init();
   },
 
@@ -529,15 +530,14 @@ var jwe_emulator =
   
   toggleSecurityLevel : function()
   {
+    SecurityManager.reset();
     SecurityManager.securityContext = $("jwe-emulator-settings-security-level").val();
-    SecurityManager.sessionConfirmed = false;
   },
   
   showYesNoDialog : function(title, body, yesCallback, noCallback)
   {
     $("jwe-runtime-dialog-yes").node.onclick = function()
     {
-      //$("jwe-runtime-dialog").css("visibility", "hidden");
       $("jwe-runtime-dialog-bg").css("display", "none");
       
       yesCallback();
@@ -545,7 +545,6 @@ var jwe_emulator =
         
     $("jwe-runtime-dialog-no").node.onclick = function()
     {
-      //$("jwe-runtime-dialog").css("visibility", "hidden");
       $("jwe-runtime-dialog-bg").css("display", "none");
       
       noCallback();
@@ -555,7 +554,6 @@ var jwe_emulator =
     $("jwe-runtime-dialog-body-text").val(body);
     
     $("jwe-runtime-dialog-bg").css("display", "block");
-    //$("jwe-runtime-dialog").css("visibility", "visible");
   },
 };
 
@@ -563,10 +561,6 @@ function jwe_waitForDelay(delay)
 {
   try
   {
-    /**
-    * Just uncomment this code if you're building an extention for Firefox.
-    * Since FF3, we'll have to ask for user permission to execute XPCOM objects.
-    */
     netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
 
     // Get the current thread.
@@ -575,15 +569,8 @@ function jwe_waitForDelay(delay)
     // Create an inner property to be used later as a notifier.
     this.delayed = true;
 
-    /* Call JavaScript setTimeout function
-     * to execute this.delayed = false
-     * after it finish.
-     */
     setTimeout("this.delayed = false;", delay);
 
-    /**
-     * Keep looping until this.delayed = false
-    */
     while (this.delayed)
       thread.processNextEvent(true);
   }
