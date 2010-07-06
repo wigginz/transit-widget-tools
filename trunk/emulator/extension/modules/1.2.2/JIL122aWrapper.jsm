@@ -1,4 +1,4 @@
-var EXPORTED_SYMBOLS = ["Widget_122", "WidgetManager_122", "SecurityManager"];
+var EXPORTED_SYMBOLS = ["Widget", "WidgetManager", "SecurityManager"];
 
 var SecurityManager = 
 {
@@ -1612,9 +1612,3 @@ var Widget =
 };
 
 Widget.init();
-
-// another wrapper :(
-var Widget_122 = Widget;
-var WidgetManager_122 = WidgetManager;
-
-
