@@ -3,23 +3,23 @@
 
 Check here for all the latest details on milestone releases, what's being worked on and committed, and future plans.
 
-<wiki:comment>
-== Friday July 2, 2010 ==
+== Tuesday July 6, 2010 ==
 
-Enhancement of API injection finally working as it should. Fixed any issues with widgets attempting to use Widget.* APIs before the emulator had properly injected the objects into scope. This happened previously with widgets using the JQuery onDocumentReady functiuon. This also fixes the issue with the Widget object not being found when in debug mode (loaded in a browser tab), so FireBug debugging is now be working well. It is possible that the objects will be injected multiple times, but I haven't seen any issues due to this yet so it's most likely safe.
+Enhancement of API injection finally working as it should. Fixed any issues with widgets attempting to use Widget. APIs before the emulator had properly injected the objects into scope. This happened previously with widgets using the JQuery onDocumentReady function. This also fixes the issue with the Widget object not being found when in debug mode (loaded in a browser tab), so Firebug debugging is now be working well. It is possible that the objects will be injected multiple times, but I haven't seen any issues due to this yet so it's most likely safe.
 
 Security manager checks have been extended to all API functions. Current limitations:
 
  * Security checks are done after argument validation (makes more sense for developers)
  * Object properties (non-function members like Widget.Device.AccountInfo.phoneMSISDN, etc.) and XMLHttpRequest are not yet being checked by the security manager.
-</wiki:comment>
+
+Download the development build [http://transit-widget-tools.googlecode.com/files/transit-emulator-20100706.xpi transit-emulator-20100706.xpi].
 
 
 == Thursday July 1, 2010 ==
 
 More progress made on the security context implementation. Prompts are correctly being displayed, responses are being tracked. Since the emulator is meant for developers and not end users, the "blanket" mode is treated the same as "session" mode. I doubt developers wont want responses saved forever. Only the Device.findFiles API is being monitored by the security manager in this build, full API integration to come in the next couple days.
 
-Also added a JIL image to the status bar (similar to FireBug's) to do a quick launch of the emulator instead of having to navigate to the Tools menu. The config.xml file still needs to be loaded in the current tab. Planning on adding a right click menu to allow launching of the profiles and debug windows.
+Also added a JIL image to the status bar (similar to Firebug's) to do a quick launch of the emulator instead of having to navigate to the Tools menu. The config.xml file still needs to be loaded in the current tab. Planning on adding a right click menu to allow launching of the profiles and debug windows.
 
 I recommend installing this build as the June 28 build had an issue with full screen mode which is now resolved. 
 
