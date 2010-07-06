@@ -5,7 +5,7 @@ Check here for all the latest details on milestone releases, what's being worked
 
 == Tuesday July 6, 2010 ==
 
-Enhancement of API injection finally working as it should. Fixed any issues with widgets attempting to use Widget. APIs before the emulator had properly injected the objects into scope. This happened previously with widgets using the JQuery onDocumentReady function. This also fixes the issue with the Widget object not being found when in debug mode (loaded in a browser tab), so Firebug debugging is now be working well. It is possible that the objects will be injected multiple times, but I haven't seen any issues due to this yet so it's most likely safe.
+Enhancement of API injection making it finally working as it should. Fixed any issues with widgets attempting to use Widget. APIs before the emulator had properly injected the objects into scope. This happened previously with widgets using the JQuery onDocumentReady function. This also fixes the issue with the Widget object not being found when in debug mode (loaded in a browser tab), so Firebug debugging is now be working well. It is possible that the objects will be injected multiple times, but I haven't seen any issues due to this yet so it's most likely safe.
 
 Security manager checks have been extended to all API functions. Current limitations:
 
