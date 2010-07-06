@@ -1,4 +1,3 @@
-
 // progress listener to inject the widget script as quickly as possible for the widget's browser
 var jweInjector =
 {
@@ -76,6 +75,9 @@ var jwe_emulator =
     $("jwe-emulator-loadedprofile").sel(profileIndex);
 
     $("jwe-log").val(this.emulator.getLog());
+    
+    Components.utils.import("resource://transit-emulator/1.2.2/JIL122aWrapper.jsm");
+    Components.utils.import("resource://transit-emulator/TransitCommon.jsm");
   },
    
   loadWidgetEvents : function()
@@ -518,14 +520,12 @@ var jwe_emulator =
   },
   
   injectScripts : function()
-  {
-    Components.utils.import("resource://transit-emulator/1.2.2/JIL122aWrapper.jsm");
+  {    
     // pass the show yes/no dialog to the widget wrapper so it can activate the prompt
     SecurityManager.showYesNoDialog = jwe_emulator.showYesNoDialog;
     SecurityManager.securityContext = $("jwe-emulator-settings-security-level").val();
     
-    $("jwe-emulator-content").node.contentWindow["Widget"] = Widget_122;
-    $("jwe-emulator-content").node.contentWindow["WidgetManager"] = WidgetManager_122;
+    Components.utils.import("resource://transit-emulator/1.2.2/JIL122aWrapper.jsm", $("jwe-emulator-content").node.contentWindow.window);
   },
   
   toggleSecurityLevel : function()
