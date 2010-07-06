@@ -520,11 +520,11 @@ var jwe_emulator =
   },
   
   injectScripts : function()
-  {    
+  {
     // pass the show yes/no dialog to the widget wrapper so it can activate the prompt
     SecurityManager.showYesNoDialog = jwe_emulator.showYesNoDialog;
     SecurityManager.securityContext = $("jwe-emulator-settings-security-level").val();
-    
+
     Components.utils.import("resource://transit-emulator/1.2.2/JIL122aWrapper.jsm", $("jwe-emulator-content").node.contentWindow.window);
   },
   
@@ -540,14 +540,14 @@ var jwe_emulator =
     {
       $("jwe-runtime-dialog-bg").css("display", "none");
       
-      yesCallback();
+      yesCallback.call();
     };
         
     $("jwe-runtime-dialog-no").node.onclick = function()
     {
       $("jwe-runtime-dialog-bg").css("display", "none");
       
-      noCallback();
+      noCallback.call();
     };
     
     $("jwe-runtime-dialog-title-text").val(title);
