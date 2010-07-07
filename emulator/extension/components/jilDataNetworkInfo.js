@@ -72,14 +72,6 @@ JILDataNetworkInfo.prototype = //#
     this.onNetworkConnectionChanged = null;
   },
 
-  alert: function(aMsg){
-    var promptService = 
-      Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
-        .getService(Components.interfaces.nsIPromptService);
-    promptService.alert(null, "JIL Debug", aMsg);
-    promptService = null; 
-  },
-
   QueryInterface: function(aIID)
   {
     if (!aIID.equals(INTERFACE) &&    
