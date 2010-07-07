@@ -7,6 +7,8 @@ Check here for all the latest details on milestone releases, what's being worked
 == Wednesday July 7, 2010 ==
 
 Added a right click context menu to the JIL status bar icon. Left click still launches the emulator in normal mode, right click with give the same options as in the tools menu.
+
+A widget in full screen mode will now stay in full screen mode when the reload button is pressed, even when the device profile is being changed.
 </wiki:comment>
 
 == Tuesday July 6, 2010 ==
