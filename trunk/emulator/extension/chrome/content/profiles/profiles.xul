@@ -7,7 +7,7 @@
 
 <window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
         xmlns:html="http://www.w3.org/1999/xhtml"
-        id="jwe-profiles-panel"        
+        id="jwe-profiles-panel"
         title="&jwe.profiles.title;"
         onload="jwe_Profiles.init();"
         onclose="return(closeForm('&jwe.profiles.ok.confirm;'));">
@@ -15,7 +15,7 @@
   <script src="chrome://transit-emulator/content/utils/utils.js" />
   <script src="chrome://transit-emulator/content/profiles/profiles.js" />
 
-  <vbox flex="1" style="background-color: #CCCCCC;">
+  <vbox flex="1">
     
     <tabbox id="jwe-profiles-content">
     

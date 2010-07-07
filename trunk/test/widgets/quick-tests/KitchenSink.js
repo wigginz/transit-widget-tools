@@ -370,34 +370,34 @@ var testTelephony =
       showResult("Widget.Telephony.findCallRecords() [callback]", result);
     };
     
-    var comparison = Telephony.createCallRecord();
+    var comparison = new Widget.Telephony.CallRecord();
     comparison.callRecordName = "Em*";
     Widget.Telephony.findCallRecords(comparison, 0, 10);
   },
   
   deleteAllCallRecords : function()
   {
-    Telephony.deleteAllCallRecords(CallRecordTypes.RECEIVED);
+    Widget.Telephony.deleteAllCallRecords(Widget.Telephony.CallRecordTypes.OUTGOING);
     showResult("Telephony.deleteAllCallRecords()", "Deleted all RECEIVED call records.");
   },
   
   deleteCallRecord : function()
   {
-    var id = "6";
-    Telephony.deleteCallRecord(CallRecordTypes.RECEIVED, id);
+    var id = "8";
+    Widget.Telephony.deleteCallRecord(Widget.Telephony.CallRecordTypes.RECEIVED, id);
     showResult("Telephony.deleteCallRecord()", "Deleted RECEIVED call record with id "+id);
   },
   
   getCallRecord : function()
   {
     var id = "7";
-    var record = Telephony.getCallRecord(CallRecordTypes.RECEIVED, id);
+    var record = Widget.Telephony.getCallRecord(Widget.Telephony.CallRecordTypes.RECEIVED, id);
     showResult("Telephony.getCallRecord()", "Retrieved call record type RECEIVED with id "+record.callRecordId+", duration seconds: "+record.durationSeconds);
   },
   
   getCallRecordCnt : function()
   {
-    var count = Telephony.getCallRecordCnt(CallRecordTypes.RECEIVED);
+    var count = Widget.Telephony.getCallRecordCnt(Widget.Telephony.CallRecordTypes.RECEIVED);
     showResult("Telephony.getCallRecordCnt()", "Retrieved count "+count+" of call record type RECEIVED");
   },
   
@@ -416,7 +416,7 @@ var testPIM =
   // complete
   createAddressBookItem : function()
   {
-    var abi = PIM.createAddressBookItem();
+    var abi = Widget.PIM.createAddressBookItem();
     showResult("PIM.createAddressBookItem()", abi);
   },
   
@@ -465,7 +465,7 @@ var testPIM =
       showResult("Widget.PIM.getAddressBookGroupMembers()", result);
     };
     
-    var comparison = PIM.createAddressBookItem();
+    var comparison = new Widget.PIM.AddressBookItem();
     comparison.fullName = "Test Guy G1*";
     Widget.PIM.findAddressBookItems(comparison, 0, 10);
   },  
@@ -481,8 +481,8 @@ var testPIM =
       showResult("Widget.PIM.findAddressBookItems() [callback]", result);
     };
     
-    var comparison = PIM.createAddressBookItem();
-    comparison.fullName = "F*";
+    var comparison = new Widget.PIM.AddressBookItem();
+    comparison.fullName = "Test*";
     Widget.PIM.findAddressBookItems(comparison, 0, 10);
   },
 
@@ -572,7 +572,7 @@ var testPIM =
       showResult("Widget.PIM.findCalendarItems()", result);
     };
     
-    var comparison = Widget.PIM.createCalendarItem();
+    var comparison = new Widget.PIM.CalendarItem();
     comparison.eventName = "Test Event 2";
     Widget.PIM.findCalendarItems(comparison, 0, 10);
   },

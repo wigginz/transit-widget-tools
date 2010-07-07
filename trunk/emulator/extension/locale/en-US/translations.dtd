@@ -13,6 +13,22 @@
 <!ENTITY jwe.emulator.tab.settings "General Settings">
 <!ENTITY jwe.emulator.tab.settings.displaylabel "Display">
 
+<!ENTITY jwe.emulator.menubar.file "File"> 
+<!ENTITY jwe.emulator.menubar.file.open "Open Widget..."> 
+<!ENTITY jwe.emulator.menubar.file.reload "Reload Widget">
+<!ENTITY jwe.emulator.menubar.file.exit "Exit">
+
+<!ENTITY jwe.emulator.menubar.tools "Tools"> 
+<!ENTITY jwe.emulator.menubar.tools.profiles "Manage Profiles..."> 
+<!ENTITY jwe.emulator.menubar.tools.console "Error Console..."> 
+
+<!ENTITY jwe.emulator.menubar.help "Help"> 
+<!ENTITY jwe.emulator.menubar.help.project "Project Home..."> 
+<!ENTITY jwe.emulator.menubar.help.issues "Issues..."> 
+<!ENTITY jwe.emulator.menubar.help.discuss "Discuss..."> 
+<!ENTITY jwe.emulator.menubar.help.jil "JIL.org..."> 
+<!ENTITY jwe.emulator.menubar.help.about "About Transit Emulator..."> 
+
 <!ENTITY jwe.emulator.tab.events.list.caption "API: ">
 <!ENTITY jwe.emulator.tab.events.context.none "N/A">
 <!ENTITY jwe.emulator.tab.events.context.nonevent "Event will be triggered when the associated API call is complete (search, export, etc.).">

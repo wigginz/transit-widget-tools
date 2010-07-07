@@ -31,9 +31,9 @@
         <label value="&jwe.profiles.popup.crec.type;" class="jwe-defaultText" style="width: 10em;"/>
         <menulist align="right" oncommand="" id="jwe-profiles-popup-crec-typelist">
           <menupopup id="jwe-profiles-popup-crec-type">
-            <menuitem label="&jwe.profiles.popup.crec.outgoing;" value="OUTGOING"/>
-            <menuitem label="&jwe.profiles.popup.crec.received;" value="RECEIVED"/>
-            <menuitem label="&jwe.profiles.popup.crec.missed;" value="MISSED"/>
+            <menuitem label="&jwe.profiles.popup.crec.outgoing;" value="outgoing"/>
+            <menuitem label="&jwe.profiles.popup.crec.received;" value="received"/>
+            <menuitem label="&jwe.profiles.popup.crec.missed;" value="missed"/>
           </menupopup>
         </menulist>
       </hbox>

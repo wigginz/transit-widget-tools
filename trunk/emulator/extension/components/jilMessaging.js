@@ -243,9 +243,9 @@ JILMessaging.prototype = //#
 
   sendMessage : function(msg)
   {
-    TransitCommon.alert("Messaging.sendMessage(): emulating send action for message with subject '"+msg.subject+"' and destination address '"+msg.destinationAddress+"'");
+    TransitCommon.alert("Messaging.sendMessage(): emulating send action for message with subject '"+msg.subject+"' and destination address '"+msg.getDestinationAddress()+"'");
     
-    this.runtime.logAction("Messaging.sendMessage(): emulating send action for message with subject '"+msg.subject+"' and destination address '"+msg.destinationAddress+"'");
+    this.runtime.logAction("Messaging.sendMessage(): emulating send action for message with subject '"+msg.subject+"' and destination address '"+msg.getDestinationAddress()+"'");
   },
 
   setCurrentEmailAccount : function(accountId)
