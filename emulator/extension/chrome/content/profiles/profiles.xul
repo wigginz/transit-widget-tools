@@ -257,7 +257,7 @@
                   <vbox>
                     <hbox align="center">
                       <label value="&jwe.profiles.devices.deviceinfo.colordepth;" class="jwe-defaultText" style="width: 14em;"/>
-                      <textbox id="jwe-profiles-devices-deviceinfo-colordepth" size="5" onchange="jwe_Profiles.change('dDInfo');"/>
+                      <textbox id="jwe-profiles-devices-deviceinfo-colordepth" size="5" onchange="jwe_Profiles.change('dDInfo');" min="0" type="number"/>
                     </hbox>
                     <hbox align="center">
                       <label value="&jwe.profiles.devices.deviceinfo.firmware;" class="jwe-defaultText" style="width: 14em;"/>
@@ -277,11 +277,11 @@
                     </hbox>
                     <hbox align="center">
                       <label value="&jwe.profiles.devices.deviceinfo.height;" class="jwe-defaultText" style="width: 14em;"/>
-                      <textbox id="jwe-profiles-devices-deviceinfo-height" size="5" onchange="jwe_Profiles.change('dDInfo');"/>
+                      <textbox id="jwe-profiles-devices-deviceinfo-height" size="5" onchange="jwe_Profiles.change('dDInfo');" min="0" type="number"/>
                     </hbox>
                     <hbox align="center">
                       <label value="&jwe.profiles.devices.deviceinfo.width;" class="jwe-defaultText" style="width: 14em;"/>
-                      <textbox id="jwe-profiles-devices-deviceinfo-width" size="5" onchange="jwe_Profiles.change('dDInfo');"/>
+                      <textbox id="jwe-profiles-devices-deviceinfo-width" size="5" onchange="jwe_Profiles.change('dDInfo');" min="0" type="number"/>
                     </hbox>
                     <hbox align="center">
                       <label value="&jwe.profiles.devices.deviceinfo.software;" class="jwe-defaultText" style="width: 14em;"/>
@@ -289,7 +289,7 @@
                     </hbox>
                     <hbox align="center">
                       <label value="&jwe.profiles.devices.deviceinfo.memory;" class="jwe-defaultText" style="width: 14em;"/>
-                      <textbox id="jwe-profiles-devices-deviceinfo-memory" size="15" onchange="jwe_Profiles.change('dDInfo');"/>
+                      <textbox id="jwe-profiles-devices-deviceinfo-memory" size="15" onchange="jwe_Profiles.change('dDInfo');" min="0" type="number"/>
                     </hbox>
                   </vbox>
                 </groupbox>

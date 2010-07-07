@@ -10,6 +10,7 @@
         onready="alert('ready');"
         onunload="jwe_emulator.unload();"
         title="&jwe.emulator.title;"
+        persist="screenX,screenY,width,height,sizemode"
         windowtype="jwe-emulator">
 
   <script src="chrome://global/content/nsDragAndDrop.js"/>
@@ -97,7 +98,7 @@
                   </groupbox>
                 </vbox>  
                 <hbox style="padding-top: 100px;">
-                  <button label="&jwe.emulator.errorConsole;" oncommand="jwe_emulator.launchErrorConsole();" style="width: 100px;"/>
+                  <button label="&jwe.emulator.errorConsole;" oncommand="jwe_emulator.launchErrorConsole();"/>
                 </hbox>    
               </vbox>              
             </tabpanel>

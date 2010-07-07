@@ -69,7 +69,7 @@
       </hbox>
       <hbox align="center">
         <label value="&jwe.profiles.popup.message.validity;" class="jwe-defaultText" style="width: 10em;"/>
-        <textbox id="jwe-profiles-popup-message-validity" size="5"/>
+        <textbox id="jwe-profiles-popup-message-validity" size="5" min="0" type="number"/>
       </hbox>
       <hbox align="center">
         <label value="&jwe.profiles.popup.message.subject;" class="jwe-defaultText" style="width: 10em;"/>
