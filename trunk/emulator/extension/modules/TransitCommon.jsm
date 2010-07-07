@@ -20,7 +20,7 @@ var TransitCommon =
       } catch (ex) {}
     }
     dump("\n");
-    _jwe_dumpall(dumpdict,obj,niv,"","");
+    this._dumpall(dumpdict,obj,niv,"","");
     dump ("\n\n-------------------------------------------------------\n\n");
     
     for (i in dumpdict)
@@ -57,7 +57,7 @@ var TransitCommon =
         dump ("\n" + tab + i + " (" + typ + (path?", " + path:"") +"): " + str);
         
         if ((niv>1) && (typ=="object"))
-          _jwe_dumpall(dumpdict,obj[i],niv-1,tab+"\t",(path?path+"->"+i:i));
+          this._dumpall(dumpdict,obj[i],niv-1,tab+"\t",(path?path+"->"+i:i));
       }
     }
   },
