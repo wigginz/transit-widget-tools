@@ -242,6 +242,7 @@ var jwe_emulator =
     $("jwe-emulator-content").attr("src", this.emulator.getWidget().contentSrc);
     
     this.clearLog();
+    $("jwe-emulator-settings-fullscreen").chk(false);
 
     this.emulator.reload($("jwe-emulator-loadedprofile").selValue());
     SecurityManager.reset();
