@@ -9,6 +9,8 @@ var service = null;
 
 function JILMessaging() //#
 {
+  Components.utils.import("resource://transit-emulator/TransitCommon.jsm");
+  
   this.Account  = Components.classes["@jil.org/jilapi-account;1"].createInstance(Components.interfaces.jilAccount);
   this.MessageTypes  = Components.classes["@jil.org/jilapi-messagetypes;1"].createInstance(Components.interfaces.jilMessageTypes);
 
@@ -54,7 +56,7 @@ JILMessaging.prototype = //#
       return(null);
     
     // create a copy of the message
-    var pMessage = this.convertJILToMessage(msg);
+    var pMessage = TransitCommon.convertJILToMessage(msg);
     pMessage.folderId = pFolder.id;
     this.runtime.addMessage(pMessage);
     
@@ -134,11 +136,11 @@ JILMessaging.prototype = //#
       {
         var rtMessages = Components.classes["@jil.org/jilapi-emulatorruntime;1"].getService().wrappedJSObject.findMessages(comparisonMsg, folderName, startInx, endInx);
         
-        this.runtime.logAction("Messaging.findMessages(): found "+rtMessages.length+" messages from search");
+        service.runtime.logAction("Messaging.findMessages(): found "+rtMessages.length+" messages from search");
         
         var jilMessages = new Array();
         for ( var i = 0; i < rtMessages.length; i++ )
-          jilMessages.push(service.convertMessageToJIL(rtMessages[i]));
+          jilMessages.push(TransitCommon.convertMessageToJIL(rtMessages[i]));
         
         if ( service.onMessagesFound == null )
           Components.classes["@jil.org/jilapi-emulatorruntime;1"].getService().wrappedJSObject.logAction("Messaging.findMessages(): No callback function set, no where to send results.");
@@ -201,7 +203,7 @@ JILMessaging.prototype = //#
     if ( message == null )
       return(null);
     
-    var jilMessage = this.convertMessageToJIL(message);
+    var jilMessage = TransitCommon.convertMessageToJIL(message);
     
     this.runtime.logAction("Messaging.getMessage(): returning message with id: "+index);
     
@@ -241,7 +243,7 @@ JILMessaging.prototype = //#
 
   sendMessage : function(msg)
   {
-    this.alert("Messaging.sendMessage(): emulating send action for message with subject '"+msg.subject+"' and destination address '"+msg.destinationAddress+"'");
+    TransitCommon.alert("Messaging.sendMessage(): emulating send action for message with subject '"+msg.subject+"' and destination address '"+msg.destinationAddress+"'");
     
     this.runtime.logAction("Messaging.sendMessage(): emulating send action for message with subject '"+msg.subject+"' and destination address '"+msg.destinationAddress+"'");
   },
@@ -251,89 +253,6 @@ JILMessaging.prototype = //#
     this.runtime.setDefaultEmailAccount(accountId);
 
     this.runtime.logAction("Messaging.setCurrentEmailAccount(): setting account id: "+accountId+"  as default account for this messaging profile.");
-  },
-  
-  convertJILToMessage : function(jilMessage)
-  {
-    // convert address arrays to semi colon separated strings 
-    var toString = this.getAsString(jilMessage.getDestinationAddress());
-    var ccString = this.getAsString(jilMessage.getCcAddress());
-    var bccString = this.getAsString(jilMessage.getBccAddress());
-    
-    // attachments to file paths
-    var attachmentString = this.getAsString(jilMessage.getAttachments());
-    
-    var profileMessage = 
-    {
-      id : jilMessage.messageId,
-      toAddress : toString,
-      sourceAddress : jilMessage.sourceAddress,
-      subject : jilMessage.subject,
-      ccAddress : ccString,
-      bccAddress : bccString,
-      priority : jilMessage.messagePriority,
-      isRead : jilMessage.isRead,
-      callback : jilMessage.callbackNumber,
-      date : jilMessage.time,
-      validity : jilMessage.validityPeriodHours,
-      body : jilMessage.body,
-      type : jilMessage.messageType,
-      attachments : attachmentString,
-    };
-    return(profileMessage);
-  },
-  
-  convertMessageToJIL : function(message)
-  {
-    // convert address arrays to semi colon separated strings 
-    var toArray = this.getAsArray(message.toAddress);
-    var ccArray = this.getAsArray(message.ccAddress);
-    var bccArray = this.getAsArray(message.bccAddress);
-    
-    // attachments to file paths
-    var attachmentArray = this.getAsArray(message.attachments);
-    
-    var jilMessage = Components.classes["@jil.org/jilapi-message;1"].createInstance(Components.interfaces.jilMessage);
-
-    jilMessage.messageId = message.id;
-    jilMessage.setDestinationAddress(toArray.length, toArray);
-    jilMessage.sourceAddress = message.sourceAddress;
-    jilMessage.subject = message.subject;
-    jilMessage.setCcAddress(ccArray.length, ccArray);
-    jilMessage.setBccAddress(bccArray.length, bccArray);
-    jilMessage.messagePriority = message.priority;
-    jilMessage.isRead = message.isRead;
-    jilMessage.callbackNumber = message.callback;
-    jilMessage.time = message.date;
-    jilMessage.validityPeriodHours = message.validity;
-    jilMessage.body = message.body;
-    jilMessage.messageType = message.type;
-    jilMessage.setAttachments(attachmentArray.length, attachmentArray);    
-    return(jilMessage);
-  },
-  
-  getAsArray : function(list)
-  {
-    if ( list == null )
-      return(new Array());
-    
-    return(list.split(";"));
-  },
-  
-  getAsString : function(list)
-  {
-    if ( list == null )
-      return(null);
-    
-    var asString = "";
-    for ( var i = 0; i < list.length; i++ )
-      asString += list[i]+";";
-    
-    // remove the last char
-    if ( asString.length > 0 )
-      asString = asString.substr(0, asString.length-1);
-    
-    return(asString);
   },
   
   reload : function()

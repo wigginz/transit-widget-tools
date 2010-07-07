@@ -197,6 +197,14 @@ var testDeviceInfo =
 
 var testMessaging = 
 {
+  onMessageArrived : function()
+  {
+    Widget.Messaging.onMessageArrived = function(message) 
+    {
+      showResult("Widget.Messaging.onMessageArrived [callback]", "Received message with subject: "+message.subject);
+    };
+  },
+  
   createMessage : function()
   {
     var message = Widget.Messaging.createMessage(Widget.Messaging.MessageTypes.SMSMessage);

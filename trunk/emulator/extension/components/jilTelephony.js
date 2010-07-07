@@ -9,6 +9,8 @@ var service = null;
 
 function JILTelephony() 
 {
+  Components.utils.import("resource://transit-emulator/TransitCommon.jsm");
+  
   this.CallRecordTypes  = Components.classes["@jil.org/jilapi-callrecordtypes;1"].createInstance(Components.interfaces.jilCallRecordTypes);
   this.CallRecord  = Components.classes["@jil.org/jilapi-callrecord;1"].createInstance(Components.interfaces.jilCallRecord);
   
@@ -56,11 +58,11 @@ JILTelephony.prototype =
     {
       run: function()
       {
-        var rtRecords = Components.classes["@jil.org/jilapi-emulatorruntime;1"].getService().wrappedJSObject.findCallRecords(service.convertJILToRecord(comparisonRecord), startInx, endInx);
+        var rtRecords = Components.classes["@jil.org/jilapi-emulatorruntime;1"].getService().wrappedJSObject.findCallRecords(TransitCommon.convertJILToRecord(comparisonRecord), startInx, endInx);
         
         var jilRecords = new Array();
         for ( var i = 0; i < rtRecords.length; i++ )
-          jilRecords.push(service.convertRecordToJIL(rtRecords[i]));
+          jilRecords.push(TransitCommon.convertRecordToJIL(rtRecords[i]));
         
         if ( service.onCallRecordsFound == null )
           Components.classes["@jil.org/jilapi-emulatorruntime;1"].getService().wrappedJSObject.logAction("Telephony.findCallRecords(): No callback function set, no where to send results.");
@@ -73,7 +75,7 @@ JILTelephony.prototype =
   getCallRecord : function(callRecordType, id)
   {
     var record = this.runtime.getCallRecord(callRecordType, id);
-    var jilRecord = this.convertRecordToJIL(record);
+    var jilRecord = TransitCommon.convertRecordToJIL(record);
     
     this.runtime.logAction("Telephony.getCallRecord(): retrieving call record of type "+callRecordType+" and id "+id+" (if it existed).");
     
@@ -93,7 +95,7 @@ JILTelephony.prototype =
   {
     this.runtime.logAction("Telephony.initiateVoiceCall(): simulating voice call to: "+phoneNumber);
     
-    this.alert("Simulating voice call to: "+phoneNumber);
+    TransitCommon.alert("Simulating voice call to: "+phoneNumber);
   },
 
   reload : function()
@@ -105,34 +107,6 @@ JILTelephony.prototype =
   createCallRecord : function()
   {
     return(Components.classes["@jil.org/jilapi-callrecord;1"].createInstance(Components.interfaces.jilCallRecord));
-  },
-  
-  convertRecordToJIL : function(record)
-  {
-    var jilRecord = Components.classes["@jil.org/jilapi-callrecord;1"].createInstance(Components.interfaces.jilCallRecord);
-    
-    jilRecord.callRecordAddress = record.address;
-    jilRecord.callRecordId = record.id;
-    jilRecord.callRecordName = record.name;
-    jilRecord.callRecordType = record.type;
-    jilRecord.durationSeconds = record.durationSeconds;
-    jilRecord.startTime = record.startTime;
-    
-    return(jilRecord);
-  },
-  
-  convertJILToRecord : function(jilRecord)
-  {
-    var record = 
-    {
-      id : jilRecord.callRecordId,
-      address : jilRecord.callRecordAddress,
-      name : jilRecord.callRecordName,
-      type : jilRecord.callRecordType,
-      durationSeconds : jilRecord.durationSeconds,
-      startTime : jilRecord.startTime,
-    };
-    return(record);
   },
 
   alert: function(aMsg){

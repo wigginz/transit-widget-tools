@@ -9,6 +9,8 @@ var service = null;
 
 function JILCamera() //#
 {
+  Components.utils.import("resource://transit-emulator/TransitCommon.jsm");
+  
   service = this;
 }
 
@@ -20,22 +22,22 @@ JILCamera.prototype = //#
 
   captureImage : function(fileName, lowRes)
   {
-    this.alert("Camera.captureImage()");
+    TransitCommon.alert("Camera.captureImage()");
   },
 
   startVideoCapture : function(fileName, lowRes, maxDurationSeconds, showDefaultControls)
   {
-    this.alert("Camera.startVideoCapture()");
+    TransitCommon.alert("Camera.startVideoCapture()");
   },
 
   setWindow : function(domObj)
   {
-    this.alert("Camera.setWindow()");
+    TransitCommon.alert("Camera.setWindow()");
   },
 
   stopVideoCapture : function()
   {
-    this.alert("Camera.stopVideoCapture()");
+    TransitCommon.alert("Camera.stopVideoCapture()");
   },
   
   reload : function()

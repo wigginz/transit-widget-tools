@@ -7,7 +7,6 @@
         xmlns:html="http://www.w3.org/1999/xhtml"
         id="jwe-emulator"
         onload="jwe_emulator.init();"
-        onready="alert('ready');"
         onunload="jwe_emulator.unload();"
         title="&jwe.emulator.title;"
         persist="screenX,screenY,width,height,sizemode"
