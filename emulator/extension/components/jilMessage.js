@@ -7,6 +7,8 @@ const CONTRACT_ID = "@jil.org/jilapi-message;1"; //#
 
 function JILMessage() //#
 {    
+  Components.utils.import("resource://transit-emulator/TransitCommon.jsm");
+  
   this.runtime = Components.classes["@jil.org/jilapi-emulatorruntime;1"].getService().wrappedJSObject;
 }
 
@@ -164,54 +166,8 @@ JILMessage.prototype = //#
   
   update : function()
   {
-    var pMessage = this.convertJILToMessage(this);
+    var pMessage = TransitCommon.convertJILToMessage(this);
     this.runtime.updateMessage(pMessage);
-  },
-  
-  convertJILToMessage : function()
-  {
-    // convert address arrays to semi colon separated strings 
-    var toString = this.getAsString(this.destinationAddress);
-    var ccString = this.getAsString(this.ccAddress);
-    var bccString = this.getAsString(this.bccAddress);
-    
-    // attachments to file paths
-    var attachmentString = this.getAsString(this.attachments);
-    
-    var profileMessage = 
-    {
-      id : this.messageId,
-      toAddress : toString,
-      sourceAddress : this.sourceAddress,
-      subject : this.subject,
-      ccAddress : ccString,
-      bccAddress : bccString,
-      priority : this.messagePriority,
-      isRead : this.isRead,
-      callback : this.callbackNumber,
-      date : this.time,
-      validity : this.validityPeriodHours,
-      body : this.body,
-      type : this.messageType,
-      attachments : attachmentString,
-    };
-    return(profileMessage);
-  },
-  
-  getAsString : function(list)
-  {
-    if ( list == null )
-      return(null);
-    
-    var asString = "";
-    for ( var i = 0; i < list.length; i++ )
-      asString += list[i]+";";
-    
-    // remove the last char
-    if ( asString.length > 0 )
-      asString = asString.substr(0, asString.length-1);
-    
-    return(asString);
   },
 
   alert: function(aMsg){
@@ -322,57 +278,3 @@ var JILMessageModule = { //#
 /***********************************************************/
 
 function NSGetModule(aCompMgr, aFileSpec) { return JILMessageModule; } //#
-
-
-
-
-
-// Utility function, dump an object by reflexion up to niv level
-function jwe_dumpall(name,obj,niv) {
-  if (!niv) niv=1;
-      var dumpdict=new Object();
-  
-  dump ("\n\n-------------------------------------------------------\n");
-  dump ("Dump of the objet: " + name + " (" + niv + " levels)\n");
-  dump ("Address: " + obj + "\n");
-  dump ("Interfaces: ");
-  for (var i in Components.interfaces) {
-    try {
-      obj.QueryInterface(Components.interfaces[i]);
-      dump(""+Components.interfaces[i]+", ");
-    } catch (ex) {}
-  }
-      dump("\n");
-      _jwe_dumpall(dumpdict,obj,niv,"","");
-      dump ("\n\n-------------------------------------------------------\n\n");
-      
-      for (i in dumpdict) {
-        delete dumpdict[i];
-      }
-}
-function _jwe_dumpall(dumpdict,obj,niv,tab,path) {
-  
-  if (obj in dumpdict) {
-    dump(" (Already dumped)");
-  } else {
-    dumpdict[obj]=1;
-    
-    var i,r,str,typ;
-    for (i in obj) {
-      try {
-        str = String(obj[i]).replace(/\n/g,"\n"+tab);
-      } catch (ex) {
-        str = String(ex);
-      }
-                  try {
-                    typ = ""+typeof(obj[i]);
-                  } catch (ex) {
-                    typ = "unknown";
-                  }
-                                    dump ("\n" + tab + i + " (" + typ + (path?", " + path:"") +"): " + str);
-                                    if ((niv>1) && (typ=="object")) {
-                                      _jwe_dumpall(dumpdict,obj[i],niv-1,tab+"\t",(path?path+"->"+i:i));
-                                    }
-    }
-  }
-}

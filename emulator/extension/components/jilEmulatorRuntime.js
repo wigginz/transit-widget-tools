@@ -8,6 +8,8 @@ var service = null;
 
 function JILEmulatorRuntime() //#
 {
+  Components.utils.import("resource://transit-emulator/TransitCommon.jsm");
+  
   this.wrappedJSObject = this;
   this.profileService = Components.classes['@jil.org/jilapi-profileservice;1'].getService().wrappedJSObject;
 
@@ -78,7 +80,7 @@ JILEmulatorRuntime.prototype = //#
     // must be called "config.xml"
     if ( fileName.toLowerCase() != "config.xml" )
     {
-      this.alert("To start widget emulation, the current window location must be a valid JIL config.xml file.");
+      TransitCommon.alert("To start widget emulation, the current window location must be a valid JIL config.xml file.");
       this.logAction("Configuration file is not named config.xml, exiting.");
       return;
     }
@@ -389,24 +391,6 @@ JILEmulatorRuntime.prototype = //#
   {
     return(this.profileService.getEmulatedWidgets(this.deviceProfile.id));
   },
-  
-  addAddressBookItem : function(contact)
-  {
-    // convert the contact to a profile contact type
-    var addressItem = 
-    {
-      fullName : contact.fullName,
-      mobilePhone : contact.mobilePhone,
-      email : contact.eMail, 
-      address : contact.address,
-      company : contact.company,
-      homePhone : contact.homePhone,
-      workPhone : contact.workPhone,
-      title : contact.title,
-      //attributes: contact.,
-      //ringtoneFileUrl: contact.,
-    };
-  },
 
   invokeWOnFocus : function()
   {
@@ -534,26 +518,12 @@ JILEmulatorRuntime.prototype = //#
       onMessageSendingFailure.invoke(message, error);
   },
   
-  // TODO: move this to the API layer
   getJILMessage : function(messageId)
   {
     var message = this.profileService.getMessage(this.deviceProfile.messageProfileId, messageId);
     
     // convert it to a JIL API Message
-    var jilMessage = Components.classes["@jil.org/jilapi-message;1"].createInstance(Components.interfaces.jilMessage);
-    jilMessage.bccAddress = message.bccAddress;
-    jilMessage.body = message.body;
-    jilMessage.callbackNumber = message.callback;
-    jilMessage.ccAddress = message.ccAddress;
-    jilMessage.destinationAddress = message.toAddress;
-    jilMessage.isRead = message.isRead;
-    jilMessage.messageId = message.id;
-    jilMessage.messagePriority = message.priority;
-    jilMessage.messageType = message.type;
-    jilMessage.sourceAddress = message.sourceAddress;
-    jilMessage.subject = message.subject;
-    jilMessage.time = message.date;
-    jilMessage.validityPeriodHours = message.validity;
+    var jilMessage = TransitCommon.convertMessageToJIL(message);
     
     return(jilMessage);
   },
@@ -587,18 +557,8 @@ JILEmulatorRuntime.prototype = //#
     var onCalendarItemAlert = Components.classes["@jil.org/jilapi-pim;1"].getService(Components.interfaces.jilPIM).onCalendarItemAlert;
     
     var calendarItem = this.profileService.getCalendarItem(itemId);
-    
-    // convert it to a jilCalendarItem
-    var jilCalItem = Components.classes["@jil.org/jilapi-calendaritem;1"].createInstance(Components.interfaces.jilCalendarItem);
-    
-    jilCalItem.alarmDate = calendarItem.alarmDatetime;
-    jilCalItem.alarmed = calendarItem.alarmFlag;
-    jilCalItem.calendarItemId = calendarItem.id;
-    jilCalItem.eventEndTime = calendarItem.endDatetime;
-    jilCalItem.eventName = calendarItem.name;
-    jilCalItem.eventNotes = calendarItem.notes;
-    jilCalItem.eventStartTime = calendarItem.startDatetime;
-    jilCalItem.eventRecurrence = calendarItem.recurType;
+
+    var jilCalItem = TransitCommon.convertCalendarToJIL(calendarItem);
     
     if ( onCalendarItemAlert != null )
       onCalendarItemAlert.invoke(jilCalItem);
@@ -852,7 +812,7 @@ JILEmulatorRuntime.prototype = //#
     var localFile = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);  
     localFile.initWithPath(realPath);
     
-    var jilFile = this.convertToJILFile(localFile, fileName);
+    var jilFile = TransitCommon.convertToJILFile(localFile, fileName);
 
     var vFile = new VirtualFile();
     vFile.mozFile = localFile;
@@ -965,31 +925,6 @@ JILEmulatorRuntime.prototype = //#
     }
     
     return(fileList);
-  },
-  
-  convertToJILFile : function(localFile, jilPath)
-  {
-    var jilFile = Components.classes["@jil.org/jilapi-file;1"].createInstance(Components.interfaces.jilFile);
-
-    var fileName = jilPath.substr(jilPath.lastIndexOf("/")+1, jilPath.length);
-    var filePath = jilPath.substr(0, jilPath.lastIndexOf("/"));
-
-    try
-    {
-      jilFile.lastModifyDate = localFile.lastModifiedTime;
-      jilFile.fileSize = localFile.fileSize;
-      jilFile.createDate = localFile.lastModifiedTime;
-      jilFile.fileName = fileName;
-      jilFile.filePath = filePath;
-      jilFile.isDirectory = localFile.isDirectory();
-    }
-    catch(ex)
-    {
-      // might be a copy destination rather than actual file
-      return(null);
-    }
-    
-    return(jilFile);
   },
 
   alert: function(aMsg){
@@ -1112,55 +1047,3 @@ VirtualFile.prototype =
   localFullPath: null,
   jilFullPath : null,
 };
-
-
-
-// Utility function, dump an object by reflexion up to niv level
-function jwe_dumpall(name,obj,niv) {
-  if (!niv) niv=1;
-  var dumpdict=new Object();
-
-  dump ("\n\n-------------------------------------------------------\n");
-  dump ("Dump of the objet: " + name + " (" + niv + " levels)\n");
-  dump ("Address: " + obj + "\n");
-  dump ("Interfaces: ");
-  for (var i in Components.interfaces) {
-    try {
-      obj.QueryInterface(Components.interfaces[i]);
-      dump(""+Components.interfaces[i]+", ");
-    } catch (ex) {}
-  }
-  dump("\n");
-  _jwe_dumpall(dumpdict,obj,niv,"","");
-  dump ("\n\n-------------------------------------------------------\n\n");
-  
-  for (i in dumpdict) {
-    delete dumpdict[i];
-  }
-}
-function _jwe_dumpall(dumpdict,obj,niv,tab,path) {
-
-  if (obj in dumpdict) {
-    dump(" (Already dumped)");
-  } else {
-    dumpdict[obj]=1;
-    
-    var i,r,str,typ;
-    for (i in obj) {
-      try {
-        str = String(obj[i]).replace(/\n/g,"\n"+tab);
-      } catch (ex) {
-        str = String(ex);
-      }
-      try {
-        typ = ""+typeof(obj[i]);
-      } catch (ex) {
-        typ = "unknown";
-      }
-      dump ("\n" + tab + i + " (" + typ + (path?", " + path:"") +"): " + str);
-      if ((niv>1) && (typ=="object")) {
-        _jwe_dumpall(dumpdict,obj[i],niv-1,tab+"\t",(path?path+"->"+i:i));
-      }
-    }
-  }
-}

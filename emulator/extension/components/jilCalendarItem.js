@@ -7,6 +7,8 @@ const CONTRACT_ID = "@jil.org/jilapi-calendaritem;1"; //#
 
 function JILCalendarItem() //#
 {
+  Components.utils.import("resource://transit-emulator/TransitCommon.jsm");
+  
   this.runtime = Components.classes["@jil.org/jilapi-emulatorruntime;1"].getService().wrappedJSObject;
 }
 
@@ -27,27 +29,11 @@ JILCalendarItem.prototype = //#
 
   update : function()
   {
-    var profileItem = this.convertJILToCalendar(this);
+    var profileItem = TransitCommon.convertJILToCalendar(this);
     
     this.runtime.updateCalendarItem(profileItem);
     
     this.runtime.logAction("CalendarItem.update(): updated calendar item: "+this.calendarItemId); 
-  },
-
-  convertJILToCalendar : function(jilItem)
-  {
-    var item = 
-    {
-      alarmDatetime: jilItem.alarmDate,
-      alarmFlag: jilItem.alarmed,
-      id: jilItem.calendarItemId,
-      endDatetime: jilItem.eventEndTime,
-      name: jilItem.eventName,
-      notes: jilItem.eventNotes,
-      recurType: jilItem.eventRecurrence,
-      startDatetime: jilItem.eventStartTime,
-    }; 
-    return(item);
   },
 
   alert: function(aMsg){

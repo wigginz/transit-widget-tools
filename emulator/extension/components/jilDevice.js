@@ -11,8 +11,9 @@ var service = null;
 
 function JILDevice() //#
 {
+  Components.utils.import("resource://transit-emulator/TransitCommon.jsm");
+  
   this.DeviceInfo  = Components.classes["@jil.org/jilapi-deviceinfo;1"].createInstance(Components.interfaces.jilDeviceInfo);
-  //this.File  = Components.classes["@jil.org/jilapi-file;1"].createInstance(Components.interfaces.jilFile);
   this.DataNetworkInfo  = Components.classes["@jil.org/jilapi-datanetworkinfo;1"].createInstance(Components.interfaces.jilDataNetworkInfo);
   this.DeviceStateInfo  = Components.classes["@jil.org/jilapi-devicestateinfo;1"].createInstance(Components.interfaces.jilDeviceStateInfo);
   this.File  = Components.classes["@jil.org/jilapi-file;1"].createInstance(Components.interfaces.jilFile);
@@ -184,7 +185,7 @@ JILDevice.prototype = //#
   {
     this.runtime.logAction("Device.launchApplication(): simulated launch of application "+application+" with start parameters: "+startParameter);
 
-    this.alert("Device.launchApplication(): simulated launch of application: "+application+", with start parameters: "+startParameter);
+    TransitCommon.alert("Device.launchApplication(): simulated launch of application: "+application+", with start parameters: "+startParameter);
   },
 
   moveFile : function(originalFile, destinationFullName)
@@ -203,7 +204,7 @@ JILDevice.prototype = //#
 
   setRingtone : function(ringtoneFileUrl, addressBookItem)
   {
-    var pContact = this.convertJILToContact(addressBookItem);
+    var pContact = TransitCommon.convertJILToContact(addressBookItem);
     pContact.ringtoneFileUrl = ringtoneFileUrl;
     
     this.runtime.updateAddressBookItem(pContact);
@@ -213,29 +214,10 @@ JILDevice.prototype = //#
 
   vibrate : function(durationSeconds)
   {
-    this.alert("Simulating device vibration for "+durationSeconds+" seconds.");
+    TransitCommon.alert("Simulating device vibration for "+durationSeconds+" seconds.");
     this.runtime.logAction("Device.vibrate(): simulating device vibration for "+durationSeconds+" seconds.");
   },
-  
-  convertJILToContact : function(jilContact)
-  {
-    var profileContact = 
-    {
-      id: jilContact.addressBookItemId,
-      address: jilContact.address,
-      company: jilContact.company,
-      email: jilContact.eMail,
-      fullName: jilContact.fullName,
-      homePhone: jilContact.homePhone,
-      mobilePhone: jilContact.mobilePhone,
-      title: jilContact.title,
-      workPhone: jilContact.workPhone,
-      ringtoneFileUrl: jilContact.ringtone,
-      attributes: jilContact.attributes,
-    };
-    return(profileContact);
-  },
-  
+   
   getNewFile : function()
   {
     return(Components.classes["@jil.org/jilapi-file;1"].createInstance(Components.interfaces.jilFile));
@@ -365,54 +347,3 @@ var JILDeviceModule = { //#
 /***********************************************************/
 
 function NSGetModule(aCompMgr, aFileSpec) { return JILDeviceModule; } //#
-
-
-// Utility function, dump an object by reflexion up to niv level
-function jwe_dumpall(name,obj,niv) {
-  if (!niv) niv=1;
-    var dumpdict=new Object();
-  
-  dump ("\n\n-------------------------------------------------------\n");
-  dump ("Dump of the objet: " + name + " (" + niv + " levels)\n");
-  dump ("Address: " + obj + "\n");
-  dump ("Interfaces: ");
-  for (var i in Components.interfaces) {
-    try {
-      obj.QueryInterface(Components.interfaces[i]);
-      dump(""+Components.interfaces[i]+", ");
-    } catch (ex) {}
-  }
-    dump("\n");
-    _jwe_dumpall(dumpdict,obj,niv,"","");
-    dump ("\n\n-------------------------------------------------------\n\n");
-    
-    for (i in dumpdict) {
-      delete dumpdict[i];
-    }
-}
-function _jwe_dumpall(dumpdict,obj,niv,tab,path) {
-  
-  if (obj in dumpdict) {
-    dump(" (Already dumped)");
-  } else {
-    dumpdict[obj]=1;
-    
-    var i,r,str,typ;
-    for (i in obj) {
-      try {
-        str = String(obj[i]).replace(/\n/g,"\n"+tab);
-      } catch (ex) {
-        str = String(ex);
-      }
-            try {
-              typ = ""+typeof(obj[i]);
-            } catch (ex) {
-              typ = "unknown";
-            }
-                  dump ("\n" + tab + i + " (" + typ + (path?", " + path:"") +"): " + str);
-                  if ((niv>1) && (typ=="object")) {
-                    _jwe_dumpall(dumpdict,obj[i],niv-1,tab+"\t",(path?path+"->"+i:i));
-                  }
-    }
-  }
-}

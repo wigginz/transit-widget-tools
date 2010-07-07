@@ -9,6 +9,8 @@ var service = null;
 
 function JILPIM() //#
 {
+  Components.utils.import("resource://transit-emulator/TransitCommon.jsm");
+  
   this.AddressBookItem  = Components.classes["@jil.org/jilapi-addressbookitem;1"].createInstance(Components.interfaces.jilAddressBookItem);
   this.EventRecurrenceTypes  = Components.classes["@jil.org/jilapi-eventrecurrencetypes;1"].createInstance(Components.interfaces.jilEventRecurrenceTypes);
   this.CalendarItem  = Components.classes["@jil.org/jilapi-calendaritem;1"].createInstance(Components.interfaces.jilCalendarItem);
@@ -35,13 +37,13 @@ JILPIM.prototype = //#
 
   addAddressBookItem : function(contact)
   {
-    var profileContact = this.convertJILToContact(contact);
+    var profileContact = TransitCommon.convertJILToContact(contact);
     this.runtime.addAddressBookItem(profileContact);
   },
 
   addCalendarItem : function(item)
   {
-    var profileItem = this.convertJILToCalendar(item);
+    var profileItem = TransitCommon.convertJILToCalendar(item);
     
     this.runtime.addCalendarItem(profileItem);
     
@@ -112,7 +114,7 @@ JILPIM.prototype = //#
         
         var jilContacts = new Array();
         for ( var i = 0; i < rtContacts.length; i++ )
-          jilContacts.push(service.convertContactToJIL(rtContacts[i]));
+          jilContacts.push(TransitCommon.convertContactToJIL(rtContacts[i]));
 
         if ( service.onAddressBookItemsFound == null )
           Components.classes["@jil.org/jilapi-emulatorruntime;1"].getService().wrappedJSObject.logAction("PIM.findAddressBookItems(): No callback function set, no where to send results.");
@@ -138,7 +140,7 @@ JILPIM.prototype = //#
         
         var jilItems = new Array();
         for ( var i = 0; i < rtItems.length; i++ )
-          jilItems.push(service.convertCalendarToJIL(rtItems[i]));
+          jilItems.push(TransitCommon.convertCalendarToJIL(rtItems[i]));
         
         if ( service.onCalendarItemsFound == null )
           Components.classes["@jil.org/jilapi-emulatorruntime;1"].getService().wrappedJSObject.logAction("PIM.findCalendarItems(): No callback function set, no where to send results.");
@@ -157,7 +159,7 @@ JILPIM.prototype = //#
     
     var jilContacts = new Array();
     for ( var i = 0; i < profileContacts.length; i++ )
-      jilContacts.push(this.convertContactToJIL(profileContacts[i]));
+      jilContacts.push(TransitCommon.convertContactToJIL(profileContacts[i]));
     
     count.value = jilContacts.length;
     return(jilContacts);
@@ -166,7 +168,7 @@ JILPIM.prototype = //#
   getAddressBookItem : function(id)
   {
     var profileContact = this.runtime.getAddressBookItem(id);    
-    var jilContact = service.convertContactToJIL(profileContact);
+    var jilContact = TransitCommon.convertContactToJIL(profileContact);
     
     this.runtime.logAction("PIM.getAddressBookItem(): Retrieved address book item id: "+jilContact.addressBookItemId);
     
@@ -195,7 +197,7 @@ JILPIM.prototype = //#
   getCalendarItem : function(calendarId)
   {
     var profileItem = this.runtime.getCalendarItem(calendarId);    
-    var jilItem = service.convertCalendarToJIL(profileItem);
+    var jilItem = TransitCommon.convertCalendarToJIL(profileItem);
     
     this.runtime.logAction("PIM.getCalendarItem(): Retrieved calendar item id: "+jilItem.calendarItemId);
     
@@ -209,97 +211,13 @@ JILPIM.prototype = //#
     // convert them
     var jilItems = new Array();
     for ( var i = 0; i < profileItems.length; i++ )
-      jilItems.push(this.convertCalendarToJIL(profileItems[i]));
+      jilItems.push(TransitCommon.convertCalendarToJIL(profileItems[i]));
     
     count.value = jilItems.length;
     
     this.runtime.logAction("PIM.getCalendarItems(): retrieved "+jilItems.legnth+" calendar items from start "+startTime+" and end "+endTime);
     
     return(jilItems);
-  },
-  
-  convertJILToContact : function(jilContact)
-  {
-    var profileContact = 
-    {
-      id: jilContact.addressBookItemId,
-      address: jilContact.address,
-      company: jilContact.company,
-      email: jilContact.eMail,
-      fullName: jilContact.fullName,
-      homePhone: jilContact.homePhone,
-      mobilePhone: jilContact.mobilePhone,
-      title: jilContact.title,
-      workPhone: jilContact.workPhone,
-      ringtoneFileUrl: jilContact.ringtone,
-      attributes: jilContact.attributes,
-    };
-    return(profileContact);
-  },
-  
-  convertContactToJIL : function(contact)
-  {
-    var jilAddressBookItem = Components.classes["@jil.org/jilapi-addressbookitem;1"].createInstance(Components.interfaces.jilAddressBookItem);
-    jilAddressBookItem.addressBookItemId = contact.id;
-    jilAddressBookItem.address = contact.address;
-    jilAddressBookItem.company = contact.company;
-    jilAddressBookItem.eMail = contact.email;
-    jilAddressBookItem.fullName = contact.fullName;
-    jilAddressBookItem.homePhone = contact.homePhone;
-    jilAddressBookItem.mobilePhone = contact.mobilePhone;
-    jilAddressBookItem.title = contact.title;
-    jilAddressBookItem.workPhone = contact.workPhone;
-    jilAddressBookItem.ringtone = contact.ringtoneFileUrl;
-    
-    for ( var i in contact.attributes )
-      jilAddressBookItem.setAttribute(i, contact.attributes[i]);
-    
-    return(jilAddressBookItem);
-  },
-  
-  convertJILToCalendar : function(jilItem)
-  {
-    var item = 
-    {
-      alarmDatetime: jilItem.alarmDate,
-      alarmFlag: jilItem.alarmed,
-      id: jilItem.calendarItemId,
-      endDatetime: jilItem.eventEndTime,
-      name: jilItem.eventName,
-      notes: jilItem.eventNotes,
-      recurType: jilItem.eventRecurrence,
-      startDatetime: jilItem.eventStartTime,
-    }; 
-    return(item);
-  },
-  
-  convertCalendarToJIL : function(item)
-  {
-    var jilItem = Components.classes["@jil.org/jilapi-calendaritem;1"].createInstance(Components.interfaces.jilCalendarItem);    
-    jilItem.alarmDate = item.alarmDatetime;
-    jilItem.alarmed = item.alarmFlag;
-    jilItem.calendarItemId = item.id;
-    jilItem.eventEndTime = item.endDatetime;
-    jilItem.eventName = item.name;
-    jilItem.eventNotes = item.notes;
-    jilItem.eventRecurrence = item.recurType;
-    jilItem.eventStartTime = item.startDatetime;    
-    return(jilItem);
-  },
-  
-  convertJILtoVCard : function(jilContact)
-  {
-//     BEGIN:VCARD
-//     VERSION:3.0
-//     N:
-//     ORG:
-//     TITLE:
-//     TEL;TYPE=WORK,VOICE:
-//     TEL;TYPE=HOME,VOICE:
-//     TEL;TYPE=MOBILE,VOICE:
-//     ADR:
-//     EMAIL;TYPE=PREF,INTERNET:
-//     END:VCARD
   },
   
   reload : function()
@@ -422,54 +340,3 @@ var JILPIMModule = { //#
 /***********************************************************/
 
 function NSGetModule(aCompMgr, aFileSpec) { return JILPIMModule; } //#
-
-
-// Utility function, dump an object by reflexion up to niv level
-function jwe_dumpall(name,obj,niv) {
-  if (!niv) niv=1;
-    var dumpdict=new Object();
-  
-  dump ("\n\n-------------------------------------------------------\n");
-  dump ("Dump of the objet: " + name + " (" + niv + " levels)\n");
-  dump ("Address: " + obj + "\n");
-  dump ("Interfaces: ");
-  for (var i in Components.interfaces) {
-    try {
-      obj.QueryInterface(Components.interfaces[i]);
-      dump(""+Components.interfaces[i]+", ");
-    } catch (ex) {}
-  }
-    dump("\n");
-    _jwe_dumpall(dumpdict,obj,niv,"","");
-    dump ("\n\n-------------------------------------------------------\n\n");
-    
-    for (i in dumpdict) {
-      delete dumpdict[i];
-    }
-}
-function _jwe_dumpall(dumpdict,obj,niv,tab,path) {
-  
-  if (obj in dumpdict) {
-    dump(" (Already dumped)");
-  } else {
-    dumpdict[obj]=1;
-    
-    var i,r,str,typ;
-    for (i in obj) {
-      try {
-        str = String(obj[i]).replace(/\n/g,"\n"+tab);
-      } catch (ex) {
-        str = String(ex);
-      }
-            try {
-              typ = ""+typeof(obj[i]);
-            } catch (ex) {
-              typ = "unknown";
-            }
-                  dump ("\n" + tab + i + " (" + typ + (path?", " + path:"") +"): " + str);
-                  if ((niv>1) && (typ=="object")) {
-                    _jwe_dumpall(dumpdict,obj[i],niv-1,tab+"\t",(path?path+"->"+i:i));
-                  }
-    }
-  }
-}

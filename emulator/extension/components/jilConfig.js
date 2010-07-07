@@ -9,6 +9,8 @@ var service = null;
 
 function JILConfig() //#
 {
+  Components.utils.import("resource://transit-emulator/TransitCommon.jsm");
+  
   this.runtime = Components.classes["@jil.org/jilapi-emulatorruntime;1"].getService().wrappedJSObject;
   
   this.reload();
@@ -28,14 +30,16 @@ JILConfig.prototype = //#
 
   setAsWallpaper : function(wallpaperFileurl) 
   {
-    this.alert("DataNetworkInfo.setAsWallpaper(): simulated changing device wallpaper to: "+wallpaperFileurl);
+    TransitCommon.alert("Config.setAsWallpaper(): simulated changing device wallpaper to: "+wallpaperFileurl);
 
-    this.runtime.logAction("DataNetworkInfo.setAsWallpaper(): simulated changing device wallpaper to: "+wallpaperFileurl);
+    this.runtime.logAction("Config.setAsWallpaper(): simulated changing device wallpaper to: "+wallpaperFileurl);
   },
 
   setDefaultRingtone : function(ringtoneFileurl) 
   {
-    this.alert("DataNetworkInfo.setDefaultRingtone()");
+    TransitCommon.alert("Config.setDefaultRingtone(): simulated changing device default ringtone to: "+ringtoneFileurl);
+
+    this.runtime.logAction("Config.setDefaultRingtone(): simulated changing device default ringtone to: "+ringtoneFileurl); 
   },
   
   reload : function()

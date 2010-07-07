@@ -7,6 +7,8 @@ const CONTRACT_ID = "@jil.org/jilapi-addressbookitem;1"; //#
 
 function JILAddressBookItem() //#
 {
+  Components.utils.import("resource://transit-emulator/TransitCommon.jsm");
+  
   this.runtime = Components.classes["@jil.org/jilapi-emulatorruntime;1"].getService().wrappedJSObject;
 }
 
@@ -39,7 +41,6 @@ JILAddressBookItem.prototype = //#
 
   getAttributeValue : function(attribute)
   {
-    this.alert(attribute);
     return(this.attributes[attribute]);
   },
 
@@ -77,30 +78,11 @@ JILAddressBookItem.prototype = //#
 
   update : function()
   {
-    var profileContact = this.convertJILToContact(this);
+    var profileContact = TransitCommon.convertJILToContact(this);
     
     this.runtime.updateAddressBookItem(profileContact);
     
     this.runtime.logAction("AddressBookItem.update(): updated address book item."); 
-  },
-  
-  convertJILToContact : function(jilContact)
-  {
-    var profileContact = 
-    {
-      id: jilContact.addressBookItemId,
-      address: jilContact.address,
-      company: jilContact.company,
-      email: jilContact.eMail,
-      fullName: jilContact.fullName,
-      homePhone: jilContact.homePhone,
-      mobilePhone: jilContact.mobilePhone,
-      title: jilContact.title,
-      workPhone: jilContact.workPhone,
-      ringtoneFileUrl: jilContact.ringtone,
-      attributes: jilContact.attributes,
-    };
-    return(profileContact);
   },
 
   alert: function(aMsg){
