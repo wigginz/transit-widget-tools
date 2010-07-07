@@ -27,10 +27,10 @@
         <label value="&jwe.profiles.popup.mfolder.type;" class="jwe-defaultText" style="width: 10em;"/>
         <menulist align="right" id="jwe-profiles-popup-mfolder-typelist">
           <menupopup id="jwe-profiles-popup-mfolder-type">
-            <menuitem label="&jwe.profiles.popup.mfolder.drafts;" value="DRAFTS"/>
-            <menuitem label="&jwe.profiles.popup.mfolder.inbox;" value="INBOX"/>
-            <menuitem label="&jwe.profiles.popup.mfolder.outbox;" value="OUTBOX"/>
-            <menuitem label="&jwe.profiles.popup.mfolder.sentbox;" value="SENTBOX"/>
+            <menuitem label="&jwe.profiles.popup.mfolder.drafts;" value="drafts"/>
+            <menuitem label="&jwe.profiles.popup.mfolder.inbox;" value="inbox"/>
+            <menuitem label="&jwe.profiles.popup.mfolder.outbox;" value="outbox"/>
+            <menuitem label="&jwe.profiles.popup.mfolder.sentbox;" value="sentbox"/>
           </menupopup>
         </menulist>
       </hbox>

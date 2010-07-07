@@ -35,13 +35,13 @@
         <label value="&jwe.profiles.popup.calitem.recurrence;" class="jwe-defaultText" style="width: 10em;"/>
         <menulist align="right" oncommand="" id="jwe-profiles-popup-calitem-recurlist">
           <menupopup id="jwe-profiles-popup-calitem-recurtype">
-            <menuitem label="&jwe.profiles.popup.calitem.daily;" value="DAILY"/>
-            <menuitem label="&jwe.profiles.popup.calitem.everyweekday;" value="EVERY_WEEKDAY"/>
-            <menuitem label="&jwe.profiles.popup.calitem.monthlyonday;" value="MONTHLY_ON_DAY"/>
-            <menuitem label="&jwe.profiles.popup.calitem.monthlyondayct;" value="MONTHLY_ON_DAY_COUNT"/>
-            <menuitem label="&jwe.profiles.popup.calitem.notrepeat;" value="NOT_REPEAT"/>
-            <menuitem label="&jwe.profiles.popup.calitem.weeklyonday;" value="WEEKLY_ON_DAY"/>
-            <menuitem label="&jwe.profiles.popup.calitem.yearly;" value="YEARLY"/>
+            <menuitem label="&jwe.profiles.popup.calitem.daily;" value="daily"/>
+            <menuitem label="&jwe.profiles.popup.calitem.everyweekday;" value="every_weekday"/>
+            <menuitem label="&jwe.profiles.popup.calitem.monthlyonday;" value="monthly_on_day"/>
+            <menuitem label="&jwe.profiles.popup.calitem.monthlyondayct;" value="monthly_on_day_count"/>
+            <menuitem label="&jwe.profiles.popup.calitem.notrepeat;" value="not_repeat"/>
+            <menuitem label="&jwe.profiles.popup.calitem.weeklyonday;" value="weekly_on_day"/>
+            <menuitem label="&jwe.profiles.popup.calitem.yearly;" value="yearly"/>
           </menupopup>
         </menulist>
       </hbox>  

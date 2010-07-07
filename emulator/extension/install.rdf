@@ -5,7 +5,7 @@
   <Description about="urn:mozilla:install-manifest">
     <em:id>{0bdb2530-7a5e-11df-93f2-0800200c9a66}</em:id>
     <em:name>Transit Widget Emulator</em:name>
-    <em:version>1.2.2</em:version>
+    <em:version>1.2.2 (unstable, build 20100707)</em:version>
     <em:type>2</em:type>
     <em:creator>Kyle Wilgus</em:creator>
     <em:description>The Transit Widget Emulator for developing JIL 1.2.2 based widgets.</em:description>

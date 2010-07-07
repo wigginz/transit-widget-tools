@@ -169,18 +169,22 @@ var Widget =
     
     copyFile : function(originalFile, destinationFullName)
     {
+      var result = null;
       SecurityManager.checkSecurity("Copy File (Device.copyFile)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
       {
-        return(_Device_122a.copyFile(originalFile, destinationFullName));
+        result = _Device_122a.copyFile(originalFile, destinationFullName);
       });
+      return(result);
     },
     
     deleteFile : function(destinationFullName)
     {
+      var result = null;
       SecurityManager.checkSecurity("Delete File (Device.deleteFile)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
       {
-        return(_Device_122a.deleteFile(destinationFullName));
+        result = _Device_122a.deleteFile(destinationFullName);
       });
+      return(result);
     },
     
     findFiles : function(matchFile, startInx, endInx)
@@ -193,22 +197,27 @@ var Widget =
     
     getAvailableApplications : function()
     {
+      var result = null;
       SecurityManager.checkSecurity("Get Available Applications (Device.getAvailableApplications)", SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, SecurityManager.OP_ALLOWED, function()
       {
-        return(_Device_122a.getAvailableApplications());
+        result = _Device_122a.getAvailableApplications();
       });
+      return(result);
     },
     
     getDirectoryFileNames : function(sourceDirectory)
     {
+      var result = null;
       SecurityManager.checkSecurity("List Files in a Folder (Device.getDirectoryFileNames)", SecurityManager.OP_BLANKET, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
       {
-        return(_Device_122a.getDirectoryFileNames(sourceDirectory));
+        result = _Device_122a.getDirectoryFileNames(sourceDirectory);
       });
+      return(result);
     },
     
     getFile : function(fullName)
     {
+      var wrappedFile = null;
       SecurityManager.checkSecurity("Access a File (Device.getFile)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
       {
         var jilFile = _Device_122a.getFile(fullName);
@@ -221,19 +230,20 @@ var Widget =
           throw(exc);
         }
         
-        var wrappedFile = new Widget.Device.File();
+        wrappedFile = new Widget.Device.File();
         wrappedFile.setJIL(jilFile);
-        
-        return(wrappedFile);
       });
+      return(wrappedFile);
     },
     
     getFileSystemRoots : function()
     {
+      var result = null;
       SecurityManager.checkSecurity("List File Systems (Device.getFileSystemRoots)", SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, SecurityManager.OP_ALLOWED, function()
       {
-        return(_Device_122a.getFileSystemRoots());
+        result = _Device_122a.getFileSystemRoots();
       });
+      return(result);
     },
     
     getFileSystemSize : function(fileSystemRoot)
@@ -251,10 +261,12 @@ var Widget =
     
     moveFile : function(originalFile, destinationFullName)
     {
+      var result = null;
       SecurityManager.checkSecurity("Move File (Device.moveFile)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
       {
-        return(_Device_122a.moveFile(originalFile, destinationFullName));
+        result = _Device_122a.moveFile(originalFile, destinationFullName);
       });
+      return(result);
     },
     
     setRingtone : function(ringtoneFileUrl, addressBookItem)
@@ -854,40 +866,46 @@ var Widget =
     
     getCurrentEmailAccount : function()
     {
+      var wrappedAccount = null;
       SecurityManager.checkSecurity("Access Current Email Account (Messaging.getCurrentEmailAccount)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
       {
         var jilAccount = _Messaging_122a.getCurrentEmailAccount();
-        var wrappedAccount = new Widget.Messaging.Account();
+        wrappedAccount = new Widget.Messaging.Account();
         wrappedAccount.setJIL(jilAccount);
-        return(wrappedAccount);
       });
+      return(wrappedAccount);
     },
     
     getEmailAccounts : function()
     {
+      var result = null;
       SecurityManager.checkSecurity("Access All Email Accounts (Messaging.getEmailAccounts)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
       {
-        return(_Messaging_122a.getEmailAccounts());
+        result = _Messaging_122a.getEmailAccounts();
       });
+      return(result);
     },
     
     getFolderNames : function(messageType)
     {
+      var result = null;
       SecurityManager.checkSecurity("Access All Message Folders (Messaging.getFolderNames)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
       {
-        return(_Messaging_122a.getFolderNames(messageType));
+        result = _Messaging_122a.getFolderNames(messageType);
       });
+      return(result);
     },
     
     getMessage : function(messageType, folderName, index)
     {
+      var wrappedMessage = null;
       SecurityManager.checkSecurity("Access Message (Messaging.getMessage)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
       {
         var jilMessage = _Messaging_122a.getMessage(messageType, folderName, index);
-        var wrappedMessage = new Widget.Messaging.Message();
+        wrappedMessage = new Widget.Messaging.Message();
         wrappedMessage.setJIL(jilMessage);
-        return(wrappedMessage);
       });
+      return(wrappedMessage);
     },
     
     getMessageQuantities : function(messageType, folderName)
@@ -931,18 +949,22 @@ var Widget =
 
       captureImage : function(fileName, lowRes)
       {
+        var result = null;
         SecurityManager.checkSecurity("Capture Camera Image (Camera.captureImage)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
         {
-          return(_Camera_122a.captureImage(fileName, lowRes));
+          result = _Camera_122a.captureImage(fileName, lowRes);
         });
+        return(result);
       },
       
       startVideoCapture : function(fileName, lowRes, maxDurationSeconds, showDefaultControls)
       {
+        var result = null;
         SecurityManager.checkSecurity("Capture Camera Video (Camera.startVideoCapture)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
         {
-          return(_Camera_122a.startVideoCapture(fileName, lowRes, maxDurationSeconds, showDefaultControls));
+          result = _Camera_122a.startVideoCapture(fileName, lowRes, maxDurationSeconds, showDefaultControls);
         });
+        return(result);
       },
       
       setWindow : function(domObj)
@@ -1133,64 +1155,73 @@ var Widget =
     
     getAddressBookGroupMembers : function(groupName)
     {
+      var result = null;
       SecurityManager.checkSecurity("Add Contact Group Members (PIM.getAddressBookGroupMembers)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
       {
-        return(_PIM_122a.getAddressBookGroupMembers(groupName));
+        result = _PIM_122a.getAddressBookGroupMembers(groupName);
       });
+      return(result);
     },
     
     getAddressBookItem : function(id)
     {
+      var wrappedItem = null;
       SecurityManager.checkSecurity("Get Contact (PIM.getAddressBookItem)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
       {
         var jilItem = _PIM_122a.getAddressBookItem(id);
-        var wrappedItem = new Widget.PIM.AddressBookItem();
+        wrappedItem = new Widget.PIM.AddressBookItem();
         wrappedItem.setJIL(jilItem);
-        return(wrappedItem);
       });
+      return(wrappedItem);
     },
     
     getAddressBookItemsCount : function()
     {
+      var result = null;
       SecurityManager.checkSecurity("Count Contacts (PIM.getAddressBookItemsCount)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
       {
-        return(_PIM_122a.getAddressBookItemsCount());
+        result = _PIM_122a.getAddressBookItemsCount();
       });
+      return(result);
     },
     
     getAvailableAddressGroupNames : function()
     {
+      var result = null;
       SecurityManager.checkSecurity("Get Contact Groups (PIM.getAvailableAddressGroupNames)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
       {
-        return(_PIM_122a.getAvailableAddressGroupNames());
+        result = _PIM_122a.getAvailableAddressGroupNames();
       });
+      return(result);
     },
     
     getCalendarItem : function(calendarId)
     {
+      var wrappedItem = null;
       SecurityManager.checkSecurity("Get Calendar Entry (PIM.getCalendarItem)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
       {
         var jilItem = _PIM_122a.getCalendarItem(calendarId);
-        var wrappedItem = new Widget.PIM.CalendarItem();
+        wrappedItem = new Widget.PIM.CalendarItem();
         wrappedItem.setJIL(jilItem);
-        return(wrappedItem);
       });
+      return(wrappedItem);
     },
     
     getCalendarItems : function(startTime, endTime)
     {
+      var wrappedArray = null;
       SecurityManager.checkSecurity("Get Calendar Entries (PIM.getCalendarItems)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
       {
         var jilArray = _PIM_122a.getCalendarItems(startTime, endTime);
-        var wrappedArray = new Array();
+        wrappedArray = new Array();
         for ( var i = 0; i < jilArray.length; i++ )
         {
           var wrappedItem = new Widget.PIM.CalendarItem();
           wrappedItem.setJIL(jilArray[i]);
           wrappedArray.push(wrappedItem);
         }
-        return(wrappedArray);
       });
+      return(wrappedArray);
     },
     
     AddressBookItem : function() //object
@@ -1433,13 +1464,15 @@ var Widget =
       if ( id == null )
         Widget.throwIPException("Invalid argument type for id in Telephony.getCallRecord");
       
+      var result = null;
       SecurityManager.checkSecurity("Search Call Records (Telephony.findCallRecords)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
       {
         var jilRecord = _Telephony_122a.getCallRecord(callRecordType, id);
         var wrappedRecord = new Widget.Telephony.CallRecord();
         wrappedRecord.setJIL(jilRecord);
-        return(wrappedRecord);
+        result = wrappedRecord;
       });
+      return(result);
     },
     
     getCallRecordCnt : function(callRecordType)
@@ -1447,10 +1480,12 @@ var Widget =
       if ( ! this.testCallRecordType(callRecordType) )
         Widget.throwIPException("Invalid argument type for callRecordType in Telephony.getCallRecordCnt");
       
+      var result = null;
       SecurityManager.checkSecurity("Count Call Records (Telephony.getCallRecordCnt)", SecurityManager.OP_SESSION, SecurityManager.OP_ALLOWED, SecurityManager.OP_ALLOWED, function()
       {
-        return(_Telephony_122a.getCallRecordCnt(callRecordType));
+        result = _Telephony_122a.getCallRecordCnt(callRecordType);
       });
+      return(result);
     },
     
     initiateVoiceCall : function(phoneNumber)

@@ -241,12 +241,13 @@ var jwe_emulator =
     $("jwe-emulator-content").attr("src", "about:blank");
     $("jwe-emulator-content").attr("src", this.emulator.getWidget().contentSrc);
     
-    this.clearLog();
-    $("jwe-emulator-settings-fullscreen").chk(false);
+    this.clearLog();   
 
     this.emulator.reload($("jwe-emulator-loadedprofile").selValue());
     SecurityManager.reset();
     this.init();
+    // will keep the widget in full screen mode if the checkbox is checked.
+    this.toggleFullScreen();
   },
 
   clearLog : function ()
@@ -558,6 +559,58 @@ var jwe_emulator =
     $("jwe-runtime-dialog-body-text").val(body);
     
     $("jwe-runtime-dialog-bg").css("display", "block");
+  },
+  
+  openWidgetFile : function()
+  {
+    var nsIFilePicker = Components.interfaces.nsIFilePicker;
+    var fp = Components.classes["@mozilla.org/filepicker;1"].createInstance(nsIFilePicker);
+    fp.init(window, "Select a JIL Widget config.xml", nsIFilePicker.modeOpen);
+    fp.appendFilter("JIL Widget config.xml File (*.xml)","*.xml");
+    
+    var res = fp.show();
+    // accept an OK 
+    if ( res == nsIFilePicker.returnOK )
+    {
+      var req = new XMLHttpRequest();
+      req.open("GET", "file://"+fp.file.path, false); 
+      req.send(null);
+      this.emulator.emulateWidget(fp.file.path, req.responseXML.documentElement, null, true);
+    }
+  },
+  
+  openProjectPage : function()
+  {
+    var wm = Components.classes["@mozilla.org/appshell/window-mediator;1"].getService(Components.interfaces.nsIWindowMediator);
+    var mainWindow = wm.getMostRecentWindow("navigator:browser");
+    mainWindow.gBrowser.selectedTab = mainWindow.gBrowser.addTab("http://code.google.com/p/transit-widget-tools");
+  },
+  
+  openIssuesPage : function()
+  {
+    var wm = Components.classes["@mozilla.org/appshell/window-mediator;1"].getService(Components.interfaces.nsIWindowMediator);
+    var mainWindow = wm.getMostRecentWindow("navigator:browser");
+    mainWindow.gBrowser.selectedTab = mainWindow.gBrowser.addTab("http://code.google.com/p/transit-widget-tools/issues/list");
+  },
+  
+  openDiscussPage : function()
+  {
+    var wm = Components.classes["@mozilla.org/appshell/window-mediator;1"].getService(Components.interfaces.nsIWindowMediator);
+    var mainWindow = wm.getMostRecentWindow("navigator:browser");
+    mainWindow.gBrowser.selectedTab = mainWindow.gBrowser.addTab("http://groups.google.com/group/transit-widget-tools-discuss");
+  },
+  
+  openJILPage : function()
+  {
+    var wm = Components.classes["@mozilla.org/appshell/window-mediator;1"].getService(Components.interfaces.nsIWindowMediator);
+    var mainWindow = wm.getMostRecentWindow("navigator:browser");
+    mainWindow.gBrowser.selectedTab = mainWindow.gBrowser.addTab("http://www.jil.org");
+  },
+  
+  openAboutDialog: function()
+  {
+    var em = Components.classes["@mozilla.org/extensions/manager;1"].getService(Components.interfaces.nsIExtensionManager);
+    openDialog("chrome://mozapps/content/extensions/about.xul", "", "chrome,centerscreen,modal", "urn:mozilla:item:{0bdb2530-7a5e-11df-93f2-0800200c9a66}", em.datasource);
   },
 };
 

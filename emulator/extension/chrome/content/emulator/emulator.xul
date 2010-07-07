@@ -19,6 +19,34 @@
   <script src="chrome://transit-emulator/content/emulator/emulator.js" />
   <script src="chrome://transit-emulator/content/emulator/workspace.js" />
 
+  <menubar id="jwe-emulator-menubar">
+    <menu label="&jwe.emulator.menubar.file;"> 
+      <menupopup>
+         <menuitem label="&jwe.emulator.menubar.file.open;" oncommand="jwe_emulator.openWidgetFile();"/>
+         <menuitem label="&jwe.emulator.menubar.file.reload;" oncommand="jwe_emulator.reload();"/>
+         <menuseparator/>
+         <menuitem label="&jwe.emulator.menubar.file.exit;" oncommand="window.close();"/>
+      </menupopup>
+    </menu>
+    <menu label="&jwe.emulator.menubar.tools;">
+      <menupopup>
+         <menuitem label="&jwe.emulator.menubar.tools.profiles;" oncommand="jwe_emulator.launchProfiles();"/>
+         <menuitem label="&jwe.emulator.menubar.tools.console;" oncommand="jwe_emulator.launchErrorConsole();"/>
+      </menupopup>
+    </menu>    
+    <menu label="&jwe.emulator.menubar.help;">
+      <menupopup>
+         <menuitem label="&jwe.emulator.menubar.help.project;" oncommand="jwe_emulator.openProjectPage();"/>
+         <menuitem label="&jwe.emulator.menubar.help.issues;" oncommand="jwe_emulator.openIssuesPage();"/>
+         <menuitem label="&jwe.emulator.menubar.help.discuss;" oncommand="jwe_emulator.openDiscussPage();"/>
+         <menuseparator/>
+         <menuitem label="&jwe.emulator.menubar.help.jil;" oncommand="jwe_emulator.openJILPage();"/>
+         <menuseparator/>
+         <menuitem label="&jwe.emulator.menubar.help.about;" oncommand="jwe_emulator.openAboutDialog();"/>
+      </menupopup>
+    </menu>  
+  </menubar>
+
   <vbox> 
     
     <hbox>
