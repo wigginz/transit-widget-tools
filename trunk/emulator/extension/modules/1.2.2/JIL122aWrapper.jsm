@@ -1609,6 +1609,8 @@ var Widget =
     Widget.Telephony.watch("onCallRecordsFound", function(id, oldValue, newValue) {
       _Telephony_122a.onCallRecordsFound = newValue; });
   },
+  
+  isEmulator : true,
 };
 
 Widget.init();
