@@ -39,7 +39,7 @@
       </hbox>
       <hbox align="center">
         <label value="&jwe.profiles.popup.crec.duration;" class="jwe-defaultText" style="width: 10em;"/>
-        <textbox id="jwe-profiles-popup-crec-duration" size="10"/>
+        <textbox id="jwe-profiles-popup-crec-duration" size="10" min="0" type="number"/>
       </hbox>
       <hbox align="center">
         <label value="&jwe.profiles.popup.crec.start;" class="jwe-defaultText" style="width: 10em;"/>
