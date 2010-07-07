@@ -13,6 +13,7 @@
         <menupopup id="menu_jwe_manu_popup">
           <menuitem label="&jwe.menu.emulate;" oncommand="jwe_emulator.readConfig(false);"/>
           <menuitem label="&jwe.menu.emulateintab;" oncommand="jwe_emulator.readConfig(true);"/>
+          <menuseparator/>
           <menuitem label="&jwe.menu.profiles;" oncommand="jwe_emulator.launchProfiles();"/>
           <!--menuitem label="Controls" oncommand="jwe_emulator.launchControls();"/-->
           <!--menuitem label="&jwe.menu.logviewer;" oncommand="jwe_emulator.logViewer();"/-->
@@ -21,9 +22,15 @@
     </menupopup>
     
     <statusbar id="status-bar">
-      <statusbarpanel id="jwe-status-bar" role="button" onmouseup="jwe_emulator.readConfig(false);" tooltiptext="&jwe.status.bar.launch;">
+      <statusbarpanel id="jwe-status-bar" role="button" context="jwe-status-bar-menu" onmouseup="jwe_emulator.readConfig(false, event);" tooltiptext="&jwe.status.bar.launch;">
         <image id="jwe-status-icon" src="chrome://transit-emulator/skin/images/transit-enabled.ico"/>
       </statusbarpanel>
+      <menupopup id="jwe-status-bar-menu">
+        <menuitem label="&jwe.menu.emulate;" oncommand="jwe_emulator.readConfig(false);"/>
+        <menuitem label="&jwe.menu.emulateintab;" oncommand="jwe_emulator.readConfig(true);"/>
+        <menuseparator/>
+        <menuitem label="&jwe.menu.profiles;" oncommand="jwe_emulator.launchProfiles();"/>
+      </menupopup>
     </statusbar>
 
 </overlay>

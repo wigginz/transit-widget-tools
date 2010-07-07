@@ -259,8 +259,11 @@ var jwe_emulator =
   {
   },
 
-  readConfig : function(inTab)
+  readConfig : function(inTab, event)
   {
+    if ( (event != null) && (event.button != 0) )
+      return;
+    
     if ( inTab )
     {
       this.emulator.emulateWidget(content.location.pathname, content.document.documentElement, null, false);
