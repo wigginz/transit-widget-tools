@@ -143,12 +143,6 @@ JILEmulatorRuntime.prototype = //#
         this.emulatorWindow = ww.openWindow(ww.activeWindow, "chrome://transit-emulator/content/emulator/emulator.xul", "emulator", "chrome,centerscreen", null);
         this.emulatorWindow.focus();
       }
-      //this.emulatorWindow = Components.classes['@mozilla.org/appshell/window-mediator;1'] .getService(Components.interfaces.nsIWindowMediator).getMostRecentWindow('navigator:browser');
-      //this.emulatorWindow.gBrowser.selectedTab = this.emulatorWindow.gBrowser.addTab(url);
-
-//open a url current window: function openUrl(url) { content.wrappedJSObject.location = url; newTabBrowser = gBrowser.selectedBrowser; newTabBrowser.addEventListener("load", highlight, true); }
-
-//new tab function openUrlNewTab(url) { var win = Components.classes['@mozilla.org/appshell/window-mediator;1'] .getService(Components.interfaces.nsIWindowMediator) .getMostRecentWindow('navigator:browser'); win.gBrowser.selectedTab = win.gBrowser.addTab(url); }
       
       this.logAction("Starting widget emulation for widget: "+eWidget.name+", version: "+eWidget.version);
 
@@ -925,14 +919,6 @@ JILEmulatorRuntime.prototype = //#
     }
     
     return(fileList);
-  },
-
-  alert: function(aMsg){
-    var promptService = 
-      Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
-        .getService(Components.interfaces.nsIPromptService);
-    promptService.alert(null, "JIL Debug", aMsg);
-    promptService = null; 
   },
 
   QueryInterface: function(aIID)
