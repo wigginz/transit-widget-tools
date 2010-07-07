@@ -3,13 +3,17 @@
 
 Check here for all the latest details on milestone releases, what's being worked on and committed, and future plans.
 
-<wiki:comment>
+
 == Wednesday July 7, 2010 ==
 
 Added a right click context menu to the JIL status bar icon. Left click still launches the emulator in normal mode, right click with give the same options as in the tools menu.
 
 A widget in full screen mode will now stay in full screen mode when the reload button is pressed, even when the device profile is being changed.
-</wiki:comment>
+
+Fixed various minor issues found through some regression testing. Also added a menu bar to the emulator window for easier access to common functions as well as allowing a config.xml to be directly opened from the "File" menu.
+
+Download the development build [http://transit-widget-tools.googlecode.com/files/transit-emulator-20100707.xpi transit-emulator-20100707.xpi].
+
 
 == Tuesday July 6, 2010 ==
 
