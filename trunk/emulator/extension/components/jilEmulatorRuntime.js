@@ -799,9 +799,9 @@ JILEmulatorRuntime.prototype = //#
     // remove the root path from the full file path to get the relative path
     // for the local file
     var relativePath = fileName.substr(score, fileName.length);
-    
+TransitCommon.debug(fileName+", "+relativePath);    
     // the real path to the mapped drive 
-    var realPath = fsysMap[candidate]+relativePath;
+    var realPath = fsysMap[candidate]+"/"+relativePath;
     
     var localFile = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);  
     localFile.initWithPath(realPath);
