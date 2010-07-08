@@ -149,7 +149,14 @@ JILDevice.prototype = //#
 
   getFile : function(fullName)
   {
-    return(this.runtime.getLocalFile(fullName).jilFile);
+    var vFile = this.runtime.getLocalFile(fullName);
+    
+    if ( vFile == null )
+      this.runtime.logAction("Device.getFile(): Could not locate file with runtime path "+fullName+" in any file systems.");
+    else
+      this.runtime.logAction("Device.getFile(): found "+fullName+" at virtual path "+vFile.localFullPath);
+    
+    return(vFile.jilFile);
   },
 
   getFileSystemRoots : function(count, retv)
