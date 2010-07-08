@@ -24,7 +24,7 @@ var testDevice =
 {
   getFile : function()
   {
-    var jilFile = Widget.Device.getFile("/var/system.log");
+    var jilFile = Widget.Device.getFile("/var/System.log");
     
     showResult("Device.getFile", "Retrieved file "+jilFile.fileName+" with size "+jilFile.fileSize+", last modified on "+jilFile.lastModifyDate);
   },
@@ -655,13 +655,19 @@ var testABI =
 {
   getAvailableAttributes : function()
   {
-    var result = "";
-    var attribs = Widget.PIM.AddressBookItem.getAvailableAttributes();
-    for ( var i = 0; i < attribs.length; i++ )
+    Widget.PIM.onAddressBookItemsFound = function(results) 
     {
-      result += attribs[i]+", ";
-    }
-    showResult("Widget.PIM.AddressBookItem.getAvailableAttributes()", result);
+      var result = "";
+      var attribs = results[0].getAvailableAttributes();
+      for ( var i = 0; i < attribs.length; i++ )
+        result += attribs[i]+", ";
+      
+      showResult("Widget.PIM.AddressBookItem.getAvailableAttributes()", result);
+    };
+    
+    var comparison = Widget.PIM.createAddressBookItem();
+    comparison.fullName = "Test Guy 7";
+    Widget.PIM.findAddressBookItems(comparison, 0, 10);
   },
   
   update : function()

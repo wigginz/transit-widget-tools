@@ -36,11 +36,15 @@ JILAddressBookItem.prototype = //#
     
     count.value = names.length;
     
+    this.runtime.logAction("AddressBookItem.getAddressGroupNames(): Retrieved "+names.length+" address group names for address book item id "+this.addressBookItemId);
+    
     return(names);
   },
 
   getAttributeValue : function(attribute)
   {
+    this.runtime.logAction("AddressBookItem.getAttributeValue(): Retrieved attribute value "+this.attributes[attribute]+" for key "+attribute+" for address book item ID "+this.addressBookItemId);
+    
     return(this.attributes[attribute]);
   },
 
@@ -53,7 +57,7 @@ JILAddressBookItem.prototype = //#
     for ( var i = 0; i < attribs.length; i++ )
       availAttribs.push(attribs[i].key);
     
-    this.runtime.logAction("AddressBookItem.getAvailableAttributes(): returned a list of all "+count.value+" attributes available for address book items.");
+    this.runtime.logAction("AddressBookItem.getAvailableAttributes(): returned a list of all "+count.value+" attributes available for address book items. Attributes: "+availAttribs);
     
     return(availAttribs);
   },
@@ -73,6 +77,8 @@ JILAddressBookItem.prototype = //#
 
   setAttributeValue : function(attribute, value)
   {
+    this.runtime.logAction("AddressBookItem.setAttributeValue(): Setting attribute value "+value+" for key "+attribute);
+    
     this.attributes[attribute] = value;
   },
 
@@ -82,7 +88,7 @@ JILAddressBookItem.prototype = //#
     
     this.runtime.updateAddressBookItem(profileContact);
     
-    this.runtime.logAction("AddressBookItem.update(): updated address book item."); 
+    this.runtime.logAction("AddressBookItem.update(): updated address book item with id "+this.addressBookItemId); 
   },
 
   QueryInterface: function(aIID)
