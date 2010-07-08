@@ -2,6 +2,12 @@ var EXPORTED_SYMBOLS = ["TransitCommon"];
 
 var TransitCommon = 
 {
+  debug : function(logEntry)
+  {
+    var tstamp = new Date().getTime();
+    dump(tstamp+": "+logEntry+"\n");
+  },
+  
   convertMessageToJIL : function(message)
   {
     // convert address arrays to semi colon separated strings 
@@ -110,6 +116,8 @@ var TransitCommon =
   
   convertToJILFile : function(localFile, jilPath)
   {
+    this.debug(localFile.path+", "+jilPath);
+    
     var jilFile = Components.classes["@jil.org/jilapi-file;1"].createInstance(Components.interfaces.jilFile);
 
     var fileName = jilPath.substr(jilPath.lastIndexOf("/")+1, jilPath.length);
