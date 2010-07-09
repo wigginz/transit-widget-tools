@@ -116,8 +116,6 @@ var TransitCommon =
   
   convertToJILFile : function(localFile, jilPath)
   {
-    this.debug(localFile.path+", "+jilPath);
-    
     var jilFile = Components.classes["@jil.org/jilapi-file;1"].createInstance(Components.interfaces.jilFile);
 
     var fileName = jilPath.substr(jilPath.lastIndexOf("/")+1, jilPath.length);

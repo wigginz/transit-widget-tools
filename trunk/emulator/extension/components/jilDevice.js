@@ -149,7 +149,6 @@ JILDevice.prototype = //#
 
   getFile : function(fullName)
   {
-    TransitCommon.debug("from Device.getFile: "+fullName);
     var vFile = this.runtime.getLocalFile(fullName);
     
     if ( vFile == null )
