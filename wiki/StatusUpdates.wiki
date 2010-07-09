@@ -4,7 +4,7 @@
 Check here for all the latest details on milestone releases, what's being worked on and committed, and future plans.
 
 
-== Wednesday July 7, 2010 ==
+== Friday July 9, 2010 ==
 
 Changed window settings so the emulator is resizable, still working on getting scrollbars to work correctly, especially on smaller displays. 
 
