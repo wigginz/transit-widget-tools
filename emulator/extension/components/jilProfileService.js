@@ -2,7 +2,8 @@ const CLASS_ID = Components.ID("c37a7321-3dd3-11df-9879-0800200c9a66"); //#
 const CLASS_NAME = "JIL API Profile Service"; //#
 const CONTRACT_ID = "@jil.org/jilapi-profileservice;1"; //#
 
-const SQL_FILE = "jil-widget-emulator_1-2-1.sqlite";
+const SQL_FILE = "transit-emulator_1-2-2-20100709.sqlite";
+const PROF_DIR = "transit";
 
 /***********************************************************/
 
@@ -10,7 +11,34 @@ var service = null;
 
 function JILProfileService() //#
 {
+  Components.utils.import("resource://transit-emulator/TransitCommon.jsm");
+    
   this.wrappedJSObject = this;
+
+  // check to see if the sqlite file has been moved to the proper location outside of the extension directory (to make upgrading less destructive)
+  var profDir = Components.classes["@mozilla.org/file/directory_service;1"].getService(Components.interfaces.nsIProperties).get("ProfD", Components.interfaces.nsIFile);
+  
+  //TransitCommon.debug(profDir.path);
+  
+  var transitDir = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);  
+  transitDir.initWithPath(profDir.path+ TransitCommon.getFileSeparator() +PROF_DIR);
+  
+  //TransitCommon.debug(transitDir.path);
+  //TransitCommon.debug(transitDir.exists());
+  
+  // if it doesnt exist, create the directory
+  if ( !transitDir.exists() )
+    transitDir.create(Components.interfaces.nsIFile.DIRECTORY_TYPE, 0755);
+    
+  transitDir.append(SQL_FILE);
+  if ( !transitDir.exists() )
+  {
+    var sqlFile = __LOCATION__.parent.parent;
+    sqlFile.append(SQL_FILE);  
+    sqlFile.copyTo(transitDir.parent, "");
+  }
+  
+  this.sqlFile = transitDir;
 
   service = this;
 }
@@ -19,6 +47,8 @@ function JILProfileService() //#
 
 JILProfileService.prototype = //#
 {
+  sqlFile : null,
+  
   getAllDeviceProfiles : function()
   {
     var stmt = this.getConnection().createStatement("select dev.name as dname, dev.id as did, dev.uuid as duuid, msg.id as mid, msg.name as mname, pim.id as pid, pim.name as pname from jwe_device_profile dev, jwe_messaging_profile msg, jwe_pim_profile pim where dev.messaging_profile_id = msg.id and dev.pim_profile_id = pim.id");
@@ -4215,12 +4245,9 @@ JILProfileService.prototype = //#
   
   getConnection : function()
   {
-    var sqlFile = __LOCATION__.parent.parent;
-    sqlFile.append(SQL_FILE);
-
     var storageService = Components.classes["@mozilla.org/storage/service;1"]  
                         .getService(Components.interfaces.mozIStorageService);  
-    return(storageService.openDatabase(sqlFile));  
+    return(storageService.openDatabase(this.sqlFile));  
   },
 
   QueryInterface: function(aIID)

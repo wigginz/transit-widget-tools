@@ -2,6 +2,23 @@ var EXPORTED_SYMBOLS = ["TransitCommon"];
 
 var TransitCommon = 
 {
+  fileSep : null,
+  
+  getFileSeparator : function()
+  {
+    if ( this.fileSep == null )
+    {
+      var profDir = Components.classes["@mozilla.org/file/directory_service;1"].getService(Components.interfaces.nsIProperties).get("ProfD", Components.interfaces.nsIFile).path;
+      
+      if ( profDir.search(/\\/) != -1 )
+        this.fileSep = "\\";
+      
+      else
+        this.fileSep = "/";
+    }    
+    return(this.fileSep);
+  },  
+  
   debug : function(logEntry)
   {
     var tstamp = new Date().getTime();
