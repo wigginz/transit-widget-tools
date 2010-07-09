@@ -806,7 +806,7 @@ JILEmulatorRuntime.prototype = //#
     if ( (fsysMap[candidate].charAt(fsysMap[candidate].length-1) != "/") &&
          (relativePath.charAt(0) != "/")
        )
-      realPath = fsysMap[candidate]+"/"+relativePath;
+      realPath = fsysMap[candidate]+ TransitCommon.getFileSeparator() +relativePath;
     
     var localFile = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);  
     localFile.initWithPath(realPath);
