@@ -6,6 +6,17 @@ Check here for all the latest details on milestone releases, what's being worked
 
 == Wednesday July 7, 2010 ==
 
+Changed window settings so the emulator is resizable, still working on getting scrollbars to work correctly, especially on smaller displays. 
+
+Cleaned up the default data as well as copying the SQLite file outside of the extension directory so an upgrade or un-install will not destroy any custom data. Changed default devices to be three generic devices with common screen sizes.
+
+Enabled update check so Firefox can detect and install new versions of the extension.
+
+Download the development build [http://transit-widget-tools.googlecode.com/files/transit-emulator-20100709.xpi transit-emulator-20100709.xpi].
+
+
+== Wednesday July 7, 2010 ==
+
 Added a right click context menu to the JIL status bar icon. Left click still launches the emulator in normal mode, right click with give the same options as in the tools menu.
 
 A widget in full screen mode will now stay in full screen mode when the reload button is pressed, even when the device profile is being changed.
