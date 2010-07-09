@@ -140,7 +140,7 @@ JILEmulatorRuntime.prototype = //#
 
       if ( openWindow )
       {
-        this.emulatorWindow = ww.openWindow(ww.activeWindow, "chrome://transit-emulator/content/emulator/emulator.xul", "emulator", "chrome,centerscreen", null);
+        this.emulatorWindow = ww.openWindow(ww.activeWindow, "chrome://transit-emulator/content/emulator/emulator.xul", "emulator", "chrome,scrollbars=yes,resizable,dialog=no,centerscreen", null);
         this.emulatorWindow.focus();
       }
       
