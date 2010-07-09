@@ -733,18 +733,18 @@
                 <groupbox>
                   <caption label="&jwe.profiles.pim.address;" class="jwe-defaultText" />
                   <vbox>      
-                    <listbox style="width: 500px;" id="jwe-profiles-pim-addressbook" onselect="jwe_selectAddressBookItem();" ondblclick="jwe_modifyAddressBookItem();">
+                    <listbox id="jwe-profiles-pim-addressbook" onselect="jwe_selectAddressBookItem();" ondblclick="jwe_modifyAddressBookItem();">
                       <listhead>
                         <listheader label="&jwe.profiles.pim.address.name;" />
                         <listheader label="&jwe.profiles.pim.address.mobile;" />
                         <listheader label="&jwe.profiles.pim.address.email;" />             
                       </listhead>
                       <listcols>
-                        <listcol flex="1" />
+                        <listcol style="width: 200px;"/>
                         <splitter class="tree-splitter" />
-                        <listcol flex="1" />
+                        <listcol style="width: 120px;"/>
                         <splitter class="tree-splitter" />
-                        <listcol flex="1" />
+                        <listcol style="width: 200px;"/>
                       </listcols>
                     </listbox>
                     <hbox pack="end" class="jwe-profiles-buttons">
@@ -757,15 +757,15 @@
                 <groupbox>
                   <caption label="&jwe.profiles.pim.groups;" class="jwe-defaultText" />
                   <vbox>      
-                    <listbox style="width: 300px;" id="jwe-profiles-pim-addressgroups" onselect="jwe_selectAddressBookGroup();" ondblclick="jwe_modifyAddressBookGroup();">
+                    <listbox id="jwe-profiles-pim-addressgroups" onselect="jwe_selectAddressBookGroup();" ondblclick="jwe_modifyAddressBookGroup();">
                       <listhead>
                         <listheader label="&jwe.profiles.pim.groups.name;" />
                         <listheader label="&jwe.profiles.pim.groups.items;" />
                       </listhead>
                       <listcols>
-                        <listcol flex="1" />
+                        <listcol  style="width: 320px;"/>
                         <splitter class="tree-splitter" />
-                        <listcol flex="1" />
+                        <listcol  style="width: 200px;"/>
                       </listcols>
                     </listbox>
                     <hbox pack="end" class="jwe-profiles-buttons">
