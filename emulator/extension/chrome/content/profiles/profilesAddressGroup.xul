@@ -16,7 +16,7 @@
         
 <html:script type="application/x-javascript" src="chrome://transit-emulator/content/profiles/profiles.js" />
 
-  <vbox flex="1" style="background-color: #CCCCCC;">
+  <vbox flex="1">
 
     <dialogheader title="&jwe.profiles.popup.addrgrp.caption;"/>
 

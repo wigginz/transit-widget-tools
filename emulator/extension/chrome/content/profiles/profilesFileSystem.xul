@@ -14,7 +14,7 @@
         ondialogaccept="return jwe_saveForm('&jwe.profiles.popup.fsys.error;');"
         ondialogcancel="return true;">
 
-  <vbox flex="1" style="background-color: #CCCCCC;">
+  <vbox flex="1">
 
     <dialogheader title="&jwe.profiles.popup.fsys.caption;"/>
     

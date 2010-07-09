@@ -7,6 +7,8 @@ var jwe_Profiles =
   /** initialize the state of the profile window **/
   init : function () 
   {
+    Components.utils.import("resource://transit-emulator/TransitCommon.jsm");
+    
     this.state["selDevice"] = null;
     this.state["selMessage"] = null;
     this.state["selPIM"] = null;
@@ -1056,6 +1058,8 @@ var jwe_Profiles =
       var mobileCell = jwe_Profiles.createListCell({id: "ai-"+items[i].id+"-mobile", label: items[i].mobilePhone});
       var emailCell = jwe_Profiles.createListCell({id: "ai-"+items[i].id+"-email", label: items[i].email});
 
+      TransitCommon.debug("#### "+fullNameCell.getAttribute("label")+", "+mobileCell.getAttribute("label")+", "+emailCell.getAttribute("label"));
+      
       addrItem.appendChild(fullNameCell);
       addrItem.appendChild(mobileCell);
       addrItem.appendChild(emailCell);
