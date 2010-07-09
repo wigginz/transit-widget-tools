@@ -1057,8 +1057,6 @@ var jwe_Profiles =
       var fullNameCell = jwe_Profiles.createListCell({id: "ai-"+items[i].id+"-name", label: items[i].fullName});
       var mobileCell = jwe_Profiles.createListCell({id: "ai-"+items[i].id+"-mobile", label: items[i].mobilePhone});
       var emailCell = jwe_Profiles.createListCell({id: "ai-"+items[i].id+"-email", label: items[i].email});
-
-      TransitCommon.debug("#### "+fullNameCell.getAttribute("label")+", "+mobileCell.getAttribute("label")+", "+emailCell.getAttribute("label"));
       
       addrItem.appendChild(fullNameCell);
       addrItem.appendChild(mobileCell);
