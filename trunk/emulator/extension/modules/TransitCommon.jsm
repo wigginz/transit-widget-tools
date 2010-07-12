@@ -144,7 +144,7 @@ var TransitCommon =
       jilFile.fileSize = localFile.fileSize;
       jilFile.createDate = localFile.lastModifiedTime;
       jilFile.fileName = fileName;
-      jilFile.filePath = filePath;
+      jilFile.filePath = filePath+"/"; // path to have trailing slash, always? per 1.2.2 spec, their example has a trailing slash
       jilFile.isDirectory = localFile.isDirectory();
     }
     catch(ex)
