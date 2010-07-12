@@ -2496,29 +2496,11 @@ JILProfileService.prototype = //#
         stmt.reset();
       }
       
-      if ( item.attributes == null )
-        return;
-
-      // flush any existing attributes
-      stmt = conn.createStatement("delete from jwe_pim_address_book_item_attribute_value where address_book_item_id = :id");    
-      stmt.params.id = item.id;
-
-      try
+      if ( item.attributes != null )
       {
-        stmt.executeStep();
-      }
-      finally 
-      {
-        stmt.reset();
-      }
-
-      // add attributes
-      for ( var i in item.attributes )
-      {
-        stmt = conn.createStatement("insert into jwe_pim_address_book_item_attribute_value (address_book_item_id, key, value) values (:id, :key, :value)");
+        // flush any existing attributes
+        stmt = conn.createStatement("delete from jwe_pim_address_book_item_attribute_value where address_book_item_id = :id");    
         stmt.params.id = item.id;
-        stmt.params.key = i;
-        stmt.params.value = item.attributes[i];
 
         try
         {
@@ -2527,6 +2509,24 @@ JILProfileService.prototype = //#
         finally 
         {
           stmt.reset();
+        }
+
+        // add attributes
+        for ( var i in item.attributes )
+        {
+          stmt = conn.createStatement("insert into jwe_pim_address_book_item_attribute_value (address_book_item_id, key, value) values (:id, :key, :value)");
+          stmt.params.id = item.id;
+          stmt.params.key = i;
+          stmt.params.value = item.attributes[i];
+
+          try
+          {
+            stmt.executeStep();
+          }
+          finally 
+          {
+            stmt.reset();
+          }
         }
       }
       conn.commitTransaction();
