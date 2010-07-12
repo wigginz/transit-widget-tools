@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+       point="org.eclipse.ui.newWizards">
+       <category
+            name="JIL"
+            id="org.jil.ide.wizard.WidgetWizard">
+      </category>
+      <wizard
+            name="JIL Widget Project"
+            icon="icons/new.png"
+            finalPerspective="org.eclipse.jdt.ui.JavaPerspective"
+            category="org.jil.ide.wizard.WidgetWizard"
+            class="org.jil.ide.wizard.WidgetWizard"
+            project="true"
+            id="org.jil.ide.wizard.WidgetWizard"
+            preferredPerspectives="org.eclipse.jdt.ui.JavaPerspective">
+         <description>
+            Create a JIL Widget Project.
+         </description>
+      </wizard>
+   </extension>
+   
+   <extension
+         id="org.jil.ide.widgetBuilder"
+         name="JILPackageBuilder"
+         point="org.eclipse.core.resources.builders">
+      <builder hasNature="true">
+         <run class="org.jil.ide.builder.WidgetBuilder"/>
+      </builder>
+     </extension>
+   
+   
+   <extension
+         id="org.jil.ide.widgetNature"
+         name="WidgetNature"
+         point="org.eclipse.core.resources.natures">
+      <runtime>
+         <run class="org.jil.ide.builder.WidgetNature"/>
+      </runtime>
+       <builder id="org.jil.ide.widgetBuilder"/>
+   </extension>
+   
+   
+   <extension
+ 	         point="org.eclipse.wst.jsdt.core.JsGlobalScopeContainerInitializer">
+    	 <JsGlobalScopeUIInitializer
+     		id="org.jil.ide.libraries.widgetLibrary"
+     	    class="org.jil.ide.libraries.WidgetLibraryContainerUIExtension">
+     	</JsGlobalScopeUIInitializer>
+   	</extension>
+   	
+   	<extension
+        point="org.eclipse.wst.jsdt.core.JsGlobalScopeContainerInitializer">
+      <JsGlobalScopeContainerInitializer
+            class="org.jil.ide.libraries.WidgetLibInitializer"
+            id="org.jil.ide.libraries.widgetLibrary">
+      </JsGlobalScopeContainerInitializer>
+   </extension>
+   
+   <extension
+        point="org.eclipse.wst.sse.ui.editorConfiguration">
+        <provisionalConfiguration
+		type="contentassistprocessor"
+		class="org.eclipse.wst.jsdt.web.ui.internal.contentassist.JSDTContentAssistant"
+		target="org.eclipse.jst.jsp.SCRIPT.JAVASCRIPT" />
+    </extension>
+    
+   <extension
+         point="org.eclipse.ui.preferencePages">
+          <category
+            name="JIL"
+            id="org.jil.ide.preferences.jil">
+           </category> 
+         <page
+            class="org.jil.ide.preferences.WidgetPreferencePage"
+            id="org.jil.ide.preferences.jil"
+            name="JIL Widget Preference Page"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.exportWizards">
+         <category
+            name="JIL"
+            id="org.jil.ide.wizard.widgetExportWizard">
+           </category> 
+         <wizard 
+         id="org.jil.ide.wizard.widgetExportWizard"
+         name="Export Signed Widget "
+         category="org.jil.ide.wizard.widgetExportWizard"
+         class="org.jil.ide.wizard.WidgetExportWizard"
+         icon= "icons/new.png"> 
+         <description> 
+            Export Signed Widget 
+         </description> 
+         <selection class="org.eclipse.core.resources.IProject"/> 
+      </wizard> 
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.ide.projectNatureImages">
+         <image icon="icons/widget_project.png"
+            id="org.jil.ide.widgetNature.image"
+            natureId="org.jil.ide.widgetNature">
+      </image>
+   </extension>
+   
+   <extension
+       id="org.jil.ide.ui.xmlmarker"
+       name="org.jil.ide.ui.xmlmarker"
+       point="org.eclipse.core.resources.markers">
+       <super
+          type="org.eclipse.core.resources.problemmarker">
+       </super>
+       <persistent value="true"></persistent>
+   </extension>
+   
+   <extension  
+         point="org.eclipse.ui.propertyPages" >
+         <page id="org.jil.ide.ui.JILPropertyPage"
+            name="JIL Property Page"
+            objectClass="org.eclipse.core.resources.IProject"
+            class="org.jil.ide.ui.JILPropertyPage">
+      	 </page>
+         
+   </extension>
+
+</plugin>

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Widgets 1.0 (Working Draft) RELAX NG schema -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified"
+	targetNamespace="http://www.jil.org/ns/widgets"
+	xmlns:its="http://www.w3.org/2005/11/its"
+	xmlns:wid="http://www.jil.org/ns/widgets">
+	<!-- xs:import schemaLocation="local.xsd"-->
+	<xs:import namespace="http://www.w3.org/2005/11/its"
+		schemaLocation="its.xsd" />
+	<xs:import namespace="http://www.w3.org/XML/1998/namespace"
+		schemaLocation="xml.xsd" />
+	
+
+	<xs:element name="widget">
+		<xs:complexType mixed="true">
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="wid:name" />
+				<xs:element ref="wid:description" />
+				<xs:element ref="wid:icon" />
+				<xs:element ref="wid:access" />
+				<xs:element ref="wid:author" />
+				<xs:element ref="wid:license" />
+				<xs:element ref="wid:content" />
+				<xs:element ref="wid:update" />
+				<xs:element ref="wid:feature" />
+				<xs:element ref="wid:billing" />
+				<xs:element ref="wid:maximum_display_mode" />
+				<xs:group ref="wid:extension" />
+			</xs:choice>
+			<xs:attribute ref="xml:lang" />
+			<xs:attribute name="id" type="xs:anyURI" />
+			<xs:attribute name="version" />
+			<xs:attribute name="height" type="wid:data.positiveNumber" />
+			<xs:attribute name="width" type="wid:data.positiveNumber" />
+			<xs:attributeGroup ref="wid:extension" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="name">
+		<xs:complexType mixed="true">
+			<xs:group ref="wid:extension" />
+			<xs:attribute ref="xml:lang" />
+			<xs:attribute ref="its:dir" />
+			<xs:attributeGroup ref="wid:extension" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="description">
+		<xs:complexType mixed="true">
+			<xs:group ref="wid:extension" />
+			<xs:attribute ref="xml:lang" />
+			<xs:attribute ref="its:dir" />
+			<xs:attributeGroup ref="wid:extension" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="icon">
+		<xs:complexType>
+			<xs:attributeGroup ref="wid:attr.allowed" />
+			<xs:attribute name="src" use="required" type="xs:anyURI" />
+			<xs:attribute name="height" type="wid:data.positiveNumber" />
+			<xs:attribute name="width" type="wid:data.positiveNumber" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="access">
+		<xs:complexType>
+			<xs:attributeGroup ref="wid:attr.allowed" />
+			<xs:attribute name="network" type="wid:data.boolean" />
+			<xs:attribute name="localfs" type="wid:data.boolean" />
+			<xs:attribute name="remote_scripts" type="wid:data.boolean" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="author">
+		<xs:complexType mixed="true">
+			<xs:group ref="wid:extension" />
+			<xs:attribute ref="xml:lang" />
+			<xs:attribute ref="its:dir" />
+			<xs:attribute name="href" type="xs:anyURI" />
+			<xs:attribute name="email">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value=".+@.+" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attributeGroup ref="wid:extension" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="license">
+		<xs:complexType mixed="true">
+			<xs:group ref="wid:extension" />
+			<xs:attribute ref="xml:lang" />
+			<xs:attribute ref="its:dir" />
+			<xs:attribute name="href" type="xs:anyURI" />
+			<xs:attributeGroup ref="wid:extension" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="content">
+		<xs:complexType>
+			<xs:attributeGroup ref="wid:attr.allowed" />
+			<xs:attribute name="src" use="required" type="xs:anyURI" />
+			<xs:attribute name="type" />
+			<xs:attribute name="charset" />
+
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="update">
+		<xs:complexType>
+			<xs:attributeGroup ref="wid:attr.allowed" />
+			<xs:attribute name="href" type="xs:anyURI" />
+			<xs:attribute name="period">
+        <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="0"/>
+                <xs:enumeration value="1"/>
+                <xs:enumeration value="2"/>
+                <xs:enumeration value="3"/>
+              </xs:restriction>
+         </xs:simpleType>
+      </xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="feature">
+		<xs:complexType mixed="true">
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="wid:feature" />
+				<xs:group ref="wid:extension" />
+			</xs:choice>
+			<xs:attribute name="name" use="required" type="xs:anyURI" />
+			<xs:attribute name="required" type="wid:data.boolean" default="true" />
+			<xs:attributeGroup ref="wid:extension" />
+		</xs:complexType>
+	</xs:element>
+
+	<!--  Added for JIL  -->
+
+
+
+	<!--  End Added for JIL  -->
+
+
+	<xs:group name="extension">
+		<xs:sequence>
+			<xs:group minOccurs="0" maxOccurs="unbounded"
+				ref="wid:anyElement" />
+		</xs:sequence>
+	</xs:group>
+
+	<xs:attributeGroup name="extension">
+		<xs:attributeGroup ref="wid:attr.allowed" />
+	</xs:attributeGroup>
+
+	<xs:group name="anyElement">
+		<xs:sequence>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<!-- <xs:any namespace="##other" processContents="skip"/>-->
+				<xs:any namespace="##local" processContents="skip" />
+				<!--   <xs:any namespace="http://www.jil.org/ns/widgets" processContents="strict"/>-->
+			</xs:choice>
+		</xs:sequence>
+	</xs:group>
+
+	<xs:group name="any">
+		<xs:sequence>
+			<xs:group minOccurs="0" maxOccurs="unbounded"
+				ref="wid:anyElement" />
+		</xs:sequence>
+	</xs:group>
+
+	<xs:attributeGroup name="any">
+		<xs:anyAttribute processContents="skip" />
+	</xs:attributeGroup>
+
+	<xs:attributeGroup name="attr.allowed">
+		<xs:anyAttribute namespace="##other" processContents="skip" />
+	</xs:attributeGroup>
+	<xs:attributeGroup name="attr.xmllang">
+		<xs:attribute ref="xml:lang" use="required" />
+	</xs:attributeGroup>
+	<xs:attributeGroup name="attr.itsdir">
+		<xs:attribute ref="its:dir" use="required" />
+	</xs:attributeGroup>
+	<xs:simpleType name="data.positiveNumber">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[1-9]\d*" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="data.boolean">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="true" />
+			<xs:enumeration value="false" />
+		</xs:restriction>
+	</xs:simpleType>
+ 
+	<xs:element name="maximum_display_mode">
+		<xs:complexType mixed="true">
+			<xs:attribute name="height" type="wid:data.positiveNumber" />
+			<xs:attribute name="width" type="wid:data.positiveNumber" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="billing">
+		<xs:complexType mixed="true">
+			<xs:attribute name="required" type="wid:data.boolean" default="false"/>
+		</xs:complexType>
+	</xs:element>
+
+	
+
+
+</xs:schema>
