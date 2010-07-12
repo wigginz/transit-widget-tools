@@ -1,0 +1,36 @@
+#results 
+{
+  position: absolute;
+  top: 20;
+  left: 20;
+  height: 90%;
+  width: 300px;
+  margin: 5px;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-bottom: 10px;
+  border: 2px solid #666666;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  background-color: #dddddd;
+  overflow-x: auto;
+  overflow-y: auto;
+  display: none;
+}
+
+#results-title
+{
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+
+#result-detail
+{
+  padding-bottom: 30px;
+}
+
+a
+{
+  font-weight: bold;
+  color: blue;
+}

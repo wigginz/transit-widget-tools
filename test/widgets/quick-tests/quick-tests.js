@@ -1,74 +1,256 @@
-
-var Case = 
+var testException = 
 {
-    testFn : function() 
+  tExceptionTypes : function()
+  {
+    var result = 
+      "<br>ExceptionTypes.INVALID_PARAMETER: "+Widget.ExceptionTypes.INVALID_PARAMETER +
+      "<br>ExceptionTypes.SECURITY: "+Widget.ExceptionTypes.SECURITY +
+      "<br>ExceptionTypes.UNKNOWN: "+Widget.ExceptionTypes.UNKNOWN +
+      "<br>ExceptionTypes.UNSUPPORTED: "+Widget.ExceptionTypes.UNSUPPORTED;
+    
+    showResult("ExceptionTypes", "Testing ExceptionTypes, <br>"+result);
+  },
+  
+  tException : function()
+  {
+    var result = "Throwing and catching Widget.Exception<br>";
+    var tException = new Widget.Exception();
+    tException.message = "Thrown Widget.Exception test";
+    tException.type = Widget.ExceptionTypes.SECURITY;
+    
+    try
     {
-      alert("1");
-      return("hello");
-    },
+      throw tException;
+    }
+    catch(ex)
+    {
+      result += "Caught exception, message: "+ex.message+", type: "+ex.type;
+    }
+    
+    showResult("Exception", "Testing Exception, <br>"+result);
+  },
 };
 
-
-var testAccountInfo =
+var testWidget = 
 {
-  phoneMSISDN : function()
+  tDevice : function()
   {
+    var t = Widget.Device;
+    showResult("Widget.Device", "Testing Widget.Device, value: "+t);
+  },
+
+  tException : function()
+  {
+    var t = Widget.Exception;
+    showResult("Widget.Exception", "Testing Widget.Exception, value: "+t);
+  },
+
+  tExceptionTypes : function()
+  {
+    var t = Widget.ExceptionTypes;
+        
+    showResult("Widget.ExceptionTypes", "Testing Widget.ExceptionTypes, value: "+t);
+  },
+
+  tMessaging : function()
+  {
+    var t = Widget.Messaging;
+    showResult("Widget.Messaging", "Testing Widget.Messaging, value: "+t);
+  },
+
+  tMultimedia : function()
+  {
+    var t = Widget.Multimedia;
+    showResult("Widget.Multimedia", "Testing Widget.Multimedia, value: "+t);
+  },
+
+  tPIM : function()
+  {
+    var t = Widget.PIM;
+    showResult("Widget.PIM", "Testing Widget.PIM, value: "+t);
+  },
+
+  tTelephony : function()
+  {
+    var t = Widget.Telephony;
+    showResult("Widget.Telephony", "Testing Widget.Telephony, value: "+t);
+  },
+  
+  onFocus : function()
+  {
+    Widget.onFocus = function()
+    {
+      showResult("Widget.onFocus", "Widget.onFocus() callback function called.");
+    };
+  },
+  
+  onMaximize : function()
+  {
+    Widget.onMaximize = function()
+    {
+      showResult("Widget.onMaximize", "Widget.onMaximize() callback function called.");
+    };
+  },
+  
+  onRestore : function()
+  {
+    Widget.onRestore = function()
+    {
+      showResult("Widget.onRestore", "Widget.onRestore() callback function called.");
+    };
+  },
+  
+  onWakeup : function()
+  {
+    Widget.onWakeup = function()
+    {
+      showResult("Widget.onWakeup", "Widget.onWakeup() callback function called.");
+    };
+  },
+  
+  openURL : function()
+  {
+    Widget.openURL("http://www.jil.org");
+    showResult("Widget.openURL", "Widget.openURL() called for www.jil.org.");
+  },
+  
+  preferenceForKey : function()
+  {
+    var result = "Setting value 'test successful' for key 'result'";
+    Widget.setPreferenceForKey("test successful", "result");
+    var value = Widget.preferenceForKey("result");
+    result += "<br>Retrieved value for key result: "+value;
     
-    alert(Case.testWatch);
-    Case.testWatch = "watch2";
-    //showResult("AccountInfo.phoneMSISDN", Widget.Device.AccountInfo.phoneMSISDN);
+    showResult("Widget.preferenceForKey", result);
+  },
+  
+  setPreferenceForKey : function()
+  {
+    this.preferenceForKey();
   },
 };
 
 var testDevice =
 {
-  getFile : function()
+  tAccountInfo : function()
   {
-    var jilFile = Widget.Device.getFile("/var/System.log");
-    
-    showResult("Device.getFile", "Retrieved file "+jilFile.fileName+" with size "+jilFile.fileSize+", last modified on "+jilFile.lastModifyDate);
+    var t = Widget.Device.AccountInfo;
+     
+    var result = 
+      "<br>AccountInfo.phoneMSISDN: "+t.phoneMSISDN +
+      "<br>AccountInfo.phoneOperatorName: "+t.phoneOperatorName +
+      "<br>AccountInfo.phoneUserUniqueId: "+t.phoneUserUniqueId +
+      "<br>AccountInfo.userAccountBalance: "+t.userAccountBalance +
+      "<br>AccountInfo.userSubscriptionType: "+t.userSubscriptionType;
+         
+    showResult("Device.AccountInfo", "Testing Device.AccountInfo, value: "+t+"<br>"+result);
+  },
+   
+  tApplicationTypes : function()
+  {
+    var t = Widget.Device.ApplicationTypes;
+     
+    var result = 
+      "<br>ApplicationTypes.ALARM: "+t.ALARM +
+      "<br>ApplicationTypes.BROWSER: "+t.BROWSER +
+      "<br>ApplicationTypes.CALCULATOR: "+t.CALCULATOR +
+      "<br>ApplicationTypes.CALENDAR: "+t.CALENDAR +
+      "<br>ApplicationTypes.CAMERA: "+t.CAMERA +
+      "<br>ApplicationTypes.CONTACTS: "+t.CONTACTS +
+      "<br>ApplicationTypes.FILES: "+t.FILES +
+      "<br>ApplicationTypes.MAIL: "+t.MAIL +
+      "<br>ApplicationTypes.MEDIAPLAYER: "+t.MEDIAPLAYER +
+      "<br>ApplicationTypes.MESSAGING: "+t.MESSAGING +
+      "<br>ApplicationTypes.PHONECALL: "+t.PHONECALL +
+      "<br>ApplicationTypes.PICTURES: "+t.PICTURES +
+      "<br>ApplicationTypes.PROG_MANAGER: "+t.PROG_MANAGER +
+      "<br>ApplicationTypes.SETTINGS: "+t.SETTINGS +
+      "<br>ApplicationTypes.TASKS: "+t.TASKS +
+      "<br>ApplicationTypes.WIDGET_MANAGER: "+t.WIDGET_MANAGER;      
+         
+    showResult("Device.ApplicationTypes", "Testing Device.ApplicationTypes, value: "+t+"<br>"+result);
+  },
+   
+  tDataNetworkInfo : function()
+  {
+    var t = Widget.Device.DataNetworkInfo;
+    showResult("Device.DataNetworkInfo", "Testing Device.DataNetworkInfo, value: "+t);
+  },
+   
+  tDeviceInfo : function()
+  {
+    var t = Widget.Device.DeviceInfo;
+    showResult("Device.DeviceInfo", "Testing Device.DeviceInfo, value: "+t);
+  },
+   
+  tDeviceStateInfo : function()
+  {
+    var t = Widget.Device.DeviceStateInfo;
+    showResult("Device.DeviceStateInfo", "Testing Device.DeviceStateInfo, value: "+t);
+  },
+   
+  tFile : function()
+  {
+    var t = new Widget.Device.File();
+    var result = t instanceof Widget.Device.File;
+     
+    showResult("Device.File", "Testing Device.File, value: "+t+", instanceof Widget.Device.File: "+result);
+  },
+   
+  tPositionInfo : function()
+  {
+    var t = new Widget.Device.PositionInfo();
+    var result = t instanceof Widget.Device.PositionInfo;
+     
+    showResult("Device.PositionInfo", "Testing Device.PositionInfo, value: "+t+", instanceof Widget.Device.PositionInfo: "+result);
+  },
+   
+  tPowerInfo : function()
+  {
+    var t = Widget.Device.PowerInfo;
+    showResult("Device.PowerInfo", "Testing Device.PowerInfo, value: "+t);
+  },
+   
+  tRadioInfo : function()
+  {
+    var t = Widget.Device.RadioInfo;
+    showResult("Device.RadioInfo", "Testing Device.RadioInfo, value: "+t);
   },
   
+  clipboardString : function()
+  {
+    showResult("Device.clipboardString", "Value: "+Widget.Device.clipboardString);
+  },
+   
+  widgetEngineName : function()
+  {
+    showResult("Device.widgetEngineName", "Value: "+Widget.Device.widgetEngineName);
+  },
+   
+  widgetEngineProvider : function()
+  {
+    showResult("Device.widgetEngineProvider", "Value: "+Widget.Device.widgetEngineProvider);
+  },
+   
+  widgetEngineVersion : function()
+  {
+    showResult("Device.widgetEngineVersion", "Value: "+Widget.Device.widgetEngineVersion);
+  },
+   
   copyFile : function()
   {
-    Widget.Device.copyFile("/var/home.sh", "/app/var/tools/green-sauce.sh");
+    var result = Widget.Device.copyFile("/sdcard/to-copy.txt", "/sdcard/copy-destination.txt");
     
-    var toFile = Widget.Device.getFile("/app/var/test/home.sh");
+    var toFile = Widget.Device.getFile("/sdcard/destination.txt");
     
-    showResult("Device.copyFile", "Copied and new file path is "+toFile.fileName+" and size "+toFile.fileSize);
+    showResult("Device.copyFile", "Copied '/sdcard/original.txt' with result "+result+" and new file name is "+toFile.fileName+" with path "+toFile.filePath+" and size "+toFile.fileSize);
   },
   
   deleteFile : function()
   {
-    Widget.Device.deleteFile("/app/var/tools");
+    var result = Widget.Device.deleteFile("/sdcard/to-delete.txt");
     
-    showResult("Device.copyFile", "Deleted file /app/var/tools/");
-  },
-  
-  getDirectoryFileNames : function()
-  {
-    var results = "List of files in directory: <br>";
-    
-    var fileList = Widget.Device.getDirectoryFileNames("/app/var/");
-    
-    for ( var i = 0; i < fileList.length; i++ )
-      results += fileList[i]+"<br>";
-    
-    showResult("Device.deleteFile", results);
-  },
-  
-  getFileSystemSize : function()
-  {
-    var fileSize = Widget.Device.getFileSystemSize("/");
-    
-    showResult("Device.getFileSystemSize", "File system size for / is "+fileSize+" bytes");
-  },
-  
-  moveFile : function()
-  {
-    Widget.Device.moveFile("/app/var/tools/green-sauce.sh", "/app/var");
-    
-    showResult("Device.moveFile", "Moved file /app/var/tools/home.sh to /app/var");
+    showResult("Device.copyFile", "Deleted file /sdcard/to-delete.txt, result: "+result);
   },
   
   findFiles : function()
@@ -85,6 +267,125 @@ var testDevice =
     match.fileName = "*.html";
     Widget.Device.findFiles(match, 0, 10);
   },
+  
+  getDirectoryFileNames : function()
+  {
+    var results = "List of files in directory: /sdcard<br>";
+    
+    var fileList = Widget.Device.getDirectoryFileNames("/sdcard");
+    
+    for ( var i = 0; i < fileList.length; i++ )
+      results += fileList[i]+"<br>";
+    
+    showResult("Device.getDirectoryFileNames", results);
+  },
+  
+  getFile : function()
+  {
+    var jilFile = Widget.Device.getFile("/sdcard/get-file.txt");
+    
+    showResult("Device.getFile", "Retrieved file "+jilFile.fileName+" with size "+jilFile.fileSize+", last modified on "+jilFile.lastModifyDate);
+  },
+  
+  getFileSystemRoots : function()
+  {
+    var roots = Widget.Device.getFileSystemRoots();
+    
+    var result = "";
+    for ( var i = 0; i < roots.length; i++ )
+      result += roots[i]+"<br>";
+    
+    showResult("Device.getFileSystemRoots", "File system roots :<br>"+result);
+  },
+  
+  getFileSystemSize : function()
+  {
+    var fileSize = Widget.Device.getFileSystemSize("/");
+    
+    showResult("Device.getFileSystemSize", "File system size for / is "+fileSize+" bytes");
+  },
+  
+  moveFile : function()
+  {
+    var result = Widget.Device.moveFile("/sdcard/to-move.txt", "/sdcard/destination.txt");
+    
+    showResult("Device.moveFile", "Moved file /sdcard/to-move.txt to /sdcard/move-destination.txt result: "+result);
+  },
+  
+  onFilesFound : function()
+  {
+    this.findFiles();
+  },
+  
+  getAvailableApplications : function()
+  {
+    var results = Widget.Device.getAvailableApplications();
+    var result = "";
+    for ( var i = 0; i < results.length; i++ )
+      result += "<br>"+results[i];
+    
+    showResult("Device.getAvailableApplications", "Available applications: <br>"+result);
+  },
+  
+  launchApplication : function()
+  {
+    Widget.Device.launchApplication(Widget.Device.ApplicationTypes.MEDIAPLAYER, "/home/user1/a.mp4");
+    
+    showResult("Device.launchApplication", "Launched application Widget.Device.ApplicationTypes.MEDIAPLAYER with param '/home/user1/a.mp4'");
+  },
+  
+  setRingtone : function()
+  {
+    common.createTestGuy("Test setRingtone");
+    
+    Widget.PIM.onAddressBookItemsFound = function(results) 
+    {
+      try {
+      var result = "Creating contact called 'Test setRingtone<br>";
+
+      for ( var i = 0; i < results.length; i++ )
+      {
+        result += "Contact id: "+results[i].addressBookItemId+"<br>";
+        Widget.Device.setRingtone("/sdcard/set-ringtone.mp3", results[i]);
+        result += "Set contact's ringtone to /sdcard/set-ringtone.mp3<br>";
+      }
+      } catch(ex) {alert(ex.message);}
+      
+      showResult("Device.setRingtone", result);
+    };
+    
+    var comparison = Widget.PIM.createAddressBookItem();
+    comparison.fullName = "Test setRingtone";
+    Widget.PIM.findAddressBookItems(comparison, 0, 10);
+  },
+  
+  vibrate : function()
+  {
+    Widget.Device.vibrate(5);
+    
+    showResult("Device.vibrate", "Called vibrate for five seconds");
+  },
+   
+ /*  
+
+
+<a href="javascript:testDevice.getAvailableApplications();">Test Device.getAvailableApplications</a><br>
+<a href="javascript:testDevice.launchApplication();">Test Device.launchApplication</a><br>
+<a href="javascript:testDevice.setRingtone();">Test Device.setRingtone</a><br>
+<a href="javascript:testDevice.vibrate();">Test Device.vibrate</a><br>
+
+*/
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
 };
 
 var testVideoPlayer =
@@ -816,57 +1117,3 @@ function closeResults()
 
 
 
-
-
-
-
-
-// Utility function, dump an object by reflexion up to niv level
-function jwe_dumpall(name,obj,niv) {
-  if (!niv) niv=1;
-    var dumpdict=new Object();
-  
-  dump ("\n\n-------------------------------------------------------\n");
-  dump ("Dump of the objet: " + name + " (" + niv + " levels)\n");
-  dump ("Address: " + obj + "\n");
-  dump ("Interfaces: ");
-  for (var i in Components.interfaces) {
-    try {
-      obj.QueryInterface(Components.interfaces[i]);
-      dump(""+Components.interfaces[i]+", ");
-    } catch (ex) {}
-  }
-    dump("\n");
-    _jwe_dumpall(dumpdict,obj,niv,"","");
-    dump ("\n\n-------------------------------------------------------\n\n");
-    
-    for (i in dumpdict) {
-      delete dumpdict[i];
-    }
-}
-function _jwe_dumpall(dumpdict,obj,niv,tab,path) {
-  
-  if (obj in dumpdict) {
-    dump(" (Already dumped)");
-  } else {
-    dumpdict[obj]=1;
-    
-    var i,r,str,typ;
-    for (i in obj) {
-      try {
-        str = String(obj[i]).replace(/\n/g,"\n"+tab);
-      } catch (ex) {
-        str = String(ex);
-      }
-            try {
-              typ = ""+typeof(obj[i]);
-            } catch (ex) {
-              typ = "unknown";
-            }
-                  dump ("\n" + tab + i + " (" + typ + (path?", " + path:"") +"): " + str);
-                  if ((niv>1) && (typ=="object")) {
-                    _jwe_dumpall(dumpdict,obj[i],niv-1,tab+"\t",(path?path+"->"+i:i));
-                  }
-    }
-  }
-}

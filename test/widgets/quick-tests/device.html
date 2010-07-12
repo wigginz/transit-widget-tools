@@ -1,0 +1,60 @@
+<html>
+
+<head>
+
+<script type="text/javascript" src="quick-tests.js"></script>
+
+<link rel="stylesheet" type="text/css" href="quick-tests.css" />
+
+</head>
+
+<body bgcolor="white" id="widget-body">
+
+<h2>Device Tests</h2>
+
+
+<a href="javascript:testDevice.tAccountInfo();">Test Device.AccountInfo</a><br>
+<a href="javascript:testDevice.tApplicationTypes();">Test Device.ApplicationTypes</a><br>
+<a href="javascript:testDevice.tDataNetworkInfo();">Test Device.DataNetworkInfo</a><br>
+<a href="javascript:testDevice.tDeviceInfo();">Test Device.DeviceInfo</a><br>
+<a href="javascript:testDevice.tDeviceStateInfo();">Test Device.DeviceStateInfo</a><br>
+<a href="javascript:testDevice.tFile();">Test Device.File</a><br>
+<a href="javascript:testDevice.tPositionInfo();">Test Device.PositionInfo</a><br>
+<a href="javascript:testDevice.tPowerInfo();">Test Device.PowerInfo</a><br>
+<a href="javascript:testDevice.tRadioInfo();">Test Device.RadioInfo</a><br>
+<br>
+
+<a href="javascript:testDevice.clipboardString();">Test Device.clipboardString</a><br>
+<a href="javascript:testDevice.widgetEngineName();">Test Device.widgetEngineName</a><br>
+<a href="javascript:testDevice.widgetEngineProvider();">Test Device.widgetEngineProvider</a><br>
+<a href="javascript:testDevice.widgetEngineVersion();">Test Device.widgetEngineVersion</a><br>
+<br>
+
+<a href="javascript:testDevice.copyFile();">Test Device.copyFile</a> (requires /sdcard to be a file system on the device and /sdcard/to-copy.txt to be the file to be copied)<br>
+<a href="javascript:testDevice.deleteFile();">Test Device.deleteFile</a> (requires /sdcard to be a file system on the device and /sdcard/to-delete.txt to be the file to be deleted)<br>
+<a href="javascript:testDevice.findFiles();">Test Device.findFiles</a> (searches for *.html on all file systems)<br>
+<a href="javascript:testDevice.getDirectoryFileNames();">Test Device.getDirectoryFileNames</a> (requires /sdcard to be a file system on the device and searches that directory for file *not recursive)<br>
+<a href="javascript:testDevice.getFile();">Test Device.getFile</a> (requires /sdcard to be a file system on the device and /sdcard/get-file.txt to be the file to get)<br>
+<a href="javascript:testDevice.getFileSystemRoots();">Test Device.getFileSystemRoots</a><br>
+<a href="javascript:testDevice.getFileSystemSize();">Test Device.getFileSystemSize</a><br>
+<a href="javascript:testDevice.moveFile();">Test Device.moveFile</a> (requires /sdcard to be a file system on the device and /sdcard/to-move.txt to be the file to be copied)<br>
+<a href="javascript:testDevice.onFilesFound();">Test Device.onFilesFound</a><br>
+<br>
+
+<a href="javascript:testDevice.getAvailableApplications();">Test Device.getAvailableApplications</a><br>
+<a href="javascript:testDevice.launchApplication();">Test Device.launchApplication</a><br>
+<a href="javascript:testDevice.setRingtone();">Test Device.setRingtone</a><br>
+<a href="javascript:testDevice.vibrate();">Test Device.vibrate</a><br>
+
+
+
+<br><a href="main.html">Back</a>
+
+<div id="results">
+  <div id="results-title"></div>
+  <div id="results-detail"></div>
+  <center><a class="close" href="javascript:closeResults();">Close</a></center>
+</div>
+
+</body>
+</html>

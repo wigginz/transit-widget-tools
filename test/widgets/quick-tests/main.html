@@ -3,58 +3,9 @@
 <head>
 <script type="text/javascript" src="KitchenSink.js"></script>
 
-<!--<script type="text/javascript" src="chrome://jilemulator/content/emulator/test.js"></script>-->
+<script type="text/javascript" src="quick-tests.js"></script>
 
-<script>
-
-function quickTest()
-{
-  alert(Widget_122.Device.widgetEngineName);
-}
-
-</script>
-
-<style>
-
-#results 
-{
-  position: absolute;
-  top: 20;
-  left: 20;
-  height: 90%;
-  width: 300px;
-  margin: 5px;
-  padding-top: 10px;
-  padding-left: 10px;
-  padding-bottom: 10px;
-  border: 2px solid #666666;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  background-color: #dddddd;
-  overflow-x: auto;
-  overflow-y: auto;
-  display: none;
-}
-
-#results-title
-{
-  font-weight: bold;
-  padding-bottom: 10px;
-}
-
-#result-detail
-{
-  padding-bottom: 30px;
-}
-
-a
-{
-  font-weight: bold;
-  color: blue;
-}
-
-
-</style>
+<link rel="stylesheet" type="text/css" href="quick-tests.css" />
 
 </head>
 
@@ -62,16 +13,13 @@ a
 
 <h2>Tests</h2>
 
-<!--<input type="button" onclick="quickTest();" value="test"/><br><br>-->
+<a href="widget.html">Widget</a><br>
+<a href="exception.html">Widget.Exception (and types)</a><br>
+<a href="device.html">Widget.Device</a><br>
 
-<br><b>Device</b><br>
-<a href="javascript:testDevice.getFile();">Test Device.getFile</a><br>
-<a href="javascript:testDevice.copyFile();">Test Device.copyFile</a><br>
-<a href="javascript:testDevice.deleteFile();">Test Device.deleteFile</a><br>
-<a href="javascript:testDevice.getDirectoryFileNames();">Test Device.getDirectoryFileNames</a><br>
-<a href="javascript:testDevice.getFileSystemSize();">Test Device.getFileSystemSize</a><br>
-<a href="javascript:testDevice.moveFile();">Test Device.moveFile</a><br>
-<a href="javascript:testDevice.findFiles();">Test Device.findFiles</a><br>
+<br>
+
+
 
 <br><b>VideoPlayer</b><br>
 Div Video Container, <a href="javascript:testVideoPlayer.setWindow();">setWindow</a>, <a href="javascript:testVideoPlayer.open();">open</a>, <a href="javascript:testVideoPlayer.play();">play</a>, <a href="javascript:testVideoPlayer.stop();">stop</a>, <a href="javascript:testVideoPlayer.pause();">pause</a>, <a href="javascript:testVideoPlayer.resume();">resume</a>:<br>
