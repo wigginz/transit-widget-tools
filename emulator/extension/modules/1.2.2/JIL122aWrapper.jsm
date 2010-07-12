@@ -1,5 +1,7 @@
 var EXPORTED_SYMBOLS = ["Widget", "WidgetManager", "SecurityManager"];
 
+Components.utils.import("resource://transit-emulator/TransitCommon.jsm");
+
 var SecurityManager = 
 {
   sessionConfirmed : new Array(),
@@ -161,6 +163,9 @@ var Widget =
 {
   Device : 
   {
+    // the isEmulator flag is not part of this spec, but provided in case there's a need
+    isEmulator : true,
+      
     clipboardString : _Device_122a.clipboardString,
     widgetEngineName : _Device_122a.widgetEngineName,
     widgetEngineProvider : _Device_122a.widgetEngineProvider,
@@ -1626,8 +1631,21 @@ var Widget =
     Widget.Multimedia.VideoPlayer.watch("onStateChange", function(id, oldValue, newValue) {
       _VideoPlayer_122a.onStateChange = newValue; });
       
-    Widget.PIM.watch("onAddressBookItemsFound", function(id, oldValue, newValue) {
-      _PIM_122a.onAddressBookItemsFound = newValue; });
+    Widget.PIM.watch("onAddressBookItemsFound", function(id, oldValue, newValue) 
+    {
+      _PIM_122a.onAddressBookItemsFound = function(results)
+      {
+        // convert to wrapped class
+        var jilResults = new Array();
+        for ( var i = 0; i < results.length; i++ )
+        {
+          var jilContact = new Widget.PIM.AddressBookItem();
+          jilContact.setJIL(results[i]);
+          jilResults.push(jilContact);
+        }
+        newValue(jilResults);
+      };
+    });
       
     Widget.PIM.watch("onCalendarItemAlert", function(id, oldValue, newValue) {
       _PIM_122a.onCalendarItemAlert = newValue; });
@@ -1644,8 +1662,6 @@ var Widget =
     Widget.Telephony.watch("onCallRecordsFound", function(id, oldValue, newValue) {
       _Telephony_122a.onCallRecordsFound = newValue; });
   },
-  
-  isEmulator : true,
 };
 
 Widget.init();
