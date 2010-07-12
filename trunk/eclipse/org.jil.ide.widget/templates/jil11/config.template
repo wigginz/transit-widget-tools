@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget  xmlns="http://www.w3.org/ns/widgets"
+         xmlns:JIL="http://www.jil.org/ns/widgets1.2"
+         xmlns:its="http://www.w3.org/2005/11/its"
+         id="http://jil.org/wid/$developerid$/PROJECT_NAME"
+         version="1.0.Beta"
+         height="200"
+         width="300"
+         viewmodes="floating">
+         
+    <name short="PROJECT_NAME">PROJECT_NAME</name>
+    <description>PROJECT_DESCRIPTION</description>
+    
+    <JIL:maximum_display_mode height="450" width="320"/>
+    <JIL:update href="http://www.jil.org/widgets/" period="2"/>
+    <JIL:access network="true" localfs="true" remote_scripts="false"/>
+    <JIL:billing required="true"/>
+    
+    <icon src="Icon.png"/>
+    
+    <content src="E2E-Test-1003-greekChars.html" encoding="UTF-8" type="text/html"/>
+    <preference name="apikey" value="ea31ad3a23fd2f" readonly="true"/>
+    <license  href="LICENCE_URL">LICENCE</license>
+    <author  email="AUTHER_EMAIL" href="AUTHER_URL">AUTHER_NAME</author>
+    
+</widget>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="TransitWidgetTools"
+      label="TransitWidgetTools"
+      version="1.2.2.20100712"
+      provider-name="JIL.org">
+
+   <description url="http://code.google.com/p/transit-widget-tools/">
+      Transit Widget Tools Eclipse Plug-ins for JIL Widgets.
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      [Enter Copyright Description here.]
+   </copyright>
+
+   <license url="http://www.mozilla.org/MPL">
+      Mozilla Public License 1.1
+   </license>
+
+   <url>
+      <update label="Transit Widget Tools" url="http://code.google.com/p/transit-widget-tools/"/>
+   </url>
+
+   <plugin
+         id="org.jil.ide"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.jil.ide.widget"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+</feature>

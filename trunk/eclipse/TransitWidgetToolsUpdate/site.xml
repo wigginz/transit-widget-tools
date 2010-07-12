@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/TransitWidgetTools_1.2.2.20100712.jar" id="TransitWidgetTools" version="1.2.2.20100712">
+      <category name="Transit Widget Tools"/>
+   </feature>
+   <category-def name="Transit Widget Tools" label="Transit Widget Tools">
+      <description>
+         Transit Widget Tools for Eclipse.
+      </description>
+   </category-def>
+</site>
