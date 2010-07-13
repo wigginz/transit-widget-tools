@@ -1,3 +1,124 @@
+/*<a href="javascript:testPowerInfo.isCharging();">PowerInfo.isCharging</a><br>
+<a href="javascript:testPowerInfo.percentRemaining();">PowerInfo.percentRemaining</a><br>
+<br>
+
+<a href="javascript:testPowerInfo.onChargeLevelChange();">PowerInfo.onChargeLevelChange</a><br>
+<a href="javascript:testPowerInfo.onChargeStateChange();">PowerInfo.onChargeStateChange</a><br>
+<a href="javascript:testPowerInfo.onLowBattery();">PowerInfo.onLowBattery</a><br>
+*/
+
+var testConfig = 
+{
+  msgRingtoneVolume : function()
+  {
+    showResult("Config.msgRingtoneVolume", "msgRingtoneVolume: "+Widget.Device.DeviceStateInfo.Config.msgRingtoneVolume);
+  },
+  
+  ringtoneVolume : function()
+  {
+    showResult("Config.ringtoneVolume", "ringtoneVolume: "+Widget.Device.DeviceStateInfo.Config.ringtoneVolume);
+  },
+  
+  vibrationSetting : function()
+  {
+    showResult("Config.vibrationSetting", "vibrationSetting: "+Widget.Device.DeviceStateInfo.Config.vibrationSetting);
+  },
+  
+  setAsWallpaper : function()
+  {
+    Widget.Device.DeviceStateInfo.Config.setAsWallpaper("file://wallpaper.png");
+    
+    showResult("Config.setAsWallpaper", "Setting wallpaper to file://wallpaper.png");
+  },
+  
+  setDefaultRingtone : function()
+  {
+    Widget.Device.DeviceStateInfo.Config.setDefaultRingtone("file://ringtone.mp3");
+    
+    showResult("Config.setAsWallpaper", "Setting ringtone to file://ringtone.mp3");
+  },  
+};
+
+var testDeviceStateInfo = 
+{
+  tAccelerometerInfo : function()
+  {
+    var accel = Widget.Device.DeviceStateInfo.AccelerometerInfo;
+    
+    showResult("DeviceStateInfo.AccelerometerInfo", "xAxis: "+accel.xAxis+", yAxis: "+accel.yAxis+", zAxis: "+accel.zAxis);
+  },
+  
+  audioPath : function()
+  {
+    showResult("DeviceStateInfo.audioPath", "audioPath: "+Widget.Device.DeviceStateInfo.audioPath);
+  },
+  
+  availableMemory : function()
+  {
+    showResult("DeviceStateInfo.availableMemory", "availableMemory: "+Widget.Device.DeviceStateInfo.availableMemory);
+  },
+  
+  backLightOn : function()
+  {
+    showResult("DeviceStateInfo.backLightOn", "backLightOn: "+Widget.Device.DeviceStateInfo.backLightOn);
+  },
+  
+  keypadLightOn : function()
+  {
+    showResult("DeviceStateInfo.keypadLightOn", "keypadLightOn: "+Widget.Device.DeviceStateInfo.keypadLightOn);
+  },
+  
+  language : function()
+  {
+    showResult("DeviceStateInfo.language", "language: "+Widget.Device.DeviceStateInfo.language);
+  },
+  
+  processorUtilizationPercent : function()
+  {
+    showResult("DeviceStateInfo.processorUtilizationPercent", "processorUtilizationPercent: "+Widget.Device.DeviceStateInfo.processorUtilizationPercent);
+  },
+  
+  onFlipEvent : function()
+  {
+    Widget.Device.DeviceStateInfo.onFlipEvent = function(isNowClosed)
+    {
+      showResult("DeviceStateInfo.onFlipEvent", "onFlipEvent caught, value for isNowClosed: "+isNowClosed);
+    };
+  },
+  
+  onPositionRetrieved : function()
+  {
+    Widget.Device.DeviceStateInfo.onPositionRetrieved = function(locationInfo, method)
+    {
+      var result =
+         "<br>PositionInfo.accuracy: "+locationInfo.accuracy
+        +"<br>PositionInfo.altitude: "+locationInfo.altitude
+        +"<br>PositionInfo.altitudeAccuracy: "+locationInfo.altitudeAccuracy
+        +"<br>PositionInfo.cellID: "+locationInfo.cellID
+        +"<br>PositionInfo.latitude: "+locationInfo.latitude
+        +"<br>PositionInfo.longitude: "+locationInfo.longitude
+        +"<br>PositionInfo.timeStamp: "+locationInfo.timeStamp
+        +"<br>method: "+method;
+        
+      showResult("DeviceStateInfo.onPositionRetrieved", "onPositionRetrieved caught, value for location and method: "+result);
+    };
+    alert("Position callback set, test requestPositionInfo or manually trigger event to complete test.");
+  },
+  
+  onScreenChangeDimensions : function()
+  {
+    Widget.Device.DeviceStateInfo.onScreenChangeDimensions = function(width, height)
+    {
+      showResult("DeviceStateInfo.onScreenChangeDimensions", "onScreenChangeDimensions caught, value for height: "+height+", width: "+width);
+    };
+  },
+  
+  requestPositionInfo : function()
+  {
+    Widget.Device.DeviceStateInfo.requestPositionInfo("gps");
+  },
+};
+
 var testException = 
 {
   tExceptionTypes : function()
@@ -365,27 +486,6 @@ var testDevice =
     
     showResult("Device.vibrate", "Called vibrate for five seconds");
   },
-   
- /*  
-
-
-<a href="javascript:testDevice.getAvailableApplications();">Test Device.getAvailableApplications</a><br>
-<a href="javascript:testDevice.launchApplication();">Test Device.launchApplication</a><br>
-<a href="javascript:testDevice.setRingtone();">Test Device.setRingtone</a><br>
-<a href="javascript:testDevice.vibrate();">Test Device.vibrate</a><br>
-
-*/
-  
-  
-  
-  
-  
-  
-  
-
-  
-  
-  
 };
 
 var testVideoPlayer =
@@ -472,14 +572,80 @@ var testDataNetworkInfo =
     showResult("DataNetworkInfo.networkConnectionType", result);
   },
   
-  DataNetworkConnectionTypes : function()
+  tDataNetworkConnectionTypes : function()
   {
-    showResult("DataNetworkInfo.DataNetworkConnectionTypes", "value for DataNetworkConnectionTypes.EDGE: "+Widget.Device.DataNetworkInfo.DataNetworkConnectionTypes.EDGE);
+    var t = Widget.Device.DataNetworkInfo.DataNetworkConnectionTypes;
+    
+    var result = 
+      "<br>DataNetworkConnectionTypes.BLUETOOTH: "+t.BLUETOOTH +
+      "<br>DataNetworkConnectionTypes.EDGE: "+t.EDGE +
+      "<br>DataNetworkConnectionTypes.EVDO: "+t.EVDO +
+      "<br>DataNetworkConnectionTypes.GPRS: "+t.GPRS +
+      "<br>DataNetworkConnectionTypes.IRDA: "+t.IRDA +
+      "<br>DataNetworkConnectionTypes.LTE: "+t.LTE +
+      "<br>DataNetworkConnectionTypes.ONEXRTT: "+t.ONEXRTT +
+      "<br>DataNetworkConnectionTypes.WIFI: "+t.WIFI;      
+         
+    showResult("DataNetworkInfo.DataNetworkConnectionTypes", "Testing DataNetworkInfo.DataNetworkConnectionTypes, value: "+t+"<br>"+result);
+  },
+  
+  getNetworkConnectionName : function()
+  {
+    var result = Widget.Device.DataNetworkInfo.getNetworkConnectionName(Widget.Device.DataNetworkInfo.DataNetworkConnectionTypes.BLUETOOTH);
+    showResult("DataNetworkInfo.getNetworkConnectionName", "Value for DataNetworkConnectionTypes.BLUETOOTH: "+result);
+  },
+  
+  onNetworkConnectionChanged : function()
+  {
+    Widget.Device.DataNetworkInfo.onNetworkConnectionChanged = function(connectionName)
+    {
+      showResult("DataNetworkInfo.onNetworkConnectionChanged", "Connection change event caught, new connection name: "+connectionName);
+    };    
   },
 };
 
 var testDeviceInfo = 
 {
+  ownerInfo : function()
+  {
+    showResult("DeviceInfo.ownerInfo", "value for DeviceInfo.ownerInfo.fullName: "+Widget.Device.DeviceInfo.ownerInfo.fullName);
+  },
+  
+  phoneColorDepthDefault : function()
+  {
+    showResult("DeviceInfo.phoneColorDepthDefault", "value for DeviceInfo.phoneColorDepthDefault: "+Widget.Device.DeviceInfo.phoneColorDepthDefault);
+  },
+  
+  phoneFirmware : function()
+  {
+    showResult("DeviceInfo.phoneFirmware", "value for DeviceInfo.phoneFirmware: "+Widget.Device.DeviceInfo.phoneFirmware);
+  },
+  
+  phoneManufacturer : function()
+  {
+    showResult("DeviceInfo.phoneManufacturer", "value for DeviceInfo.phoneManufacturer: "+Widget.Device.DeviceInfo.phoneManufacturer);
+  },
+  
+  phoneModel : function()
+  {
+    showResult("DeviceInfo.phoneModel", "value for DeviceInfo.phoneModel: "+Widget.Device.DeviceInfo.phoneModel);
+  },
+  
+  phoneOS : function()
+  {
+    showResult("DeviceInfo.phoneOS", "value for DeviceInfo.phoneOS: "+Widget.Device.DeviceInfo.phoneOS);
+  },
+  
+  phoneSoftware : function()
+  {
+    showResult("DeviceInfo.phoneSoftware", "value for DeviceInfo.phoneSoftware: "+Widget.Device.DeviceInfo.phoneSoftware);
+  },
+  
+  totalMemory : function()
+  {
+    showResult("DeviceInfo.totalMemory", "value for DeviceInfo.totalMemory: "+Widget.Device.DeviceInfo.totalMemory);
+  },
+
   phoneScreenHeightDefault : function()
   {
     showResult("DeviceInfo.phoneScreenHeightDefault", "value for DeviceInfo.phoneScreenHeightDefault: "+Widget.Device.DeviceInfo.phoneScreenHeightDefault);
@@ -488,11 +654,6 @@ var testDeviceInfo =
   phoneScreenWidthDefault : function()
   {
     showResult("DeviceInfo.phoneScreenWidthDefault", "value for DeviceInfo.phoneScreenWidthDefault: "+Widget.Device.DeviceInfo.phoneScreenWidthDefault);
-  },
-  
-  ownerInfo : function()
-  {
-    showResult("DeviceInfo.ownerInfo", "value for DeviceInfo.ownerInfo.fullName: "+Widget.Device.DeviceInfo.ownerInfo.fullName);
   },
 };
 
@@ -661,6 +822,13 @@ var testMessaging =
 
 var testTelephony = 
 {
+  initiateVoiceCall : function()
+  {
+    Widget.Telephony.initiateVoiceCall("+19255551234");
+    
+    showResult("Telephony.initiateVoiceCall()", "Initiated voice call to number +19255551234");
+  },
+  
   findCallRecords : function()
   {
     Widget.Telephony.onCallRecordsFound = function(results) 
