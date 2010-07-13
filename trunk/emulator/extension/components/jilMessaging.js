@@ -41,6 +41,11 @@ JILMessaging.prototype = //#
     return(Components.classes["@jil.org/jilapi-message;1"].createInstance(Components.interfaces.jilMessage));
   },
   
+  getNewAccount : function()
+  {
+    return(Components.classes["@jil.org/jilapi-account;1"].createInstance(Components.interfaces.jilAccount));
+  },
+  
   getNewAttachment : function()
   {
     return(Components.classes["@jil.org/jilapi-attachment;1"].createInstance(Components.interfaces.jilAttachment));
@@ -213,7 +218,7 @@ JILMessaging.prototype = //#
   getMessageQuantities : function(messageType, folderName)
   {
     var pFolder = this.runtime.getMessageFolder(folderName);
-    
+
     if ( pFolder == null )
       return(null);
     
