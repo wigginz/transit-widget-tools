@@ -428,7 +428,7 @@ JILEmulatorRuntime.prototype = //#
   
   invokeDSOnFlipEvent : function(flipClosed)
   {
-    var onFlipEvent = Components.classes["@jil.org/jilapi-device;1"].getService(Components.interfaces.jilDevice).onFlipEvent;
+    var onFlipEvent = Components.classes["@jil.org/jilapi-devicestateinfo;1"].getService(Components.interfaces.jilDeviceStateInfo).onFlipEvent;
 
     if ( onFlipEvent != null )
       onFlipEvent.invoke(flipClosed);
