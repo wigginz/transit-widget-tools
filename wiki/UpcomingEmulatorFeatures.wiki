@@ -1,5 +1,5 @@
 #labels Featured,Phase-Requirements
-= Upcoming Features and Improvements =
+= Upcoming Emulator Features and Improvements =
 
 This is the current list of features and improvements we plan to implement in the emulator in order of priority. This list is a living document, we welcome any suggestions or requests you may have via the Issues tab, discussion group, or jil.org.
 
