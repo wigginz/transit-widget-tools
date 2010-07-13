@@ -696,7 +696,7 @@ var jwe_Profiles =
   loadPositionInfo : function()
   {
     var position = JILProfileService.wrappedJSObject.getPositionInfo(jwe_Profiles.state["selDevice"]);
-    document.getElementById("jwe-profiles-devices-position-cellid").value = position.cellId;
+    document.getElementById("jwe-profiles-devices-position-cellid").value = position.cellID;
     document.getElementById("jwe-profiles-devices-position-accuracy").value = position.accuracy;
     document.getElementById("jwe-profiles-devices-position-lat").value = position.latitude;
     document.getElementById("jwe-profiles-devices-position-long").value = position.longitude;
@@ -708,7 +708,7 @@ var jwe_Profiles =
   {
     var position =
     {
-      cellId: document.getElementById("jwe-profiles-devices-position-cellid").value,
+      cellID: document.getElementById("jwe-profiles-devices-position-cellid").value,
       accuracy: document.getElementById("jwe-profiles-devices-position-accuracy").value,
       latitude: document.getElementById("jwe-profiles-devices-position-lat").value,
       longitude: document.getElementById("jwe-profiles-devices-position-long").value,

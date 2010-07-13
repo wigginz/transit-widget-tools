@@ -1135,7 +1135,7 @@ JILProfileService.prototype = //#
     {  
       while ( stmt.step() )
       {
-        position.cellId = stmt.row.position_cell_id;
+        position.cellID = stmt.row.position_cell_id;
         position.accuracy = stmt.row.position_accuracy;
         position.latitude = stmt.row.position_latitude;
         position.longitude = stmt.row.position_longitude;
@@ -1153,8 +1153,8 @@ JILProfileService.prototype = //#
 
   savePositionInfo : function(position)
   {
-    var stmt = this.getConnection().createStatement("update jwe_network_state set position_cell_id = :cellId, position_accuracy = :accuracy, position_latitude = :lat, position_longitude = :long, position_altitude = :alt, position_altitude_accuracy = :altAccuracy where profile_id = :profileId");
-    stmt.params.cellId = position.cellId;
+    var stmt = this.getConnection().createStatement("update jwe_network_state set position_cell_id = :cellID, position_accuracy = :accuracy, position_latitude = :lat, position_longitude = :long, position_altitude = :alt, position_altitude_accuracy = :altAccuracy where profile_id = :profileId");
+    stmt.params.cellID = position.cellID;
     stmt.params.accuracy = position.accuracy;
     stmt.params.lat = position.latitude;
     stmt.params.long = position.longitude;
@@ -3528,12 +3528,12 @@ JILProfileService.prototype = //#
         stmt.reset();
       }
 
-      stmt = conn.createStatement("insert into jwe_network_state (profile_id, position_accuracy, position_altitude, position_altitude_accuracy, position_cell_id, position_latitude, position_longitude, is_radio_enabled, is_roaming, radio_signal_source, radio_signal_strength_percent) values (:profileId, :accuracy, :altitude, :altAccuracy, :cellId, :lat, :long, :radio, :roaming, :signal, :strength)");
+      stmt = conn.createStatement("insert into jwe_network_state (profile_id, position_accuracy, position_altitude, position_altitude_accuracy, position_cell_id, position_latitude, position_longitude, is_radio_enabled, is_roaming, radio_signal_source, radio_signal_strength_percent) values (:profileId, :accuracy, :altitude, :altAccuracy, :cellID, :lat, :long, :radio, :roaming, :signal, :strength)");
       stmt.params.profileId = profileId;
       stmt.params.accuracy = ip.accuracy;
       stmt.params.altitude = defaults["altitude"];
       stmt.params.altAccuracy = ip.accuracy;
-      stmt.params.cellId = defaults["cell-id"];
+      stmt.params.cellID = defaults["cell-id"];
       stmt.params.lat = defaults["latitude"];
       stmt.params.long = defaults["longitude"];
       stmt.params.radio = defaults["radio-enabled"];
@@ -4495,7 +4495,7 @@ function jilPositionInfo() {}
 jilPositionInfo.prototype =
 {
   profileId : null,
-  cellId : null,
+  cellID : null,
   accuracy : null,
   latitude : null,
   longitude : null,

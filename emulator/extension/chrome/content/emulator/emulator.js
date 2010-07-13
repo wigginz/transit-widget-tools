@@ -95,7 +95,7 @@ var jwe_emulator =
     $("jwe-emulator-subtab-event-context-onposition-accuracy").val(positionInfo.accuracy);
     $("jwe-emulator-subtab-event-context-onposition-altitude").val(positionInfo.altitude);
     $("jwe-emulator-subtab-event-context-onposition-altitudeaccuracy").val(positionInfo.altitudeAccuracy);
-    $("jwe-emulator-subtab-event-context-onposition-cellid").val(positionInfo.cellId);
+    $("jwe-emulator-subtab-event-context-onposition-cellid").val(positionInfo.cellID);
     $("jwe-emulator-subtab-event-context-onposition-latitude").val(positionInfo.latitude);
     $("jwe-emulator-subtab-event-context-onposition-longitude").val(positionInfo.longitude);
 
