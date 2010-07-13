@@ -14,7 +14,7 @@ function JILPositionInfo() //#
   this.accuracy = positionInfo.accuracy;
   this.altitude = positionInfo.altitude;
   this.altitudeAccuracy = positionInfo.altitudeAccuracy;
-  this.cellID = positionInfo.cellId;
+  this.cellID = positionInfo.cellID;
   this.latitude = positionInfo.latitude;
   this.longitude = positionInfo.longitude;
   this.timeStamp = new Date();
