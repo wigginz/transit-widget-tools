@@ -1,11 +1,84 @@
-/*<a href="javascript:testPowerInfo.isCharging();">PowerInfo.isCharging</a><br>
-<a href="javascript:testPowerInfo.percentRemaining();">PowerInfo.percentRemaining</a><br>
-<br>
+var testRadioInfo = 
+{
+  isRadioEnabled : function()
+  {
+    showResult("RadioInfo.isRadioEnabled", "isRadioEnabled: "+Widget.Device.RadioInfo.isRadioEnabled);
+  },
+  
+  isRoaming : function()
+  {
+    showResult("RadioInfo.isRoaming", "isRoaming: "+Widget.Device.RadioInfo.isRoaming);
+  },
+  
+  radioSignalSource : function()
+  {
+    showResult("RadioInfo.radioSignalSource", "radioSignalSource: "+Widget.Device.RadioInfo.radioSignalSource);
+  },
+  
+  radioSignalStrengthPercent : function()
+  {
+    showResult("RadioInfo.radioSignalStrengthPercent", "radioSignalStrengthPercent: "+Widget.Device.RadioInfo.radioSignalStrengthPercent);
+  },
+  
+  onSignalSourceChange : function()
+  {
+    Widget.Device.RadioInfo.onSignalSourceChange = function(source, isRoaming)
+    {
+      showResult("RadioInfo.onSignalSourceChange", "onSignalSourceChange caught, source: "+source+", roaming: "+isRoaming);
+    };
+  },
+  
+  tRadioSignalSourceTypes : function()
+  {
+    var t = Widget.Device.RadioInfo.RadioSignalSourceTypes;
+    
+    var result = 
+      "<br>RadioSignalSourceTypes.CDMA: "+t.CDMA +
+      "<br>RadioSignalSourceTypes.GSM: "+t.GSM +
+      "<br>RadioSignalSourceTypes.LTE: "+t.LTE +
+      "<br>RadioSignalSourceTypes.TDSCDMA: "+t.TDSCDMA +
+      "<br>RadioSignalSourceTypes.WCDMA: "+t.WCDMA;
+    
+    showResult("RadioSignalSourceTypes", "Testing RadioSignalSourceTypes, <br>"+result);
+  },
+};
 
-<a href="javascript:testPowerInfo.onChargeLevelChange();">PowerInfo.onChargeLevelChange</a><br>
-<a href="javascript:testPowerInfo.onChargeStateChange();">PowerInfo.onChargeStateChange</a><br>
-<a href="javascript:testPowerInfo.onLowBattery();">PowerInfo.onLowBattery</a><br>
-*/
+var testPowerInfo =
+{
+  isCharging : function()
+  {
+    showResult("PowerInfo.isCharging", "isCharging: "+Widget.Device.PowerInfo.isCharging);
+  },
+  
+  percentRemaining : function()
+  {
+    showResult("PowerInfo.percentRemaining", "isCharging: "+Widget.Device.PowerInfo.percentRemaining);
+  },
+  
+  onChargeLevelChange : function()
+  {
+    Widget.Device.PowerInfo.onChargeLevelChange = function(percent)
+    {
+      showResult("PowerInfo.onChargeLevelChange", "onChargeLevelChange caught, new percent: "+percent);
+    };
+  },
+  
+  onChargeStateChange : function()
+  {
+    Widget.Device.PowerInfo.onChargeStateChange = function(state)
+    {
+      showResult("PowerInfo.onChargeStateChange", "onChargeStateChange caught, new state: "+state);
+    };
+  },
+  
+  onLowBattery : function()
+  {
+    Widget.Device.PowerInfo.onLowBattery = function(percent)
+    {
+      showResult("PowerInfo.onLowBattery", "onLowBattery caught, new percent: "+percent);
+    };
+  },  
+};
 
 var testConfig = 
 {
@@ -546,6 +619,40 @@ var testMessage =
     
     showResult("Message.saveAttachment", "Saved attachment with path "+attach.fileName+" to /var/log/new.txt");
   },
+  
+  addAttachment : function()
+  {
+    
+  },
+  
+  deleteAddress : function()
+  {
+    var message = new Widget.Messaging.Message();
+    message.addAddress("cc", "cc1-noreply@jil.org");
+    message.addAddress("cc", "cc2-noreply@jil.org");
+    message.addAddress("bcc", "bcc1-noreply@jil.org");
+    message.addAddress("destination", "destination1-noreply@jil.org");
+    message.addAddress("destination", "destination2-noreply@jil.org");
+    message.addAddress("destination", "destination3-noreply@jil.org"); 
+    
+    message.deleteAddress("cc", "cc1-noreply@jil.org");
+    message.deleteAddress("destination", "destination3-noreply@jil.org");
+    
+    var result = "Dest: <br>";
+    for ( var i = 0; i < message.destinationAddress.length; i++ )
+      result += "<br>"+message.destinationAddress[i];
+    
+    result += "<br>CC: <br>";
+    for ( var i = 0; i < message.ccAddress.length; i++ )
+      result += "<br>"+message.ccAddress[i];
+    
+    showResult("Message.deleteAddress", result);
+  },
+  
+  deleteAttachment : function()
+  {
+    
+  },
 };
 
 function testWrapper()
@@ -659,6 +766,45 @@ var testDeviceInfo =
 
 var testMessaging = 
 {
+  tAccount : function()
+  {
+    var t = new Widget.Messaging.Account();
+    var result = t instanceof Widget.Messaging.Account;
+    
+    showResult("Messaging.Account", "value for Account: "+t+", instanceof Widget.Messaging.Account: "+result);
+  },
+  
+  tAttachment : function()
+  {
+    var t = new Widget.Messaging.Attachment();
+    var result = t instanceof Widget.Messaging.Attachment;
+    
+    showResult("Messaging.Attachment", "value for Attachment: "+t+", instanceof Widget.Messaging.Attachment: "+result);
+  },
+
+  getCurrentEmailAccount : function()
+  {
+    showResult("Messaging.getCurrentEmailAccount", "current email account: "+Widget.Messaging.getCurrentEmailAccount().accountName);
+  },
+  
+  getEmailAccounts : function()
+  {
+    var result = "";
+    var results = Widget.Messaging.getEmailAccounts();
+    for ( var i = 0; i < results.length; i++ )
+      result += "<br>"+results[i].accountName;
+    
+    showResult("Messaging.getEmailAccounts", "all email accounts: "+result);
+  },
+  
+  createMessage : function()
+  {
+    var message = Widget.Messaging.createMessage(Widget.Messaging.MessageTypes.SMSMessage);
+    var result = message instanceof Widget.Messaging.Message;
+    
+    showResult("Messaging.createMessage", "message created: "+message+", instanceof Widget.Messaging.Message? "+result+", type: "+message.messageType);
+  },
+  
   onMessageArrived : function()
   {
     Widget.Messaging.onMessageArrived = function(message) 
@@ -666,13 +812,7 @@ var testMessaging =
       showResult("Widget.Messaging.onMessageArrived [callback]", "Received message with subject: "+message.subject);
     };
   },
-  
-  createMessage : function()
-  {
-    var message = Widget.Messaging.createMessage(Widget.Messaging.MessageTypes.SMSMessage);
-    showResult("Messaging.createMessage()", "Created message of type: "+message.messageType);
-  },
-  
+
   sendMessage : function()
   {
     var message = Widget.Messaging.createMessage(Widget.Messaging.MessageTypes.EmailMessage);
@@ -742,9 +882,9 @@ var testMessaging =
   
   deleteEmailAccount : function()
   {
-    Widget.Messaging.deleteEmailAccount(18);
+    Widget.Messaging.deleteEmailAccount(20);
     
-    showResult("Messaging.deleteEmailAccount()", "Deleted email with account id 18");
+    showResult("Messaging.deleteEmailAccount()", "Deleted email with account id 20");
   },
   
   deleteFolder : function()
@@ -760,29 +900,29 @@ var testMessaging =
   
   deleteMessage : function()
   {
-    Widget.Messaging.deleteMessage(Widget.Messaging.MessageTypes.EmailMessage, "Test 4", 6);
+    Widget.Messaging.deleteMessage(Widget.Messaging.MessageTypes.EmailMessage, "Test 2", 321);
     
-    showResult("Messaging.deleteMessage()", "Deleted message with id 6");
+    showResult("Messaging.deleteMessage()", "Deleted message with id 321");
   },
   
   findMessages : function()
   {
     Widget.Messaging.onMessagesFound = function(results, folderName) 
     {
-      var result = "Searching for messages with 'findme*' in the subject in folder "+folderName;
+      var result = "Searching for messages with 'Test*' in the subject in folder "+folderName;
       for ( var i = 0; i < results.length; i++ )
         result += results[i].messageId+": "+results[i].subject+"<br>";
       showResult("Widget.Messaging.findMessages() [callback]", result);
     };
     
     var message = new Widget.Messaging.Message();
-    message.subject = "findme*";  
-    Widget.Messaging.findMessages(message, "Test 3", 0, 10);
+    message.subject = "Test*";  
+    Widget.Messaging.findMessages(message, "Test 2", 0, 10);
   },
   
   getFolderNames : function()
   {
-    var result = "Retrieving all folder names for message type EmailMessage";
+    var result = "Retrieving all folder names for message type EmailMessage<br>";
     var names = Widget.Messaging.getFolderNames(Widget.Messaging.MessageTypes.EmailMessage);
     
     for ( var i = 0; i < names.length; i++ )
@@ -793,15 +933,15 @@ var testMessaging =
   
   getMessage : function()
   {
-    var message = Widget.Messaging.getMessage(Widget.Messaging.MessageTypes.EmailMessage, "Test 4", 7);
+    var message = Widget.Messaging.getMessage(Widget.Messaging.MessageTypes.EmailMessage, "Test 2", 0);
     
-    showResult("Messaging.deleteMessage()", "Retrieved message with id 7, subject: "+message.subject);
+    showResult("Messaging.deleteMessage()", "Retrieved message with index 0, subject: "+message.subject);
   },
   
   getMessageQuantities : function()
   {
-    var result = "Getting quantities for folder named 'Inbox'<br>";
-    var quantities = Widget.Messaging.getMessageQuantities(Widget.Messaging.MessageTypes.EmailMessage, "Inbox");
+    var result = "Getting quantities for folder named 'Test 22'<br>";
+    var quantities = Widget.Messaging.getMessageQuantities(Widget.Messaging.MessageTypes.EmailMessage, "Test 22");
     
     result+= "Read: "+quantities.totalMessageReadCnt+"<br>";
     result+= "Unread: "+quantities.totalMessageUnreadCnt+"<br>";
@@ -812,11 +952,11 @@ var testMessaging =
   
   moveMessageToFolder : function()
   {
-    var message = Widget.Messaging.getMessage(Widget.Messaging.MessageTypes.EmailMessage, "Test 4", 7);
+    var message = Widget.Messaging.getMessage(Widget.Messaging.MessageTypes.EmailMessage, "Test 22", 0);
     
-    Widget.Messaging.moveMessageToFolder(message, "Test 3");
+    Widget.Messaging.moveMessageToFolder(message, "Test 1");
     
-    showResult("Messaging.moveMessageToFolder()", "Moved message with id 7 to folder 'Test 3'");
+    showResult("Messaging.moveMessageToFolder()", "Moved message with index 0 to folder 'Test 1'");
   },
 };
 
