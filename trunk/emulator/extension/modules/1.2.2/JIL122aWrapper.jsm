@@ -1498,9 +1498,9 @@ var Widget =
       if ( !(phoneNumber > -1) )
         Widget.throwIPException("Invalid argument type for phoneNumber in Telephony.initiateVoiceCall");
       
-      var phoneNumberPattern = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
-      if ( !(phoneNumberPattern.test(phoneNumber)) )
-        Widget.throwIPException("Invalid argument type (format) for phoneNumber in Telephony.initiateVoiceCall");
+      //var phoneNumberPattern = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
+      //if ( !(phoneNumberPattern.test(phoneNumber)) )
+      //  Widget.throwIPException("Invalid argument type (format) for phoneNumber in Telephony.initiateVoiceCall");
         
       SecurityManager.checkSecurity("Initiate Phone Call (Telephony.initiateVoiceCall)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, function()
       {
