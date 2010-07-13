@@ -9,6 +9,8 @@ var service = null;
 
 function JILDeviceStateInfo() //#
 {
+  Components.utils.import("resource://transit-emulator/TransitCommon.jsm");
+  
   this.AccelerometerInfo  = Components.classes["@jil.org/jilapi-accelerometerinfo;1"].createInstance(Components.interfaces.jilAccelerometerInfo);
   this.Config  = Components.classes["@jil.org/jilapi-config;1"].createInstance(Components.interfaces.jilConfig);
 
@@ -44,8 +46,26 @@ JILDeviceStateInfo.prototype = //#
   requestPositionInfo : function(method) 
   {
     this.positionMethod = method;
-
+    
     this.runtime.logAction("DeviceStateInfo.requestPositionInfo(): Position requested and sent back to callback function.");
+    
+    var tm = Components.classes["@mozilla.org/thread-manager;1"].getService(Components.interfaces.nsIThreadManager);
+
+    tm.mainThread.dispatch(
+    {
+      run: function()
+      {
+        if ( service.onPositionRetrieved == null )
+          Components.classes["@jil.org/jilapi-emulatorruntime;1"].getService().wrappedJSObject.logAction("DeviceStateInfo.requestPositionInfo(): No callback function set, no where to send results.");
+        else
+        {
+          var positionInfo = service.runtime.getPositionInfo();
+          TransitCommon.debug(positionInfo.cellID);
+          positionInfo.timeStamp = new Date();
+          service.onPositionRetrieved.invoke(positionInfo, method);
+        }
+      }
+    }, Components.interfaces.nsIThread.DISPATCH_NORMAL);    
   },
   
   reload : function()
