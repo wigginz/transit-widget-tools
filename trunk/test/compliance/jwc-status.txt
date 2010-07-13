@@ -42,3 +42,5 @@ Executing case[JIL-HAPI-00217]...
 Case[JIL-HAPI-00217] is failed. Detail: ValidateException-Validate Fail[Unequal]! The expect value of [the total message quantity of Drafts increase one.] is '1', but the real value is '0'.
 Executor will stop due to fail in 'Stop On Fail' mode.
 Executor stopped.
+
+JIL-HAPI-00466 - test doesn't make sense, there is an assert undefined for the destination address which is clearly defined (line: Validator.assertUndefined(vRetMsg.destinationAddress);)
