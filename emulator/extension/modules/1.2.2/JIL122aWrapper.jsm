@@ -596,8 +596,27 @@ var Widget =
   {
     Account : function()
     {
+      this._jilAccount = null;
+      
       this.accountId = null;
       this.accountName = null;
+      
+      this.setJIL = function(jilAccount)
+      {
+        this.accountId = jilAccount.accountId;
+        this.accountName = jilAccount.accountName;
+        this._jilAccount = jilAccount;
+      };
+      
+      this.updateJIL = function()
+      {
+        if ( this._jilAccount == null )
+          this._jilAccount = _Messaging_122a.getNewAccount();
+        
+        this.accountId = this._jilAccount.accountId;
+        this.accountName = this._jilAccount.accountName;
+        return(this._jilAccount);
+      };
     },
     
     MessageQuantities : function() //object
@@ -678,12 +697,18 @@ var Widget =
       
       this.deleteAddress = function(type, address)
       {
+        var allowed = false;
         SecurityManager.checkSecurity("Remove Message Recipient (Message.deleteAddress)", SecurityManager.OP_DISALLOWED, SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, function()
+        {
+          allowed = true;
+        });
+        
+        if ( allowed )
         {
           this.updateJIL();
           this._jilMessage.deleteAddress(type, address);
           this.updateAddress(type);
-        });
+        }
       };
       
       this.deleteAttachment = function(attachment)
@@ -883,10 +908,16 @@ var Widget =
     
     getEmailAccounts : function()
     {
-      var result = null;
+      var result = new Array();
       SecurityManager.checkSecurity("Access All Email Accounts (Messaging.getEmailAccounts)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
       {
-        result = _Messaging_122a.getEmailAccounts();
+        var accounts = _Messaging_122a.getEmailAccounts();
+        for ( var i = 0; i < accounts.length; i++ )
+        {
+          var wrappedAccount = new Widget.Messaging.Account();
+          wrappedAccount.setJIL(accounts[i]);
+          result.push(wrappedAccount);
+        }
       });
       return(result);
     },

@@ -23,7 +23,7 @@ JILMessage.prototype = //#
   
   getAttachments : function(count, retv)
   {
-    count.value = this.attachments.length;
+    count = {value : this.attachments.length};
     return(this.attachments);
   },
   
@@ -34,7 +34,7 @@ JILMessage.prototype = //#
 
   getBccAddress : function(count, retv)
   {
-    count.value = this.bccAddress.length;
+    count = {value : this.bccAddress.length};
     return(this.bccAddress);
   },
   
@@ -45,7 +45,7 @@ JILMessage.prototype = //#
   
   getCcAddress : function(count, retv)
   {
-    count.value = this.ccAddress.length;
+    count = {value : this.ccAddress.length};
     return(this.ccAddress);
   },
   
@@ -56,7 +56,7 @@ JILMessage.prototype = //#
   
   getDestinationAddress : function(count, retv)
   {
-    count.value = this.destinationAddress.length;
+    count = {value : this.destinationAddress.length};
     return(this.destinationAddress);
   },
   
