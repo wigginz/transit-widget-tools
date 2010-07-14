@@ -30,6 +30,11 @@ JILMultimedia.prototype = //#
   isVideoPlaying : null,
 
   runtime : null,
+  
+  setAudioPlaying : function(isPlaying)
+  {
+    this.isAudioPlaying = isPlaying;
+  },
 
   getVolume : function()
   {

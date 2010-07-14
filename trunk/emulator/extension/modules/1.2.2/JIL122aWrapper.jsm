@@ -1079,7 +1079,7 @@ var Widget =
       
       setWindow : function(domObj)
       {
-        _VideoPlayer_122a.setWindow(domObj, document.createElement("video"));
+        _VideoPlayer_122a.setWindow(domObj, domObj.ownerDocument.createElement("video"));
       },
     },
 
@@ -1191,12 +1191,19 @@ var Widget =
     
     getAddressBookGroupMembers : function(groupName)
     {
-      var result = null;
+      var jilItems = null;
       SecurityManager.checkSecurity("Add Contact Group Members (PIM.getAddressBookGroupMembers)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
       {
-        result = _PIM_122a.getAddressBookGroupMembers(groupName);
+        var results = _PIM_122a.getAddressBookGroupMembers(groupName);
+        jilItems = new Array();
+        for ( var i = 0; i < results.length; i++ )
+        {
+          var wrappedItem = new Widget.PIM.AddressBookItem();
+          wrappedItem.setJIL(results[i]);
+          jilItems.push(wrappedItem);
+        }
       });
-      return(result);
+      return(jilItems);
     },
     
     getAddressBookItem : function(id)
@@ -1307,11 +1314,17 @@ var Widget =
       
       this.update = function()     
       {
+        var allowed = false;
         SecurityManager.checkSecurity("Update Contact (AddressBookItem.update)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+        {
+          allowed = true;          
+        });
+        
+        if ( allowed )
         {
           this.updateJIL();
           this._jilAddrItem.update();
-        });
+        }
       };
       
       this.setJIL = function(jilAddrItem)
@@ -1681,8 +1694,21 @@ var Widget =
     Widget.PIM.watch("onCalendarItemAlert", function(id, oldValue, newValue) {
       _PIM_122a.onCalendarItemAlert = newValue; });
       
-    Widget.PIM.watch("onCalendarItemsFound", function(id, oldValue, newValue) {
-      _PIM_122a.onCalendarItemsFound = newValue; });
+    Widget.PIM.watch("onCalendarItemsFound", function(id, oldValue, newValue) 
+    {      
+      _PIM_122a.onCalendarItemsFound = function(results)
+      {
+        // convert to wrapped class
+        var jilResults = new Array();
+        for ( var i = 0; i < results.length; i++ )
+        {
+          var jilItem = new Widget.PIM.CalendarItem();
+          jilItem.setJIL(results[i]);
+          jilResults.push(jilItem);
+        }
+        newValue(jilResults);
+      };
+    });
       
     Widget.PIM.watch("onVCardExportingFinish", function(id, oldValue, newValue) {
       _PIM_122a.onVCardExportingFinish = newValue; });

@@ -1,3 +1,94 @@
+var testMultimedia = 
+{
+  isAudioPlaying : function()
+  {
+    alert("Audio will start playing and test will be made five seconds in, then stopped.");
+    
+    var result = "starting audio test, isAudioPlaying should be true:<br>";
+    
+    Widget.Multimedia.AudioPlayer.open("test.ogg");
+    Widget.Multimedia.AudioPlayer.play(1);
+    
+    // pause 5 seconds
+    waitForDelay(5000);
+    
+    var test1 = Widget.Multimedia.isAudioPlaying;
+    
+    result += "value five seconds in for isAudioPlaying: "+test1+"<br>";
+    
+    // stop
+    Widget.Multimedia.AudioPlayer.stop();
+    
+    var test2 = Widget.Multimedia.isAudioPlaying;
+    
+    result += "value after stopped for isAudioPlaying: "+test2+"<br>";
+    
+    showResult("Multimedia.isAudioPlaying", result);
+  },
+  
+  isVideoPlaying : function()
+  {
+    showResult("Multimedia.isVideoPlaying", "Opened audio file 'test.ogg'");
+  },
+  
+  getVolume : function()
+  {
+    showResult("Multimedia.getVolume", "Opened audio file 'test.ogg'");
+  },
+  
+  stopAll : function()
+  {
+    showResult("Multimedia.stopAll", "Opened audio file 'test.ogg'");
+  },
+  
+};
+
+var testAudioPlayer = 
+{
+  open : function()
+  {
+    Widget.Multimedia.AudioPlayer.open("test.ogg");
+    
+    showResult("AudioPlayer.open", "Opened audio file 'test.ogg'");
+  },
+  
+  pause : function()
+  {
+    Widget.Multimedia.AudioPlayer.pause();
+    
+    showResult("AudioPlayer.pause", "Paused playback.");
+  },
+  
+  play : function()
+  {
+    Widget.Multimedia.AudioPlayer.play(3);
+    
+    showResult("AudioPlayer.play", "Playing opened audio file with three repeat times.");
+  },
+  
+  resume : function()
+  {
+    Widget.Multimedia.AudioPlayer.resume();
+    
+    showResult("AudioPlayer.resume", "Resumed playback.");
+  },
+  
+  stop : function()
+  {
+    Widget.Multimedia.AudioPlayer.stop();
+    
+    showResult("AudioPlayer.open", "Stopped playback.");
+  },
+  
+  onStateChange : function()
+  {
+    Widget.Multimedia.AudioPlayer.onStateChange = function(state)
+    {
+      alert("AudioPlayer state changed to "+state);
+    };
+  },
+};
+
 var testRadioInfo = 
 {
   isRadioEnabled : function()
@@ -565,6 +656,7 @@ var testVideoPlayer =
 {
   setWindow : function()
   {
+    var obj = document.getElementById("video-container");
     Widget.Multimedia.VideoPlayer.setWindow(document.getElementById("video-container"));
   },
   
@@ -591,6 +683,14 @@ var testVideoPlayer =
   resume : function()
   {
     Widget.Multimedia.VideoPlayer.resume();
+  },
+  
+  onStateChange : function()
+  {
+    Widget.Multimedia.VideoPlayer.onStateChange = function(state)
+    {
+      alert("VideoPlayer state changed to "+state);
+    };
   },
 };
 
@@ -766,6 +866,39 @@ var testDeviceInfo =
 
 var testMessaging = 
 {
+  tMessageFolderTypes : function()
+  {
+    var t = Widget.Messaging.MessageFolderTypes;
+    
+    var result = 
+      "<br>MessageFolderTypes.DRAFTS: "+t.DRAFTS +
+      "<br>MessageFolderTypes.INBOX: "+t.INBOX +
+      "<br>MessageFolderTypes.OUTBOX: "+t.OUTBOX +
+      "<br>MessageFolderTypes.SENTBOX: "+t.SENTBOX;   
+      
+    showResult("Messaging.MessageFolderTypes", "Testing Messaging.MessageFolderTypes, value: "+t+"<br>"+result);
+  },
+  
+  tMessageQuantities : function()
+  {
+    var test = new Widget.Messaging.MessageQuantities();
+    var result = test instanceof Widget.Messaging.MessageQuantities;
+    
+    showResult("Messaging.MessageQuantities", "Testing Messaging.MessageQuantities, value: "+test+"<br>Instanceof Widget.Messaging.MessageQuantities: "+result);
+  },
+  
+  tMessageTypes : function()
+  {
+    var t = Widget.Messaging.MessageTypes;
+    
+    var result = 
+      "<br>MessageTypes.EmailMessage: "+t.EmailMessage +
+      "<br>MessageTypes.MMSMessage: "+t.MMSMessage +
+      "<br>MessageTypes.SMSMessage: "+t.SMSMessage;   
+      
+    showResult("Messaging.MessageTypes", "Testing Messaging.MessageTypes, value: "+t+"<br>"+result);
+  },
+  
   tAccount : function()
   {
     var t = new Widget.Messaging.Account();
@@ -962,6 +1095,26 @@ var testMessaging =
 
 var testTelephony = 
 {
+  tCallRecord : function()
+  {
+    var test = new Widget.Telephony.CallRecord();
+    var result = test instanceof Widget.Telephony.CallRecord;
+    
+    showResult("CallRecord", "Testing CallRecord, object: "+test+"<br>Instanceof Widget.Telephony.CallRecord: "+result);
+  },
+  
+  tCallRecordTypes : function()
+  {
+    var t = Widget.Telephony.CallRecordTypes;
+
+    var result = 
+      "<br>CallRecordTypes.MISSED: "+t.MISSED +
+      "<br>CallRecordTypes.OUTGOING: "+t.OUTGOING +
+      "<br>CallRecordTypes.RECEIVED: "+t.RECEIVED;
+    
+    showResult("CallRecordTypes", "Testing CallRecordTypes, value: "+t+"<br>"+result);
+  },
+    
   initiateVoiceCall : function()
   {
     Widget.Telephony.initiateVoiceCall("+19255551234");
@@ -987,7 +1140,7 @@ var testTelephony =
   deleteAllCallRecords : function()
   {
     Widget.Telephony.deleteAllCallRecords(Widget.Telephony.CallRecordTypes.OUTGOING);
-    showResult("Telephony.deleteAllCallRecords()", "Deleted all RECEIVED call records.");
+    showResult("Telephony.deleteAllCallRecords()", "Deleted all OUTGOING call records.");
   },
   
   deleteCallRecord : function()
@@ -1022,11 +1175,63 @@ var testTelephony =
 
 var testPIM = 
 {
+  tEventRecurrenceTypes : function()
+  {
+    var t = Widget.PIM.EventRecurrenceTypes;
+    
+    var result = 
+      "<br>EventRecurrenceTypes.DAILY: "+t.DAILY +
+      "<br>EventRecurrenceTypes.EVERY_WEEKDAY: "+t.EVERY_WEEKDAY +
+      "<br>EventRecurrenceTypes.MONTHLY_ON_DAY: "+t.MONTHLY_ON_DAY +
+      "<br>EventRecurrenceTypes.MONTHLY_ON_DAY_COUNT: "+t.MONTHLY_ON_DAY_COUNT +
+      "<br>EventRecurrenceTypes.NOT_REPEAT: "+t.NOT_REPEAT +
+      "<br>EventRecurrenceTypes.WEEKLY_ON_DAY: "+t.WEEKLY_ON_DAY +
+      "<br>EventRecurrenceTypes.YEARLY: "+t.YEARLY;
+    
+    showResult("EventRecurrenceTypes", "Testing EventRecurrenceTypes, value: "+t+"<br>"+result);
+  },
+  
+  onAddressBookItemsFound : function()
+  {
+//     Widget.PIM.onAddressBookItemsFound = function(results)
+//     {
+//       var result = "";
+//       for ( var i = 0; i < results.length; i++ )
+//         result += "<br>"+results[i].fullName;
+//       
+//       showResult("Widget.PIM.onAddressBookItemsFound() [callback]", "Address book item names found: <br>"+result);
+//     };
+    this.findAddressBookItems();
+  },
+  
+  onCalendarItemAlert : function()
+  {
+    Widget.PIM.onCalendarItemAlert = function(item)
+    {
+      showResult("Widget.PIM.onCalendarItemAlert() [callback]", "calendar item alert caught, event name: "+item.eventName);
+    };
+  },
+  
+  onCalendarItemsFound : function()
+  {
+//     Widget.PIM.onCalendarItemsFound = function(results)
+//     {
+//       var result = "";
+//       for ( var i = 0; i < results.length; i++ )
+//         result += "<br>"+results[i].eventName;
+//       
+//       showResult("Widget.PIM.onAddressBookItemsFound() [callback]", "calendar items found: <br>"+result);
+//     };
+    this.findCalendarItems();
+  },
+    
   // complete
   createAddressBookItem : function()
   {
     var abi = Widget.PIM.createAddressBookItem();
-    showResult("PIM.createAddressBookItem()", abi);
+    var result = abi instanceof Widget.PIM.AddressBookItem;
+    
+    showResult("PIM.createAddressBookItem()", "value of created address book item: "+abi+", instanceof Widget.PIM.AddressBookItem: "+result);
   },
   
   // complete
@@ -1106,12 +1311,12 @@ var testPIM =
       var addrItem = results[0];
       result += "Found address item with id: "+addrItem.addressBookItemId+"<br>";
       
-      PIM.deleteAddressBookItem(addrItem.addressBookItemId);
+      Widget.PIM.deleteAddressBookItem(addrItem.addressBookItemId);
       result += "Deleted address item.<br>";
       showResult("Widget.PIM.deleteAddressBookItem()", result);
     };
     
-    var comparison = PIM.createAddressBookItem();
+    var comparison = Widget.PIM.createAddressBookItem();
     comparison.fullName = "Test Guy 5";
     Widget.PIM.findAddressBookItems(comparison, 0, 10);
   },  
@@ -1201,7 +1406,7 @@ var testPIM =
       showResult("Widget.PIM.deleteCalendarItem()", result+"Deleted calendar item with id: "+results[0].calendarItemId);
     };
     
-    var comparison = Widget.PIM.createCalendarItem();
+    var comparison = new Widget.PIM.CalendarItem();
     comparison.eventName = "Test Event 3";
     Widget.PIM.findCalendarItems(comparison, 0, 10);
   },
@@ -1262,6 +1467,47 @@ var testPIM =
 
 var testABI = 
 {
+  getAttributeValue : function()
+  {
+    Widget.PIM.onAddressBookItemsFound = function(results) 
+    {
+      var result = "Got address book item 'Test Guy 9'<br>";
+      
+      var addrItem = results[0];
+      result += "Found address item with id: "+addrItem.addressBookItemId+"<br>";
+      
+      var val = addrItem.getAttributeValue("PICTURE");
+      result += "Got attribute PICTURE value: "+val+"<br>";
+      showResult("Widget.PIM.getAttributeValue()", result);
+    };
+    
+    var comparison = Widget.PIM.createAddressBookItem();
+    comparison.fullName = "Test Guy 9";
+    Widget.PIM.findAddressBookItems(comparison, 0, 10);
+  },
+  
+  setAttributeValue : function()
+  {
+    common.createTestGuy("Test Guy 9");
+    
+    Widget.PIM.onAddressBookItemsFound = function(results) 
+    {
+      var result = "Created new address book item 'Test Guy 9'<br>";
+      
+      var addrItem = results[0];
+      result += "Found address item with id: "+addrItem.addressBookItemId+"<br>";
+      
+      addrItem.setAttributeValue("PICTURE", "set value test");
+      addrItem.update();
+      result += "Set attribute PICTURE value 'set value test'<br>";
+      showResult("Widget.PIM.setAttributeValue()", result);
+    };
+    
+    var comparison = Widget.PIM.createAddressBookItem();
+    comparison.fullName = "Test Guy 9";
+    Widget.PIM.findAddressBookItems(comparison, 0, 10);
+  },
+  
   getAvailableAttributes : function()
   {
     Widget.PIM.onAddressBookItemsFound = function(results) 
@@ -1417,7 +1663,27 @@ function closeResults()
   document.getElementById("results-detail").innerHTML = "";
 }
 
+function waitForDelay(delay) 
+{
+  try
+  {
+    netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
 
+    // Get the current thread.
+    var thread = Components.classes["@mozilla.org/thread-manager;1"].getService(Components.interfaces.nsIThreadManager).currentThread;
+
+    // Create an inner property to be used later as a notifier.
+    this.delayed = true;
+
+    setTimeout("this.delayed = false;", delay);
+
+    while (this.delayed)
+      thread.processNextEvent(true);
+  }
+  catch(e) 
+  {  
+  } 
+}
 
 
 

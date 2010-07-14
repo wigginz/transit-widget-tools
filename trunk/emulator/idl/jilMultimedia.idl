@@ -17,4 +17,6 @@ interface jilMultimedia : jilService
 
   long getVolume();
   void stopAll();
+
+  void setAudioPlaying(in boolean isPlaying);
 };
