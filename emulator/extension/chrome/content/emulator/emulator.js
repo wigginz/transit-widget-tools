@@ -188,11 +188,11 @@ var jwe_emulator =
 
   resizeScreen : function()
   {
-    $("jwe-emulator-workspace").attr("maxheight", this.deviceHeight);
-    $("jwe-emulator-workspace").attr("minheight", this.deviceHeight);
+    $("jwe-emulator-workspace").attr("maxheight", this.deviceHeight+2);
+    $("jwe-emulator-workspace").attr("minheight", this.deviceHeight+2);
 
-    $("jwe-emulator-workspace").attr("maxwidth", this.deviceWidth);
-    $("jwe-emulator-workspace").attr("minwidth", this.deviceWidth);
+    $("jwe-emulator-workspace").attr("maxwidth", this.deviceWidth+2);
+    $("jwe-emulator-workspace").attr("minwidth", this.deviceWidth+2);
 
     var contentHeight = this.widgetHeight;
     var contentWidth = this.widgetWidth;

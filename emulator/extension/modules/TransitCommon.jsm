@@ -219,7 +219,7 @@ var TransitCommon =
     jilAddressBookItem.ringtone = contact.ringtoneFileUrl;
     
     for ( var i in contact.attributes )
-      jilAddressBookItem.setAttribute(i, contact.attributes[i]);
+      jilAddressBookItem.setAttributeValue(i, contact.attributes[i]);
     
     return(jilAddressBookItem);
   },

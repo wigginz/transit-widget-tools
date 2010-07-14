@@ -17,8 +17,10 @@ var service = null;
 
 function JILAudioPlayer() //#
 {
+  Components.utils.import("resource://transit-emulator/TransitCommon.jsm");
+  
   this.runtime = Components.classes['@jil.org/jilapi-emulatorruntime;1'].getService().wrappedJSObject;
-
+  
   this.reload();
   
   service = this;
@@ -149,9 +151,18 @@ JILAudioPlayer.prototype = //#
   
   reload : function()
   {
+    this.unwatch("_isPlaying");
+    
     this.repeatsRemaining = 0;
     this._isPlaying = false;    
     this.onStateChange = null;
+    
+    // watch
+    this.watch("_isPlaying", function(id, oldValue, newValue) 
+    {
+      TransitCommon.debug("play flag changed to "+newValue);
+      Components.classes["@jil.org/jilapi-multimedia;1"].createInstance(Components.interfaces.jilMultimedia).setAudioPlaying(newValue);
+    });
   },
 
   QueryInterface: function(aIID)
