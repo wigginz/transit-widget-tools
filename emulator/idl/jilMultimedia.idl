@@ -5,6 +5,13 @@
 #include "jilVideoPlayer.idl"
 
 
+[scriptable, function, uuid(d03de2a0-9034-11df-a4ee-0800200c9a66)]
+interface jilMultimediaMonitor : nsISupports
+{
+  void invoke(in boolean currentAudioPlaying, in boolean currentVideoPlaying);
+};
+
+
 [scriptable, uuid(300a4b90-be91-11de-8a39-0800200c9a66)]
 interface jilMultimedia : jilService
 {
@@ -15,8 +22,11 @@ interface jilMultimedia : jilService
   attribute boolean isAudioPlaying;
   attribute boolean isVideoPlaying;
 
+  attribute jilMultimediaMonitor monitor;
+
   long getVolume();
   void stopAll();
 
   void setAudioPlaying(in boolean isPlaying);
+  void setVideoPlaying(in boolean isPlaying);
 };
