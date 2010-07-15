@@ -1718,6 +1718,12 @@ var Widget =
       
     Widget.Telephony.watch("onCallRecordsFound", function(id, oldValue, newValue) {
       _Telephony_122a.onCallRecordsFound = newValue; });
+
+    _Multimedia_122a.monitor = function(currentAudioPlaying, currentVideoPlaying)
+    {
+      Widget.Multimedia.isAudioPlaying = currentAudioPlaying;
+      Widget.Multimedia.isVideoPlaying = currentVideoPlaying;
+    };
   },
 };
 

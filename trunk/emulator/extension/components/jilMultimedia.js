@@ -9,6 +9,8 @@ var service = null;
 
 function JILMultimedia() //#
 {
+  Components.utils.import("resource://transit-emulator/TransitCommon.jsm");
+  
   this.Camera  = Components.classes["@jil.org/jilapi-camera;1"].createInstance(Components.interfaces.jilCamera);
   this.AudioPlayer  = Components.classes["@jil.org/jilapi-audioplayer;1"].createInstance(Components.interfaces.jilAudioPlayer);
   this.VideoPlayer  = Components.classes["@jil.org/jilapi-videoplayer;1"].createInstance(Components.interfaces.jilVideoPlayer);
@@ -28,12 +30,25 @@ JILMultimedia.prototype = //#
 
   isAudioPlaying : null,
   isVideoPlaying : null,
+  
+  monitor : null,
 
   runtime : null,
   
   setAudioPlaying : function(isPlaying)
   {
     this.isAudioPlaying = isPlaying;
+    
+    if ( this.monitor != null )
+      this.monitor.invoke(this.isAudioPlaying, this.isVideoPlaying);
+  },
+  
+  setVideoPlaying : function(isPlaying)
+  {
+    this.isVideoPlaying = isPlaying;
+    
+    if ( this.monitor != null )
+      this.monitor.invoke(this.isAudioPlaying, this.isVideoPlaying);
   },
 
   getVolume : function()
