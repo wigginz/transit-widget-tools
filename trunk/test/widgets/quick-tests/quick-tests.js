@@ -1,3 +1,13 @@
+var testWidgetManager =
+{
+  checkWidgetInstallationStatus : function()
+  {
+    var result = WidgetManager.checkWidgetInstallationStatus("0df9f49e-c46d-4300-9ea4-e1c0f1f8398a", "APISample", "01.00.Beta");
+    
+    showResult("WidgetManager.checkWidgetInstallationStatus", "checking status for this widget<br>id: 0df9f49e-c46d-4300-9ea4-e1c0f1f8398a<br>name: APISample<br>version: 01.00.Beta<br><br>result: "+result);
+  },
+};
+
 var testMultimedia = 
 {
   isAudioPlaying : function()
@@ -28,17 +38,55 @@ var testMultimedia =
   
   isVideoPlaying : function()
   {
-    showResult("Multimedia.isVideoPlaying", "Opened audio file 'test.ogg'");
+    alert("Video will start playing and test will be made three seconds in, then stopped.");
+    
+    var result = "starting video test, isVideoPlaying should be true:<br>";
+    
+    Widget.Multimedia.VideoPlayer.open("http://v2v.cc/~j/theora_testsuite/320x240.ogg");
+    Widget.Multimedia.VideoPlayer.setWindow(document.getElementById("video-container"));
+    Widget.Multimedia.VideoPlayer.play(1);
+    
+    // pause 5 seconds
+    waitForDelay(3000);
+    
+    var test1 = Widget.Multimedia.isVideoPlaying;
+    
+    result += "value five seconds in for isVideoPlaying: "+test1+"<br>";
+    
+    // stop
+    Widget.Multimedia.VideoPlayer.stop();
+    
+    var test2 = Widget.Multimedia.isVideoPlaying;
+    
+    result += "value after stopped for isVideoPlaying: "+test2+"<br>";
+    
+    showResult("Multimedia.isVideoPlaying", result);
   },
   
   getVolume : function()
   {
-    showResult("Multimedia.getVolume", "Opened audio file 'test.ogg'");
+    showResult("Multimedia.getVolume", "volume: "+Widget.Multimedia.getVolume());
   },
   
   stopAll : function()
   {
-    showResult("Multimedia.stopAll", "Opened audio file 'test.ogg'");
+    alert("Audio and video will start playing and stopAll will be made two seconds in");
+    
+    Widget.Multimedia.VideoPlayer.open("http://v2v.cc/~j/theora_testsuite/320x240.ogg");
+    Widget.Multimedia.VideoPlayer.setWindow(document.getElementById("video-container"));
+    Widget.Multimedia.VideoPlayer.play(3);
+    
+    Widget.Multimedia.AudioPlayer.open("test.ogg");
+    Widget.Multimedia.AudioPlayer.play(1);
+    
+    var result = "taking current state before stopAll. isAudioPlaying: "+Widget.Multimedia.isAudioPlaying+", isVideoPlaying: "+Widget.Multimedia.isVideoPlaying;
+    
+    // pause 5 seconds
+    waitForDelay(3000);
+    
+    Widget.Multimedia.stopAll();
+    
+    showResult("Multimedia.stopAll", result+"<br><br>stopAll has been called, isAudioPlaying: "+Widget.Multimedia.isAudioPlaying+", isVideoPlaying: "+Widget.Multimedia.isVideoPlaying);
   },
   
 };
@@ -656,7 +704,6 @@ var testVideoPlayer =
 {
   setWindow : function()
   {
-    var obj = document.getElementById("video-container");
     Widget.Multimedia.VideoPlayer.setWindow(document.getElementById("video-container"));
   },
   
