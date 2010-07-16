@@ -16,7 +16,7 @@
 
 #jwe-emulator-container
 {
-  position:fixed;
+  position:absolute;
   z-index: 100;
   height: auto;
   width: auto;
@@ -98,8 +98,6 @@
   position: absolute;
   top: 0px;
   left: 0px;
-  height: 100%;
-  width: 100%;
   z-index: 1101;
   padding: 10px;
   background-image: url('chrome://transit-emulator/skin/images/border-bg-darker.png');

@@ -22,6 +22,18 @@ var jweInjector =
   onSecurityChange: function(aWebProgress, aRequest, aState) {}
 };
 
+function jwe_setScrollArea()
+{
+  var windowHeight = window.innerHeight;
+  var windowWidth = window.innerWidth;
+  
+  var workspaceHeight = $("jwe-scroll-container").node.clientHeight;
+  var workspaceWidth = $("jwe-scroll-container").node.clientWidth;
+  
+  $("jwe-scroll-container").attr("maxheight", windowHeight-21);
+  $("jwe-scroll-container").attr("minheight", windowHeight-21);
+}
+
 var jwe_emulator = 
 {
   emulator : Components.classes["@jil.org/jilapi-emulatorruntime;1"].getService().wrappedJSObject,
@@ -77,7 +89,11 @@ var jwe_emulator =
     $("jwe-log").val(this.emulator.getLog());
     
     Components.utils.import("resource://transit-emulator/1.2.2/JIL122aWrapper.jsm");
-    Components.utils.import("resource://transit-emulator/TransitCommon.jsm");
+    Components.utils.import("resource://transit-emulator/TransitCommon.jsm");    
+    
+    jwe_setScrollArea();
+    
+    window.onresize = jwe_setScrollArea;
   },
    
   loadWidgetEvents : function()
@@ -559,6 +575,9 @@ var jwe_emulator =
     $("jwe-runtime-dialog-body-text").val(body);
     
     $("jwe-runtime-dialog-bg").css("display", "block");
+        
+    $("jwe-runtime-dialog-bg").css("height", jwe_emulator.deviceHeight+"px");
+    $("jwe-runtime-dialog-bg").css("width", jwe_emulator.deviceWidth+"px");
   },
   
   openWidgetFile : function()
