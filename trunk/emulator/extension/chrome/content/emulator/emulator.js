@@ -54,7 +54,7 @@ var jwe_emulator =
     catch(ex)
     {
       // ignore, probably already registered
-      dump("Could not load progress listener. Message: "+ex.message);
+      //dump("Could not load progress listener. Message: "+ex.message);
     }
     
     this.deviceWidth = this.emulator.getDeviceInfo().screenWidth;
@@ -417,8 +417,8 @@ var jwe_emulator =
 
       if ( $("jwe-emulator-subtab-event-context-onscreenchange-resize").chk() )
       {
-        this.deviceWidth = newWidth;
-        this.deviceHeight = newHeight;
+        this.deviceWidth = parseInt(newWidth);
+        this.deviceHeight = parseInt(newHeight);
         this.resizeScreen();
       }
       this.emulator.invokeDSOnScreenChangeDimensions(newWidth, newHeight);

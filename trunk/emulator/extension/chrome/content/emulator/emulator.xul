@@ -81,7 +81,7 @@
         <grippy/>
       </splitter>
 
-      <vbox id="jwe-emulator-tab-container" maxwidth="400px">
+      <vbox id="jwe-emulator-tab-container" minwidth="400px" maxwidth="400px">
 
         <hbox pack="center" id="jwe-emulator-title">
           <label id="jwe-emulator-widget-started" value="&jwe.emulator.emulating;"/>
