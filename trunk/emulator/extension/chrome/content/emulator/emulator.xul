@@ -47,33 +47,39 @@
     </menu>  
   </menubar>
 
-  <vbox> 
+  <vbox id="jwe-scroll-container" style="overflow: auto;"> 
     
     <hbox>
-     
+
       <hbox id="jwe-emulator-workspace-container" minheight="800px" minwidth="480px">
         <hbox id="jwe-emulator-workspace">
-         
-          <hbox id="jwe-emulator-container">
-            <browser id="jwe-emulator-content" type="chrome" disablehistory="true">
-            </browser>
-          </hbox>
-          <vbox class="runtime-dialog-bg" flex="1" id="jwe-runtime-dialog-bg"> 
-            <vbox class="runtime-dialog-container" id="jwe-runtime-dialog">
-              <hbox class="runtime-dialog-title-bar">
-                <description class="runtime-dialog-title" id="jwe-runtime-dialog-title-text"/> 
-              </hbox>  
-              <hbox class="runtime-dialog-body" style="overflow: hidden;">
-                <textbox id="jwe-runtime-dialog-body-text" class="plain" style="background-color: transparent;" flex="1" multiline="true" readonly="true" onoverflow="this.height = this.inputField.scrollHeight;" DOMAttrModified="if(event.attrName == 'value') this.value = event.newValue; return true;"/>
-              </hbox>
-              <hbox pack="center">
-                <label class="runtime-dialog-button" id="jwe-runtime-dialog-yes" value="Yes"/>
-                <label class="runtime-dialog-button" id="jwe-runtime-dialog-no" value="No"/>
-             </hbox>
-            </vbox>  
-          </vbox> 
-        </hbox>          
+        
+          <stack>
+            <hbox id="jwe-emulator-container">
+              <browser id="jwe-emulator-content" type="chrome" disablehistory="true">
+              </browser>
+            </hbox>
+            <vbox class="runtime-dialog-bg" flex="1" id="jwe-runtime-dialog-bg"> 
+              <vbox class="runtime-dialog-container" id="jwe-runtime-dialog">
+                <hbox class="runtime-dialog-title-bar">
+                  <description class="runtime-dialog-title" id="jwe-runtime-dialog-title-text"/> 
+                </hbox>  
+                <hbox class="runtime-dialog-body" style="overflow: hidden;">
+                  <textbox id="jwe-runtime-dialog-body-text" class="plain" style="background-color: transparent;" flex="1" multiline="true" readonly="true" onoverflow="this.height = this.inputField.scrollHeight;" DOMAttrModified="if(event.attrName == 'value') this.value = event.newValue; return true;"/>
+                </hbox>
+                <hbox pack="center">
+                  <label class="runtime-dialog-button" id="jwe-runtime-dialog-yes" value="Yes"/>
+                  <label class="runtime-dialog-button" id="jwe-runtime-dialog-no" value="No"/>
+               </hbox>
+              </vbox>  
+            </vbox> 
+          </stack>          
+        </hbox>         
       </hbox>
+      
+      <splitter resizeafter="grow">
+        <grippy/>
+      </splitter>
 
       <vbox id="jwe-emulator-tab-container" maxwidth="400px">
 
