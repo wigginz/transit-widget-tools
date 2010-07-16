@@ -3,6 +3,13 @@
 
 Check here for all the latest details on milestone releases, what's being worked on and committed, and future plans.
 
+<wiki:comment>
+== Thursday July 15, 2010 ==
+
+Finally tackled the issue of smaller displays and cut off elements emulating in the debug tab by adding scroll bars to the entire window if the device screen is taller than the viewable content. Also added a sliding panel separator allowing you to move the controls to the right to allow more space for the device screen.
+
+</wiki:comment>
+
 
 == Thursday July 15, 2010 ==
 
