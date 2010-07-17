@@ -77,35 +77,59 @@
         </hbox>         
       </hbox>
       
-      <splitter resizeafter="grow">
+      <splitter resizeafter="grow" id="jwe-emulator-splitter">
         <grippy/>
       </splitter>
 
-      <vbox id="jwe-emulator-tab-container" minwidth="400px" maxwidth="400px">
+      <vbox id="jwe-emulator-tools-container" flex="1">
 
-        <hbox pack="center" id="jwe-emulator-title">
-          <label id="jwe-emulator-widget-started" value="&jwe.emulator.emulating;"/>
-          <label id="jwe-emulator-widget-name"/>
-        </hbox>
-        
-        <hbox pack="center" id="jwe-emulator-version" style="padding-bottom: 20px;">
-          <label value="&jwe-emulator-widget-name-version;"/>
-          <label id="jwe-emulator-widget-name-version"/>
-        </hbox>
+        <toolbox id="jwe-emulator-tools-box">                            
+          <toolbar align="center" role="toolbar" id="jwe-emulator-tools-bar">
+            <toolbarbutton id="jwe-emulator-tools-box-gen" image="chrome://transit-emulator/skin/images/general.png" label="&jwe.emulator.tab.settings;" oncommand="jwe_emulator.pageDeck(0, this);" checked="true"/>
+            <toolbarbutton id="jwe-emulator-tools-box-events" image="chrome://transit-emulator/skin/images/apis.png" label="&jwe.emulator.tab.events;" oncommand="jwe_emulator.loadWidgetEvents(); jwe_emulator.pageDeck(1, this);"/>
+            <toolbarbutton id="jwe-emulator-tools-box-log" image="chrome://transit-emulator/skin/images/log.png" label="&jwe.emulator.tab.log;" oncommand="jwe_emulator.pageDeck(2, this);"/>
+            <toolbarseparator/>
+            <toolbarbutton id="jwe-emulator-tools-box-profiles" image="chrome://transit-emulator/skin/images/devices.png" label="&jwe.emulator.pickprofile;" type="menu">
+              <menupopup align="right" id="jwe-emulator-tools-box-profiles-list"/>
+            </toolbarbutton>  
+            <toolbarseparator/>     
+            <toolbarbutton id="jwe-emulator-tools-box-reload" image="chrome://transit-emulator/skin/images/reload.png" label="&jwe.emulator.reload;" oncommand="jwe_emulator.reload();"/>     
+          </toolbar>
+        </toolbox>
 
-        <tabbox>
-        
-          <tabs>
-            <tab label="&jwe.emulator.tab.settings;" style="padding-left: 10px; padding-right: 10px;"/>
-            <tab label="&jwe.emulator.tab.events;" style="padding-left: 10px; padding-right: 10px;" oncommand="jwe_emulator.loadWidgetEvents();"/>
-            <tab label="&jwe.emulator.tab.log;" style="padding-left: 10px; padding-right: 10px;"/>
-          </tabs>
-          
-          <tabpanels>
-          
-            <tabpanel>
-              <vbox flex="1">
-                <vbox flex="1" class="jwe-emulator-general-settings-panel">
+
+         
+        <deck id="jwe-emulator-tools-deck">          
+
+                <vbox flex="1" class="jwe-emulator-tools-panel">
+                
+                  <groupbox style="width: 100%;">
+                    <caption label="&jwe.emulator.tab.settings.infolabel;"/>
+                      <hbox>
+                        <vbox flex="1">
+                          <hbox>
+                            <label style="width: 14em;" value="&jwe.emulator.widgetinfo.name;"/>
+                            <label id="jwe-emulator-widget-name"/>
+                          </hbox>
+                          <hbox>
+                            <label style="width: 14em;" value="&jwe-emulator-widget-name-version;"/>
+                            <label id="jwe-emulator-widget-version"/>
+                          </hbox>
+                          <!--hbox>
+                            <label style="width: 14em;" value="&jwe.emulator.widgetinfo.name;"/>
+                            <label id="jwe-emulator-widget-id"/>
+                          </hbox-->
+                          <hbox>
+                            <label style="width: 14em;" value="&jwe.emulator.widgetinfo.author;"/>
+                            <label id="jwe-emulator-widget-author"/>
+                          </hbox>                          
+                        </vbox>
+                        <box pack="end" style="valign: top;">
+                          <image id="jwe-emulator-widget-icon"/>
+                        </box>
+                      </hbox>
+                  </groupbox>
+                                    
                   <groupbox style="width: 100%;">
                     <caption label="&jwe.emulator.tab.settings.displaylabel;"/>
                     <vbox>
@@ -129,15 +153,16 @@
                       <textbox value="&jwe.emulator.tab.settings.security.warning;" class="plain" style="background-color: transparent;font-style: italic;" flex="1" multiline="true" readonly="true" onoverflow="this.height = this.inputField.scrollHeight;" DOMAttrModified="if(event.attrName == 'value') this.value = event.newValue; return true;"/>
                     </vbox>
                   </groupbox>
-                </vbox>  
-                <hbox style="padding-top: 100px;">
-                  <button label="&jwe.emulator.errorConsole;" oncommand="jwe_emulator.launchErrorConsole();"/>
-                </hbox>    
-              </vbox>              
-            </tabpanel>
-            
-            <tabpanel>
-              <vbox flex="1">
+                  <hbox style="padding-top: 100px;">
+                    <button label="&jwe.emulator.errorConsole;" oncommand="jwe_emulator.launchErrorConsole();"/>
+                  </hbox>   
+                </vbox>         
+
+
+
+
+
+              <vbox flex="1" class="jwe-emulator-tools-panel">
                 <hbox align="center" pack="end">
                   <label value="&jwe.emulator.tab.events.list.caption;"/>
                   <menulist id="jwe-emulator-subtab-widget-event-list" label="&jwe.emulator.tab.events.list.caption;" align="right">
@@ -554,32 +579,27 @@
                 </hbox>
                 <label value="&jwe.emulator.tab.events.context.warning;" style="font-style: italic;"/>
               </vbox>
-                         
-            </tabpanel>
+
+
+              <vbox flex="1" class="jwe-emulator-tools-panel">
+                <groupbox>
+                  <caption label="&jwe.emulator.log.status.label;"/>
+                  <vbox>
+                    <label value="&jwe.emulator.log.warning.caption;"/>
+                    <textbox id="jwe-log" readonly="false" multiline="true" cols="50" rows="30" wrap="off" />
+                    <hbox>
+                      <button label="&jwe.emulator.log.clear;" id="jwe-log-clear" oncommand="jwe_emulator.clearLog();" />
+                      <button label="&jwe.emulator.log.copy;" id="jwe-log-copy" oncommand="jwe_emulator.copyLog();" />                    
+                    </hbox>
+                  </vbox>
+                </groupbox>
+              </vbox>
             
-            <tabpanel>
-              <groupbox>
-                <caption label="&jwe.emulator.log.status.label;"/>
-                <vbox>
-                  <label value="&jwe.emulator.log.warning.caption;"/>
-                  <textbox id="jwe-log" readonly="false" multiline="true" cols="50" rows="30" wrap="off" />
-                  <hbox>
-                    <button label="&jwe.emulator.log.clear;" id="jwe-log-clear" oncommand="jwe_emulator.clearLog();" />
-                    <button label="&jwe.emulator.log.copy;" id="jwe-log-copy" oncommand="jwe_emulator.copyLog();" />                    
-                  </hbox>
-                </vbox>
-              </groupbox>
-            </tabpanel>
-            
-          </tabpanels>
-          
-        </tabbox>
+        </deck>
         
-        <hbox align="center" pack="center">
-          <label value="&jwe.emulator.pickprofile;" style="width: 7em;"/>
-          <menulist align="right" oncommand="" id="jwe-emulator-loadedprofile"/>
-          <button label="&jwe.emulator.reload;" id="jwe-emulator-reload" oncommand="jwe_emulator.reload();"/>
-        </hbox>  
+        
+        
+        
         
       </vbox>
         
