@@ -65,13 +65,16 @@ var jwe_emulator =
     this.resizeScreen();
 
     $("jwe-emulator-widget-name").attr("value", this.emulator.getWidget().name);
-    $("jwe-emulator-widget-name-version").attr("value", this.emulator.getWidget().version);    
+    $("jwe-emulator-widget-version").attr("value", this.emulator.getWidget().version); 
+    $("jwe-emulator-widget-author").attr("value", this.emulator.getWidget().author); 
+    
+    $("jwe-emulator-widget-icon").attr("src", this.emulator.getWidget().iconSrc);
         
     $("jwe-emulator-content").attr("src", this.emulator.getWidget().contentSrc);
     
-    $("jwe-emulator-loadedprofile").node.removeAllItems();
+    $("jwe-emulator-tools-box-profiles-list").node.parentNode.removeChild($("jwe-emulator-tools-box-profiles-list").node);
     var menupopup = document.createElement("menupopup");
-    menupopup.setAttribute("id", "jwe-emulator-loadedprofile-list");
+    menupopup.setAttribute("id", "jwe-emulator-tools-box-profiles-list");
     var profiles = this.emulator.getAllDeviceProfiles();
     var profileIndex = 0;
     for ( var i = 0; i < profiles.length; i++ )
@@ -79,12 +82,15 @@ var jwe_emulator =
       var menuitem = document.createElement("menuitem");
       menuitem.setAttribute("label", profiles[i].name);
       menuitem.setAttribute("value", profiles[i].id);
-      menupopup.appendChild(menuitem);
+      menuitem.setAttribute("type", "radio");
+      menuitem.setAttribute("name", "jwe-device-profiles");
+      menuitem.setAttribute("oncommand", "jwe_emulator.reload(this);");
       if ( profiles[i].id == this.emulator.deviceProfile.id )
-        profileIndex = i;
+        menuitem.setAttribute("checked", "true");
+      menupopup.appendChild(menuitem);
     }
-    $("jwe-emulator-loadedprofile").add(menupopup);
-    $("jwe-emulator-loadedprofile").sel(profileIndex);
+    $("jwe-emulator-tools-box-profiles").add(menupopup);
+    //$("jwe-emulator-tools-box-profiles").sel(profileIndex);
 
     $("jwe-log").val(this.emulator.getLog());
     
@@ -251,7 +257,7 @@ var jwe_emulator =
     this.injectScripts();
   },
 
-  reload: function()
+  reload: function(element)
   {
     $("jwe-log").val(this.emulator.getLog());
     $("jwe-emulator-content").attr("src", "about:blank");
@@ -259,7 +265,11 @@ var jwe_emulator =
     
     this.clearLog();   
 
-    this.emulator.reload($("jwe-emulator-loadedprofile").selValue());
+    if ( element != null )
+      this.emulator.reload(element.value);
+    else
+      this.emulator.reload(this.emulator.deviceProfile.id);
+      
     SecurityManager.reset();
     this.init();
     // will keep the widget in full screen mode if the checkbox is checked.
@@ -630,6 +640,17 @@ var jwe_emulator =
   {
     var em = Components.classes["@mozilla.org/extensions/manager;1"].getService(Components.interfaces.nsIExtensionManager);
     openDialog("chrome://mozapps/content/extensions/about.xul", "", "chrome,centerscreen,modal", "urn:mozilla:item:{0bdb2530-7a5e-11df-93f2-0800200c9a66}", em.datasource);
+  },
+  
+  pageDeck : function(index, button)
+  {
+    $("jwe-emulator-tools-box-gen").chk(false);
+    $("jwe-emulator-tools-box-events").chk(false);
+    $("jwe-emulator-tools-box-log").chk(false);
+    
+    button.checked = true;
+    
+    $("jwe-emulator-tools-deck").node.selectedIndex = index;
   },
 };
 

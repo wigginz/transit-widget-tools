@@ -1,11 +1,17 @@
+#jwe-scroll-container
+{
+
+}
+
 #jwe-emulator-workspace-container
 {
-  margin: 10px;
+  background-color: #878a8d;
+  padding: 10px;
 }
 
 #jwe-emulator-workspace
 {
-  border: 1px solid black; 
+  border: 2px solid #504F61; 
   background-image: url('chrome://transit-emulator/skin/images/jil-bg.png');
   background-repeat: no-repeat;
   background-position: center center;
@@ -56,6 +62,44 @@
   margin: 10px;
 }
 
+
+
+/* ---- experimental ----*/
+#jwe-emulator-tools-container
+{
+  background-color: #B8BBC0;
+}
+
+#jwe-emulator-tools-box
+{
+  margin-top: -1px;
+}
+
+#jwe-emulator-tools-bar
+{
+  padding: 5px;
+}
+
+.jwe-widget-icon
+{
+  width: 50px;
+}
+
+.jwe-emulator-tools-panel
+{
+  margin: 15px;
+  padding: 10px;
+  border: 1px solid #504F61;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  overflow-y: auto;
+  background-color: #EEEEEE;
+}
+/* ---- experimental ----*/
+
+
+
+
 #jwe-emulator-content
 {
   position: absolute;
@@ -66,6 +110,12 @@
 #jwe-emulator-reload
 {
   margin: 10px;
+}
+
+.jwe-emulator-tab
+{
+  padding-left: 10px; 
+  padding-right: 10px;
 }
 
 .jwe-emulator-events-panel

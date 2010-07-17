@@ -5,13 +5,16 @@
 <!ENTITY jwe.menu.logviewer "Log Viewer">
 <!ENTITY jwe.emulator.title "Transit Widget Emulator">
 <!ENTITY jwe.emulator.emulating "Emulating: ">
-<!ENTITY jwe-emulator-widget-name-version "Widget Version: ">
-<!ENTITY jwe.emulator.pickprofile "Device Profile: ">
+<!ENTITY jwe-emulator-widget-name-version "Version: ">
+<!ENTITY jwe.emulator.pickprofile "Device Profile">
 <!ENTITY jwe.emulator.controls.popout "Pop-out">
 <!ENTITY jwe.menu.profiles "Manage Profiles...">
 
 <!ENTITY jwe.emulator.tab.settings "General Settings">
 <!ENTITY jwe.emulator.tab.settings.displaylabel "Display">
+<!ENTITY jwe.emulator.tab.settings.infolabel "Widget Info">
+<!ENTITY jwe.emulator.widgetinfo.name "Name: ">
+<!ENTITY jwe.emulator.widgetinfo.author "Author: ">
 
 <!ENTITY jwe.emulator.menubar.file "File"> 
 <!ENTITY jwe.emulator.menubar.file.open "Open Widget..."> 
