@@ -205,6 +205,11 @@ JILEmulatorRuntime.prototype = //#
   {
     return(this.emulatorWindow);
   },
+  
+  setEmulatorWindow : function(window)
+  {
+    this.emulatorWindow = window;
+  },
 
   getFileName : function (path)
   {

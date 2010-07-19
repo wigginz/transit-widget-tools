@@ -47,6 +47,8 @@ var jwe_emulator =
 
   init : function()
   {
+    this.emulator.setEmulatorWindow(window);
+    
     try
     {
       document.getElementById("jwe-emulator-content").addProgressListener(jweInjector);
