@@ -160,7 +160,6 @@ JILAudioPlayer.prototype = //#
     // watch
     this.watch("_isPlaying", function(id, oldValue, newValue) 
     {
-      TransitCommon.debug("play flag changed to "+newValue);
       Components.classes["@jil.org/jilapi-multimedia;1"].createInstance(Components.interfaces.jilMultimedia).setAudioPlaying(newValue);
     });
   },
