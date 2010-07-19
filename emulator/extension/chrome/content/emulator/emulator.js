@@ -44,6 +44,8 @@ var jwe_emulator =
   eventpanels : null,
   eventContexts : null,
   fileSystemMap : new Array(),
+  eventsLoaded : false,
+  currentPanel : null,
 
   init : function()
   {
@@ -68,8 +70,9 @@ var jwe_emulator =
 
     $("jwe-emulator-widget-name").attr("value", this.emulator.getWidget().name);
     $("jwe-emulator-widget-version").attr("value", this.emulator.getWidget().version); 
-    $("jwe-emulator-widget-author").attr("value", this.emulator.getWidget().author); 
-    
+    $("jwe-emulator-widget-author").attr("value", this.emulator.getWidget().author);  
+    $("jwe-emulator-widget-heightwidth").attr("value", this.widgetWidth+" x "+this.widgetHeight);
+    $("jwe-emulator-widget-description").attr("value", this.emulator.getWidget().description);    
     $("jwe-emulator-widget-icon").attr("src", this.emulator.getWidget().iconSrc);
         
     $("jwe-emulator-content").attr("src", this.emulator.getWidget().contentSrc);
@@ -103,16 +106,15 @@ var jwe_emulator =
     
     window.onresize = jwe_setScrollArea;
   },
-   
+
   loadWidgetEvents : function()
   {
+    if ( this.eventsLoaded == true )
+      return;
+    
     this.eventPanels = new Array("widget", "device", "devicestate", "power", "network", "radio", "messaging", "audio", "video", "camera", "pim", "telephony");
     
     this.eventContexts = new Array("onfocus", "onmaximize", "onrestore", "onwakeup", "onfilesfound", "onflip", "onposition", "onscreenchange", "onchargelevel", "onchargestate", "onlowbattery", "onnetworkchange", "onsignalchange", "onmessagearrived", "onmessagesendingfailure", "onmessagesfound", "audioonstatechange", "videoonstatechange", "oncameracaptured", "onaddressbookitemsfound", "oncalendaritemalert", "oncalendaritemsfound", "onvcardexportingfinish", "oncallevent", "oncallrecordsfound");
-    
-    $("jwe-emulator-subtab-widget-event-list").sel(0);
-    
-    this.switchEventPanel("widget");
 
     // pre-populate position event data
     var positionInfo = this.emulator.getPositionInfo();
@@ -208,6 +210,8 @@ var jwe_emulator =
     }
     $("jwe-emulator-subtab-event-context-oncalendaritemalert-calitems").add(ciMenupopup);
     $("jwe-emulator-subtab-event-context-oncalendaritemalert-calitems").sel(0);
+    
+    this.eventsLoaded = true;
   },
 
   resizeScreen : function()
@@ -225,8 +229,14 @@ var jwe_emulator =
     $("jwe-emulator-content").css("width", contentWidth+"px");
   },
 
-  switchEventPanel : function(switchTo)
+  switchEventPanel : function(switchTo, menuItem)
   {
+    if ( this.eventsLoaded == false )
+      this.loadWidgetEvents();
+    
+    menuItem.setAttribute("checked", "true");    
+    this.currentPanel = menuItem.getAttribute("value");
+    
     for( var i = 0; i < this.eventPanels.length; i++ )
       $("jwe-emulator-subtab-"+this.eventPanels[i]).css("display", "none");
     
@@ -276,6 +286,9 @@ var jwe_emulator =
     this.init();
     // will keep the widget in full screen mode if the checkbox is checked.
     this.toggleFullScreen();
+    
+    // have the window reload events too, in the case that values have been changed by the user
+    this.eventsLoaded = false;
   },
 
   clearLog : function ()
@@ -327,7 +340,7 @@ var jwe_emulator =
   
   triggerEvent : function()
   {
-    var selected = $("jwe-emulator-subtab-widget-event-list").val();
+    var selected = this.currentPanel;
     var delay = $("jwe-emulator-subtab-event-context-delay").val();
     
     // if there is a delay, disable the trigger button until the event is executed

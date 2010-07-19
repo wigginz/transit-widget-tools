@@ -120,14 +120,7 @@
 
 .jwe-emulator-events-panel
 {
-  width: 98%;
-  margin: 5px;
-  height: 450px;
-  padding: 10px;
-  border: 1px solid #666666;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  overflow-y: auto;
+  padding-bottom: 50px;
 }
 
 .jwe-emulator-general-settings-panel
