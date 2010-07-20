@@ -10,6 +10,7 @@ Finally tackled the issue of smaller displays and cut off elements emulating in 
 
 Fixed issue where audio and video APIs would not work when the emulator was opened as a tab in the main window (debug mode).
 
+Edging ever closer to phasing out the XPCOM components of the JIL APIs and moving towards more native JavaScript modules ([https://developer.mozilla.org/en/JavaScript/Code_modules/Using more info on modules at MDC]). Eventually all API implementations will be contained in modules. We're keeping the runtime and profile service as wrapped XPCOM components to more mimic the logical separation an actual device would have. This is a major change so we'll be doing it in chunks over the next couple releases, ensuring regression tests are made before each official release build.
 </wiki:comment>
 
 
