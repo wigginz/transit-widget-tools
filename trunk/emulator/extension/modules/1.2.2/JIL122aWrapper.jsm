@@ -3,10 +3,16 @@ var EXPORTED_SYMBOLS = ["Widget", "WidgetManager", "SecurityManager"];
 Components.utils.import("resource://transit-emulator/TransitCommon.jsm");
 
 Components.utils.import("resource://transit-emulator/1.2.2/Multimedia.jsm");
-
 Components.utils.import("resource://transit-emulator/1.2.2/Device.jsm");
 Components.utils.import("resource://transit-emulator/1.2.2/PositionInfo.jsm");
 Components.utils.import("resource://transit-emulator/1.2.2/File.jsm");
+Components.utils.import("resource://transit-emulator/1.2.2/Exception.jsm");
+Components.utils.import("resource://transit-emulator/1.2.2/Messaging.jsm");
+Components.utils.import("resource://transit-emulator/1.2.2/Account.jsm");
+Components.utils.import("resource://transit-emulator/1.2.2/MessageQuantities.jsm");
+Components.utils.import("resource://transit-emulator/1.2.2/Message.jsm");
+Components.utils.import("resource://transit-emulator/1.2.2/Attachment.jsm");
+Components.utils.import("resource://transit-emulator/1.2.2/AddressBookItem.jsm");
 
 var SecurityManager = 
 {
@@ -169,420 +175,11 @@ var Widget =
 {
   Device : new Device(),
   
-  Exception : function() //object
-  {
-    this._jilException = null;
-    
-    this.message = null;
-    this.type = null;
-    
-    this.setJIL = function(jilException)
-    {
-      this.message = jilException.message;
-      this.type = jilException.type;
-      this._jilException = jilException;
-    };
-    
-    this.updateJIL = function()
-    {
-      this._jilException.message = this.message;
-      this._jilException.type = this.type;
-      return(this._jilException);
-    };
-  },
+  Exception : function() {},
   
-  ExceptionTypes :
-  {
-    INVALID_PARAMETER : _ExceptionTypes_122a.INVALID_PARAMETER,
-    SECURITY : _ExceptionTypes_122a.SECURITY,
-    UNKNOWN : _ExceptionTypes_122a.UNKNOWN,
-    UNSUPPORTED : _ExceptionTypes_122a.UNSUPPORTED,
-  },
+  ExceptionTypes : new ExceptionTypes(),
   
-  Messaging :
-  {
-    Account : function()
-    {
-      this._jilAccount = null;
-      
-      this.accountId = null;
-      this.accountName = null;
-      
-      this.setJIL = function(jilAccount)
-      {
-        this.accountId = jilAccount.accountId;
-        this.accountName = jilAccount.accountName;
-        this._jilAccount = jilAccount;
-      };
-      
-      this.updateJIL = function()
-      {
-        if ( this._jilAccount == null )
-          this._jilAccount = _Messaging_122a.getNewAccount();
-        
-        this.accountId = this._jilAccount.accountId;
-        this.accountName = this._jilAccount.accountName;
-        return(this._jilAccount);
-      };
-    },
-    
-    MessageQuantities : function() //object
-    {
-      this._jilMsgQuantities = null;
-      
-      this.totalMessageCnt = null;
-      this.totalMessageReadCnt = null;
-      this.totalMessageUnreadCnt = null;
-      
-      this.setJIL = function(jilMsgQuantities)
-      {
-        this.totalMessageCnt = jilMsgQuantities.totalMessageCnt;
-        this.totalMessageReadCnt = jilMsgQuantities.totalMessageReadCnt;
-        this.totalMessageUnreadCnt = jilMsgQuantities.totalMessageUnreadCnt;
-        this._jilMsgQuantities = jilMsgQuantities;
-      };
-      
-      this.updateJIL = function()
-      {
-        this._jilMsgQuantities.totalMessageCnt = this.totalMessageCnt;
-        this._jilMsgQuantities.totalMessageReadCnt = this.totalMessageReadCnt;
-        this._jilMsgQuantities.totalMessageUnreadCnt = this.totalMessageUnreadCnt;
-        return(this._jilMsgQuantities);
-      };
-    },
-    
-    MessageFolderTypes :
-    {
-      DRAFTS : _MessageFolderTypes_122a.DRAFTS,
-      INBOX : _MessageFolderTypes_122a.INBOX,
-      OUTBOX : _MessageFolderTypes_122a.OUTBOX,
-      SENTBOX : _MessageFolderTypes_122a.SENTBOX,
-    },
-    
-    Message : function() //object
-    {
-      this._jilMessage = null;
-      
-      this.attachments = null;
-      this.bccAddress = null;
-      this.body = null;
-      this.callbackNumber = null;
-      this.ccAddress = null;
-      this.destinationAddress = null;
-      this.isRead = null;
-      this.messageId = null;
-      this.messagePriority = null;
-      this.messageType = null;
-      this.sourceAddress = null;
-      this.subject = null;
-      this.time = null;
-      this.validityPeriodHours = null;
-      
-      this.updateAddress = function(type, address)
-      {
-        if ( type == "cc" )
-          this.ccAddress = this._jilMessage.getCcAddress();
-        else if ( type == "bcc" )
-          this.bccAddress = this._jilMessage.getBccAddress();
-        else if ( type == "destination" )
-          this.destinationAddress = this._jilMessage.getDestinationAddress();
-      };
-
-      this.addAddress = function(type, address)
-      {
-        this.updateJIL();
-        this._jilMessage.addAddress(type, address);
-        this.updateAddress(type);
-      };
-      
-      this.addAttachment = function(fileFullName)
-      {
-        this.updateJIL();
-        this._jilMessage.addAttachment(fileFullName);
-        this.attachments = this._jilMessage.getAttachments();
-      };
-      
-      this.deleteAddress = function(type, address)
-      {
-        var allowed = false;
-        SecurityManager.checkSecurity("Remove Message Recipient (Message.deleteAddress)", SecurityManager.OP_DISALLOWED, SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, function()
-        {
-          allowed = true;
-        });
-        
-        if ( allowed )
-        {
-          this.updateJIL();
-          this._jilMessage.deleteAddress(type, address);
-          this.updateAddress(type);
-        }
-      };
-      
-      this.deleteAttachment = function(attachment)
-      {
-        SecurityManager.checkSecurity("Remove Message Attachment (Message.deleteAttachment)", SecurityManager.OP_DISALLOWED, SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, function()
-        {
-          this.updateJIL();
-          this._jilMessage.deleteAttachment(attachment.updateJIL());
-          this.attachments = this._jilMessage().getAttachments();
-        });
-      };
-      
-      this.saveAttachment = function(fileFullName, attachment)
-      {
-        SecurityManager.checkSecurity("Save Message Attachment (Message.saveAttachment)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, function()
-        {
-          this.updateJIL();
-          this._jilMessage.saveAttachment(fileFullName, attachment.updateJIL());
-          this.attachments = this._jilMessage.getAttachments();
-        });
-      };
-      
-      this.update = function()
-      {
-        this.updateJIL().update();
-      };
-      
-      this.setJIL = function(jilMessage)
-      {
-        this.attachments = jilMessage.getAttachments();
-        this.bccAddress = jilMessage.getBccAddress();
-        this.ccAddress = jilMessage.getCcAddress();
-        this.destinationAddress = jilMessage.getDestinationAddress();
-        
-        this.body = jilMessage.body;
-        this.callbackNumber = jilMessage.callbackNumber;
-        this.isRead = jilMessage.isRead;
-        this.messageId = jilMessage.messageId;
-        this.messagePriority = jilMessage.messagePriority;
-        this.messageType = jilMessage.messageType;
-        this.sourceAddress = jilMessage.sourceAddress;
-        this.subject = jilMessage.subject;
-        
-        this.time = new Date();
-        this.time.setTime(jilMessage.time);
-        
-        this.validityPeriodHours = jilMessage.validityPeriodHours;
-        this._jilMessage = jilMessage;
-      };
-      
-      this.updateJIL = function()
-      {               
-        if ( this._jilMessage == null )
-          this._jilMessage = _Messaging_122a.getNewMessage();
-        
-        if ( this.attachments != null )
-          this._jilMessage.setAttachments(this.attachments.length, this.attachments);
-        if ( this.bccAddress != null )
-          this._jilMessage.setBccAddress(this.bccAddress.length, this.bccAddress);
-        if ( this.ccAddress != null )
-          this._jilMessage.setCcAddress(this.ccAddress.length, this.ccAddress);
-        
-        if ( this.destinationAddress != null )
-          this._jilMessage.setDestinationAddress(this.destinationAddress.length, this.destinationAddress);
-        
-        this._jilMessage.body = this.body;
-        this._jilMessage.callbackNumber = this.callbackNumber;        
-        this._jilMessage.isRead = this.isRead;
-        this._jilMessage.messageId = this.messageId;
-        this._jilMessage.messagePriority = this.messagePriority;
-        this._jilMessage.messageType = this.messageType;
-        this._jilMessage.sourceAddress = this.sourceAddress;
-        this._jilMessage.subject = this.subject;
-        
-        if ( this.time != null )
-          this._jilMessage.time = this.time.getTime();
-        
-        this._jilMessage.validityPeriodHours = this.validityPeriodHours;
-        return(this._jilMessage);
-      };
-    },
-    
-    Attachment : function() //object
-    {
-      this._jilAttachment = null;
-      
-      this.fileName = null;
-      this.MIMEType = null;
-      this.size = null;
-      
-      this.setJIL = function(jilAttachment)
-      {
-        this.fileName = jilAttachment.fileName;
-        this.MIMEType = jilAttachment.MIMEType;
-        this.size = jilAttachment.size;
-        this._jilAttachment = jilAttachment;
-      };
-      
-      this.updateJIL = function()
-      {
-        if ( this._jilAttachment == null )
-          this._jilAttachment = _Messaging_122a.getNewAttachment();
-        
-        this._jilAttachment.fileName = this.fileName;
-        this._jilAttachment.MIMEType = this.MIMEType;
-        this._jilAttachment.size = this.size;
-        return(this._jilAttachment);
-      };
-    },
-    
-    MessageTypes : 
-    {
-      EmailMessage : _MessageTypes_122a.EmailMessage,
-      MMSMessage : _MessageTypes_122a.MMSMessage,
-      SMSMessage : _MessageTypes_122a.SMSMessage,
-    },
-
-    onMessageArrived : null,
-    onMessageSendingFailure : null,
-    onMessagesFound : null,
-
-    copyMessageToFolder : function(msg, destinationFolder)
-    {
-      SecurityManager.checkSecurity("Copy Message to Folder (Messaging.copyMessageToFolder)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
-      {
-        _Messaging_122a.copyMessageToFolder(msg.updateJIL(), destinationFolder);
-      });
-    },
-    
-    createFolder : function(messageType, folderName)
-    {
-      SecurityManager.checkSecurity("Create Message Folder (Messaging.createFolder)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
-      {
-        _Messaging_122a.createFolder(messageType, folderName);
-      });
-    },
-    
-    createMessage : function(messageType)
-    {
-      var jilMessage = _Messaging_122a.createMessage(messageType);
-      var wrappedMessage = new Widget.Messaging.Message();
-      wrappedMessage.setJIL(jilMessage);
-      return(wrappedMessage);
-    },
-    
-    deleteAllMessages : function(messageType, folderName)
-    {
-      SecurityManager.checkSecurity("Delete All Messages in Folder (Messaging.deleteAllMessages)", SecurityManager.OP_DISALLOWED, SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, function()
-      {
-        _Messaging_122a.deleteAllMessages(messageType, folderName);
-      });
-    },
-    
-    deleteEmailAccount : function(accountId)
-    {
-      SecurityManager.checkSecurity("Delete Email Account (Messaging.deleteEmailAccount)", SecurityManager.OP_DISALLOWED, SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, function()
-      {
-        _Messaging_122a.deleteEmailAccount(accountId);
-      });
-    },
-    
-    deleteFolder : function(messageType, folderName)
-    {
-      SecurityManager.checkSecurity("Delete Message Folder (Messaging.deleteFolder)", SecurityManager.OP_DISALLOWED, SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, function()
-      {
-        _Messaging_122a.deleteFolder(messageType, folderName);
-      });
-    },
-    
-    deleteMessage : function(messageType, folderName, id)
-    {
-      SecurityManager.checkSecurity("Delete Message (Messaging.deleteMessage)", SecurityManager.OP_DISALLOWED, SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, function()
-      {
-        _Messaging_122a.deleteMessage(messageType, folderName, id);
-      });
-    },
-    
-    findMessages : function(comparisonMsg, folderName, startInx, endInx)
-    {
-      SecurityManager.checkSecurity("Search Messages (Messaging.findMessages)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
-      {
-        _Messaging_122a.findMessages(comparisonMsg.updateJIL(), folderName, startInx, endInx);
-      });
-    },
-    
-    getCurrentEmailAccount : function()
-    {
-      var wrappedAccount = null;
-      SecurityManager.checkSecurity("Access Current Email Account (Messaging.getCurrentEmailAccount)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
-      {
-        var jilAccount = _Messaging_122a.getCurrentEmailAccount();
-        wrappedAccount = new Widget.Messaging.Account();
-        wrappedAccount.setJIL(jilAccount);
-      });
-      return(wrappedAccount);
-    },
-    
-    getEmailAccounts : function()
-    {
-      var result = new Array();
-      SecurityManager.checkSecurity("Access All Email Accounts (Messaging.getEmailAccounts)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
-      {
-        var accounts = _Messaging_122a.getEmailAccounts();
-        for ( var i = 0; i < accounts.length; i++ )
-        {
-          var wrappedAccount = new Widget.Messaging.Account();
-          wrappedAccount.setJIL(accounts[i]);
-          result.push(wrappedAccount);
-        }
-      });
-      return(result);
-    },
-    
-    getFolderNames : function(messageType)
-    {
-      var result = null;
-      SecurityManager.checkSecurity("Access All Message Folders (Messaging.getFolderNames)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
-      {
-        result = _Messaging_122a.getFolderNames(messageType);
-      });
-      return(result);
-    },
-    
-    getMessage : function(messageType, folderName, index)
-    {
-      var wrappedMessage = null;
-      SecurityManager.checkSecurity("Access Message (Messaging.getMessage)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
-      {
-        var jilMessage = _Messaging_122a.getMessage(messageType, folderName, index);
-        wrappedMessage = new Widget.Messaging.Message();
-        wrappedMessage.setJIL(jilMessage);
-      });
-      return(wrappedMessage);
-    },
-    
-    getMessageQuantities : function(messageType, folderName)
-    {
-      var jilQuantities = _Messaging_122a.getMessageQuantities(messageType, folderName);
-      var wrappedQuantities = new Widget.Messaging.MessageQuantities();
-      wrappedQuantities.setJIL(jilQuantities);      
-      return(wrappedQuantities);
-    },
-    
-    moveMessageToFolder : function(msg, destinationFolder)
-    {
-      SecurityManager.checkSecurity("Move Message to Folder (Messaging.moveMessageToFolder)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
-      {
-        _Messaging_122a.moveMessageToFolder(msg.updateJIL(), destinationFolder);
-      });
-    },
-    
-    sendMessage : function(msg)
-    {
-      SecurityManager.checkSecurity("Send Message (Messaging.sendMessage)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
-      {
-        _Messaging_122a.sendMessage(msg.updateJIL());
-      });
-    },
-    
-    setCurrentEmailAccount : function(accountId)
-    {
-      SecurityManager.checkSecurity("Set Current Email Account (Messaging.setCurrentEmailAccount)", SecurityManager.OP_SESSION, SecurityManager.OP_ALLOWED, SecurityManager.OP_ALLOWED, function()
-      {
-        _Messaging_122a.setCurrentEmailAccount(accountId);
-      });
-    },
-  },
+  Messaging : new Messaging(),
   
   Multimedia : new Multimedia(),
   
@@ -756,99 +353,7 @@ var Widget =
       return(wrappedArray);
     },
     
-    AddressBookItem : function() //object
-    {      
-      this._jilAddrItem = null;
-      
-      this.address = null;
-      this.addressBookItemId = null;
-      this.company = null;
-      this.eMail = null;
-      this.fullName = null;
-      this.homePhone = null;
-      this.mobilePhone = null;
-      this.title = null;
-      this.workPhone = null;
-      this.ringtone = null;
-
-      this.getAddressGroupNames = function()
-      {
-        this.updateJIL();
-        return(this._jilAddrItem.getAddressGroupNames());
-      };
-      
-      this.getAttributeValue = function(attr)
-      {
-        this.updateJIL();
-        return(this._jilAddrItem.getAttributeValue(attr));
-      };
-      
-      this.getAvailableAttributes = function()
-      {
-        this.updateJIL();
-        return(this._jilAddrItem.getAvailableAttributes());
-      };
-      
-      this.setAddressGroupNames = function(groups)
-      {
-        this.updateJIL();
-        this._jilAddrItem.setAddressGroupNames(groups, groups.length);
-      };
-      
-      this.setAttributeValue = function(attr, value)
-      {
-        this.updateJIL();
-        this._jilAddrItem.setAttributeValue(attr, value);
-      };
-      
-      this.update = function()     
-      {
-        var allowed = false;
-        SecurityManager.checkSecurity("Update Contact (AddressBookItem.update)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
-        {
-          allowed = true;          
-        });
-        
-        if ( allowed )
-        {
-          this.updateJIL();
-          this._jilAddrItem.update();
-        }
-      };
-      
-      this.setJIL = function(jilAddrItem)
-      {
-        this.address = jilAddrItem.address;
-        this.addressBookItemId = jilAddrItem.addressBookItemId;
-        this.company = jilAddrItem.company;
-        this.eMail = jilAddrItem.eMail;
-        this.fullName = jilAddrItem.fullName;
-        this.homePhone = jilAddrItem.homePhone;
-        this.mobilePhone = jilAddrItem.mobilePhone;
-        this.title = jilAddrItem.title;
-        this.workPhone = jilAddrItem.workPhone;
-        this.ringtone = jilAddrItem.ringtone;
-        this._jilAddrItem = jilAddrItem;
-      };
-      
-      this.updateJIL = function()
-      {
-        if ( this._jilAddrItem == null )
-          this._jilAddrItem = _PIM_122a.createAddressBookItem();
-        
-        this._jilAddrItem.address = this.address;
-        this._jilAddrItem.addressBookItemId = this.addressBookItemId;
-        this._jilAddrItem.company = this.company;
-        this._jilAddrItem.eMail = this.eMail;
-        this._jilAddrItem.fullName = this.fullName;
-        this._jilAddrItem.homePhone = this.homePhone;
-        this._jilAddrItem.mobilePhone = this.mobilePhone;
-        this._jilAddrItem.title = this.title;
-        this._jilAddrItem.workPhone = this.workPhone;
-        this._jilAddrItem.ringtone = this.ringtone;
-        return(this._jilAddrItem);
-      };
-    },
+    AddressBookItem : function() {},
     
     EventRecurrenceTypes :
     {
@@ -1228,7 +733,19 @@ var Widget =
 
 Widget.Device.File.prototype = new File();
 
+Widget.Device.Exception.prototype = new Exception();
+
 Widget.Device.PositionInfo.prototype = new PositionInfo();
+
+Widget.Messaging.prototype.Account = new Account();
+
+Widget.Messaging.prototype.MessageQuantities = new MessageQuantities();
+
+Widget.Messaging.prototype.Message = new Message();
+
+Widget.Messaging.prototype.Attachment = new Attachment();
+
+Widget.PIM.AddressBookItem = new AddressBookItem();
 
 Widget.init();
 
