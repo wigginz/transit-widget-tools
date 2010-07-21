@@ -2,7 +2,7 @@ var EXPORTED_SYMBOLS = ["Device"];
 
 var _Device_122 = Components.classes["@jil.org/jilapi-device;1"].getService(Components.interfaces.jilDevice);
 
-Components.utils.import("resource://transit-emulator/1.2.2/Widget.jsm");
+Components.utils.import("resource://transit-emulator/1.2.2/SecurityManager.jsm");
 Components.utils.import("resource://transit-emulator/1.2.2/AccountInfo.jsm");
 Components.utils.import("resource://transit-emulator/1.2.2/ApplicationTypes.jsm");
 Components.utils.import("resource://transit-emulator/1.2.2/DataNetworkInfo.jsm");
@@ -12,15 +12,36 @@ Components.utils.import("resource://transit-emulator/1.2.2/File.jsm");
 Components.utils.import("resource://transit-emulator/1.2.2/PositionInfo.jsm");
 Components.utils.import("resource://transit-emulator/1.2.2/PowerInfo.jsm");
 Components.utils.import("resource://transit-emulator/1.2.2/RadioInfo.jsm");
+Components.utils.import("resource://transit-emulator/1.2.2/Exception.jsm");
+Components.utils.import("resource://transit-emulator/1.2.2/ExceptionTypes.jsm");
+Components.utils.import("resource://transit-emulator/1.2.2/AddressBookItem.jsm");
 
 function Device()
 {
 }
 
 Device.prototype = function()
-{
-  
+{  
 }; 
+
+Device.prototype.toString = function()
+{
+  return("Widget.Device");
+};
+
+Device.prototype.AccountInfo = new AccountInfo();
+
+Device.prototype.ApplicationTypes = new ApplicationTypes();
+
+Device.prototype.DataNetworkInfo = new DataNetworkInfo();
+
+Device.prototype.DeviceInfo = new DeviceInfo();
+
+Device.prototype.DeviceStateInfo = new DeviceStateInfo();
+
+Device.prototype.PowerInfo = new PowerInfo();
+
+Device.prototype.RadioInfo = new RadioInfo();
 
 // the isEmulator flag is not part of this spec, but provided in case there's a need
 Device.prototype.isEmulator = true;
@@ -37,6 +58,7 @@ Device.prototype.onFilesFound = null;
 
 Device.prototype.copyFile = function(originalFile, destinationFullName)
 {
+
   var result = null;
   SecurityManager.checkSecurity("Copy File (Device.copyFile)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
   {
@@ -92,13 +114,13 @@ Device.prototype.getFile = function(fullName)
     
     if ( jilFile == null )
     {
-      var exc = new Widget.Exception();
+      var exc = new Exception();
       exc.message = "Invalid file name";
-      exc.type = Widget.ExceptionTypes.INVALID_PARAMETER;
+      exc.type = ExceptionTypes.INVALID_PARAMETER;
       throw(exc);
     }
     
-    wrappedFile = new Widget.Device.File();
+    wrappedFile = new File();
     wrappedFile.setJIL(jilFile);
   });
   return(wrappedFile);
@@ -140,10 +162,10 @@ Device.prototype.moveFile = function(originalFile, destinationFullName)
 Device.prototype.setRingtone = function(ringtoneFileUrl, addressBookItem)
 {
   if ( (ringtoneFileUrl == null) || (ringtoneFileUrl.constructor != String) )
-    Widget.throwIPException("Invalid argument type for ringtoneFileUrl in Device.setRingtone");
+    this.throwIPException("Invalid argument type for ringtoneFileUrl in Device.setRingtone");
 
-  if ( (addressBookItem == null) || !(addressBookItem instanceof Widget.PIM.AddressBookItem) )
-    Widget.throwIPException("Invalid argument type for addressBookItem in Device.setRingtone");
+  if ( (addressBookItem == null) || !(addressBookItem instanceof AddressBookItem) )
+    this.throwIPException("Invalid argument type for addressBookItem in Device.setRingtone");
 
   SecurityManager.checkSecurity("Set Contact Ringtone (Device.setRingtone)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
   {
@@ -154,25 +176,15 @@ Device.prototype.setRingtone = function(ringtoneFileUrl, addressBookItem)
 Device.prototype.vibrate = function(durationSeconds)
 {
   if ( (durationSeconds == null) || !(durationSeconds > -1) )
-    Widget.throwIPException("Invalid argument type for durationSeconds in Device.vibrate");
+    this.throwIPException("Invalid argument type for durationSeconds in Device.vibrate");
   
   _Device_122.vibrate(durationSeconds);
 };
 
-Device.prototype.AccountInfo = new AccountInfo();
-
-Device.prototype.ApplicationTypes = new ApplicationTypes();
-
-Device.prototype.DataNetworkInfo = new DataNetworkInfo();
-
-Device.prototype.DeviceInfo = new DeviceInfo();
-
-Device.prototype.DeviceStateInfo = new DeviceStateInfo();
-
-Device.prototype.File = function() {};
-
-Device.prototype.PositionInfo = function() {};
-
-Device.prototype.PowerInfo = new PowerInfo();
-
-Device.prototype.RadioInfo = new RadioInfo();
+Device.prototype.throwIPException = function(message)
+{
+  var exc = new Exception();
+  exc.message = message;
+  exc.type = ExceptionTypes.INVALID_PARAMETER;
+  throw(exc);
+};

@@ -8,8 +8,12 @@ function PowerInfo()
 
 PowerInfo.prototype = function()
 {
-  
 };
+
+PowerInfo.prototype.toString = function()
+{
+  return("Widget.Device.PowerInfo");
+};  
 
 PowerInfo.prototype.isCharging = _PowerInfo_122.isCharging;
 

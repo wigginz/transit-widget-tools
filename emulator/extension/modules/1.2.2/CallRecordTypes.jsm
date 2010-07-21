@@ -7,9 +7,13 @@ function CallRecordTypes()
 }
 
 CallRecordTypes.prototype = function()
-{
-  
+{  
 };
+
+CallRecordTypes.prototype.toString = function()
+{
+  return("Widget.Telephony.CallRecordTypes");
+}; 
 
 CallRecordTypes.prototype.MISSED = _CallRecordTypes_122.MISSED;
 

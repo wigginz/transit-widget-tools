@@ -7,9 +7,13 @@ function AccountInfo()
 }
 
 AccountInfo.prototype = function()
-{
-  
+{  
 }; 
+
+AccountInfo.prototype.toString = function()
+{
+  return("Widget.Device.AccountInfo");
+};
 
 AccountInfo.prototype.phoneMSISDN = _AccountInfo_122.phoneMSISDN;
 

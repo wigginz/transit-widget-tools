@@ -9,9 +9,13 @@ function CalendarItem()
 }
 
 CalendarItem.prototype = function()
-{
-  
+{  
 };
+
+CalendarItem.prototype.toString = function()
+{
+  return("Widget.PIM.CalendarItem");
+}; 
 
 CalendarItem.prototype._jilCalItem = null;
 

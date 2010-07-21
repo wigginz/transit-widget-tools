@@ -8,8 +8,12 @@ function ExceptionTypes()
 
 ExceptionTypes.prototype = function()
 {
-  
 };
+
+ExceptionTypes.prototype.toString = function()
+{
+  return("Widget.ExceptionTypes");
+};  
 
 ExceptionTypes.prototype.INVALID_PARAMETER = _ExceptionTypes_122.INVALID_PARAMETER;
 

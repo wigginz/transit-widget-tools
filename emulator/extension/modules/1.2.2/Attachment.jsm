@@ -7,9 +7,13 @@ function Attachment()
 }
 
 Attachment.prototype = function()
-{
-  
+{  
 };
+
+Attachment.prototype.toString = function()
+{
+  return("Widget.Messaging.Attachment");
+}; 
 
 Attachment.prototype._jilAttachment = null;
 

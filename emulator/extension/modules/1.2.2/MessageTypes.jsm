@@ -7,9 +7,13 @@ function MessageTypes()
 }
 
 MessageTypes.prototype = function()
-{
-  
+{  
 };
+
+MessageTypes.prototype.toString = function()
+{
+  return("Widget.Messaging.MessageTypes");
+};  
 
 MessageTypes.prototype.EmailMessage = _MessageTypes_122.EmailMessage;
 

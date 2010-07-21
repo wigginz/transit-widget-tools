@@ -3,8 +3,8 @@ var EXPORTED_SYMBOLS = ["PIM"];
 var _PIM_122 = Components.classes["@jil.org/jilapi-pim;1"].getService(Components.interfaces.jilPIM);
 
 Components.utils.import("resource://transit-emulator/1.2.2/SecurityManager.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/AddressBookItem.jsm");
 Components.utils.import("resource://transit-emulator/1.2.2/EventRecurrenceTypes.jsm");
+Components.utils.import("resource://transit-emulator/1.2.2/AddressBookItem.jsm");
 Components.utils.import("resource://transit-emulator/1.2.2/CalendarItem.jsm");
 
 function PIM()
@@ -12,15 +12,15 @@ function PIM()
 }
 
 PIM.prototype = function()
-{
-  
+{  
 };
 
-PIM.prototype.AddressBookItem = function() {};
+PIM.prototype.toString = function()
+{
+  return("Widget.PIM");
+};
 
 PIM.prototype.EventRecurrenceTypes = new EventRecurrenceTypes();
-
-PIM.prototype.CalendarItem = function() {};
 
 PIM.prototype.onAddressBookItemsFound = null;
 
@@ -56,7 +56,7 @@ PIM.prototype.createAddressBookGroup = function(groupName)
 
 PIM.prototype.createAddressBookItem = function()
 {
-  var item = new Widget.PIM.AddressBookItem();
+  var item = new AddressBookItem();
   item.setJIL(_PIM_122.createAddressBookItem());
   return(item);
 };
@@ -98,7 +98,7 @@ PIM.prototype.findAddressBookItems = function(comparisonContact, startInx, endIn
   SecurityManager.checkSecurity("Search Contacts (PIM.findAddressBookItems)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
   {
     var jilContact = null;
-    if ( comparisonContact instanceof Widget.PIM.AddressBookItem )
+    if ( comparisonContact instanceof AddressBookItem )
       jilContact = comparisonContact.updateJIL();
     else
       jilContact = comparisonContact;
@@ -124,7 +124,7 @@ PIM.prototype.getAddressBookGroupMembers = function(groupName)
     jilItems = new Array();
     for ( var i = 0; i < results.length; i++ )
     {
-      var wrappedItem = new Widget.PIM.AddressBookItem();
+      var wrappedItem = new AddressBookItem();
       wrappedItem.setJIL(results[i]);
       jilItems.push(wrappedItem);
     }
@@ -138,7 +138,7 @@ PIM.prototype.getAddressBookItem = function(id)
   SecurityManager.checkSecurity("Get Contact (PIM.getAddressBookItem)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
   {
     var jilItem = _PIM_122.getAddressBookItem(id);
-    wrappedItem = new Widget.PIM.AddressBookItem();
+    wrappedItem = new AddressBookItem();
     wrappedItem.setJIL(jilItem);
   });
   return(wrappedItem);
@@ -170,7 +170,7 @@ PIM.prototype.getCalendarItem = function(calendarId)
   SecurityManager.checkSecurity("Get Calendar Entry (PIM.getCalendarItem)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
   {
     var jilItem = _PIM_122.getCalendarItem(calendarId);
-    wrappedItem = new Widget.PIM.CalendarItem();
+    wrappedItem = new CalendarItem();
     wrappedItem.setJIL(jilItem);
   });
   return(wrappedItem);
@@ -185,7 +185,7 @@ PIM.prototype.getCalendarItems = function(startTime, endTime)
     wrappedArray = new Array();
     for ( var i = 0; i < jilArray.length; i++ )
     {
-      var wrappedItem = new Widget.PIM.CalendarItem();
+      var wrappedItem = new CalendarItem();
       wrappedItem.setJIL(jilArray[i]);
       wrappedArray.push(wrappedItem);
     }

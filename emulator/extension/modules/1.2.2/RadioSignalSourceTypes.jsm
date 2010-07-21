@@ -8,8 +8,12 @@ function RadioSignalSourceTypes()
 
 RadioSignalSourceTypes.prototype = function()
 {
-  
 };
+
+RadioSignalSourceTypes.prototype.toString = function()
+{
+  return("Widget.Device.RadioInfo.RadioSignalSourceTypes");
+};  
 
 RadioSignalSourceTypes.prototype.CDMA = _RadioSignalSourceTypes_122.CDMA;
 

@@ -6,8 +6,12 @@ function Exception()
 
 Exception.prototype = function()
 {
-  
 };
+
+Exception.prototype.toString = function()
+{
+  return("Widget.Exception");
+};  
 
 Exception.prototype._jilException = null;
 

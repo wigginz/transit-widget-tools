@@ -8,8 +8,12 @@ function VideoPlayer()
 
 VideoPlayer.prototype = function()
 {
-  
 };
+
+VideoPlayer.prototype.toString = function()
+{
+  return("Widget.Multimedia.VideoPlayer");
+};  
 
 VideoPlayer.prototype.onStateChange = null;
 

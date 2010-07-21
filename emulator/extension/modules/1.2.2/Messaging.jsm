@@ -1,12 +1,11 @@
 var EXPORTED_SYMBOLS = ["Messaging"];
 
 Components.utils.import("resource://transit-emulator/1.2.2/SecurityManager.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/Account.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/MessageQuantities.jsm");
 Components.utils.import("resource://transit-emulator/1.2.2/MessageFolderTypes.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/Message.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/Attachment.jsm");
 Components.utils.import("resource://transit-emulator/1.2.2/MessageTypes.jsm");
+Components.utils.import("resource://transit-emulator/1.2.2/MessageQuantities.jsm");
+Components.utils.import("resource://transit-emulator/1.2.2/Message.jsm");
+Components.utils.import("resource://transit-emulator/1.2.2/Account.jsm");
 
 var _Messaging_122 = Components.classes["@jil.org/jilapi-messaging;1"].getService(Components.interfaces.jilMessaging);
 
@@ -16,20 +15,16 @@ function Messaging()
 
 Messaging.prototype = function()
 {
-  
 };
 
-Messaging.prototype.Account = function() {};
-
-Messaging.prototype.MessageQuantities = function() {};
-
-Messaging.prototype.MessageFolderTypes = new MessageFolderTypes();
-
-Messaging.prototype.Message = function() {};
-
-Messaging.prototype.Attachment = function() {};
+Messaging.prototype.toString = function()
+{
+  return("Widget.Messaging");
+};
 
 Messaging.prototype.MessageTypes = new MessageTypes();
+
+Messaging.prototype.MessageFolderTypes = new MessageFolderTypes();
 
 Messaging.prototype.onMessageArrived = null;
 
@@ -56,7 +51,7 @@ Messaging.prototype.createFolder = function(messageType, folderName)
 Messaging.prototype.createMessage = function(messageType)
 {
   var jilMessage = _Messaging_122.createMessage(messageType);
-  var wrappedMessage = new Widget.Messaging.Message();
+  var wrappedMessage = new Message();
   wrappedMessage.setJIL(jilMessage);
   return(wrappedMessage);
 };
@@ -107,7 +102,7 @@ Messaging.prototype.getCurrentEmailAccount = function()
   SecurityManager.checkSecurity("Access Current Email Account (Messaging.getCurrentEmailAccount)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
   {
     var jilAccount = _Messaging_122.getCurrentEmailAccount();
-    wrappedAccount = new Widget.Messaging.Account();
+    wrappedAccount = new Account();
     wrappedAccount.setJIL(jilAccount);
   });
   return(wrappedAccount);
@@ -121,7 +116,7 @@ Messaging.prototype.getEmailAccounts = function()
     var accounts = _Messaging_122.getEmailAccounts();
     for ( var i = 0; i < accounts.length; i++ )
     {
-      var wrappedAccount = new Widget.Messaging.Account();
+      var wrappedAccount = new Account();
       wrappedAccount.setJIL(accounts[i]);
       result.push(wrappedAccount);
     }
@@ -145,7 +140,7 @@ Messaging.prototype.getMessage = function(messageType, folderName, index)
   SecurityManager.checkSecurity("Access Message (Messaging.getMessage)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
   {
     var jilMessage = _Messaging_122.getMessage(messageType, folderName, index);
-    wrappedMessage = new Widget.Messaging.Message();
+    wrappedMessage = new Message();
     wrappedMessage.setJIL(jilMessage);
   });
   return(wrappedMessage);
@@ -154,7 +149,7 @@ Messaging.prototype.getMessage = function(messageType, folderName, index)
 Messaging.prototype.getMessageQuantities = function(messageType, folderName)
 {
   var jilQuantities = _Messaging_122.getMessageQuantities(messageType, folderName);
-  var wrappedQuantities = new Widget.Messaging.MessageQuantities();
+  var wrappedQuantities = new MessageQuantities();
   wrappedQuantities.setJIL(jilQuantities);      
   return(wrappedQuantities);
 };

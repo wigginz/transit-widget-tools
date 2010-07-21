@@ -7,8 +7,12 @@ function DataNetworkConnectionTypes()
 }
 
 DataNetworkConnectionTypes.prototype = function()
+{  
+}; 
+
+DataNetworkConnectionTypes.prototype.toString = function()
 {
-  
+  return("Widget.Device.DataNetworkInfo.DataNetworkConnectionTypes");
 }; 
 
 DataNetworkConnectionTypes.prototype.BLUETOOTH = _DataNetworkConnectionTypes_122.BLUETOOTH;

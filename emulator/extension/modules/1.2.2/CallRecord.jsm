@@ -7,9 +7,13 @@ function CallRecord()
 }
 
 CallRecord.prototype = function()
-{
-  
+{  
 };
+
+CallRecord.prototype.toString = function()
+{
+  return("Widget.Telephony.CallRecord");
+}; 
 
 CallRecord.prototype._jilCallRecord = null;
 

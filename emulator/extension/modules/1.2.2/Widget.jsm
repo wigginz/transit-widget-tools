@@ -1,4 +1,4 @@
-var EXPORTED_SYMBOLS = ["Widget", "WidgetManager", "SecurityManager"];
+var EXPORTED_SYMBOLS = ["Widget"];
 
 Components.utils.import("resource://transit-emulator/TransitCommon.jsm");
 
@@ -18,8 +18,6 @@ Components.utils.import("resource://transit-emulator/1.2.2/CalendarItem.jsm");
 Components.utils.import("resource://transit-emulator/1.2.2/PIM.jsm");
 Components.utils.import("resource://transit-emulator/1.2.2/Telephony.jsm");
 Components.utils.import("resource://transit-emulator/1.2.2/CallRecord.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/WidgetManager.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/SecurityManager.jsm");
 
 var _Device_122 = Components.classes["@jil.org/jilapi-device;1"].getService(Components.interfaces.jilDevice);
 var _DataNetworkInfo_122 = Components.classes["@jil.org/jilapi-datanetworkinfo;1"].getService(Components.interfaces.jilDataNetworkInfo);
@@ -34,31 +32,32 @@ var _VideoPlayer_122 = Components.classes["@jil.org/jilapi-videoplayer;1"].getSe
 var _Widget_122 = Components.classes["@jil.org/jilapi-widget;1"].getService(Components.interfaces.jilWidget);
 var _PIM_122 = Components.classes["@jil.org/jilapi-pim;1"].getService(Components.interfaces.jilPIM);
 
-var Widget = 
+var Widget =
 {
   Device : new Device(),
-  
-  Exception : function() {},
-  
+
   ExceptionTypes : new ExceptionTypes(),
-  
+
   Messaging : new Messaging(),
-  
+
   Multimedia : new Multimedia(),
-  
+
   PIM : new PIM(),
-  
+
   Telephony : new Telephony(),
-  
+
   // events //
 
   onFocus : null,
+
   onMaximize : null,
+
   onRestore : null,
+
   onWakeup : null,
-  
+
   // regular methods //
-  
+
   openURL : function(url) 
   {
     if ( (url == null) || (url.constructor != String) )
@@ -66,17 +65,17 @@ var Widget =
     
     _Widget_122.openURL(url);
   },
-  
+
   preferenceForKey : function(key) 
   {
     return(_Widget_122.preferenceForKey(key));
   },
-  
+
   setPreferenceForKey : function(preference, key) 
   {
     _Widget_122.setPreferenceForKey(preference, key);
   },
-  
+
   throwIPException : function(message)
   {
     var exc = new Widget.Exception();
@@ -86,9 +85,7 @@ var Widget =
   },
       
   init : function()
-  {
-    this.test1234 = new Date().getTime();
-    
+  {    
     Widget.watch("onFocus", function(id, oldValue, newValue) {
       _Widget_122.onFocus = newValue; });
       
@@ -212,24 +209,34 @@ var Widget =
   },
 };
 
-Widget.Device.File.prototype = new File();
-
+Widget.Exception = function() {};
 Widget.Exception.prototype = new Exception();
 
+Widget.Device.File = function() {};
+Widget.Device.File.prototype = new File();
+
+Widget.Device.PositionInfo = function() {};
 Widget.Device.PositionInfo.prototype = new PositionInfo();
 
-Widget.Messaging.prototype.Account = new Account();
+Widget.Messaging.Account = function() {};
+Widget.Messaging.Account.prototype = new Account();
 
-Widget.Messaging.prototype.MessageQuantities = new MessageQuantities();
+Widget.Messaging.Attachment = function() {};
+Widget.Messaging.Attachment.prototype = new Attachment();
 
-Widget.Messaging.prototype.Message = new Message();
+Widget.Messaging.Message = function() {};
+Widget.Messaging.Message.prototype = new Message();
 
-Widget.Messaging.prototype.Attachment = new Attachment();
+Widget.Messaging.MessageQuantities = function() {};
+Widget.Messaging.MessageQuantities.prototype = new MessageQuantities();
 
-Widget.PIM.AddressBookItem = new AddressBookItem();
+Widget.PIM.AddressBookItem = function() {};
+Widget.PIM.AddressBookItem.prototype = new AddressBookItem();
 
-Widget.PIM.CalendarItem = new CalendarItem();
+Widget.PIM.CalendarItem = function() {};
+Widget.PIM.CalendarItem.prototype = new CalendarItem();
 
-Widget.Telephony.prototype.CallRecord = new CallRecord();
+Widget.Telephony.CallRecord = function() {};
+Widget.Telephony.CallRecord.prototype = new CallRecord();
 
 Widget.init();
