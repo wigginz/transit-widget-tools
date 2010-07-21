@@ -99,7 +99,7 @@ var jwe_emulator =
 
     $("jwe-log").val(this.emulator.getLog());
     
-    Components.utils.import("resource://transit-emulator/1.2.2/JIL122aWrapper.jsm");
+    Components.utils.import("resource://transit-emulator/1.2.2/Widget.jsm");
     Components.utils.import("resource://transit-emulator/TransitCommon.jsm");    
     
     jwe_setScrollArea();
@@ -571,7 +571,7 @@ var jwe_emulator =
     SecurityManager.showYesNoDialog = jwe_emulator.showYesNoDialog;
     SecurityManager.securityContext = $("jwe-emulator-settings-security-level").val();
 
-    Components.utils.import("resource://transit-emulator/1.2.2/JIL122aWrapper.jsm", $("jwe-emulator-content").node.contentWindow.window);
+    Components.utils.import("resource://transit-emulator/1.2.2/Widget.jsm", $("jwe-emulator-content").node.contentWindow.window);
   },
   
   toggleSecurityLevel : function()

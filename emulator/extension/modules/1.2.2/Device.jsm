@@ -2,7 +2,7 @@ var EXPORTED_SYMBOLS = ["Device"];
 
 var _Device_122 = Components.classes["@jil.org/jilapi-device;1"].getService(Components.interfaces.jilDevice);
 
-Components.utils.import("resource://transit-emulator/1.2.2/JIL122aWrapper.jsm");
+Components.utils.import("resource://transit-emulator/1.2.2/Widget.jsm");
 Components.utils.import("resource://transit-emulator/1.2.2/AccountInfo.jsm");
 Components.utils.import("resource://transit-emulator/1.2.2/ApplicationTypes.jsm");
 Components.utils.import("resource://transit-emulator/1.2.2/DataNetworkInfo.jsm");
