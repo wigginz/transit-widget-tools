@@ -13,6 +13,10 @@ Components.utils.import("resource://transit-emulator/1.2.2/MessageQuantities.jsm
 Components.utils.import("resource://transit-emulator/1.2.2/Message.jsm");
 Components.utils.import("resource://transit-emulator/1.2.2/Attachment.jsm");
 Components.utils.import("resource://transit-emulator/1.2.2/AddressBookItem.jsm");
+Components.utils.import("resource://transit-emulator/1.2.2/CalendarItem.jsm");
+Components.utils.import("resource://transit-emulator/1.2.2/PIM.jsm");
+Components.utils.import("resource://transit-emulator/1.2.2/Telephony.jsm");
+Components.utils.import("resource://transit-emulator/1.2.2/CallRecord.jsm");
 
 var SecurityManager = 
 {
@@ -183,385 +187,9 @@ var Widget =
   
   Multimedia : new Multimedia(),
   
-  PIM :
-  {
-    onAddressBookItemsFound : null,
-    onCalendarItemAlert : null,
-    onCalendarItemsFound : null,
-    onVCardExportingFinish : null,
-
-    addAddressBookItem : function(contact)
-    {
-      SecurityManager.checkSecurity("Add Contact (PIM.addAddressBookItem)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
-      {
-        _PIM_122a.addAddressBookItem(contact.updateJIL());
-      });
-    },
-    
-    addCalendarItem : function(item)
-    {
-      SecurityManager.checkSecurity("Add Calendar Entry (PIM.addCalendarItem)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
-      {
-        _PIM_122a.addCalendarItem(item.updateJIL());
-      });
-    },
-    
-    createAddressBookGroup : function(groupName)
-    {
-      SecurityManager.checkSecurity("Add Contact Group (PIM.createAddressBookGroup)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
-      {
-        _PIM_122a.createAddressBookGroup(groupName);
-      });
-    },
-    
-    createAddressBookItem : function()
-    {
-      var item = new Widget.PIM.AddressBookItem();
-      item.setJIL(_PIM_122a.createAddressBookItem());
-      return(item);
-    },
-    
-    deleteAddressBookGroup : function(groupName)
-    {
-      SecurityManager.checkSecurity("Remove Contact Group (PIM.deleteAddressBookGroup)", SecurityManager.OP_DISALLOWED, SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, function()
-      {
-        _PIM_122a.deleteAddressBookGroup(groupName);
-      });
-    },
-    
-    deleteAddressBookItem : function(id)
-    {
-      SecurityManager.checkSecurity("Remove Contact (PIM.deleteAddressBookItem)", SecurityManager.OP_DISALLOWED, SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, function()
-      {
-        _PIM_122a.deleteAddressBookItem(id);
-      });
-    },
-    
-    deleteCalendarItem : function(calendarId)
-    {
-      SecurityManager.checkSecurity("Remove Calendar Entry (PIM.deleteCalendarItem)", SecurityManager.OP_DISALLOWED, SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, function()
-      {
-        _PIM_122a.deleteCalendarItem(calendarId);
-      });
-    },
-    
-    exportAsVCard : function(addressBookItems)
-    {
-      SecurityManager.checkSecurity("Export Contact VCard (PIM.exportAsVCard)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
-      {
-        _PIM_122a.exportAsVCard(addressBookItems, addressBookItems.length);
-      });
-    },
-    
-    findAddressBookItems : function(comparisonContact, startInx, endInx)
-    {
-      SecurityManager.checkSecurity("Search Contacts (PIM.findAddressBookItems)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
-      {
-        var jilContact = null;
-        if ( comparisonContact instanceof Widget.PIM.AddressBookItem )
-          jilContact = comparisonContact.updateJIL();
-        else
-          jilContact = comparisonContact;
-          
-          _PIM_122a.findAddressBookItems(jilContact, startInx, endInx);
-      });
-    },
-    
-    findCalendarItems : function(itemToMatch, startInx, endInx)
-    {
-      SecurityManager.checkSecurity("Search Calendar Entries (PIM.findCalendarItems)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
-      {
-        _PIM_122a.findCalendarItems(itemToMatch.updateJIL(), startInx, endInx);
-      });
-    },
-    
-    getAddressBookGroupMembers : function(groupName)
-    {
-      var jilItems = null;
-      SecurityManager.checkSecurity("Add Contact Group Members (PIM.getAddressBookGroupMembers)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
-      {
-        var results = _PIM_122a.getAddressBookGroupMembers(groupName);
-        jilItems = new Array();
-        for ( var i = 0; i < results.length; i++ )
-        {
-          var wrappedItem = new Widget.PIM.AddressBookItem();
-          wrappedItem.setJIL(results[i]);
-          jilItems.push(wrappedItem);
-        }
-      });
-      return(jilItems);
-    },
-    
-    getAddressBookItem : function(id)
-    {
-      var wrappedItem = null;
-      SecurityManager.checkSecurity("Get Contact (PIM.getAddressBookItem)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
-      {
-        var jilItem = _PIM_122a.getAddressBookItem(id);
-        wrappedItem = new Widget.PIM.AddressBookItem();
-        wrappedItem.setJIL(jilItem);
-      });
-      return(wrappedItem);
-    },
-    
-    getAddressBookItemsCount : function()
-    {
-      var result = null;
-      SecurityManager.checkSecurity("Count Contacts (PIM.getAddressBookItemsCount)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
-      {
-        result = _PIM_122a.getAddressBookItemsCount();
-      });
-      return(result);
-    },
-    
-    getAvailableAddressGroupNames : function()
-    {
-      var result = null;
-      SecurityManager.checkSecurity("Get Contact Groups (PIM.getAvailableAddressGroupNames)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
-      {
-        result = _PIM_122a.getAvailableAddressGroupNames();
-      });
-      return(result);
-    },
-    
-    getCalendarItem : function(calendarId)
-    {
-      var wrappedItem = null;
-      SecurityManager.checkSecurity("Get Calendar Entry (PIM.getCalendarItem)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
-      {
-        var jilItem = _PIM_122a.getCalendarItem(calendarId);
-        wrappedItem = new Widget.PIM.CalendarItem();
-        wrappedItem.setJIL(jilItem);
-      });
-      return(wrappedItem);
-    },
-    
-    getCalendarItems : function(startTime, endTime)
-    {
-      var wrappedArray = null;
-      SecurityManager.checkSecurity("Get Calendar Entries (PIM.getCalendarItems)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
-      {
-        var jilArray = _PIM_122a.getCalendarItems(startTime, endTime);
-        wrappedArray = new Array();
-        for ( var i = 0; i < jilArray.length; i++ )
-        {
-          var wrappedItem = new Widget.PIM.CalendarItem();
-          wrappedItem.setJIL(jilArray[i]);
-          wrappedArray.push(wrappedItem);
-        }
-      });
-      return(wrappedArray);
-    },
-    
-    AddressBookItem : function() {},
-    
-    EventRecurrenceTypes :
-    {
-      DAILY : _EventRecurrenceTypes_122a.DAILY,
-      EVERY_WEEKDAY : _EventRecurrenceTypes_122a.EVERY_WEEKDAY,
-      MONTHLY_ON_DAY : _EventRecurrenceTypes_122a.MONTHLY_ON_DAY,
-      MONTHLY_ON_DAY_COUNT : _EventRecurrenceTypes_122a.MONTHLY_ON_DAY_COUNT,
-      NOT_REPEAT : _EventRecurrenceTypes_122a.NOT_REPEAT,
-      WEEKLY_ON_DAY : _EventRecurrenceTypes_122a.WEEKLY_ON_DAY,
-      YEARLY : _EventRecurrenceTypes_122a.YEARLY,
-    },
-    
-    CalendarItem : function() //object
-    {
-      this._jilCalItem = null;
-      
-      this.alarmDate = null;
-      this.alarmed = null;
-      this.calendarItemId = null;
-      this.eventEndTime = null;
-      this.eventName = null;
-      this.eventNotes = null;
-      this.eventRecurrence = null;
-      this.eventStartTime = null;
-
-      this.update = function()
-      {
-        SecurityManager.checkSecurity("Update Calendar Entry (CalendarItem.update)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
-        {
-          this.updateJIL();
-          this._jilCalItem.update();
-        });
-      };
-      
-      this.setJIL = function(jilCalItem)
-      {
-        this.alarmDate = jilCalItem.alarmDate;
-        this.alarmed = jilCalItem.alarmed;
-        this.calendarItemId = jilCalItem.calendarItemId;
-        this.eventEndTime = jilCalItem.eventEndTime;
-        this.eventName = jilCalItem.eventName;
-        this.eventNotes = jilCalItem.eventNotes;
-        this.eventRecurrence = jilCalItem.eventRecurrence;
-        this.eventStartTime = jilCalItem.eventStartTime;
-        this._jilCalItem = jilCalItem;
-      };
-      
-      this.updateJIL = function()
-      {
-        if ( this._jilCalItem == null )
-          this._jilCalItem = _PIM_122a.getNewCalendarItem();
-          
-        this._jilCalItem.alarmDate = this.alarmDate;
-        this._jilCalItem.alarmed = this.alarmed;
-        this._jilCalItem.calendarItemId = this.calendarItemId;
-        this._jilCalItem.eventEndTime = this.eventEndTime;
-        this._jilCalItem.eventName = this.eventName;
-        this._jilCalItem.eventNotes = this.eventNotes;
-        this._jilCalItem.eventRecurrence = this.eventRecurrence;
-        this._jilCalItem.eventStartTime = this.eventStartTime;
-        return(this._jilCalItem);
-      };
-    },
-  },
+  PIM : new PIM(),
   
-  Telephony :
-  {
-    CallRecordTypes : 
-    {
-      MISSED : _CallRecordTypes_122a.MISSED,
-      OUTGOING : _CallRecordTypes_122a.OUTGOING,
-      RECEIVED : _CallRecordTypes_122a.RECEIVED,
-    },
-    
-    CallRecord : function() //object
-    {
-      this._jilCallRecord = null;
-      
-      this.callRecordAddress = null;
-      this.callRecordId = null;
-      this.callRecordName = null;
-      this.callRecordType = null;
-      this.durationSeconds = null;
-      this.startTime = null;
-      
-      this.setJIL = function(jilCallRecord)
-      {
-        this.callRecordAddress = jilCallRecord.callRecordAddress;
-        this.callRecordId = jilCallRecord.callRecordId;
-        this.callRecordName = jilCallRecord.callRecordName;
-        this.callRecordType = jilCallRecord.callRecordType;
-        this.durationSeconds = jilCallRecord.durationSeconds;
-        this.startTime = jilCallRecord.startTime;
-        this._jilCallRecord = jilCallRecord;
-      };
-      
-      this.updateJIL = function()
-      {
-        if ( this._jilCallRecord == null )
-          this._jilCallRecord = _Telephony_122a.createCallRecord();
-
-        this._jilCallRecord.callRecordAddress = this.callRecordAddress;
-        this._jilCallRecord.callRecordId = this.callRecordId;
-        this._jilCallRecord.callRecordName = this.callRecordName;
-        this._jilCallRecord.callRecordType = this.callRecordType;
-        this._jilCallRecord.durationSeconds = this.durationSeconds;
-        this._jilCallRecord.startTime = this.startTime;
-        return(this._jilCallRecord);
-      };
-    },
-
-    onCallEvent : null,
-    onCallRecordsFound : null,
-
-    deleteAllCallRecords : function(callRecordType)
-    {
-      SecurityManager.checkSecurity("Remove Call Records (Telephony.deleteAllCallRecords)", SecurityManager.OP_DISALLOWED, SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, function()
-      {
-        _Telephony_122a.deleteAllCallRecords(callRecordType);
-      });
-    },
-    
-    deleteCallRecord : function(callRecordType, id)
-    {
-      SecurityManager.checkSecurity("Remove Call Record (Telephony.deleteCallRecord)", SecurityManager.OP_DISALLOWED, SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, function()
-      {
-        _Telephony_122a.deleteCallRecord(callRecordType, id);
-      });
-    },
-    
-    findCallRecords : function(comparisonRecord, startInx, endInx)
-    {
-      if ( !(comparisonRecord instanceof Widget.Telephony.CallRecord) )
-        Widget.throwIPException("Invalid argument type for comparisonRecord in Telephony.findCallRecords");
-      if ( !(startInx > -1) )
-        Widget.throwIPException("Invalid argument type for startIdx in Telephony.findCallRecords");
-      if ( !(endInx > -1) )
-        Widget.throwIPException("Invalid argument type for endIdx in Telephony.findCallRecords");
-      
-      SecurityManager.checkSecurity("Search Call Records (Telephony.findCallRecords)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
-      {
-        _Telephony_122a.findCallRecords(comparisonRecord.updateJIL(), startInx, endInx);
-      });
-    },
-    
-    getCallRecord : function(callRecordType, id)
-    {
-      if ( ! this.testCallRecordType(callRecordType) )
-        Widget.throwIPException("Invalid argument type for callRecordType in Telephony.getCallRecord");
-      
-      if ( id == null )
-        Widget.throwIPException("Invalid argument type for id in Telephony.getCallRecord");
-      
-      var result = null;
-      SecurityManager.checkSecurity("Search Call Records (Telephony.findCallRecords)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
-      {
-        var jilRecord = _Telephony_122a.getCallRecord(callRecordType, id);
-        var wrappedRecord = new Widget.Telephony.CallRecord();
-        wrappedRecord.setJIL(jilRecord);
-        result = wrappedRecord;
-      });
-      return(result);
-    },
-    
-    getCallRecordCnt : function(callRecordType)
-    {
-      if ( ! this.testCallRecordType(callRecordType) )
-        Widget.throwIPException("Invalid argument type for callRecordType in Telephony.getCallRecordCnt");
-      
-      var result = null;
-      SecurityManager.checkSecurity("Count Call Records (Telephony.getCallRecordCnt)", SecurityManager.OP_SESSION, SecurityManager.OP_ALLOWED, SecurityManager.OP_ALLOWED, function()
-      {
-        result = _Telephony_122a.getCallRecordCnt(callRecordType);
-      });
-      return(result);
-    },
-    
-    initiateVoiceCall : function(phoneNumber)
-    {
-      if ( !(phoneNumber > -1) )
-        Widget.throwIPException("Invalid argument type for phoneNumber in Telephony.initiateVoiceCall");
-      
-      //var phoneNumberPattern = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
-      //if ( !(phoneNumberPattern.test(phoneNumber)) )
-      //  Widget.throwIPException("Invalid argument type (format) for phoneNumber in Telephony.initiateVoiceCall");
-        
-      SecurityManager.checkSecurity("Initiate Phone Call (Telephony.initiateVoiceCall)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, function()
-      {
-        _Telephony_122a.initiateVoiceCall(phoneNumber);
-      });
-    },
-    
-    createCallRecord : function()
-    {
-      return(_Telephony_122a.createCallRecord());
-    },   
-    
-    testCallRecordType : function(type)
-    {
-      if ( (type != Widget.Telephony.CallRecordTypes.MISSED ) &&
-           (type != Widget.Telephony.CallRecordTypes.OUTGOING ) &&
-           (type != Widget.Telephony.CallRecordTypes.RECEIVED )
-         )
-        return(false);
-      else
-        return(true);
-    },
-  },
+  Telephony : new Telephony(),
   
   // events //
 
@@ -597,10 +225,7 @@ var Widget =
     exc.type = Widget.ExceptionTypes.INVALID_PARAMETER;
     throw(exc);
   },
-  
-    
-  test1234 : null,
-    
+      
   init : function()
   {
     this.test1234 = new Date().getTime();
@@ -629,7 +254,6 @@ var Widget =
     Widget.Device.DeviceStateInfo.watch("onPositionRetrieved", function(id, oldValue, newValue) 
     {
       Widget.Device.DeviceStateInfo.onPositionRetrieved = newValue;
-      TransitCommon.debug("test1234: "+Widget.test1234);
       _DeviceStateInfo_122a.onPositionRetrieved = function(position, method)
       {
         var jilPosition = new Widget.Device.PositionInfo();
@@ -747,5 +371,8 @@ Widget.Messaging.prototype.Attachment = new Attachment();
 
 Widget.PIM.AddressBookItem = new AddressBookItem();
 
-Widget.init();
+Widget.PIM.CalendarItem = new CalendarItem();
 
+Widget.Telephony.prototype.CallRecord = new CallRecord();
+
+Widget.init();
