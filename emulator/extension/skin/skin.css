@@ -98,7 +98,12 @@
 /* ---- experimental ----*/
 
 
-
+.jwe-emulator-link
+{
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
 
 #jwe-emulator-content
 {

@@ -2,6 +2,12 @@ var EXPORTED_SYMBOLS = ["Widget", "WidgetManager", "SecurityManager"];
 
 Components.utils.import("resource://transit-emulator/TransitCommon.jsm");
 
+Components.utils.import("resource://transit-emulator/1.2.2/Multimedia.jsm");
+
+Components.utils.import("resource://transit-emulator/1.2.2/Device.jsm");
+Components.utils.import("resource://transit-emulator/1.2.2/PositionInfo.jsm");
+Components.utils.import("resource://transit-emulator/1.2.2/File.jsm");
+
 var SecurityManager = 
 {
   sessionConfirmed : new Array(),
@@ -161,406 +167,7 @@ var WidgetManager =
 
 var Widget = 
 {
-  Device : 
-  {
-    // the isEmulator flag is not part of this spec, but provided in case there's a need
-    isEmulator : true,
-      
-    clipboardString : _Device_122a.clipboardString,
-    widgetEngineName : _Device_122a.widgetEngineName,
-    widgetEngineProvider : _Device_122a.widgetEngineProvider,
-    widgetEngineVersion : _Device_122a.widgetEngineVersion,
-    onFilesFound : null,
-    
-    copyFile : function(originalFile, destinationFullName)
-    {
-      var result = null;
-      SecurityManager.checkSecurity("Copy File (Device.copyFile)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
-      {
-        result = _Device_122a.copyFile(originalFile, destinationFullName);
-      });
-      return(result);
-    },
-    
-    deleteFile : function(destinationFullName)
-    {
-      var result = null;
-      SecurityManager.checkSecurity("Delete File (Device.deleteFile)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
-      {
-        result = _Device_122a.deleteFile(destinationFullName);
-      });
-      return(result);
-    },
-    
-    findFiles : function(matchFile, startInx, endInx)
-    {
-      SecurityManager.checkSecurity("File Search (Device.findFiles)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
-      {
-        _Device_122a.findFiles(matchFile.updateJIL(), startInx, endInx);
-      });
-    },
-    
-    getAvailableApplications : function()
-    {
-      var result = null;
-      SecurityManager.checkSecurity("Get Available Applications (Device.getAvailableApplications)", SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, SecurityManager.OP_ALLOWED, function()
-      {
-        result = _Device_122a.getAvailableApplications();
-      });
-      return(result);
-    },
-    
-    getDirectoryFileNames : function(sourceDirectory)
-    {
-      var result = null;
-      SecurityManager.checkSecurity("List Files in a Folder (Device.getDirectoryFileNames)", SecurityManager.OP_BLANKET, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
-      {
-        result = _Device_122a.getDirectoryFileNames(sourceDirectory);
-      });
-      return(result);
-    },
-    
-    getFile : function(fullName)
-    {
-      var wrappedFile = null;
-      SecurityManager.checkSecurity("Access a File (Device.getFile)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
-      {
-        var jilFile = _Device_122a.getFile(fullName);
-        
-        if ( jilFile == null )
-        {
-          var exc = new Widget.Exception();
-          exc.message = "Invalid file name";
-          exc.type = Widget.ExceptionTypes.INVALID_PARAMETER;
-          throw(exc);
-        }
-        
-        wrappedFile = new Widget.Device.File();
-        wrappedFile.setJIL(jilFile);
-      });
-      return(wrappedFile);
-    },
-    
-    getFileSystemRoots : function()
-    {
-      var result = null;
-      SecurityManager.checkSecurity("List File Systems (Device.getFileSystemRoots)", SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, SecurityManager.OP_ALLOWED, function()
-      {
-        result = _Device_122a.getFileSystemRoots();
-      });
-      return(result);
-    },
-    
-    getFileSystemSize : function(fileSystemRoot)
-    {
-      return(_Device_122a.getFileSystemSize(fileSystemRoot));
-    },
-    
-    launchApplication : function(application, startParameter)
-    {
-      SecurityManager.checkSecurity("Launch Application (Device.launchApplication)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
-      {
-        _Device_122a.launchApplication(application, startParameter);
-      });
-    },
-    
-    moveFile : function(originalFile, destinationFullName)
-    {
-      var result = null;
-      SecurityManager.checkSecurity("Move File (Device.moveFile)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
-      {
-        result = _Device_122a.moveFile(originalFile, destinationFullName);
-      });
-      return(result);
-    },
-    
-    setRingtone : function(ringtoneFileUrl, addressBookItem)
-    {
-      if ( (ringtoneFileUrl == null) || (ringtoneFileUrl.constructor != String) )
-        Widget.throwIPException("Invalid argument type for ringtoneFileUrl in Device.setRingtone");
-
-      if ( (addressBookItem == null) || !(addressBookItem instanceof Widget.PIM.AddressBookItem) )
-        Widget.throwIPException("Invalid argument type for addressBookItem in Device.setRingtone");
-    
-      SecurityManager.checkSecurity("Set Contact Ringtone (Device.setRingtone)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
-      {
-        _Device_122a.setRingtone(ringtoneFileUrl, addressBookItem.updateJIL());
-      });
-    },
-    
-    vibrate : function(durationSeconds)
-    {
-      if ( (durationSeconds == null) || !(durationSeconds > -1) )
-        Widget.throwIPException("Invalid argument type for durationSeconds in Device.vibrate");
-      
-      _Device_122a.vibrate(durationSeconds);
-    },
-
-    AccountInfo : 
-    {
-      phoneMSISDN : _AccountInfo_122a.phoneMSISDN,
-      phoneOperatorName : _AccountInfo_122a.phoneOperatorName,
-      phoneUserUniqueId : _AccountInfo_122a.phoneUserUniqueId,
-      userAccountBalance : _AccountInfo_122a.userAccountBalance,
-      userSubscriptionType : _AccountInfo_122a.userSubscriptionType,
-    },
-    
-    ApplicationTypes : 
-    {
-      ALARM : _ApplicationTypes_122a.ALARM,
-      BROWSER : _ApplicationTypes_122a.BROWSER,
-      CALCULATOR : _ApplicationTypes_122a.CALCULATOR,
-      CALENDAR : _ApplicationTypes_122a.CALENDAR,
-      CAMERA : _ApplicationTypes_122a.CAMERA,
-      CONTACTS : _ApplicationTypes_122a.CONTACTS,
-      FILES : _ApplicationTypes_122a.FILES,
-      GAMES : _ApplicationTypes_122a.GAMES,
-      MAIL : _ApplicationTypes_122a.MAIL,
-      MEDIAPLAYER : _ApplicationTypes_122a.MEDIAPLAYER,
-      MESSAGING : _ApplicationTypes_122a.MESSAGING,
-      PHONECALL : _ApplicationTypes_122a.PHONECALL,
-      PICTURES : _ApplicationTypes_122a.PICTURES,
-      PROG_MANAGER : _ApplicationTypes_122a.PROG_MANAGER,
-      SETTINGS : _ApplicationTypes_122a.SETTINGS,
-      TASKS : _ApplicationTypes_122a.TASKS,
-      WIDGET_MANAGER : _ApplicationTypes_122a.WIDGET_MANAGER,
-    },
-    
-    DataNetworkInfo : 
-    {
-      DataNetworkConnectionTypes : 
-      {
-        BLUETOOTH : _DataNetworkConnectionTypes_122a.BLUETOOTH,
-        EDGE : _DataNetworkConnectionTypes_122a.EDGE,
-        EVDO : _DataNetworkConnectionTypes_122a.EVDO,
-        GPRS : _DataNetworkConnectionTypes_122a.GPRS,
-        IRDA : _DataNetworkConnectionTypes_122a.IRDA,
-        LTE : _DataNetworkConnectionTypes_122a.LTE,
-        ONEXRTT : _DataNetworkConnectionTypes_122a.ONEXRTT,
-        WIFI : _DataNetworkConnectionTypes_122a.WIFI,
-      },
-      
-      isDataNetworkConnected : _DataNetworkInfo_122a.isDataNetworkConnected,
-      networkConnectionType : _DataNetworkInfo_122a.getNetworkConnectionTypes(),
-      
-      onNetworkConnectionChanged : null,
-      
-      getNetworkConnectionName : function(networkConnecionType)
-      {
-        if ( ! this.testDataNetworkConnectionTypes(networkConnecionType) )
-          Widget.throwIPException("Invalid argument type for networkConnecionType in DataNetworkInfo.getNetworkConnectionName");      
-        
-        return(_DataNetworkInfo_122a.getNetworkConnectionName(networkConnecionType));
-      },
-      
-      testDataNetworkConnectionTypes : function(type)
-      {
-        if ( (type != Widget.Device.DataNetworkInfo.DataNetworkConnectionTypes.BLUETOOTH ) &&
-             (type != Widget.Device.DataNetworkInfo.DataNetworkConnectionTypes.EDGE ) &&
-             (type != Widget.Device.DataNetworkInfo.DataNetworkConnectionTypes.EVDO ) &&
-             (type != Widget.Device.DataNetworkInfo.DataNetworkConnectionTypes.GPRS ) &&
-             (type != Widget.Device.DataNetworkInfo.DataNetworkConnectionTypes.IRDA ) &&
-             (type != Widget.Device.DataNetworkInfo.DataNetworkConnectionTypes.LTE ) &&
-             (type != Widget.Device.DataNetworkInfo.DataNetworkConnectionTypes.ONEXRTT ) &&
-             (type != Widget.Device.DataNetworkInfo.DataNetworkConnectionTypes.WIFI )
-          )
-          return(false);
-        else
-          return(true);
-      },
-    },
-    
-    DeviceInfo : 
-    {
-      ownerInfo : _DeviceInfo_122a.getOwnerInfo(),
-      
-      phoneColorDepthDefault : _DeviceInfo_122a.phoneColorDepthDefault, 
-      phoneFirmware : _DeviceInfo_122a.phoneFirmware, 
-      phoneManufacturer : _DeviceInfo_122a.phoneManufacturer, 
-      phoneModel : _DeviceInfo_122a.phoneModel, 
-      phoneOS : _DeviceInfo_122a.phoneOS, 
-      phoneScreenHeightDefault : _DeviceInfo_122a.phoneScreenHeightDefault, 
-      phoneScreenWidthDefault : _DeviceInfo_122a.phoneScreenWidthDefault, 
-      phoneSoftware : _DeviceInfo_122a.phoneSoftware, 
-      totalMemory : _DeviceInfo_122a.totalMemory, 
-    },
-    
-    DeviceStateInfo : 
-    {
-      AccelerometerInfo : 
-      {
-        xAxis : _AccelerometerInfo_122a.xAxis,
-        yAxis : _AccelerometerInfo_122a.yAxis,
-        zAxis : _AccelerometerInfo_122a.zAxis,
-      },
-      
-      Config : 
-      {
-        msgRingtoneVolume : _Config_122a.msgRingtoneVolume,
-        ringtoneVolume : _Config_122a.ringtoneVolume,
-        vibrationSetting : _Config_122a.vibrationSetting,
-
-        setAsWallpaper : function(wallpaperFileUrl)
-        {
-          if ( (wallpaperFileUrl == null) || (wallpaperFileUrl.constructor != String) )
-            Widget.throwIPException("Invalid argument type for wallpaperFileUrl in Config.setAsWallpaper");
-          
-          SecurityManager.checkSecurity("Set Wallpaper (Config.setAsWallpaper)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_BLANKET, function()
-          {
-            _Config_122a.setAsWallpaper(wallpaperFileUrl);
-          });
-        },
-        
-        setDefaultRingtone : function(ringtoneFileUrl)
-        {
-          if ( (ringtoneFileUrl == null) || (ringtoneFileUrl.constructor != String) )
-            Widget.throwIPException("Invalid argument type for ringtoneFileUrl in Config.setDefaultRingtone");
-
-          SecurityManager.checkSecurity("Set Default Ringtone (Config.setDefaultRingtone)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_BLANKET, function()
-          {
-            _Config_122a.setDefaultRingtone(ringtoneFileUrl);
-          });
-        },
-      },
-      
-      onFlipEvent : null,
-      onPositionRetrieved : null,
-      onScreenChangeDimensions : null,
-
-      audioPath : _DeviceStateInfo_122a.audioPath,
-      availableMemory : _DeviceStateInfo_122a.availableMemory,
-      backLightOn : _DeviceStateInfo_122a.backLightOn,
-      keypadLightOn : _DeviceStateInfo_122a.keypadLightOn,
-      language : _DeviceStateInfo_122a.language,
-      processorUtilizationPercent : _DeviceStateInfo_122a.processorUtilizationPercent,
-      positionMethod : _DeviceStateInfo_122a.positionMethod,
-
-      requestPositionInfo : function(method)
-      {
-        if ( ! this.testPositionInfoMethods(method) )
-          Widget.throwIPException("Invalid argument type for method in DeviceStateInfo.requestPositionInfo");
-        
-        SecurityManager.checkSecurity("Determine Location (DeviceStateInfo.requestPositionInfo)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_SESSION, SecurityManager.OP_ALLOWED, function()
-        {
-          _DeviceStateInfo_122a.requestPositionInfo(method);
-        });
-      },
-      
-      testPositionInfoMethods : function(type)
-      {
-        if ( (type != "cellid" ) &&
-             (type != "gps" ) &&
-             (type != "agps" )
-          )
-          return(false);
-        else
-          return(true);
-      },
-    },
-    
-    File : function() //object
-    {
-      this._jilFile = null;
-      
-      this.createDate = null;
-      this.fileName = null;
-      this.filePath = null;
-      this.fileSize = null;
-      this.isDirectory = null;
-      this.lastModifyDate = null;
-      
-      this.setJIL = function(jilFile)
-      {
-        this.createDate = jilFile.createDate;
-        this.fileName = jilFile.fileName;
-        this.filePath = jilFile.filePath;
-        this.fileSize = jilFile.fileSize;
-        this.isDirectory = jilFile.isDirectory;
-        this.lastModifyDate = jilFile.lastModifyDate;
-        this._jil = jilFile;
-      };
-      
-      this.updateJIL = function()
-      {
-        if ( this._jilFile == null )
-          this._jilFile = _Device_122a.getNewFile();
-
-        this._jilFile.createDate = this.createDate;
-        this._jilFile.fileName = this.fileName;
-        this._jilFile.filePath = this.filePath;
-        this._jilFile.fileSize = this.fileSize;
-        this._jilFile.isDirectory = this.isDirectory;
-        this._jilFile.lastModifyDate = this.lastModifyDate;
-        return(this._jilFile);
-      };
-    },
-    
-    PositionInfo : function() //object
-    {
-      this._jilPositionInfo = null;
-      
-      this.accuracy = null;
-      this.altitude = null;
-      this.altitudeAccuracy = null;
-      this.cellID = null;
-      this.latitude = null;
-      this.longitude = null;
-      this.timeStamp = null;
-      
-      this.setJIL = function(jilPositionInfo)
-      {
-        this.accuracy = jilPositionInfo.accuracy;
-        this.altitude = jilPositionInfo.altitude;
-        this.altitudeAccuracy = jilPositionInfo.altitudeAccuracy;
-        this.cellID = jilPositionInfo.cellID;
-        this.latitude = jilPositionInfo.latitude;
-        this.longitude = jilPositionInfo.longitude;
-        this.timeStamp = jilPositionInfo.timeStamp;
-        this._jilPositionInfo = jilPositionInfo;
-      };
-      
-      this.updateJIL = function()
-      {
-        this._jilPositionInfo.accuracy = this.accuracy;
-        this._jilPositionInfo.altitude = this.altitude;
-        this._jilPositionInfo.altitudeAccuracy = this.altitudeAccuracy;
-        this._jilPositionInfo.cellID = this.cellID;
-        this._jilPositionInfo.latitude = this.latitude;
-        this._jilPositionInfo.longitude = this.longitude;
-        this._jilPositionInfo.timeStamp = this.timeStamp;
-        return(this._jilPositionInfo);
-      };
-    },
-    
-    PowerInfo : 
-    {
-      isCharging : _PowerInfo_122a.isCharging,
-      percentRemaining : _PowerInfo_122a.percentRemaining,
-
-      onChargeLevelChange : null,
-      onChargeStateChange : null,
-      onLowBattery : null,
-    },
-    
-    RadioInfo : 
-    {
-      RadioSignalSourceTypes :
-      {
-        CDMA : _RadioSignalSourceTypes_122a.CDMA,
-        GSM : _RadioSignalSourceTypes_122a.GSM,
-        LTE : _RadioSignalSourceTypes_122a.LTE,
-        TDSCDMA : _RadioSignalSourceTypes_122a.TDSCDMA,
-        WCDMA : _RadioSignalSourceTypes_122a.WCDMA,
-      },
-      
-      isRadioEnabled : _RadioInfo_122a.isRadioEnabled,
-      isRoaming : _RadioInfo_122a.isRoaming,
-      radioSignalSource : _RadioInfo_122a.radioSignalSource,
-      radioSignalStrengthPercent : _RadioInfo_122a.radioSignalStrengthPercent,
-
-      onSignalSourceChange : null,
-    },
-  },
+  Device : new Device(),
   
   Exception : function() //object
   {
@@ -977,125 +584,7 @@ var Widget =
     },
   },
   
-  Multimedia : 
-  {
-    Camera : 
-    {
-      onCameraCaptured : null,
-
-      captureImage : function(fileName, lowRes)
-      {
-        var result = null;
-        SecurityManager.checkSecurity("Capture Camera Image (Camera.captureImage)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
-        {
-          result = _Camera_122a.captureImage(fileName, lowRes);
-        });
-        return(result);
-      },
-      
-      startVideoCapture : function(fileName, lowRes, maxDurationSeconds, showDefaultControls)
-      {
-        var result = null;
-        SecurityManager.checkSecurity("Capture Camera Video (Camera.startVideoCapture)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
-        {
-          result = _Camera_122a.startVideoCapture(fileName, lowRes, maxDurationSeconds, showDefaultControls);
-        });
-        return(result);
-      },
-      
-      setWindow : function(domObj)
-      {
-        _Camera_122a.setWindow(domObj);
-      },
-      
-      stopVideoCapture : function()
-      {
-        _Camera_122a.stopVideoCapture();
-      },
-    },
-    
-    AudioPlayer :
-    {
-      onStateChange : null,
-      
-      open : function(fileUrl)
-      {
-        _AudioPlayer_122a.open(fileUrl);
-      },
-      
-      pause : function()
-      {
-        _AudioPlayer_122a.pause();
-      },
-      
-      play : function(repeatTimes)
-      {
-        _AudioPlayer_122a.play(repeatTimes);
-      },
-      
-      resume : function()
-      {
-        _AudioPlayer_122a.resume();
-      },
-      
-      stop : function()
-      {
-        _AudioPlayer_122a.stop();
-      },
-    },
-    
-    VideoPlayer :
-    {
-      onStateChange : null, 
-      
-      source : null,
-      
-      video : null,
-      
-      open : function(fileUrl)
-      {
-        _VideoPlayer_122a.open(fileUrl);
-      },
-      
-      pause : function()
-      {
-        _VideoPlayer_122a.pause();
-      },
-      
-      play : function(repeatTimes)
-      {
-        _VideoPlayer_122a.play(repeatTimes);
-      },
-      
-      resume : function()
-      {
-        _VideoPlayer_122a.resume();
-      },
-      
-      stop : function()
-      {
-        _VideoPlayer_122a.stop();
-      },
-      
-      setWindow : function(domObj)
-      {
-        _VideoPlayer_122a.setWindow(domObj, domObj.ownerDocument.createElement("video"));
-      },
-    },
-
-    isAudioPlaying : _Multimedia_122a.isAudioPlaying,
-    isVideoPlaying : _Multimedia_122a.isVideoPlaying,
-
-    getVolume : function()
-    {
-      return(_Multimedia_122a.getVolume());
-    },
-    
-    stopAll : function()
-    {
-      _Multimedia_122a.stopAll();
-    },
-  },
+  Multimedia : new Multimedia(),
   
   PIM :
   {
@@ -1604,8 +1093,13 @@ var Widget =
     throw(exc);
   },
   
+    
+  test1234 : null,
+    
   init : function()
   {
+    this.test1234 = new Date().getTime();
+    
     Widget.watch("onFocus", function(id, oldValue, newValue) {
       _Widget_122a.onFocus = newValue; });
       
@@ -1629,10 +1123,11 @@ var Widget =
       
     Widget.Device.DeviceStateInfo.watch("onPositionRetrieved", function(id, oldValue, newValue) 
     {
+      Widget.Device.DeviceStateInfo.onPositionRetrieved = newValue;
+      TransitCommon.debug("test1234: "+Widget.test1234);
       _DeviceStateInfo_122a.onPositionRetrieved = function(position, method)
       {
         var jilPosition = new Widget.Device.PositionInfo();
-
         if ( position.failure == true )
           jilPosition = {};
         else
@@ -1640,6 +1135,7 @@ var Widget =
       
         newValue(jilPosition, method);
       };
+      TransitCommon.debug(Widget.Device.DeviceStateInfo.onPositionRetrieved);
     });
     
     Widget.Device.DeviceStateInfo.watch("onScreenChangeDimensions", function(id, oldValue, newValue) {
@@ -1649,7 +1145,10 @@ var Widget =
       _PowerInfo_122a.onChargeLevelChange = newValue; });
       
     Widget.Device.PowerInfo.watch("onChargeStateChange", function(id, oldValue, newValue) {
-      _PowerInfo_122a.onChargeStateChange = newValue; });
+      Widget.test1234 = newValue;
+      _PowerInfo_122a.onChargeStateChange = newValue; 
+      Widget.Device.PowerInfo.onChargeStateChange = _PowerInfo_122a.onChargeStateChange;
+    });
       
     Widget.Device.PowerInfo.watch("onLowBattery", function(id, oldValue, newValue) {
       _PowerInfo_122a.onLowBattery = newValue; });
@@ -1727,4 +1226,9 @@ var Widget =
   },
 };
 
+Widget.Device.File.prototype = new File();
+
+Widget.Device.PositionInfo.prototype = new PositionInfo();
+
 Widget.init();
+

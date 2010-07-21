@@ -662,10 +662,19 @@ var jwe_emulator =
     $("jwe-emulator-tools-box-gen").chk(false);
     $("jwe-emulator-tools-box-events").chk(false);
     $("jwe-emulator-tools-box-log").chk(false);
+    $("jwe-emulator-tools-box-state").chk(false);
     
     button.checked = true;
     
     $("jwe-emulator-tools-deck").node.selectedIndex = index;
+  },
+  
+  showCallbackValue : function(callback)
+  {
+    //if ( callback )
+      alert($("jwe-emulator-content").node.contentWindow.window["Widget"].Device.DeviceStateInfo.onPositionRetrieved);
+    //else
+    //  alert("Callback not set.");
   },
 };
 
