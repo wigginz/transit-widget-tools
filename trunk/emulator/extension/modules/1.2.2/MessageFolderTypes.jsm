@@ -7,9 +7,13 @@ function MessageFolderTypes()
 }
 
 MessageFolderTypes.prototype = function()
-{
-  
+{  
 };
+
+MessageFolderTypes.prototype.toString = function()
+{
+  return("Widget.Messaging.MessageFolderTypes");
+};  
 
 MessageFolderTypes.prototype.DRAFTS = _MessageFolderTypes_122.DRAFTS;
 

@@ -10,7 +10,11 @@ function Camera()
 
 Camera.prototype = function()
 {
-  
+};
+
+Camera.prototype.toString = function()
+{
+  return("Widget.Multimedia.Camera");
 };
 
 Camera.prototype.onCameraCaptured = null;

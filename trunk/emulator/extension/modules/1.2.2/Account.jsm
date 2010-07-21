@@ -7,8 +7,12 @@ function Account()
 }
 
 Account.prototype = function()
+{  
+};
+
+Account.prototype.toString = function()
 {
-  
+  return("Widget.Messaging.Account");
 };
 
 Account.prototype._jilAccount = null;

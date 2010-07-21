@@ -1,17 +1,21 @@
 var EXPORTED_SYMBOLS = ["Message"];
 
-Components.utils.import("resource://transit-emulator/1.2.2/Widget.jsm");
-
 var _Messaging_122 = Components.classes["@jil.org/jilapi-messaging;1"].getService(Components.interfaces.jilMessaging);
+
+Components.utils.import("resource://transit-emulator/1.2.2/SecurityManager.jsm");
 
 function Message()
 {
 }
 
 Message.prototype = function()
-{
-  
+{  
 };
+
+Message.prototype.toString = function()
+{
+  return("Widget.Messaging.Message");
+};  
 
 Message.prototype._jilMessage = null;
 

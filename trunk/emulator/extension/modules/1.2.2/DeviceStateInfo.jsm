@@ -3,6 +3,8 @@ var EXPORTED_SYMBOLS = ["DeviceStateInfo"];
 Components.utils.import("resource://transit-emulator/1.2.2/SecurityManager.jsm");
 Components.utils.import("resource://transit-emulator/1.2.2/AccelerometerInfo.jsm");
 Components.utils.import("resource://transit-emulator/1.2.2/Config.jsm");
+Components.utils.import("resource://transit-emulator/1.2.2/Exception.jsm");
+Components.utils.import("resource://transit-emulator/1.2.2/ExceptionTypes.jsm");
 
 var _DeviceStateInfo_122 = Components.classes["@jil.org/jilapi-devicestateinfo;1"].getService(Components.interfaces.jilDeviceStateInfo);
 
@@ -11,9 +13,13 @@ function DeviceStateInfo()
 }
 
 DeviceStateInfo.prototype = function()
+{  
+};      
+
+DeviceStateInfo.prototype.toString = function()
 {
-  
-};       
+  return("Widget.Device.DeviceStateInfo");
+};  
 
 DeviceStateInfo.prototype.AccelerometerInfo = new AccelerometerInfo();
 
@@ -42,7 +48,7 @@ DeviceStateInfo.prototype.positionMethod = _DeviceStateInfo_122.positionMethod;
 DeviceStateInfo.prototype.requestPositionInfo = function(method)
 {
   if ( ! this.testPositionInfoMethods(method) )
-    Widget.throwIPException("Invalid argument type for method in DeviceStateInfo.requestPositionInfo");
+    this.throwIPException("Invalid argument type for method in DeviceStateInfo.requestPositionInfo");
   
   SecurityManager.checkSecurity("Determine Location (DeviceStateInfo.requestPositionInfo)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_SESSION, SecurityManager.OP_ALLOWED, function()
   {
@@ -59,4 +65,12 @@ DeviceStateInfo.prototype.testPositionInfoMethods = function(type)
     return(false);
   else
     return(true);
+};
+
+DeviceStateInfo.prototype.throwIPException = function(message)
+{
+  var exc = new Exception();
+  exc.message = message;
+  exc.type = ExceptionTypes.INVALID_PARAMETER;
+  throw(exc);
 };

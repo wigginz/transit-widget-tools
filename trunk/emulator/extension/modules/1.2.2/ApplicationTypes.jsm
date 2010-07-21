@@ -7,8 +7,12 @@ function ApplicationTypes()
 }
 
 ApplicationTypes.prototype = function()
+{  
+};
+
+ApplicationTypes.prototype.toString = function()
 {
-  
+  return("Widget.Device.ApplicationTypes");
 }; 
 
 ApplicationTypes.prototype.ALARM = _ApplicationTypes_122.ALARM;

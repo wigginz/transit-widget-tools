@@ -7,9 +7,13 @@ function EventRecurrenceTypes()
 }
 
 EventRecurrenceTypes.prototype = function()
-{
-  
+{  
 };
+
+EventRecurrenceTypes.prototype.toString = function()
+{
+  return("Widget.PIM.EventRecurrenceTypes");
+};  
 
 EventRecurrenceTypes.prototype.DAILY = _EventRecurrenceTypes_122.DAILY;
 

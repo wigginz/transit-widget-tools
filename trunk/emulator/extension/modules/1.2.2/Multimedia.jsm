@@ -12,8 +12,12 @@ function Multimedia()
 
 Multimedia.prototype = function()
 {
-
 };
+
+Multimedia.prototype.toString = function()
+{
+  return("Widget.Multimedia");
+};  
 
 Multimedia.prototype.Camera = new Camera();
 
@@ -22,6 +26,7 @@ Multimedia.prototype.AudioPlayer = new AudioPlayer();
 Multimedia.prototype.VideoPlayer = new VideoPlayer();
 
 Multimedia.prototype.isAudioPlaying = _Multimedia_122.isAudioPlaying;
+
 Multimedia.prototype.isVideoPlaying = _Multimedia_122.isVideoPlaying;
 
 Multimedia.prototype.getVolume = function()

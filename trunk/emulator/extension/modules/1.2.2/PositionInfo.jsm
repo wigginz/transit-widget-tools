@@ -6,8 +6,12 @@ function PositionInfo()
 
 PositionInfo.prototype = function()
 {
-  
 };
+
+PositionInfo.prototype.toString = function()
+{
+  return("Widget.Device.PositionInfo");
+};  
 
 PositionInfo.prototype._jilPositionInfo = null;
 

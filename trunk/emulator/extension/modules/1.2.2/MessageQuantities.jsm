@@ -6,8 +6,12 @@ function MessageQuantities()
 
 MessageQuantities.prototype = function()
 {
-  
 };
+
+MessageQuantities.prototype.toString = function()
+{
+  return("Widget.Messaging.MessageQuantities");
+};  
 
 MessageQuantities.prototype._jilMsgQuantities = null;
 

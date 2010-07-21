@@ -9,9 +9,13 @@ function RadioInfo()
 }
 
 RadioInfo.prototype = function()
-{
-  
+{  
 };
+
+RadioInfo.prototype.toString = function()
+{
+  return("Widget.Device.RadioInfo");
+};  
 
 RadioInfo.prototype.RadioSignalSourceTypes = new RadioSignalSourceTypes();
 

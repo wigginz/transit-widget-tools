@@ -7,9 +7,13 @@ function File()
 }
 
 File.prototype = function()
-{
-  
+{  
 };
+
+File.prototype.toString = function()
+{
+  return("Widget.Device.File");
+};  
 
 File.prototype._jilFile = null;
 

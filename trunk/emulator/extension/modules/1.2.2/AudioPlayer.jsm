@@ -7,9 +7,13 @@ function AudioPlayer()
 }
 
 AudioPlayer.prototype = function()
-{
-  
+{  
 };
+
+AudioPlayer.prototype.toString = function()
+{
+  return("Widget.Multimedia.AudioPlayer");
+}; 
 
 AudioPlayer.prototype.onStateChange = null;
 

@@ -7,9 +7,13 @@ function AccelerometerInfo()
 }
 
 AccelerometerInfo.prototype = function()
-{
-  
+{  
 };   
+
+AccelerometerInfo.prototype.toString = function()
+{
+  return("Widget.Device.DeviceStateInfo.AccelerometerInfo");
+};
 
 AccelerometerInfo.prototype.xAxis = _AccelerometerInfo_122.xAxis;
 

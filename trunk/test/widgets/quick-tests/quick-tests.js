@@ -1,3 +1,15 @@
+var testCamera = 
+{
+  onCameraCaptured : function()
+  {
+    Widget.Multimedia.Camera.onCameraCaptured = function()
+    {
+      alert("Hello!");
+    };
+    alert(Widget.Multimedia.Camera.onCameraCaptured);
+  },
+};
+
 var testWidgetManager =
 {
   checkWidgetInstallationStatus : function()
@@ -208,6 +220,7 @@ var testPowerInfo =
     {
       showResult("PowerInfo.onChargeStateChange", "onChargeStateChange caught, new state: "+state);
     };
+    alert(Widget.Device.PowerInfo.onChargeStateChange);
   },
   
   onLowBattery : function()
@@ -300,6 +313,9 @@ var testDeviceStateInfo =
   
   onPositionRetrieved : function()
   {
+    var test = new Widget.Device.PositionInfo();
+    var testIO = test instanceof Widget.Device.PositionInfo;
+    alert(testIO);
     Widget.Device.DeviceStateInfo.onPositionRetrieved = function(locationInfo, method)
     {
       var result =
@@ -374,8 +390,9 @@ var testWidget =
 
   tException : function()
   {
-    var t = Widget.Exception;
-    showResult("Widget.Exception", "Testing Widget.Exception, value: "+t);
+    var t = new Widget.Exception();
+    var result = t instanceof Widget.Exception;
+    showResult("Widget.Exception", "Testing Widget.Exception, value: "+t+", instanceof Widget.Exception: "+result);
   },
 
   tExceptionTypes : function()
@@ -1132,7 +1149,7 @@ var testMessaging =
   
   moveMessageToFolder : function()
   {
-    var message = Widget.Messaging.getMessage(Widget.Messaging.MessageTypes.EmailMessage, "Test 22", 0);
+    var message = Widget.Messaging.getMessage(Widget.Messaging.MessageTypes.EmailMessage, "Test 2", 0);
     
     Widget.Messaging.moveMessageToFolder(message, "Test 1");
     

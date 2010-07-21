@@ -9,8 +9,12 @@ function AddressBookItem()
 }
 
 AddressBookItem.prototype = function()
+{  
+};
+
+AddressBookItem.prototype.toString = function()
 {
-  
+  return("Widget.PIM.AddressBookItem");
 };
       
 AddressBookItem.prototype._jilAddrItem = null;
