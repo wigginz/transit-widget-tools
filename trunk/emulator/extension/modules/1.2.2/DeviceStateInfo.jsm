@@ -1,6 +1,6 @@
 var EXPORTED_SYMBOLS = ["DeviceStateInfo"];
 
-Components.utils.import("resource://transit-emulator/1.2.2/JIL122aWrapper.jsm");
+Components.utils.import("resource://transit-emulator/1.2.2/SecurityManager.jsm");
 Components.utils.import("resource://transit-emulator/1.2.2/AccelerometerInfo.jsm");
 Components.utils.import("resource://transit-emulator/1.2.2/Config.jsm");
 

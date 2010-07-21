@@ -1,6 +1,6 @@
 var EXPORTED_SYMBOLS = ["Message"];
 
-Components.utils.import("resource://transit-emulator/1.2.2/JIL122aWrapper.jsm");
+Components.utils.import("resource://transit-emulator/1.2.2/Widget.jsm");
 
 var _Messaging_122 = Components.classes["@jil.org/jilapi-messaging;1"].getService(Components.interfaces.jilMessaging);
 

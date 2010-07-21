@@ -1,6 +1,6 @@
 var EXPORTED_SYMBOLS = ["Messaging"];
 
-Components.utils.import("resource://transit-emulator/1.2.2/JIL122aWrapper.jsm");
+Components.utils.import("resource://transit-emulator/1.2.2/SecurityManager.jsm");
 Components.utils.import("resource://transit-emulator/1.2.2/Account.jsm");
 Components.utils.import("resource://transit-emulator/1.2.2/MessageQuantities.jsm");
 Components.utils.import("resource://transit-emulator/1.2.2/MessageFolderTypes.jsm");
