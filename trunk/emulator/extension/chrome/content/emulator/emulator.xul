@@ -212,6 +212,7 @@
                       </vbox>
                       <vbox id="jwe-emulator-subtab-event-context-onmaximize" style="display: none;">
                         <checkbox id="jwe-emulator-subtab-event-context-onmaximize-forcemax" label="&jwe.emulator.tab.events.widget.onmax.context.forcemax;" checked="true"/>
+                        <label value="Current Callback" class="jwe-emulator-link" onclick="jwe_emulator.showCallbackValue(Widget.onMaximize);"/>
                       </vbox>
                       <vbox id="jwe-emulator-subtab-event-context-onrestore" style="display: none;">
                         <label value="&jwe.emulator.tab.events.context.none;"/>
@@ -281,6 +282,7 @@
                           <textbox id="jwe-emulator-subtab-event-context-onposition-longitude" size="15"/>
                         </hbox>
                         <checkbox id="jwe-emulator-subtab-event-context-onposition-failure" label="&jwe.emulator.tab.events.devicestate.onposition.context.failure;" checked="false" oncommand="jwe_emulator.togglePositionContext();"/>
+                        <label value="Current Callback" class="jwe-emulator-link" onclick="jwe_emulator.showCallbackValue(Widget.Device.DeviceStateInfo.onPositionRetrieved);"/>
                       </vbox>
                       <vbox id="jwe-emulator-subtab-event-context-onscreenchange" style="display: none;">
                         <hbox align="center">
