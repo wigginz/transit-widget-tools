@@ -102,7 +102,7 @@ var jwe_emulator =
     Components.utils.import("resource://transit-emulator/1.2.2/Widget.jsm");
     Components.utils.import("resource://transit-emulator/1.2.2/WidgetManager.jsm");
     Components.utils.import("resource://transit-emulator/1.2.2/SecurityManager.jsm");
-    Components.utils.import("resource://transit-emulator/TransitCommon.jsm");    
+    Components.utils.import("resource://transit-emulator/TransitCommon.jsm");  
     
     jwe_setScrollArea();
     
@@ -575,6 +575,7 @@ var jwe_emulator =
 
     Components.utils.import("resource://transit-emulator/1.2.2/Widget.jsm", $("jwe-emulator-content").node.contentWindow.window);
     Components.utils.import("resource://transit-emulator/1.2.2/WidgetManager.jsm", $("jwe-emulator-content").node.contentWindow.window);
+    Components.utils.import("resource://transit-emulator/1.2.2/XMLHttpRequest.jsm", $("jwe-emulator-content").node.contentWindow.window);
   },
   
   toggleSecurityLevel : function()

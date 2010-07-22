@@ -1,3 +1,18 @@
+var testXMLHttpRequest = 
+{
+  testAsync : function()
+  {
+    var req = new XMLHttpRequest();
+    req.open('GET', 'http://example.com/', true);
+    req.onreadystatechange = function () 
+    {
+      if ( (req.readyState == 4) && (req.status == 200) )
+        showResult("XMLHttpRequest", "Status: "+req.status+"<pre>"+req.responseText+"</pre>");
+    };
+    req.send(null);
+  },
+};
+
 var testCamera = 
 {
   onCameraCaptured : function()
