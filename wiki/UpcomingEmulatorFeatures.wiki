@@ -10,7 +10,6 @@ This is the current list of features and improvements we plan to implement in th
  * Allow PPI emulation for better CSS media query support.
  * Ensure SVG and SVG Tiny is properly supported.
  * Implementation of Camera capture APIs via attached webcam (or other input stream if possible).
- * Improve UI implementation for developers with smaller screens. Large screen devices can cause emulator controls to move off the viewable window. <font color="green">(complete, included in next build)</font>
 
 == Medium Priority ==
 
