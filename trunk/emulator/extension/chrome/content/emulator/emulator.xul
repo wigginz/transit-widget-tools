@@ -103,7 +103,7 @@
               </menupopup>
             </toolbarbutton>
             
-            <toolbarbutton id="jwe-emulator-tools-box-state" image="chrome://transit-emulator/skin/images/state.png" label="&jwe.emulator.tab.state;" oncommand="jwe_emulator.pageDeck(2, this);"/>
+            <!--toolbarbutton id="jwe-emulator-tools-box-state" image="chrome://transit-emulator/skin/images/state.png" label="&jwe.emulator.tab.state;" oncommand="jwe_emulator.pageDeck(2, this);"/-->
                     
             <toolbarbutton id="jwe-emulator-tools-box-log" image="chrome://transit-emulator/skin/images/log.png" label="&jwe.emulator.tab.log;" oncommand="jwe_emulator.pageDeck(3, this);"/>   
             
