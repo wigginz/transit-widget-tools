@@ -15,15 +15,15 @@
 
     <h3>Fixes and UI Changes</h3>
 
-    <p>Tackled the issue of smaller displays and cut off elements emulating in the debug tab by adding scroll bars to the entire window if the device screen is taller than the viewable content. Also added a sliding panel separator allowing you to move the controls to the right to allow more space for the device screen. These changes work in both regular mode and debug mode.</p>
+    <p>Tackled the issue of smaller displays and cut off elements when emulating in the debug tab by adding scroll bars to the entire window if the device screen is taller than the viewable content. Also added a sliding panel separator allowing you to move the controls to the right to allow more space for the device screen. These changes work in both regular mode and debug mode.</p>
 
     <p>Fixed an issue where audio and video APIs would not work when the emulator was opened as a tab in the main window (debug mode).</p>
 
-    <p>Fixed the problem with XMLHttpRequests not functioning from within a widget. This was due to the cross-domain security model Firefox uses with XMLHttpRequests. The fix involved wrapping the native XMLHttpRequest object in a JavaScript module. Currently, the wrapper only supports asynchronous requests. If implementing synchronous calls is needed in your widgets, please submit a request on the project home page. With the wrapper, there are no security restrictions, it should work in all cases.</p>
+    <p>Fixed the problem with XMLHttpRequests not functioning from within a widget. This was due to the cross-domain security model Firefox uses with XMLHttpRequests. The fix involved wrapping the native XMLHttpRequest object in a JavaScript module. Currently, the wrapper only supports asynchronous requests. If implementing synchronous calls is needed in your widgets, please submit a request on the project home page and I'll get working on it. There are no security restrictions with the wrapper, it should work for all URIs.</p>
 
     <h3>Under the Hood</h3>
 
-    <p>With this build, we're edging ever closer to phasing out the XPCOM components of the JIL APIs and moving towards more native JavaScript modules ([https://developer.mozilla.org/en/JavaScript/Code_modules/Using more info on modules at MDC]). Eventually all API implementations will be fully contained in modules allowing us to simultaneously support multiple versions of the JIL API. In an upcoming build we hope to allow a device profile to define which version of the JIL API it uses (1.0, 1.2, 1.3, etc.). We're keeping the runtime and profile service as wrapped XPCOM components to more mimic the logical separation an actual device would have. This is the first step in a major change that we'll be doing over the next couple of weekly releases, ensuring regression tests are made before each build.</p>
+    <p>With this build, we're edging ever closer to phasing out the XPCOM components of the JIL APIs and moving towards more native JavaScript modules. Eventually all API implementations will be fully contained in modules allowing us to simultaneously support multiple versions of the JIL API. In an upcoming build we hope to allow a device profile to define which version of the JIL API it uses (1.0, 1.2, 1.3, etc.). We're keeping the runtime and profile service as wrapped XPCOM components to better mimic the logical separations an actual device would have. This is the first step in a major change that we'll be doing over the next couple of weekly releases, we will ensure regression tests are made before each build is posted.</p>
 
   </body>
 
