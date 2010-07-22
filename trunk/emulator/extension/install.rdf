@@ -3,9 +3,9 @@
      xmlns:em="http://www.mozilla.org/2004/em-rdf#">
 
   <Description about="urn:mozilla:install-manifest">
-    <em:id>kyle.wilgus@vodafone.com</em:id>
+    <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
     <em:name>Transit Widget Emulator</em:name>
-    <em:version>1.2.2.20100715</em:version>
+    <em:version>1.2.2.20100722</em:version>
     <em:type>2</em:type>
     <em:creator>Kyle Wilgus</em:creator>
     <em:description>The Transit Widget Emulator for developing JIL Widgets.</em:description>
