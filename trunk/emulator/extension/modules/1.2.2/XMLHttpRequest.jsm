@@ -7,27 +7,10 @@ function XMLHttpRequest()
   var self = this;
   
   self.wrapped = Components.classes["@mozilla.org/xmlextras/xmlhttprequest;1"].createInstance(Components.interfaces.nsIXMLHttpRequest);
-  
-  self.headers = null;
-  
+    
   self.setRequestHeader = function(header, value) 
   {
-    if ( self.headers == null )
-      self.headers = new Object();
-    
-    self.headers[header] = value;
-  };
-  
-  self.send = function(data)
-  {
-    self.data = data;
-    
-    self.wrapped.onreadystatechange = function()
-    {
-      copyValues();
-      self.onreadystatechange();
-    };
-    self.wrapped.send(data);
+    self.wrapped.setRequestHeader(header, value);
   };
   
   self.open = function(method, url, sync)
@@ -39,7 +22,58 @@ function XMLHttpRequest()
     self.wrapped.open(method, url, sync);
   };
   
-  function copyValues() 
+  self.send = function(data)
+  {
+    self.data = data;
+    
+    if ( self.multipart )
+      self.wrapped.multipart = self.multipart;
+    
+    self.wrapped.onreadystatechange = function()
+    {
+      updateData();
+      if ( self.onreadystatechange )
+        self.onreadystatechange();
+    };
+    
+    self.wrapped.onload = function()
+    {
+      updateData();
+      if ( self.onload )
+        self.onload();
+    };
+    
+    self.wrapped.onerror = function()
+    {
+      updateData();
+      if ( self.onerror )
+        self.onerror();
+    };
+    
+    self.wrapped.send(data);
+  };
+   
+  self.abort = function() 
+  {
+    self.wrapped.abort();
+  };
+    
+  self.getAllResponseHeaders = function() 
+  {
+    return(self.wrapped.getAllResponseHeaders());
+  };
+    
+  self.getResponseHeader = function(header) 
+  {
+    return(self.wrapped.getResponseHeader(header));
+  };
+  
+  self.overrideMimeType = function(mimetype) 
+  {
+    self.wrapped.overrideMimeType(mimetype);
+  }
+ 
+  function updateData() 
   {
     if ( self.wrapped.readyState )
         self.readyState = self.wrapped.readyState;
