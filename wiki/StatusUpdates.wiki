@@ -3,15 +3,23 @@
 
 Check here for all the latest details on milestone releases, what's being worked on and committed, and future plans.
 
-<wiki:comment>
-== Thursday July 15, 2010 ==
+== Thursday July 22, 2010 ==
 
-Finally tackled the issue of smaller displays and cut off elements emulating in the debug tab by adding scroll bars to the entire window if the device screen is taller than the viewable content. Also added a sliding panel separator allowing you to move the controls to the right to allow more space for the device screen.
+Quite a few changes have been made in this week's build including bug fixes, emulator interface improvements and some changes under the hood.
 
-Fixed issue where audio and video APIs would not work when the emulator was opened as a tab in the main window (debug mode).
+=== Fixes and UI Changes ===
 
-Edging ever closer to phasing out the XPCOM components of the JIL APIs and moving towards more native JavaScript modules ([https://developer.mozilla.org/en/JavaScript/Code_modules/Using more info on modules at MDC]). Eventually all API implementations will be contained in modules. We're keeping the runtime and profile service as wrapped XPCOM components to more mimic the logical separation an actual device would have. This is a major change so we'll be doing it in chunks over the next couple releases, ensuring regression tests are made before each official release build.
-</wiki:comment>
+Tackled the issue of smaller displays and cut off elements when emulating in the debug tab by adding scroll bars to the entire window if the device screen is taller than the viewable content. Also added a sliding panel separator allowing you to move the controls to the right to allow more space for the device screen. These changes work in both regular mode and debug mode.
+
+Fixed an issue where audio and video APIs would not work when the emulator was opened as a tab in the main window (debug mode).
+
+Fixed the problem with XMLHttpRequests not functioning from within a widget. This was due to the cross-domain security model Firefox uses with XMLHttpRequests. The fix involved wrapping the native XMLHttpRequest object in a JavaScript module. Currently, the wrapper only supports asynchronous requests. If implementing synchronous calls is needed in your widgets, please submit a request on the project home page and I'll get working on it. There are no security restrictions with the wrapper, it should work for all URIs.
+
+=== Under the Hood ===
+
+With this build, we're edging ever closer to phasing out the XPCOM components of the JIL APIs and moving towards more native JavaScript modules. Eventually all API implementations will be fully contained in modules allowing us to simultaneously support multiple versions of the JIL API. In an upcoming build we hope to allow a device profile to define which version of the JIL API it uses (1.0, 1.2, 1.3, etc.). We're keeping the runtime and profile service as wrapped XPCOM components to better mimic the logical separations an actual device would have. This is the first step in a major change that we'll be doing over the next couple of weekly releases, we will ensure regression tests are made before each build is posted.
+
+Download the development build [http://transit-widget-tools.googlecode.com/files/transit-emulator-20100715.xpi transit-emulator-20100715.xpi].
 
 
 == Thursday July 15, 2010 ==
@@ -30,8 +38,6 @@ Changed window settings so the emulator is resizable, still working on getting s
 Cleaned up the default data as well as copying the SQLite file outside of the extension directory so an upgrade or un-install will not destroy any custom data. Changed default devices to be three generic devices with common screen sizes.
 
 Enabled update check so Firefox can detect and install new versions of the extension.
-
-Download the development build [http://transit-widget-tools.googlecode.com/files/transit-emulator-20100709.xpi transit-emulator-20100709.xpi].
 
 
 == Wednesday July 7, 2010 ==
