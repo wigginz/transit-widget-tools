@@ -32,6 +32,8 @@ var _VideoPlayer_122 = Components.classes["@jil.org/jilapi-videoplayer;1"].getSe
 var _Widget_122 = Components.classes["@jil.org/jilapi-widget;1"].getService(Components.interfaces.jilWidget);
 var _PIM_122 = Components.classes["@jil.org/jilapi-pim;1"].getService(Components.interfaces.jilPIM);
 
+var emulator = Components.classes["@jil.org/jilapi-emulatorruntime;1"].getService().wrappedJSObject;
+
 var Widget =
 {
   Device : new Device(),
@@ -84,32 +86,42 @@ var Widget =
     throw(exc);
   },
       
+      //this.eventContexts = new Array("onfocus", "onmaximize", "onrestore", "onwakeup", "onfilesfound", "onflip", "onposition", "onscreenchange", "onchargelevel", "onchargestate", "onlowbattery", "onnetworkchange", "onsignalchange", "onmessagearrived", "onmessagesendingfailure", "onmessagesfound", "audioonstatechange", "videoonstatechange", "oncameracaptured", "onaddressbookitemsfound", "oncalendaritemalert", "oncalendaritemsfound", "onvcardexportingfinish", "oncallevent", "oncallrecordsfound");
+      
   init : function()
   {    
     Widget.watch("onFocus", function(id, oldValue, newValue) {
+      emulator.setInCache("onfocus", newValue);
       _Widget_122.onFocus = newValue; });
       
     Widget.watch("onMaximize", function(id, oldValue, newValue) {
+      emulator.setInCache("onmaximize", newValue);
       _Widget_122.onMaximize = newValue; });
       
     Widget.watch("onRestore", function(id, oldValue, newValue) {
+      emulator.setInCache("onrestore", newValue);
       _Widget_122.onRestore = newValue; });
       
     Widget.watch("onWakeup", function(id, oldValue, newValue) {
+      emulator.setInCache("onwakeup", newValue);
       _Widget_122.onWakeup = newValue; });
       
     Widget.Device.watch("onFilesFound", function(id, oldValue, newValue) {
+      emulator.setInCache("onfilesfound", newValue);
       _Device_122.onFilesFound = newValue; });
 
     Widget.Device.DataNetworkInfo.watch("onNetworkConnectionChanged", function(id, oldValue, newValue) {
+      emulator.setInCache("onnetworkchange", newValue);
       _DataNetworkInfo_122.onNetworkConnectionChanged = newValue; });
       
     Widget.Device.DeviceStateInfo.watch("onFlipEvent", function(id, oldValue, newValue) {
+      emulator.setInCache("onflip", newValue);
       _DeviceStateInfo_122.onFlipEvent = newValue; });
       
     Widget.Device.DeviceStateInfo.watch("onPositionRetrieved", function(id, oldValue, newValue) 
     {
-      //Widget.Device.DeviceStateInfo.onPositionRetrieved = newValue;
+      Widget.Device.DeviceStateInfo.onPositionRetrieved = newValue;
+      emulator.setInCache("onposition", newValue);
       _DeviceStateInfo_122.onPositionRetrieved = function(position, method)
       {
         var jilPosition = new Widget.Device.PositionInfo();
@@ -123,42 +135,54 @@ var Widget =
     });
     
     Widget.Device.DeviceStateInfo.watch("onScreenChangeDimensions", function(id, oldValue, newValue) {
+      emulator.setInCache("onscreenchange", newValue);
       _DeviceStateInfo_122.onScreenChangeDimensions = newValue; });
       
     Widget.Device.PowerInfo.watch("onChargeLevelChange", function(id, oldValue, newValue) {
+      emulator.setInCache("onchargelevel", newValue);
       _PowerInfo_122.onChargeLevelChange = newValue; });
       
     Widget.Device.PowerInfo.watch("onChargeStateChange", function(id, oldValue, newValue) {
+      emulator.setInCache("onchargestate", newValue);
       _PowerInfo_122.onChargeStateChange = newValue; 
       //Widget.Device.PowerInfo.onChargeStateChange = _PowerInfo_122.onChargeStateChange;
     });
       
     Widget.Device.PowerInfo.watch("onLowBattery", function(id, oldValue, newValue) {
+      emulator.setInCache("onlowbattery", newValue);
       _PowerInfo_122.onLowBattery = newValue; });
       
     Widget.Device.RadioInfo.watch("onSignalSourceChange", function(id, oldValue, newValue) {
+      emulator.setInCache("onsignalchange", newValue);
       _RadioInfo_122.onSignalSourceChange = newValue; });
       
     Widget.Messaging.watch("onMessageArrived", function(id, oldValue, newValue) {
+      emulator.setInCache("onmessagearrived", newValue);
       _Messaging_122.onMessageArrived = newValue; });
       
     Widget.Messaging.watch("onMessageSendingFailure", function(id, oldValue, newValue) {
+      emulator.setInCache("onmessagesendingfailure", newValue);
       _Messaging_122.onMessageSendingFailure = newValue; });
       
     Widget.Messaging.watch("onMessagesFound", function(id, oldValue, newValue) {
+      emulator.setInCache("onmessagesfound", newValue);
       _Messaging_122.onMessagesFound = newValue; });
       
     Widget.Multimedia.watch("onCameraCaptured", function(id, oldValue, newValue) {
+      emulator.setInCache("oncameracaptured", newValue);
       _Multimedia_122.onCameraCaptured = newValue; });
       
     Widget.Multimedia.AudioPlayer.watch("onStateChange", function(id, oldValue, newValue) {
+      emulator.setInCache("audioonstatechange", newValue);
       _AudioPlayer_122.onStateChange = newValue; });
       
     Widget.Multimedia.VideoPlayer.watch("onStateChange", function(id, oldValue, newValue) {
+      emulator.setInCache("videoonstatechange", newValue);
       _VideoPlayer_122.onStateChange = newValue; });
       
     Widget.PIM.watch("onAddressBookItemsFound", function(id, oldValue, newValue) 
     {
+      emulator.setInCache("onaddressbookitemsfound", newValue);
       _PIM_122.onAddressBookItemsFound = function(results)
       {
         // convert to wrapped class
@@ -174,10 +198,12 @@ var Widget =
     });
       
     Widget.PIM.watch("onCalendarItemAlert", function(id, oldValue, newValue) {
+      emulator.setInCache("oncalendaritemalert", newValue);
       _PIM_122.onCalendarItemAlert = newValue; });
       
     Widget.PIM.watch("onCalendarItemsFound", function(id, oldValue, newValue) 
     {      
+      emulator.setInCache("oncalendaritemsfound", newValue);
       _PIM_122.onCalendarItemsFound = function(results)
       {
         // convert to wrapped class
@@ -193,12 +219,15 @@ var Widget =
     });
       
     Widget.PIM.watch("onVCardExportingFinish", function(id, oldValue, newValue) {
+      emulator.setInCache("onvcardexportingfinish", newValue);
       _PIM_122.onVCardExportingFinish = newValue; });
       
     Widget.Telephony.watch("onCallEvent", function(id, oldValue, newValue) {
+      emulator.setInCache("oncallevent", newValue);
       _Telephony_122.onCallEvent = newValue; });
       
     Widget.Telephony.watch("onCallRecordsFound", function(id, oldValue, newValue) {
+      emulator.setInCache("oncallrecordsfound", newValue);
       _Telephony_122.onCallRecordsFound = newValue; });
 
     _Multimedia_122.monitor = function(currentAudioPlaying, currentVideoPlaying)

@@ -33,6 +33,8 @@ JILEmulatorRuntime.prototype = //#
   domDoc : null,
 
   profileService : null,
+  
+  cache : new Array(),
 
   reloadServices : function()
   {
@@ -54,11 +56,25 @@ JILEmulatorRuntime.prototype = //#
     Components.classes["@jil.org/jilapi-widget;1"].getService(Components.interfaces.jilWidget).reload();
     Components.classes["@jil.org/jilapi-widgetmanager;1"].getService(Components.interfaces.jilWidgetManager).reload();  
     Components.classes["@jil.org/jilapi-camera;1"].getService(Components.interfaces.jilCamera).reload();
+    
+    this.cache = new Array();
   },
   
   reload : function(profileId)
   {
-    this.emulateWidget(this.configUri, this.domDoc, profileId)
+    this.emulateWidget(this.configUri, this.domDoc, profileId);
+    
+    this.cache = new Array();
+  },
+  
+  setInCache : function(key, value)
+  {
+    this.cache[key] = value;
+  },
+  
+  getFromCache : function(key)
+  {
+    return(this.cache[key]);
   },
 
   emulateWidget : function(configUri, domDoc, profileId, openWindow)

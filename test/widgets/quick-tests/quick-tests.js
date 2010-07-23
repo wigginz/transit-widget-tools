@@ -7,11 +7,16 @@ var testXMLHttpRequest =
     req.onreadystatechange = function () 
     {
       if ( (req.readyState == 4) && (req.status == 200) )
-        showResult("XMLHttpRequest", "Status: "+req.status+"<pre>"+req.responseText+"</pre>");
+        response(req);
     };
     req.send(null);
   },
 };
+
+function response(req)
+{
+  showResult("asdXMLHttpRequest", "Status: "+req.status+"<pre>"+req.responseText+"</pre>");
+}
 
 var testCamera = 
 {
@@ -328,9 +333,6 @@ var testDeviceStateInfo =
   
   onPositionRetrieved : function()
   {
-    var test = new Widget.Device.PositionInfo();
-    var testIO = test instanceof Widget.Device.PositionInfo;
-    alert(testIO);
     Widget.Device.DeviceStateInfo.onPositionRetrieved = function(locationInfo, method)
     {
       var result =

@@ -140,6 +140,22 @@
   overflow-y: auto;
 }
 
+#jwe-emulator-callback-panel
+{
+  height: 400px;
+  width: 400px;
+  padding: 10px;
+  top: 100px;
+  left: 200px;
+}
+
+#jwe-emulator-callback-panel textbox
+{
+  height: 380px;
+  width: 380px;
+  overflow: auto;
+}
+
 .runtime-dialog-bg
 {
   display: none;
