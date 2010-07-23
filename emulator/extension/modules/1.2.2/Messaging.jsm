@@ -11,6 +11,9 @@ var _Messaging_122 = Components.classes["@jil.org/jilapi-messaging;1"].getServic
 
 function Messaging()
 {
+  this.onMessageArrived = null;
+  this.onMessageSendingFailure = null;
+  this.onMessagesFound = null;
 }
 
 Messaging.prototype = function()

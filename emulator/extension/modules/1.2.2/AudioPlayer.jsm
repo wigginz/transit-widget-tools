@@ -4,6 +4,7 @@ var _AudioPlayer_122 = Components.classes["@jil.org/jilapi-audioplayer;1"].getSe
 
 function AudioPlayer()
 {
+  this.onStateChange = null;
 }
 
 AudioPlayer.prototype = function()

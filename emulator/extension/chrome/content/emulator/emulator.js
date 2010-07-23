@@ -49,6 +49,8 @@ var jwe_emulator =
 
   init : function()
   {
+    Components.utils.import("resource://transit-emulator/TransitCommon.jsm");  
+
     this.emulator.setEmulatorWindow(window);
     
     try
@@ -60,7 +62,7 @@ var jwe_emulator =
       // ignore, probably already registered
       //dump("Could not load progress listener. Message: "+ex.message);
     }
-    
+TransitCommon.debug(this.emulator.getDeviceInfo().screenWidth+", "+this.emulator.getDeviceInfo().screenHeight);    
     this.deviceWidth = this.emulator.getDeviceInfo().screenWidth;
     this.deviceHeight = this.emulator.getDeviceInfo().screenHeight;
     this.widgetWidth = this.emulator.getWidget().maxWidth;
@@ -102,7 +104,6 @@ var jwe_emulator =
     Components.utils.import("resource://transit-emulator/1.2.2/Widget.jsm");
     Components.utils.import("resource://transit-emulator/1.2.2/WidgetManager.jsm");
     Components.utils.import("resource://transit-emulator/1.2.2/SecurityManager.jsm");
-    Components.utils.import("resource://transit-emulator/TransitCommon.jsm");  
     
     jwe_setScrollArea();
     
@@ -313,8 +314,14 @@ var jwe_emulator =
     // will keep the widget in full screen mode if the checkbox is checked.
     this.toggleFullScreen();
     
+    // switch to portrait mode by default
+    $("jwe-emulator-settings-landscape").chk(false);
+    
     // have the window reload events too, in the case that values have been changed by the user
     this.eventsLoaded = false;
+    
+    // tell the widget module in the widget's scope to reset itself and re-read all device profile values
+    $("jwe-emulator-content").node.contentWindow.window["Widget"].reset();
   },
 
   clearLog : function ()

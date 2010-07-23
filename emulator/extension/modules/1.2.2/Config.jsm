@@ -8,6 +8,9 @@ var _Config_122 = Components.classes["@jil.org/jilapi-config;1"].getService(Comp
 
 function Config()
 {
+  this.msgRingtoneVolume = _Config_122.msgRingtoneVolume;
+  this.ringtoneVolume = _Config_122.ringtoneVolume;
+  this.vibrationSetting = _Config_122.vibrationSetting;
 }
 
 Config.prototype = function()
@@ -19,11 +22,11 @@ Config.prototype.toString = function()
   return("Widget.Device.DeviceStateInfo.Config");
 };   
 
-Config.prototype.msgRingtoneVolume = _Config_122.msgRingtoneVolume;
+Config.prototype.msgRingtoneVolume = null;
 
-Config.prototype.ringtoneVolume = _Config_122.ringtoneVolume;
+Config.prototype.ringtoneVolume = null;
 
-Config.prototype.vibrationSetting = _Config_122.vibrationSetting;
+Config.prototype.vibrationSetting = null;
 
 Config.prototype.setAsWallpaper = function(wallpaperFileUrl)
 {

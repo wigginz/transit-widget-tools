@@ -9,6 +9,10 @@ Components.utils.import("resource://transit-emulator/1.2.2/CalendarItem.jsm");
 
 function PIM()
 {
+  this.onAddressBookItemsFound = null;
+  this.onCalendarItemAlert = null;
+  this.onCalendarItemsFound = null;
+  this.onVCardExportingFinish = null;
 }
 
 PIM.prototype = function()

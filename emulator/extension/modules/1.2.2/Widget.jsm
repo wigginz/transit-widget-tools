@@ -85,11 +85,23 @@ var Widget =
     exc.type = Widget.ExceptionTypes.INVALID_PARAMETER;
     throw(exc);
   },
-      
-      //this.eventContexts = new Array("onfocus", "onmaximize", "onrestore", "onwakeup", "onfilesfound", "onflip", "onposition", "onscreenchange", "onchargelevel", "onchargestate", "onlowbattery", "onnetworkchange", "onsignalchange", "onmessagearrived", "onmessagesendingfailure", "onmessagesfound", "audioonstatechange", "videoonstatechange", "oncameracaptured", "onaddressbookitemsfound", "oncalendaritemalert", "oncalendaritemsfound", "onvcardexportingfinish", "oncallevent", "oncallrecordsfound");
+
+  reset : function()
+  {
+    this.Device = new Device();
+    this.Messaging = new Messaging();
+    this.Multimedia = new Multimedia();
+    this.PIM = new PIM();
+    this.Telephony = new Telephony();
+    
+    this.onFocus = null;
+    this.onMaximize = null;
+    this.onRestore = null;
+    this.onWakeup = null;
+  },
       
   init : function()
-  {    
+  {   
     Widget.watch("onFocus", function(id, oldValue, newValue) {
       emulator.setInCache("onfocus", newValue);
       _Widget_122.onFocus = newValue; });
@@ -163,7 +175,7 @@ var Widget =
     Widget.Messaging.watch("onMessageSendingFailure", function(id, oldValue, newValue) {
       emulator.setInCache("onmessagesendingfailure", newValue);
       _Messaging_122.onMessageSendingFailure = newValue; });
-      
+
     Widget.Messaging.watch("onMessagesFound", function(id, oldValue, newValue) {
       emulator.setInCache("onmessagesfound", newValue);
       _Messaging_122.onMessagesFound = newValue; });

@@ -6,6 +6,7 @@ var _Camera_122 = Components.classes["@jil.org/jilapi-camera;1"].getService(Comp
 
 function Camera()
 {
+  this.onCameraCaptured = null;
 }
 
 Camera.prototype = function()
