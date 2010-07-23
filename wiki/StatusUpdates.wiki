@@ -3,6 +3,14 @@
 
 Check here for all the latest details on milestone releases, what's being worked on and committed, and future plans.
 
+<wiki:comment>
+== Thursday July 29, 2010 ==
+
+Added a link called "Callback Source" which will pop up a panel showing the source code of the event picked via the radio buttons for event contexts. 
+
+</wiki:comment>
+
+
 == Thursday July 22, 2010 ==
 
 Quite a few changes have been made in this week's build including bug fixes, emulator interface improvements and some changes under the hood.
