@@ -10,6 +10,19 @@ var _DeviceStateInfo_122 = Components.classes["@jil.org/jilapi-devicestateinfo;1
 
 function DeviceStateInfo()
 {
+  this.AccelerometerInfo = new AccelerometerInfo();
+  this.Config = new Config();
+
+  this.audioPath = _DeviceStateInfo_122.audioPath;
+  this.availableMemory = _DeviceStateInfo_122.availableMemory;
+  this.backLightOn = _DeviceStateInfo_122.backLightOn;
+  this.keypadLightOn = _DeviceStateInfo_122.keypadLightOn;
+  this.language = _DeviceStateInfo_122.language;
+  this.processorUtilizationPercent = _DeviceStateInfo_122.processorUtilizationPercent;
+  this.positionMethod = _DeviceStateInfo_122.positionMethod;
+  
+  this.onPositionRetrieved = null;
+  this.onScreenChangeDimensions = null;
 }
 
 DeviceStateInfo.prototype = function()
@@ -21,9 +34,9 @@ DeviceStateInfo.prototype.toString = function()
   return("Widget.Device.DeviceStateInfo");
 };  
 
-DeviceStateInfo.prototype.AccelerometerInfo = new AccelerometerInfo();
+DeviceStateInfo.prototype.AccelerometerInfo = null;
 
-DeviceStateInfo.prototype.Config = new Config();
+DeviceStateInfo.prototype.Config = null;
 
 DeviceStateInfo.prototype.onFlipEvent = null;
 
@@ -31,19 +44,19 @@ DeviceStateInfo.prototype.onPositionRetrieved = null;
 
 DeviceStateInfo.prototype.onScreenChangeDimensions = null;
 
-DeviceStateInfo.prototype.audioPath = _DeviceStateInfo_122.audioPath;
+DeviceStateInfo.prototype.audioPath = null;
 
-DeviceStateInfo.prototype.availableMemory = _DeviceStateInfo_122.availableMemory;
+DeviceStateInfo.prototype.availableMemory = null;
 
-DeviceStateInfo.prototype.backLightOn = _DeviceStateInfo_122.backLightOn;
+DeviceStateInfo.prototype.backLightOn = null;
 
-DeviceStateInfo.prototype.keypadLightOn = _DeviceStateInfo_122.keypadLightOn;
+DeviceStateInfo.prototype.keypadLightOn = null;
 
-DeviceStateInfo.prototype.language = _DeviceStateInfo_122.language;
+DeviceStateInfo.prototype.language = null;
 
-DeviceStateInfo.prototype.processorUtilizationPercent = _DeviceStateInfo_122.processorUtilizationPercent;
+DeviceStateInfo.prototype.processorUtilizationPercent = null;
 
-DeviceStateInfo.prototype.positionMethod = _DeviceStateInfo_122.positionMethod;
+DeviceStateInfo.prototype.positionMethod = null;
 
 DeviceStateInfo.prototype.requestPositionInfo = function(method)
 {

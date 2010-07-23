@@ -6,6 +6,12 @@ var _RadioInfo_122a = Components.classes["@jil.org/jilapi-radioinfo;1"].getServi
 
 function RadioInfo()
 {
+  this.isRadioEnabled = _RadioInfo_122a.isRadioEnabled;
+  this.isRoaming = _RadioInfo_122a.isRoaming;
+  this.radioSignalSource = _RadioInfo_122a.radioSignalSource;
+  this.radioSignalStrengthPercent = _RadioInfo_122a.radioSignalStrengthPercent;
+  
+  this.onSignalSourceChange = null;
 }
 
 RadioInfo.prototype = function()
@@ -19,12 +25,12 @@ RadioInfo.prototype.toString = function()
 
 RadioInfo.prototype.RadioSignalSourceTypes = new RadioSignalSourceTypes();
 
-RadioInfo.prototype.isRadioEnabled = _RadioInfo_122a.isRadioEnabled;
+RadioInfo.prototype.isRadioEnabled = null;
 
-RadioInfo.prototype.isRoaming = _RadioInfo_122a.isRoaming;
+RadioInfo.prototype.isRoaming = null;
 
-RadioInfo.prototype.radioSignalSource = _RadioInfo_122a.radioSignalSource;
+RadioInfo.prototype.radioSignalSource = null;
 
-RadioInfo.prototype.radioSignalStrengthPercent = _RadioInfo_122a.radioSignalStrengthPercent;
+RadioInfo.prototype.radioSignalStrengthPercent = null;
 
 RadioInfo.prototype.onSignalSourceChange = null;

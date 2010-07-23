@@ -18,6 +18,20 @@ Components.utils.import("resource://transit-emulator/1.2.2/AddressBookItem.jsm")
 
 function Device()
 {
+  this.DeviceInfo = new DeviceInfo();
+  this.AccountInfo = new AccountInfo();
+  this.ApplicationTypes = new ApplicationTypes();
+  this.DataNetworkInfo = new DataNetworkInfo();
+  this.DeviceStateInfo = new DeviceStateInfo();
+  this.PowerInfo = new PowerInfo();
+  this.RadioInfo = new RadioInfo();
+  
+  this.clipboardString = _Device_122.clipboardString;
+  this.widgetEngineName = _Device_122.widgetEngineName;
+  this.widgetEngineProvider = _Device_122.widgetEngineProvider;
+  this.widgetEngineVersion = _Device_122.widgetEngineVersion;
+  
+  this.onFilesFound = null;
 }
 
 Device.prototype = function()
@@ -29,30 +43,30 @@ Device.prototype.toString = function()
   return("Widget.Device");
 };
 
-Device.prototype.AccountInfo = new AccountInfo();
+Device.prototype.AccountInfo = null;
 
-Device.prototype.ApplicationTypes = new ApplicationTypes();
+Device.prototype.ApplicationTypes = null;
 
-Device.prototype.DataNetworkInfo = new DataNetworkInfo();
+Device.prototype.DataNetworkInfo = null;
 
-Device.prototype.DeviceInfo = new DeviceInfo();
+Device.prototype.DeviceInfo = null;
 
-Device.prototype.DeviceStateInfo = new DeviceStateInfo();
+Device.prototype.DeviceStateInfo = null;
 
-Device.prototype.PowerInfo = new PowerInfo();
+Device.prototype.PowerInfo = null;
 
-Device.prototype.RadioInfo = new RadioInfo();
+Device.prototype.RadioInfo = null;
 
 // the isEmulator flag is not part of this spec, but provided in case there's a need
 Device.prototype.isEmulator = true;
   
-Device.prototype.clipboardString = _Device_122.clipboardString;
+Device.prototype.clipboardString = null;
 
-Device.prototype.widgetEngineName = _Device_122.widgetEngineName;
+Device.prototype.widgetEngineName = null;
 
-Device.prototype.widgetEngineProvider = _Device_122.widgetEngineProvider;
+Device.prototype.widgetEngineProvider = null;
 
-Device.prototype.widgetEngineVersion = _Device_122.widgetEngineVersion;
+Device.prototype.widgetEngineVersion = null;
 
 Device.prototype.onFilesFound = null;
 

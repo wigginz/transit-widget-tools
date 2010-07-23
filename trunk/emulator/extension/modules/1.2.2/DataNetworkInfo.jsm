@@ -8,6 +8,10 @@ var _DataNetworkInfo_122 = Components.classes["@jil.org/jilapi-datanetworkinfo;1
 
 function DataNetworkInfo()
 {
+  this.isDataNetworkConnected = _DataNetworkInfo_122.isDataNetworkConnected;
+  this.networkConnectionType = _DataNetworkInfo_122.getNetworkConnectionTypes();
+  
+  this.onNetworkConnectionChanged = null;
 }
 
 DataNetworkInfo.prototype = function()
@@ -21,9 +25,9 @@ DataNetworkInfo.prototype.toString = function()
 
 DataNetworkInfo.prototype.DataNetworkConnectionTypes = new DataNetworkConnectionTypes();
 
-DataNetworkInfo.prototype.isDataNetworkConnected = _DataNetworkInfo_122.isDataNetworkConnected;
+DataNetworkInfo.prototype.isDataNetworkConnected = null;
 
-DataNetworkInfo.prototype.networkConnectionType = _DataNetworkInfo_122.getNetworkConnectionTypes();
+DataNetworkInfo.prototype.networkConnectionType = null;
 
 DataNetworkInfo.prototype.onNetworkConnectionChanged = null;
 

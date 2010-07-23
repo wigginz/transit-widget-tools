@@ -4,6 +4,12 @@ var _PowerInfo_122 = Components.classes["@jil.org/jilapi-powerinfo;1"].getServic
 
 function PowerInfo()
 {
+  this.isCharging = _PowerInfo_122.isCharging;
+  this.percentRemaining = _PowerInfo_122.percentRemaining;
+  
+  this.onChargeLevelChange = null;
+  this.onChargeStateChange = null;
+  this.onLowBattery = null;
 }
 
 PowerInfo.prototype = function()
@@ -15,9 +21,9 @@ PowerInfo.prototype.toString = function()
   return("Widget.Device.PowerInfo");
 };  
 
-PowerInfo.prototype.isCharging = _PowerInfo_122.isCharging;
+PowerInfo.prototype.isCharging = null;
 
-PowerInfo.prototype.percentRemaining = _PowerInfo_122.percentRemaining;
+PowerInfo.prototype.percentRemaining = null;
 
 PowerInfo.prototype.onChargeLevelChange = null;
 

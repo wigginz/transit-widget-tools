@@ -4,6 +4,9 @@ var _VideoPlayer_122 = Components.classes["@jil.org/jilapi-videoplayer;1"].getSe
 
 function VideoPlayer()
 {
+  this.onStateChange = null;
+  this.source = null;
+  this.video = null;
 }
 
 VideoPlayer.prototype = function()

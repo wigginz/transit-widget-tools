@@ -10,6 +10,8 @@ Components.utils.import("resource://transit-emulator/1.2.2/ExceptionTypes.jsm");
 
 function Telephony()
 {
+  this.onCallEvent = null;
+  this.onCallRecordsFound = null;
 }
 
 Telephony.prototype = function()
