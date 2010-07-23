@@ -35,6 +35,19 @@
 <!ENTITY jwe.emulator.menubar.help.jil "JIL.org..."> 
 <!ENTITY jwe.emulator.menubar.help.about "About Transit Emulator..."> 
 
+<!ENTITY jwe.emulator.tab.state.list.device "Device State Information">
+<!ENTITY jwe.emulator.tab.state.list.multimedia "Multimedia State Information">
+<!ENTITY jwe.emulator.tab.state.warning "Real time values of runtime APIs are shown here. Any values which trigger an event are not shown. Updated values will not be saved to the device profile and will reset to the profile value when the widget is reloaded.">
+<!ENTITY jwe.emulator.tab.devicestate.clipboard "Clipboard String: ">
+<!ENTITY jwe.emulator.tab.devicestate.audiopath "Audio Path: ">
+<!ENTITY jwe.emulator.tab.devicestate.audiopath.speaker "Speaker">
+<!ENTITY jwe.emulator.tab.devicestate.audiopath.receiver "Receiver">
+<!ENTITY jwe.emulator.tab.devicestate.audiopath.earphone "Earphone">
+
+
+
+
+
 <!ENTITY jwe.emulator.tab.events.list.caption "API: ">
 <!ENTITY jwe.emulator.tab.events.context.none "N/A">
 <!ENTITY jwe.emulator.tab.events.context.nonevent "Event will be triggered when the associated API call is complete (search, export, etc.).">
