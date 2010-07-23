@@ -13,6 +13,7 @@
 <!ENTITY jwe.emulator.tab.settings "General">
 <!ENTITY jwe.emulator.tab.settings.displaylabel "Display">
 <!ENTITY jwe.emulator.tab.settings.infolabel "Widget Details">
+<!ENTITY jwe.emulator.tab.settings.landscape "Landscape mode (triggers screen change event)">
 <!ENTITY jwe.emulator.widgetinfo.name "Name: ">
 <!ENTITY jwe.emulator.widgetinfo.author "Author: ">
 <!ENTITY jwe.emulator.widgetinfo.id "ID: ">

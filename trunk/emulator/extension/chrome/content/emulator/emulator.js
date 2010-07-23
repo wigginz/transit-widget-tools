@@ -262,13 +262,37 @@ var jwe_emulator =
     }
     else
     {
-      $("jwe-emulator-content").css("height", this.emulator.getWidget().maxHeight+"px");
-      $("jwe-emulator-content").css("width", this.emulator.getWidget().maxWidth+"px");
+      // if the widget size is larger than the screen size, size the widget to fit
+      if ( this.emulator.getWidget().maxHeight > this.deviceHeight )
+        $("jwe-emulator-content").css("height", this.deviceHeight-2+"px");
+      else
+        $("jwe-emulator-content").css("height", this.emulator.getWidget().maxHeight+"px");
+      
+      if ( this.emulator.getWidget().maxWidth > this.deviceWidth )
+        $("jwe-emulator-content").css("width", this.deviceWidth-2+"px");
+      else
+        $("jwe-emulator-content").css("width", this.emulator.getWidget().maxWidth+"px");
     }
     
     // resizing the widget reloads page scope, need to re-inject widget API
     // actually I dont think it does anymore, need to double check
     this.injectScripts();
+  },
+  
+  toggleLandscape : function()
+  {
+    // swap height and width
+    var curWidth = this.deviceWidth;
+    var curHeight = this.deviceHeight;
+    
+    this.deviceWidth = curHeight;
+    this.deviceHeight = curWidth;
+    this.resizeScreen();
+    
+    this.emulator.invokeDSOnScreenChangeDimensions(this.deviceWidth, this.deviceHeight);
+    
+    // to maintain full screen mode if it's checked
+    this.toggleFullScreen();
   },
 
   reload: function(element)
