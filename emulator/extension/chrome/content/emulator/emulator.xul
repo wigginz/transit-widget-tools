@@ -165,6 +165,7 @@
                     <vbox>
                       <checkbox id="jwe-emulator-settings-overflow" label="&jwe.emulator.tab.settings.overflow;" oncommand="jwe_emulator.toggleOverflow();"/>        
                       <checkbox id="jwe-emulator-settings-fullscreen" label="&jwe.emulator.tab.settings.fullscreen;" oncommand="jwe_emulator.toggleFullScreen();"/> 
+                      <checkbox id="jwe-emulator-settings-landscape" label="&jwe.emulator.tab.settings.landscape;" oncommand="jwe_emulator.toggleLandscape();"/> 
                     </vbox>
                   </groupbox>
                   <groupbox style="width: 100%;">
