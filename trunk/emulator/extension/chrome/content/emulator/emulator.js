@@ -338,6 +338,8 @@ var jwe_emulator =
       $("jwe-emulator-subtab-event-context-"+this.eventContexts[i]).css("display", "none");
     
     $("jwe-emulator-subtab-event-context-"+context).css("display", "block");
+    
+    this.currentContext = context;
   },
   
   triggerEvent : function()
@@ -666,19 +668,21 @@ var jwe_emulator =
     $("jwe-emulator-tools-box-gen").chk(false);
     $("jwe-emulator-tools-box-events").chk(false);
     $("jwe-emulator-tools-box-log").chk(false);
-    $("jwe-emulator-tools-box-state").chk(false);
+    //$("jwe-emulator-tools-box-state").chk(false);
     
     button.checked = true;
     
     $("jwe-emulator-tools-deck").node.selectedIndex = index;
   },
   
-  showCallbackValue : function(callback)
+  showCallbackValue : function()
   {
-    //if ( callback )
-      alert($("jwe-emulator-content").node.contentWindow.window["Widget"].Device.DeviceStateInfo.onPositionRetrieved);
-    //else
-    //  alert("Callback not set.");
+    if ( ! this.emulator.getFromCache(this.currentContext) )
+      $("jwe-emulator-callback-panel-source").val("Callback function for this event is not currently set.");
+    else
+      $("jwe-emulator-callback-panel-source").val(this.emulator.getFromCache(this.currentContext));
+
+    $("jwe-emulator-callback-panel").node.openPopup(document.getElementById('jwe-emulator-subtab-event-trigger-button'), 'after_end', 0, -5, false, false);
   },
 };
 
