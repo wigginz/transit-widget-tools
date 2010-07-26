@@ -9,6 +9,8 @@ var service = null;
 function JILEmulatorRuntime() //#
 {
   Components.utils.import("resource://transit-emulator/TransitCommon.jsm");
+  Components.utils.import("resource://transit-emulator/1.2.2/WidgetIngester.jsm");
+  Components.utils.import("resource://transit-emulator/1.0/WidgetIngester.jsm");
   
   this.wrappedJSObject = this;
   this.profileService = Components.classes['@jil.org/jilapi-profileservice;1'].getService().wrappedJSObject;
@@ -86,11 +88,31 @@ JILEmulatorRuntime.prototype = //#
 
     this.configUri = configUri;
     this.domDoc = domDoc;
-
+    
     // the current window must be showing a valid config.xml
     var fileName = this.getFileName(configUri);
     var baseUrl = configUri.substring(0, configUri.length-10);
 
+    // go through the widget ingesters, starting with 1.2
+    var widget = null;
+    try
+    {
+      widget = WidgetIngester_122.ingest(domDoc, baseUrl);
+      
+      if ( !widget )
+      {
+        widget = WidgetIngester_10.ingest(domDoc, baseUrl);
+        if ( widget )
+          TransitCommon.debug("Widget is JIL spec 1.0");
+      }
+      else
+        TransitCommon.debug("Widget is JIL spec 1.2.x");
+    }
+    catch (ex)
+    {
+      TransitCommon.debug("Could not ingest widget, reason: "+ex.message);
+    }    
+    
     this.logAction("Widget emulation requested on configuration file: "+configUri);
 
     // must be called "config.xml"

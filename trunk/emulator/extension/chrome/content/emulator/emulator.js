@@ -62,7 +62,7 @@ var jwe_emulator =
       // ignore, probably already registered
       //dump("Could not load progress listener. Message: "+ex.message);
     }
-TransitCommon.debug(this.emulator.getDeviceInfo().screenWidth+", "+this.emulator.getDeviceInfo().screenHeight);    
+
     this.deviceWidth = this.emulator.getDeviceInfo().screenWidth;
     this.deviceHeight = this.emulator.getDeviceInfo().screenHeight;
     this.widgetWidth = this.emulator.getWidget().maxWidth;

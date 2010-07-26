@@ -1,0 +1,76 @@
+3.2.8. Change of Language
+ A widget manager MUST reflect a changed set point when a user changed
+language settings during widget's execution.
+
+put call records in the call history when a call is initiated via the API
+
+put messages in sent folder when sent via messaging api
+
+###
+
+format and packaging parser 1.2.2
+
+
+if the config.xml has the following namespade, it's a 1.0 widget
+
+  http://www.jil.org/ns/widgets
+
+if the config.xml has the following namespade, it's a W3C widget
+
+  http://www.w3.org/ns/widgets
+
+enable JIL 1.2 extensions if the following namespace exists in the config.xml
+
+  http://www.jil.org/ns/widgets1.2
+
+data to extract:
+
+Widget.id - required
+  - example: http://org.jil/wid/b4c3addd8a1004ee5c651ca52bdc42353ad5a51db258aa0597cfb4f63df36e41/Weather20%Widget
+
+Widget.version - required (what is jil-rec-version-tag?)
+
+Widget.viewmodes - required - floating, fullscreen
+
+Widget.name - required
+
+Widget.name.short - optional, but must be read
+
+Widget.icon - required zero or more times
+
+Widget.icon.xml:lang - required
+
+Widget.author - required in **1.0**, not 1.2
+
+Widget.author.email - optional
+
+Widget.content - if missing, attempt to use the following files: index.html, index.htm, index.xhtml, index.xht
+
+Widget.content.charset - used in **1.0**
+
+Widget.feature - used differently in **1.0** and 1.2 - can be nested, but JIL features are not hierarchical
+
+Widget.feature.required - in **1.0** if not present, false is assumed - in 1.2 true is assumed
+  - example: http://jil.org/jil/api/1.1/filesystem
+
+Widget.feature.param - not used yet
+
+Widget.preference - 1.2 only
+
+Widget.preference.readonly - optional, but enforced
+
+Widget.access - no child nodes
+
+Widget.access.network - zero or one, if none default is false - if false, any network access should not be allowed (XMLHttpRequest only?)
+
+Widget.access.localfs - zero or one, if none default is false
+
+Widget.access.remote_scripts - zero or one, if none default is false - use docshell to disallow
+
+Widget.maximum_display_mode - if maximum_display_mode is defined, these are to be used as full screen dimensions, nothing to do with floating mode. both not required
+  - use an artificial border to center the widget when these values are smaller than the screen size
+
+Widget.billing
+
+Widget.update - if present, Widget.version is required (thought it was always required). use the W3C Widgets 1.0 updated spec (UDD)
+
