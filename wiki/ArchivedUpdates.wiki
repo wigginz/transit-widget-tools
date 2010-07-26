@@ -1,0 +1,50 @@
+= Archived Updates =
+
+Archived updates are ordered most recent first. For the most up to day news items, check out the StatusUpdates page.
+
+== Friday July 9, 2010 ==
+
+Changed window settings so the emulator is resizable, still working on getting scrollbars to work correctly, especially on smaller displays. 
+
+Cleaned up the default data as well as copying the SQLite file outside of the extension directory so an upgrade or un-install will not destroy any custom data. Changed default devices to be three generic devices with common screen sizes.
+
+Enabled update check so Firefox can detect and install new versions of the extension.
+
+
+== Wednesday July 7, 2010 ==
+
+Added a right click context menu to the JIL status bar icon. Left click still launches the emulator in normal mode, right click with give the same options as in the tools menu.
+
+A widget in full screen mode will now stay in full screen mode when the reload button is pressed, even when the device profile is being changed.
+
+Fixed various minor issues found through some regression testing. Also added a menu bar to the emulator window for easier access to common functions as well as allowing a config.xml to be directly opened from the "File" menu.
+
+
+== Tuesday July 6, 2010 ==
+
+Enhancement of API injection making it finally working as it should. Fixed any issues with widgets attempting to use the Widget API before the emulator had properly injected the objects into the widget's scope. This happened previously with widgets using the JQuery onDocumentReady function as well as occasionally window.location. This also fixes the issue with the Widget object not being found when in debug mode (loaded in a browser tab), so Firebug debugging is now working well. It is possible that the objects will be injected multiple times, but I haven't seen any issues due to this yet so it's most likely safe.
+
+Security manager checks have been extended to all API functions. Current limitations:
+
+ * Security checks are done after argument validation (makes more sense for developers)
+ * Object properties (non-function members like Widget.Device.AccountInfo.phoneMSISDN, etc.) and XMLHttpRequest are not yet being checked by the security manager.
+
+
+== Thursday July 1, 2010 ==
+
+More progress made on the security context implementation. Prompts are correctly being displayed, responses are being tracked. Since the emulator is meant for developers and not end users, the "blanket" mode is treated the same as "session" mode. I doubt developers wont want responses saved forever. Only the Device.findFiles API is being monitored by the security manager in this build, full API integration to come in the next couple days.
+
+Also added a JIL image to the status bar (similar to Firebug's) to do a quick launch of the emulator instead of having to navigate to the Tools menu. The config.xml file still needs to be loaded in the current tab. Planning on adding a right click menu to allow launching of the profiles and debug windows.
+
+I recommend installing this build as the June 28 build had an issue with full screen mode which is now resolved. 
+
+
+== Tuesday June 28, 2010 ==
+
+Some usability enhancements have been added as well as the beginnings of the security context implementation.
+
+Quick list of what's new in the 20100628 build:
+
+ * Changed emulator container background to the JIL logo to reduce the size of the image (previous was 1+ MB).
+ * Tweaked the general settings tab to look more consistent with the others. Moved the error console button to the bottom and added security controls (not actually working yet though).
+ * Added an optional delay time to triggering events to better simulate callbacks that may take a while to be executed (location, searches, etc.).
