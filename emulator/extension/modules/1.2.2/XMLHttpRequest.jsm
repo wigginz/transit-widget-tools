@@ -90,18 +90,7 @@ function XMLHttpRequest()
     if ( self.wrapped.responseHeaders )
         self.responseHeaders = self.wrapped.responseHeaders;
     
-    if ( self.responseText )
-    {
-      try 
-      {
-        var parser = Components.classes["@mozilla.org/xmlextras/domparser;1"].createInstance(Components.interfaces.nsIDOMParser);  
-
-        self.responseXML = parser.parseFromString(self.responseText, 'text/xml');
-      } 
-      catch (ex) 
-      {
-        TransitCommon.debug(ex.message);
-      }
-    }
+    if ( self.wrapped.responseXML )
+      self.responseXML = self.wrapped.responseXML;
   }
 } 
