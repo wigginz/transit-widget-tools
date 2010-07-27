@@ -3,10 +3,11 @@ var EXPORTED_SYMBOLS = ["Telephony"];
 var _Telephony_122 = Components.classes["@jil.org/jilapi-telephony;1"].getService(Components.interfaces.jilTelephony);
 
 Components.utils.import("resource://transit-emulator/1.2.2/SecurityManager.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/CallRecordTypes.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/CallRecord.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/Exception.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/ExceptionTypes.jsm");
+
+Components.utils.import("resource://transit-emulator/1.0/CallRecordTypes.jsm");
+Components.utils.import("resource://transit-emulator/1.0/CallRecord.jsm");
+Components.utils.import("resource://transit-emulator/1.0/Exception.jsm");
+Components.utils.import("resource://transit-emulator/1.0/ExceptionTypes.jsm");
 
 function Telephony()
 {
@@ -31,7 +32,7 @@ Telephony.prototype.onCallRecordsFound = null;
 
 Telephony.prototype.deleteAllCallRecords = function(callRecordType)
 {
-  SecurityManager.checkSecurity("Remove Call Records (Telephony.deleteAllCallRecords)", SecurityManager.OP_DISALLOWED, SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, function()
+  SecurityManager.checkSecurity("Remove Call Records (Telephony.deleteAllCallRecords)", SecurityManager.OP_DISALLOWED, SecurityManager.OP_SESSION, SecurityManager.OP_ALLOWED, function()
   {
     _Telephony_122.deleteAllCallRecords(callRecordType);
   });
@@ -39,7 +40,7 @@ Telephony.prototype.deleteAllCallRecords = function(callRecordType)
 
 Telephony.prototype.deleteCallRecord = function(callRecordType, id)
 {
-  SecurityManager.checkSecurity("Remove Call Record (Telephony.deleteCallRecord)", SecurityManager.OP_DISALLOWED, SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, function()
+  SecurityManager.checkSecurity("Remove Call Record (Telephony.deleteCallRecord)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_SESSION, SecurityManager.OP_ALLOWED, function()
   {
     _Telephony_122.deleteCallRecord(callRecordType, id);
   });
@@ -85,7 +86,7 @@ Telephony.prototype.getCallRecordCnt = function(callRecordType)
     this.throwIPException("Invalid argument type for callRecordType in Telephony.getCallRecordCnt");
   
   var result = null;
-  SecurityManager.checkSecurity("Count Call Records (Telephony.getCallRecordCnt)", SecurityManager.OP_SESSION, SecurityManager.OP_ALLOWED, SecurityManager.OP_ALLOWED, function()
+  SecurityManager.checkSecurity("Count Call Records (Telephony.getCallRecordCnt)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, SecurityManager.OP_ALLOWED, function()
   {
     result = _Telephony_122.getCallRecordCnt(callRecordType);
   });
@@ -101,7 +102,7 @@ Telephony.prototype.initiateVoiceCall = function(phoneNumber)
   //if ( !(phoneNumberPattern.test(phoneNumber)) )
   //  Widget.throwIPException("Invalid argument type (format) for phoneNumber in Telephony.initiateVoiceCall");
     
-  SecurityManager.checkSecurity("Initiate Phone Call (Telephony.initiateVoiceCall)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, function()
+  SecurityManager.checkSecurity("Initiate Phone Call (Telephony.initiateVoiceCall)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
   {
     _Telephony_122.initiateVoiceCall(phoneNumber);
   });

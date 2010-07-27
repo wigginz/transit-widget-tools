@@ -169,7 +169,6 @@ var Widget =
       
     Widget.Device.DeviceStateInfo.watch("onPositionRetrieved", function(id, oldValue, newValue) 
     {
-      Widget.Device.DeviceStateInfo.onPositionRetrieved = newValue;
       emulator.setInCache("onposition", newValue);
       _DeviceStateInfo_122.onPositionRetrieved = function(position, method)
       {

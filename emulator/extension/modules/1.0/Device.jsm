@@ -3,17 +3,18 @@ var EXPORTED_SYMBOLS = ["Device"];
 var _Device_122 = Components.classes["@jil.org/jilapi-device;1"].getService(Components.interfaces.jilDevice);
 
 Components.utils.import("resource://transit-emulator/1.2.2/SecurityManager.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/AccountInfo.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/DataNetworkInfo.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/DeviceInfo.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/DeviceStateInfo.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/File.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/PositionInfo.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/PowerInfo.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/RadioInfo.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/Exception.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/ExceptionTypes.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/AddressBookItem.jsm");
+
+Components.utils.import("resource://transit-emulator/1.0/AccountInfo.jsm");
+Components.utils.import("resource://transit-emulator/1.0/DataNetworkInfo.jsm");
+Components.utils.import("resource://transit-emulator/1.0/DeviceInfo.jsm");
+Components.utils.import("resource://transit-emulator/1.0/DeviceStateInfo.jsm");
+Components.utils.import("resource://transit-emulator/1.0/File.jsm");
+Components.utils.import("resource://transit-emulator/1.0/PositionInfo.jsm");
+Components.utils.import("resource://transit-emulator/1.0/PowerInfo.jsm");
+Components.utils.import("resource://transit-emulator/1.0/RadioInfo.jsm");
+Components.utils.import("resource://transit-emulator/1.0/Exception.jsm");
+Components.utils.import("resource://transit-emulator/1.0/ExceptionTypes.jsm");
+Components.utils.import("resource://transit-emulator/1.0/AddressBookItem.jsm");
 
 function Device()
 {
@@ -91,7 +92,7 @@ Device.prototype.deleteFile = function(destinationFullName)
 
 Device.prototype.findFiles = function(matchFile, startInx, endInx)
 {
-  SecurityManager.checkSecurity("File Search (Device.findFiles)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+  SecurityManager.checkSecurity("File Search (Device.findFiles)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
   {
     _Device_122.findFiles(matchFile.updateJIL(), startInx, endInx);
   });
@@ -100,7 +101,7 @@ Device.prototype.findFiles = function(matchFile, startInx, endInx)
 Device.prototype.getAvailableApplications = function()
 {
   var result = null;
-  SecurityManager.checkSecurity("Get Available Applications (Device.getAvailableApplications)", SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, SecurityManager.OP_ALLOWED, function()
+  SecurityManager.checkSecurity("Get Available Applications (Device.getAvailableApplications)", SecurityManager.OP_SESSION, SecurityManager.OP_ALLOWED, SecurityManager.OP_ALLOWED, function()
   {
     result = _Device_122.getAvailableApplications();
   });
@@ -110,7 +111,7 @@ Device.prototype.getAvailableApplications = function()
 Device.prototype.getDirectoryFileNames = function(sourceDirectory)
 {
   var result = null;
-  SecurityManager.checkSecurity("List Files in a Folder (Device.getDirectoryFileNames)", SecurityManager.OP_BLANKET, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+  SecurityManager.checkSecurity("List Files in a Folder (Device.getDirectoryFileNames)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
   {
     result = _Device_122.getDirectoryFileNames(sourceDirectory);
   });
@@ -140,12 +141,7 @@ Device.prototype.getFile = function(fullName)
 
 Device.prototype.getFileSystemRoots = function()
 {
-  var result = null;
-  SecurityManager.checkSecurity("List File Systems (Device.getFileSystemRoots)", SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, SecurityManager.OP_ALLOWED, function()
-  {
-    result = _Device_122.getFileSystemRoots();
-  });
-  return(result);
+  return(_Device_122.getFileSystemRoots());
 };
 
 Device.prototype.getFileSystemSize = function(fileSystemRoot)

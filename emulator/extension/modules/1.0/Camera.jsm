@@ -47,5 +47,8 @@ Camera.prototype.setWindow = function(domObj)
 
 Camera.prototype.stopVideoCapture = function()
 {
-  _Camera_122.stopVideoCapture();
+  SecurityManager.checkSecurity("Stop Capture Camera Video (Camera.stopVideoCapture)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+  {
+    _Camera_122.stopVideoCapture();
+  });
 };
