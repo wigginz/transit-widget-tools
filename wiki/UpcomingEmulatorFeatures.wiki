@@ -11,6 +11,7 @@ This is the current list of features and improvements we plan to implement in th
  * Ensure SVG and SVG Tiny is properly supported.
  * Implementation of Camera capture APIs via attached webcam (or other input stream if possible).
  * Integrate usage of XMLHttpRequest to the security manager as defined in the JIL Spec. Additionally integrate object properties with the security manager (only methods are currently monitored by the security manager).
+ * Support for multiple languages for an emulated widget and the ability to change runtime language at runtime.
 
 == Medium Priority ==
 
