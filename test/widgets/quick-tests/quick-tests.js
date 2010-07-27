@@ -2,15 +2,14 @@ var testXMLHttpRequest =
 {
   testAsync : function()
   {
-//     var req = new XMLHttpRequest();
-//     req.open('GET', 'http://example.com/', true);
-//     req.onreadystatechange = function () 
-//     {
-//       if ( (req.readyState == 4) && (req.status == 200) )
-//         response(req);
-//     };
-//     req.send(null);
-    alert(Widget.testDate);
+    var req = new XMLHttpRequest();
+    req.open('GET', 'http://example.com/', true);
+    req.onreadystatechange = function () 
+    {
+      if ( (req.readyState == 4) && (req.status == 200) )
+        response(req);
+    };
+    req.send(null);
   },
 };
 
