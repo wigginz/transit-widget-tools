@@ -92,26 +92,6 @@ JILEmulatorRuntime.prototype = //#
     // the current window must be showing a valid config.xml
     var fileName = this.getFileName(configUri);
     var baseUrl = configUri.substring(0, configUri.length-10);
-
-    // go through the widget ingesters, starting with 1.2
-    var widget = null;
-    try
-    {
-      widget = WidgetIngester_122.ingest(domDoc, baseUrl);
-      
-      if ( !widget )
-      {
-        widget = WidgetIngester_10.ingest(domDoc, baseUrl);
-        if ( widget )
-          TransitCommon.debug("Widget is JIL spec 1.0");
-      }
-      else
-        TransitCommon.debug("Widget is JIL spec 1.2.x");
-    }
-    catch (ex)
-    {
-      TransitCommon.debug("Could not ingest widget, reason: "+ex.message);
-    }    
     
     this.logAction("Widget emulation requested on configuration file: "+configUri);
 
@@ -123,56 +103,40 @@ JILEmulatorRuntime.prototype = //#
       return;
     }
 
-    var eWidget = Components.classes["@jil.org/jilapi-emulatedwidget;1"].createInstance(Components.interfaces.jilEmulatedWidget);
     var onError = false;
+    
+    // go through the widget ingesters, starting with 1.2
+    var widget = null;
+    try
+    {
+      widget = WidgetIngester_122.ingest(domDoc, baseUrl);
+      
+      if ( !widget )
+      {
+        widget = WidgetIngester_10.ingest(domDoc, baseUrl);
+        if ( widget )
+          this.logAction("Widget is JIL spec 1.0");
+      }
+      else
+        this.logAction("Widget is JIL spec 1.2.x");
+    }
+    catch (ex)
+    {
+      TransitCommon.alert("Could not ingest widget config.xml, reason: "+ex.message+". Cannot load widget.");
+      this.logAction("Could not ingest widget config.xml, reason: "+ex.message+". Cannot load widget.");
+    }
+    
+    if ( !widget )
+    {
+      TransitCommon.alert("Widget config.xml does not conform to JIL 1.0 or 1.2.x specs, cannot load.");
+      this.logAction("Widget config.xml does not conform to JIL 1.0 or 1.2.x specs, cannot load.");
+      return;
+    }
+    
     try
     { 
       var ww = Components.classes["@mozilla.org/embedcomp/window-watcher;1"]
                    .getService(Components.interfaces.nsIWindowWatcher);
-
-      var widgetElement = domDoc;
-      eWidget.id = widgetElement.getAttribute("id");
-      eWidget.version = widgetElement.getAttribute("version");
-      eWidget.baseUrl = baseUrl;
-
-      eWidget.widgetHeight = widgetElement.getAttribute("height");
-      eWidget.widgetWidth = widgetElement.getAttribute("width");
-
-      if ( widgetElement.getElementsByTagName("billing")[0] )
-        eWidget.billingFlag = widgetElement.getElementsByTagName("billing")[0].getAttribute("required");
-
-      // find a better way to do this
-      if ( widgetElement.getElementsByTagName("maximum_display_mode")[0] )
-      {
-        eWidget.maxHeight = widgetElement.getElementsByTagName("maximum_display_mode")[0].getAttribute("height");
-        eWidget.maxWidth = widgetElement.getElementsByTagName("maximum_display_mode")[0].getAttribute("width");
-      }
-      else if ( widgetElement.getElementsByTagName("JIL:maximum_display_mode")[0] )
-      {
-        eWidget.maxHeight = widgetElement.getElementsByTagName("JIL:maximum_display_mode")[0].getAttribute("height");
-        eWidget.maxWidth = widgetElement.getElementsByTagName("JIL:maximum_display_mode")[0].getAttribute("width");
-      }
-      else if ( widgetElement.getElementsByTagName("jil:maximum_display_mode")[0] )
-      {
-        eWidget.maxHeight = widgetElement.getElementsByTagName("jil:maximum_display_mode")[0].getAttribute("height");
-        eWidget.maxWidth = widgetElement.getElementsByTagName("jil:maximum_display_mode")[0].getAttribute("width");
-      }
-
-      eWidget.iconSrc = "file://"+baseUrl+widgetElement.getElementsByTagName("icon")[0].getAttribute("src");
-      eWidget.contentSrc = "file://"+baseUrl+widgetElement.getElementsByTagName("content")[0].getAttribute("src");
-      eWidget.name = widgetElement.getElementsByTagName("name")[0].firstChild.nodeValue;
-
-      if (widgetElement.getElementsByTagName("description")[0]  )
-        eWidget.description = widgetElement.getElementsByTagName("description")[0].firstChild.nodeValue;
-
-      if ( widgetElement.getElementsByTagName("license")[0] )
-        eWidget.license = widgetElement.getElementsByTagName("license")[0].firstChild.nodeValue;
-
-      if ( widgetElement.getElementsByTagName("author")[0] )
-      {
-        eWidget.author = widgetElement.getElementsByTagName("author")[0].firstChild.nodeValue;
-        eWidget.authorEmail = widgetElement.getElementsByTagName("author")[0].getAttribute("email");
-      }
 
       this.logAction("Configuration file successfully parsed, opening widget in emulator window.");
 
@@ -182,39 +146,36 @@ JILEmulatorRuntime.prototype = //#
         this.emulatorWindow.focus();
       }
       
-      this.logAction("Starting widget emulation for widget: "+eWidget.name+", version: "+eWidget.version);
+      this.logAction("Starting widget emulation for widget: "+widget.name+", version: "+widget.version);
 
       // check to see if this widget exists in the database
-      var emulatedWidget = this.profileService.getEmulatedWidgetByAppId(this.deviceProfile.id, eWidget.id);
+      var emulatedWidget = this.profileService.getEmulatedWidgetByAppId(this.deviceProfile.id, widget.id, widget.version);
       // if it doesnt, add it
       if ( emulatedWidget == null )
       {
         emulatedWidget = 
         {
-          version : eWidget.version,
-          name : eWidget.name, 
-          author : eWidget.author,
+          version : widget.version,
+          name : widget.names[0].name, 
+          author : widget.authorName,
           profileId : this.deviceProfile.id,
-          applicationId: eWidget.id
+          applicationId: widget.id
         };
         this.profileService.addEmulatedWidget(emulatedWidget);
         // get it again so we have the ID, should rework the add so we don't have to do this...
-        emulatedWidget = this.profileService.getEmulatedWidgetByAppId(this.deviceProfile.id, eWidget.id);
+        emulatedWidget = this.profileService.getEmulatedWidgetByAppId(this.deviceProfile.id, widget.id);
       }
       // if it does, update it
       else
       {
-        emulatedWidget.version = eWidget.version;
-        emulatedWidget.name = eWidget.name;
-        emulatedWidget.author = eWidget.author;
+        emulatedWidget.version = widget.version;
+        emulatedWidget.name = widget.names[0].name;
+        emulatedWidget.author = widget.authorName;
         this.profileService.updateEmulatedWidget(emulatedWidget);
       }
 
-      eWidget.internalId = emulatedWidget.id
-      this.widget = eWidget;
-
-      // init the state hash
-      this.state = new Array();
+      widget.internalId = emulatedWidget.id;
+      this.widget = widget;
       
       // initialize the services
       this.reloadServices();
@@ -226,7 +187,7 @@ JILEmulatorRuntime.prototype = //#
     }   
   },
  
-  unload : function()
+  unload : function(internalId)
   {
     this.emulatorWindow = null;
 

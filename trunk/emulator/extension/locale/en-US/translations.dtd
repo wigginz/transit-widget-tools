@@ -6,6 +6,7 @@
 <!ENTITY jwe.emulator.title "Transit Widget Emulator">
 <!ENTITY jwe.emulator.emulating "Emulating: ">
 <!ENTITY jwe-emulator-widget-name-version "Version: ">
+<!ENTITY jwe-emulator-widget-name-jilspec "JIL Specification: ">
 <!ENTITY jwe.emulator.pickprofile "Devices">
 <!ENTITY jwe.emulator.controls.popout "Pop-out">
 <!ENTITY jwe.menu.profiles "Manage Profiles...">

@@ -70,14 +70,15 @@ var jwe_emulator =
 
     this.resizeScreen();
 
-    $("jwe-emulator-widget-name").attr("value", this.emulator.getWidget().name);
+    $("jwe-emulator-widget-name").attr("value", this.emulator.getWidget().names[0].name);
     $("jwe-emulator-widget-version").attr("value", this.emulator.getWidget().version); 
-    $("jwe-emulator-widget-author").attr("value", this.emulator.getWidget().author);  
+    $("jwe-emulator-widget-author").attr("value", this.emulator.getWidget().authorName);  
     $("jwe-emulator-widget-heightwidth").attr("value", this.widgetWidth+" x "+this.widgetHeight);
-    $("jwe-emulator-widget-description").attr("value", this.emulator.getWidget().description);    
-    $("jwe-emulator-widget-icon").attr("src", this.emulator.getWidget().iconSrc);
+    $("jwe-emulator-widget-description").attr("value", this.emulator.getWidget().descriptions[0].description);    
+    $("jwe-emulator-widget-icon").attr("src", this.emulator.getWidget().icons[0].source);
+    $("jwe-emulator-widget-jilspec").attr("value", this.emulator.getWidget().jilSpec);
         
-    $("jwe-emulator-content").attr("src", this.emulator.getWidget().contentSrc);
+    $("jwe-emulator-content").attr("src", this.emulator.getWidget().contentSource);
     
     $("jwe-emulator-tools-box-profiles-list").node.parentNode.removeChild($("jwe-emulator-tools-box-profiles-list").node);
     var menupopup = document.createElement("menupopup");
@@ -300,7 +301,7 @@ var jwe_emulator =
   {
     $("jwe-log").val(this.emulator.getLog());
     $("jwe-emulator-content").attr("src", "about:blank");
-    $("jwe-emulator-content").attr("src", this.emulator.getWidget().contentSrc);
+    $("jwe-emulator-content").attr("src", this.emulator.getWidget().contentSource);
     
     this.clearLog();   
 

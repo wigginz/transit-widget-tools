@@ -20,13 +20,13 @@ var WidgetIngester_122 =
         short
         lang
       widget.icons - array
-        src
+        source
         lang
         height
         width
       widget.contentType
       widget.contentEncoding
-      widget.source
+      widget.contentSource
       widget.features - array
         name
         required
@@ -69,7 +69,8 @@ var WidgetIngester_122 =
     }
     
     var widget = {};
-    widget.jilSpec = "1.2.2";
+    widget.jilSpec = "1.2.2";    
+    widget.baseUrl = baseUrl;
     
     widget.id = config.getAttribute("id");
     
@@ -115,7 +116,7 @@ var WidgetIngester_122 =
         
       widget.icons.push(
       {
-        src : iconElements[i].getAttribute("src"), 
+        source : "file://"+baseUrl+iconElements[i].getAttribute("src"), 
         lang : iconElements[i].getAttribute("xml:lang"), 
         height : iconElements[i].getAttribute("height"), 
         width : iconElements[i].getAttribute("width")
@@ -127,12 +128,12 @@ var WidgetIngester_122 =
     if ( contentElement )
     {
       widget.contentType = contentElement.getAttribute("type");
-      widget.source = contentElement.getAttribute("src");
+      widget.contentSource = "file://"+baseUrl+contentElement.getAttribute("src");
       widget.contentEncoding = contentElement.getAttribute("encoding");
     }
     
     // if no index file was specified, check for default values    
-    if ( !widget.source ) 
+    if ( !widget.contentSource ) 
     {
       for ( var i = 0; i < this.indexDefaults.length; i++ )
       {
@@ -141,11 +142,11 @@ var WidgetIngester_122 =
       
         if ( testFile.exists() )
         {
-          widget.source = "file://"+baseUrl+this.indexDefaults;
+          widget.contentSource = "file://"+baseUrl+this.indexDefaults;
           break;
         }
       }
-      if ( !widget.source ) 
+      if ( !widget.contentSource ) 
         throw {message: "config.xml does not contain a valid source file, could not find one in the content element, or by looking for default files (index.html, etc.)."};
     }
     
