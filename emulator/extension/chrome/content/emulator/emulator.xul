@@ -139,6 +139,10 @@
                             <label id="jwe-emulator-widget-version"/>
                           </hbox>
                           <hbox>
+                            <label style="width: 14em;" value="&jwe-emulator-widget-name-jilspec;"/>
+                            <label id="jwe-emulator-widget-jilspec"/>
+                          </hbox>
+                          <hbox>
                             <label style="width: 14em;" value="&jwe.emulator.widgetinfo.author;"/>
                             <label id="jwe-emulator-widget-author"/>
                           </hbox>   

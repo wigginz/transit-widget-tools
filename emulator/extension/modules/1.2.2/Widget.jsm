@@ -98,10 +98,47 @@ var Widget =
     this.onMaximize = null;
     this.onRestore = null;
     this.onWakeup = null;
+    
+    this.init();
+  },
+  
+  loadConstructors : function()
+  {
+    Widget.Exception = function() {};
+    Widget.Exception.prototype = new Exception();
+
+    Widget.Device.File = function() {};
+    Widget.Device.File.prototype = new File();
+
+    Widget.Device.PositionInfo = function() {};
+    Widget.Device.PositionInfo.prototype = new PositionInfo();
+
+    Widget.Messaging.Account = function() {};
+    Widget.Messaging.Account.prototype = new Account();
+
+    Widget.Messaging.Attachment = function() {};
+    Widget.Messaging.Attachment.prototype = new Attachment();
+
+    Widget.Messaging.Message = function() {};
+    Widget.Messaging.Message.prototype = new Message();
+
+    Widget.Messaging.MessageQuantities = function() {};
+    Widget.Messaging.MessageQuantities.prototype = new MessageQuantities();
+
+    Widget.PIM.AddressBookItem = function() {};
+    Widget.PIM.AddressBookItem.prototype = new AddressBookItem();
+
+    Widget.PIM.CalendarItem = function() {};
+    Widget.PIM.CalendarItem.prototype = new CalendarItem();
+
+    Widget.Telephony.CallRecord = function() {};
+    Widget.Telephony.CallRecord.prototype = new CallRecord();
   },
       
   init : function()
   {   
+    this.loadConstructors();
+    
     Widget.watch("onFocus", function(id, oldValue, newValue) {
       emulator.setInCache("onfocus", newValue);
       _Widget_122.onFocus = newValue; });
@@ -249,35 +286,5 @@ var Widget =
     };
   },
 };
-
-Widget.Exception = function() {};
-Widget.Exception.prototype = new Exception();
-
-Widget.Device.File = function() {};
-Widget.Device.File.prototype = new File();
-
-Widget.Device.PositionInfo = function() {};
-Widget.Device.PositionInfo.prototype = new PositionInfo();
-
-Widget.Messaging.Account = function() {};
-Widget.Messaging.Account.prototype = new Account();
-
-Widget.Messaging.Attachment = function() {};
-Widget.Messaging.Attachment.prototype = new Attachment();
-
-Widget.Messaging.Message = function() {};
-Widget.Messaging.Message.prototype = new Message();
-
-Widget.Messaging.MessageQuantities = function() {};
-Widget.Messaging.MessageQuantities.prototype = new MessageQuantities();
-
-Widget.PIM.AddressBookItem = function() {};
-Widget.PIM.AddressBookItem.prototype = new AddressBookItem();
-
-Widget.PIM.CalendarItem = function() {};
-Widget.PIM.CalendarItem.prototype = new CalendarItem();
-
-Widget.Telephony.CallRecord = function() {};
-Widget.Telephony.CallRecord.prototype = new CallRecord();
 
 Widget.init();

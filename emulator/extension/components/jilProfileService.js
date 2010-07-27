@@ -264,11 +264,12 @@ JILProfileService.prototype = //#
     return(widgets);
   },
 
-  getEmulatedWidgetByAppId : function(profileId, appId)
+  getEmulatedWidgetByAppId : function(profileId, appId, version)
   {
-    var stmt = this.getConnection().createStatement("select id, name, version, author from jwe_emulated_widget where profile_id = :profileId and application_id = :appId");
+    var stmt = this.getConnection().createStatement("select id, name, version, author from jwe_emulated_widget where profile_id = :profileId and application_id = :appId and version = :version");
     stmt.params.profileId = profileId;
     stmt.params.appId = appId;
+    stmt.params.version = version;
 
     var widget = new jilEmulatedWidget();
     try
@@ -279,7 +280,7 @@ JILProfileService.prototype = //#
         widget.id = stmt.row.id;
         widget.applicationId = appId;
         widget.name = stmt.row.name;
-        widget.version = stmt.row.version;
+        widget.version = version;
         widget.author = stmt.row.author;
       }
     }

@@ -40,6 +40,4 @@ ${1}/bin/xpidl -m typelib -w -v -I ${1}/idl -e ../extension/components/jilExcept
 ${1}/bin/xpidl -m typelib -w -v -I ${1}/idl -e ../extension/components/jilApplicationTypes.xpt jilApplicationTypes.idl
 ${1}/bin/xpidl -m typelib -w -v -I ${1}/idl -e ../extension/components/jilRadioSignalSourceTypes.xpt jilRadioSignalSourceTypes.idl
 
-${1}/bin/xpidl -m typelib -w -v -I ${1}/idl -e ../extension/components/jilEmulatedWidget.xpt jilEmulatedWidget.idl
-
 cd ..
