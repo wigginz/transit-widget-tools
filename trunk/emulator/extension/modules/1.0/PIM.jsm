@@ -3,9 +3,10 @@ var EXPORTED_SYMBOLS = ["PIM"];
 var _PIM_122 = Components.classes["@jil.org/jilapi-pim;1"].getService(Components.interfaces.jilPIM);
 
 Components.utils.import("resource://transit-emulator/1.2.2/SecurityManager.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/EventRecurrenceTypes.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/AddressBookItem.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/CalendarItem.jsm");
+
+Components.utils.import("resource://transit-emulator/1.0/EventRecurrenceTypes.jsm");
+Components.utils.import("resource://transit-emulator/1.0/AddressBookItem.jsm");
+Components.utils.import("resource://transit-emulator/1.0/CalendarItem.jsm");
 
 function PIM()
 {
@@ -67,7 +68,7 @@ PIM.prototype.createAddressBookItem = function()
 
 PIM.prototype.deleteAddressBookGroup = function(groupName)
 {
-  SecurityManager.checkSecurity("Remove Contact Group (PIM.deleteAddressBookGroup)", SecurityManager.OP_DISALLOWED, SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, function()
+  SecurityManager.checkSecurity("Remove Contact Group (PIM.deleteAddressBookGroup)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
   {
     _PIM_122.deleteAddressBookGroup(groupName);
   });
@@ -75,7 +76,7 @@ PIM.prototype.deleteAddressBookGroup = function(groupName)
 
 PIM.prototype.deleteAddressBookItem = function(id)
 {
-  SecurityManager.checkSecurity("Remove Contact (PIM.deleteAddressBookItem)", SecurityManager.OP_DISALLOWED, SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, function()
+  SecurityManager.checkSecurity("Remove Contact (PIM.deleteAddressBookItem)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
   {
     _PIM_122.deleteAddressBookItem(id);
   });
@@ -83,7 +84,7 @@ PIM.prototype.deleteAddressBookItem = function(id)
 
 PIM.prototype.deleteCalendarItem = function(calendarId)
 {
-  SecurityManager.checkSecurity("Remove Calendar Entry (PIM.deleteCalendarItem)", SecurityManager.OP_DISALLOWED, SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, function()
+  SecurityManager.checkSecurity("Remove Calendar Entry (PIM.deleteCalendarItem)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, function()
   {
     _PIM_122.deleteCalendarItem(calendarId);
   });
@@ -139,7 +140,7 @@ PIM.prototype.getAddressBookGroupMembers = function(groupName)
 PIM.prototype.getAddressBookItem = function(id)
 {
   var wrappedItem = null;
-  SecurityManager.checkSecurity("Get Contact (PIM.getAddressBookItem)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+  SecurityManager.checkSecurity("Get Contact (PIM.getAddressBookItem)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
   {
     var jilItem = _PIM_122.getAddressBookItem(id);
     wrappedItem = new AddressBookItem();
@@ -161,7 +162,7 @@ PIM.prototype.getAddressBookItemsCount = function()
 PIM.prototype.getAvailableAddressGroupNames = function()
 {
   var result = null;
-  SecurityManager.checkSecurity("Get Contact Groups (PIM.getAvailableAddressGroupNames)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+  SecurityManager.checkSecurity("Get Contact Groups (PIM.getAvailableAddressGroupNames)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
   {
     result = _PIM_122.getAvailableAddressGroupNames();
   });
@@ -171,7 +172,7 @@ PIM.prototype.getAvailableAddressGroupNames = function()
 PIM.prototype.getCalendarItem = function(calendarId)
 {
   var wrappedItem = null;
-  SecurityManager.checkSecurity("Get Calendar Entry (PIM.getCalendarItem)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+  SecurityManager.checkSecurity("Get Calendar Entry (PIM.getCalendarItem)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
   {
     var jilItem = _PIM_122.getCalendarItem(calendarId);
     wrappedItem = new CalendarItem();
@@ -183,7 +184,7 @@ PIM.prototype.getCalendarItem = function(calendarId)
 PIM.prototype.getCalendarItems = function(startTime, endTime)
 {
   var wrappedArray = null;
-  SecurityManager.checkSecurity("Get Calendar Entries (PIM.getCalendarItems)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+  SecurityManager.checkSecurity("Get Calendar Entries (PIM.getCalendarItems)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
   {
     var jilArray = _PIM_122.getCalendarItems(startTime, endTime);
     wrappedArray = new Array();

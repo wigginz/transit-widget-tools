@@ -1,11 +1,12 @@
 var EXPORTED_SYMBOLS = ["Messaging"];
 
 Components.utils.import("resource://transit-emulator/1.2.2/SecurityManager.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/MessageFolderTypes.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/MessageTypes.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/MessageQuantities.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/Message.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/Account.jsm");
+
+Components.utils.import("resource://transit-emulator/1.0/MessageFolderTypes.jsm");
+Components.utils.import("resource://transit-emulator/1.0/MessageTypes.jsm");
+Components.utils.import("resource://transit-emulator/1.0/MessageQuantities.jsm");
+Components.utils.import("resource://transit-emulator/1.0/Message.jsm");
+Components.utils.import("resource://transit-emulator/1.0/Account.jsm");
 
 var _Messaging_122 = Components.classes["@jil.org/jilapi-messaging;1"].getService(Components.interfaces.jilMessaging);
 
@@ -69,7 +70,7 @@ Messaging.prototype.deleteAllMessages = function(messageType, folderName)
 
 Messaging.prototype.deleteEmailAccount = function(accountId)
 {
-  SecurityManager.checkSecurity("Delete Email Account (Messaging.deleteEmailAccount)", SecurityManager.OP_DISALLOWED, SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, function()
+  SecurityManager.checkSecurity("Delete Email Account (Messaging.deleteEmailAccount)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
   {
     _Messaging_122.deleteEmailAccount(accountId);
   });
@@ -77,7 +78,7 @@ Messaging.prototype.deleteEmailAccount = function(accountId)
 
 Messaging.prototype.deleteFolder = function(messageType, folderName)
 {
-  SecurityManager.checkSecurity("Delete Message Folder (Messaging.deleteFolder)", SecurityManager.OP_DISALLOWED, SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, function()
+  SecurityManager.checkSecurity("Delete Message Folder (Messaging.deleteFolder)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, function()
   {
     _Messaging_122.deleteFolder(messageType, folderName);
   });
@@ -85,7 +86,7 @@ Messaging.prototype.deleteFolder = function(messageType, folderName)
 
 Messaging.prototype.deleteMessage = function(messageType, folderName, id)
 {
-  SecurityManager.checkSecurity("Delete Message (Messaging.deleteMessage)", SecurityManager.OP_DISALLOWED, SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, function()
+  SecurityManager.checkSecurity("Delete Message (Messaging.deleteMessage)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_SESSION, SecurityManager.OP_ALLOWED, function()
   {
     _Messaging_122.deleteMessage(messageType, folderName, id);
   });
@@ -102,7 +103,7 @@ Messaging.prototype.findMessages = function(comparisonMsg, folderName, startInx,
 Messaging.prototype.getCurrentEmailAccount = function()
 {
   var wrappedAccount = null;
-  SecurityManager.checkSecurity("Access Current Email Account (Messaging.getCurrentEmailAccount)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+  SecurityManager.checkSecurity("Access Current Email Account (Messaging.getCurrentEmailAccount)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
   {
     var jilAccount = _Messaging_122.getCurrentEmailAccount();
     wrappedAccount = new Account();
@@ -140,7 +141,7 @@ Messaging.prototype.getFolderNames = function(messageType)
 Messaging.prototype.getMessage = function(messageType, folderName, index)
 {
   var wrappedMessage = null;
-  SecurityManager.checkSecurity("Access Message (Messaging.getMessage)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+  SecurityManager.checkSecurity("Access Message (Messaging.getMessage)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
   {
     var jilMessage = _Messaging_122.getMessage(messageType, folderName, index);
     wrappedMessage = new Message();
@@ -151,15 +152,19 @@ Messaging.prototype.getMessage = function(messageType, folderName, index)
 
 Messaging.prototype.getMessageQuantities = function(messageType, folderName)
 {
-  var jilQuantities = _Messaging_122.getMessageQuantities(messageType, folderName);
-  var wrappedQuantities = new MessageQuantities();
-  wrappedQuantities.setJIL(jilQuantities);      
+  var wrappedQuantities = null;
+  SecurityManager.checkSecurity("Access Message Quantities (Messaging.getMessageQuantities)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, SecurityManager.OP_ALLOWED, function()
+  {
+    var jilQuantities = _Messaging_122.getMessageQuantities(messageType, folderName);
+    var wrappedQuantities = new MessageQuantities();
+    wrappedQuantities.setJIL(jilQuantities); 
+  });
   return(wrappedQuantities);
 };
 
 Messaging.prototype.moveMessageToFolder = function(msg, destinationFolder)
 {
-  SecurityManager.checkSecurity("Move Message to Folder (Messaging.moveMessageToFolder)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+  SecurityManager.checkSecurity("Move Message to Folder (Messaging.moveMessageToFolder)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_SESSION, SecurityManager.OP_ALLOWED, function()
   {
     _Messaging_122.moveMessageToFolder(msg.updateJIL(), destinationFolder);
   });
@@ -175,7 +180,7 @@ Messaging.prototype.sendMessage = function(msg)
 
 Messaging.prototype.setCurrentEmailAccount = function(accountId)
 {
-  SecurityManager.checkSecurity("Set Current Email Account (Messaging.setCurrentEmailAccount)", SecurityManager.OP_SESSION, SecurityManager.OP_ALLOWED, SecurityManager.OP_ALLOWED, function()
+  SecurityManager.checkSecurity("Set Current Email Account (Messaging.setCurrentEmailAccount)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
   {
     _Messaging_122.setCurrentEmailAccount(accountId);
   });

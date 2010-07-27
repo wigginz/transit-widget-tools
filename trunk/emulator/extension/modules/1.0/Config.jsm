@@ -31,7 +31,7 @@ Config.prototype.setAsWallpaper = function(wallpaperFileUrl)
   if ( (wallpaperFileUrl == null) || (wallpaperFileUrl.constructor != String) )
     this.throwIPException("Invalid argument type for wallpaperFileUrl in Config.setAsWallpaper");
   
-  SecurityManager.checkSecurity("Set Wallpaper (Config.setAsWallpaper)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_BLANKET, function()
+  SecurityManager.checkSecurity("Set Wallpaper (Config.setAsWallpaper)", SecurityManager.OP_SESSION, SecurityManager.OP_ALLOWED, SecurityManager.OP_ALLOWED, function()
   {
     _Config_122.setAsWallpaper(wallpaperFileUrl);
   });
@@ -42,7 +42,7 @@ Config.prototype.setDefaultRingtone = function(ringtoneFileUrl)
   if ( (ringtoneFileUrl == null) || (ringtoneFileUrl.constructor != String) )
     this.throwIPException("Invalid argument type for ringtoneFileUrl in Config.setDefaultRingtone");
 
-  SecurityManager.checkSecurity("Set Default Ringtone (Config.setDefaultRingtone)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_BLANKET, function()
+  SecurityManager.checkSecurity("Set Default Ringtone (Config.setDefaultRingtone)", SecurityManager.OP_SESSION, SecurityManager.OP_ALLOWED, SecurityManager.OP_ALLOWED, function()
   {
     _Config_122.setDefaultRingtone(ringtoneFileUrl);
   });

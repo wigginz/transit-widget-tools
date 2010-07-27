@@ -73,38 +73,23 @@ Message.prototype.addAttachment = function(fileFullName)
 
 Message.prototype.deleteAddress = function(type, address)
 {
-  var allowed = false;
-  SecurityManager.checkSecurity("Remove Message Recipient (Message.deleteAddress)", SecurityManager.OP_DISALLOWED, SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, function()
-  {
-    allowed = true;
-  });
-  
-  if ( allowed )
-  {
-    this.updateJIL();
-    this._jilMessage.deleteAddress(type, address);
-    this.updateAddress(type);
-  }
+  this.updateJIL();
+  this._jilMessage.deleteAddress(type, address);
+  this.updateAddress(type);
 };
 
 Message.prototype.deleteAttachment = function(attachment)
 {
-  SecurityManager.checkSecurity("Remove Message Attachment (Message.deleteAttachment)", SecurityManager.OP_DISALLOWED, SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, function()
-  {
-    this.updateJIL();
-    this._jilMessage.deleteAttachment(attachment.updateJIL());
-    this.attachments = this._jilMessage().getAttachments();
-  });
+  this.updateJIL();
+  this._jilMessage.deleteAttachment(attachment.updateJIL());
+  this.attachments = this._jilMessage().getAttachments();
 };
 
 Message.prototype.saveAttachment = function(fileFullName, attachment)
 {
-  SecurityManager.checkSecurity("Save Message Attachment (Message.saveAttachment)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, function()
-  {
-    this.updateJIL();
-    this._jilMessage.saveAttachment(fileFullName, attachment.updateJIL());
-    this.attachments = this._jilMessage.getAttachments();
-  });
+  this.updateJIL();
+  this._jilMessage.saveAttachment(fileFullName, attachment.updateJIL());
+  this.attachments = this._jilMessage.getAttachments();
 };
 
 Message.prototype.update = function()

@@ -2,20 +2,23 @@ var EXPORTED_SYMBOLS = ["Widget"];
 
 Components.utils.import("resource://transit-emulator/TransitCommon.jsm");
 
-Components.utils.import("resource://transit-emulator/1.2.2/Multimedia.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/Device.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/PositionInfo.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/File.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/Messaging.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/Account.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/MessageQuantities.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/Message.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/Attachment.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/AddressBookItem.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/CalendarItem.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/PIM.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/Telephony.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/CallRecord.jsm");
+// use the 1.2.2 security manager since it wasn't different in 1.0
+Components.utils.import("resource://transit-emulator/1.2.2/SecurityManager.jsm");
+
+Components.utils.import("resource://transit-emulator/1.0/Multimedia.jsm");
+Components.utils.import("resource://transit-emulator/1.0/Device.jsm");
+Components.utils.import("resource://transit-emulator/1.0/PositionInfo.jsm");
+Components.utils.import("resource://transit-emulator/1.0/File.jsm");
+Components.utils.import("resource://transit-emulator/1.0/Messaging.jsm");
+Components.utils.import("resource://transit-emulator/1.0/Account.jsm");
+Components.utils.import("resource://transit-emulator/1.0/MessageQuantities.jsm");
+Components.utils.import("resource://transit-emulator/1.0/Message.jsm");
+Components.utils.import("resource://transit-emulator/1.0/Attachment.jsm");
+Components.utils.import("resource://transit-emulator/1.0/AddressBookItem.jsm");
+Components.utils.import("resource://transit-emulator/1.0/CalendarItem.jsm");
+Components.utils.import("resource://transit-emulator/1.0/PIM.jsm");
+Components.utils.import("resource://transit-emulator/1.0/Telephony.jsm");
+Components.utils.import("resource://transit-emulator/1.0/CallRecord.jsm");
 
 var _Device_122 = Components.classes["@jil.org/jilapi-device;1"].getService(Components.interfaces.jilDevice);
 var _DataNetworkInfo_122 = Components.classes["@jil.org/jilapi-datanetworkinfo;1"].getService(Components.interfaces.jilDataNetworkInfo);
@@ -60,8 +63,11 @@ var Widget =
   {
     if ( (url == null) || (url.constructor != String) )
       Widget.throwIPException("Invalid argument type for url in Widget.openUrl");
-    
-    _Widget_122.openURL(url);
+
+    SecurityManager.checkSecurity("Open Internet Address (Widget.openURL)", SecurityManager.OP_SESSION, SecurityManager.OP_ALLOWED, SecurityManager.OP_ALLOWED, function()
+    {
+      _Widget_122.openURL(url);
+    });
   },
 
   preferenceForKey : function(key) 
