@@ -18,6 +18,8 @@ Added a landscape mode toggle for the display section of the general tab in the 
 
 Implemented widget config.xml ingestion based on JIL spec. Transit will now be able to detect and properly emulate widgets using either the JIL 1.0 or 1.2 packaging spec. This is leading us to full simultaneous JIL spec support for both packaging and API specs (coming soon). New ingestion process also includes per the spec validation and proper handling of all config.xml elements.
 
+TODO: Determine how to handle backward compatibility... if a widget is packaging spec 1.0 and wants to run on a 1.2.2 runtime, should we let them? Should there be a checkbox for supported specs so a device can support more than one spec?
+
 === Under the Hood ===
 
 To ease the process up future upgrades to the SQLite profile database, we've added an upgrade service that will recursively upgrade a database as many patch levels as required to bring it up to the current version. This is done automatically every time the emulator starts .If any problems are encountered, it will rollback ensuring no data is lost during a failed upgrade (which should never happen of course!).
