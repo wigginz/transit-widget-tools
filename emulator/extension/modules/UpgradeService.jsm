@@ -108,7 +108,7 @@ var UpgradeService =
           }
           catch(exception)
           {
-            TransitCommon.alert("Unrecoverable error, could not detect current database version, unable to continue. Error: "+exception);
+            TransitCommon.alert("Unrecoverable error, could not detect current database version. Error: "+exception);
           }
           finally
           {
@@ -124,21 +124,21 @@ var UpgradeService =
     }
     catch(exception)
     {
-      TransitCommon.alert("Unrecoverable error, could not detect current database version, unable to continue. Error: "+exception);
+      TransitCommon.alert("Unrecoverable error, could not detect current database version. Error: "+exception);
     }
     finally 
     {
       stmt.reset();
     }
     
-    TransitCommon.debug("Current database version is "+this.currentVersion+", if null, will upgrade all.");
+    TransitCommon.debug("Current database version is "+this.currentVersion+" (if null, will upgrade all).");
 
     if ( (Target_Current.version != this.currentVersion) || upgradeAll )
     {
       if ( upgradeAll )
-        TransitCommon.alert("Your profile database requires upgrade to use this version of the Transit Emulator. Upgrading to very first version.");
+        TransitCommon.alert("Your profile database requires an upgrade to DB "+Target_Current.version+" to use this version of the Transit Emulator. Will be upgrading from very first patchable DB.");
       else
-        TransitCommon.alert("Your profile database requires upgrade to use this version of the Transit Emulator. If an error occurs, your profile database will not be changed.");
+        TransitCommon.alert("Your profile database requires upgrade to DB "+Target_Current.version+" to use this version of the Transit Emulator. Will be upgrading from DB "+this.currentVersion+". If an error occurs, your profile database will not be changed.");
       
       connection.beginTransaction();
       

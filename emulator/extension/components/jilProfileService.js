@@ -37,9 +37,6 @@ function JILProfileService() //#
   this.sqlFile = transitDir;
 
   service = this;
-  
-  // see if there is an upgrade needed
-  UpgradeService.checkUpgrade(this.sqlFile);
 }
 
 /***********************************************************/
@@ -47,6 +44,8 @@ function JILProfileService() //#
 JILProfileService.prototype = //#
 {
   sqlFile : null,
+  
+  upgradeChecked : false,
   
   getAllDeviceProfiles : function()
   {
@@ -4245,6 +4244,13 @@ JILProfileService.prototype = //#
   
   getConnection : function()
   {
+    // check real quick to see if the DB has been checked for an upgrade
+    if ( ! this.upgradeChecked )
+    {
+      UpgradeService.checkUpgrade(this.sqlFile);
+      this.upgradeChecked = true;
+    }
+      
     var storageService = Components.classes["@mozilla.org/storage/service;1"]  
                         .getService(Components.interfaces.mozIStorageService);  
     return(storageService.openDatabase(this.sqlFile));  
