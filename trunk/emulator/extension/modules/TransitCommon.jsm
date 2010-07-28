@@ -251,7 +251,7 @@ var TransitCommon =
   alert: function(aMsg)
   {
     var promptService = Components.classes["@mozilla.org/embedcomp/prompt-service;1"].getService(Components.interfaces.nsIPromptService);
-    promptService.alert(null, "Transit Debug", aMsg);
+    promptService.alert(null, "Transit Emulator Alert", aMsg);
     promptService = null; 
   },
   
