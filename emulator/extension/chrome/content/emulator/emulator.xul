@@ -139,8 +139,8 @@
                             <label id="jwe-emulator-widget-version"/>
                           </hbox>
                           <hbox>
-                            <label style="width: 14em;" value="&jwe-emulator-widget-name-jilspec;"/>
-                            <label id="jwe-emulator-widget-jilspec"/>
+                            <label style="width: 14em;" value="&jwe-emulator-widget-jilpkgspec;"/>
+                            <label id="jwe-emulator-widget-jilpkgspec"/>
                           </hbox>
                           <hbox>
                             <label style="width: 14em;" value="&jwe.emulator.widgetinfo.author;"/>
@@ -163,7 +163,21 @@
                         </hbox>
                       </hbox>
                   </groupbox>
-                                    
+                  
+                  <groupbox style="width: 100%;">
+                    <caption label="&jwe.emulator.tab.settings.devicelabel;"/>
+                    <vbox>
+                      <hbox>
+                        <label style="width: 14em;" value="&jwe-emulator-device-name;"/>
+                        <label id="jwe-emulator-device-name"/>
+                      </hbox>
+                      <hbox>
+                        <label style="width: 14em;" value="&jwe-emulator-device-jilapispec;"/>
+                        <label id="jwe-emulator-device-jilapispec"/>
+                      </hbox>
+                    </vbox>
+                  </groupbox>
+                  
                   <groupbox style="width: 100%;">
                     <caption label="&jwe.emulator.tab.settings.displaylabel;"/>
                     <vbox>

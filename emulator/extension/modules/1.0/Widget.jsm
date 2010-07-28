@@ -82,10 +82,10 @@ var Widget =
 
   throwIPException : function(message)
   {
-    var exc = new Widget.Exception();
-    exc.message = message;
-    exc.type = Widget.ExceptionTypes.INVALID_PARAMETER;
-    throw(exc);
+//     var exc = new Widget.Exception();
+//     exc.message = message;
+//     exc.type = Widget.ExceptionTypes.INVALID_PARAMETER;
+//     throw(exc);
   },
 
   reset : function()

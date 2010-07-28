@@ -76,7 +76,10 @@ var jwe_emulator =
     $("jwe-emulator-widget-heightwidth").attr("value", this.widgetWidth+" x "+this.widgetHeight);
     $("jwe-emulator-widget-description").attr("value", this.emulator.getWidget().descriptions[0].description);    
     $("jwe-emulator-widget-icon").attr("src", this.emulator.getWidget().icons[0].source);
-    $("jwe-emulator-widget-jilspec").attr("value", this.emulator.getWidget().jilSpec);
+    $("jwe-emulator-widget-jilpkgspec").attr("value", this.emulator.getWidget().jilPackagingSpec);
+    
+    $("jwe-emulator-device-jilapispec").attr("value", this.emulator.deviceProfile.jilAPISpec);
+    $("jwe-emulator-device-name").attr("value", this.emulator.deviceProfile.name);
         
     $("jwe-emulator-content").attr("src", this.emulator.getWidget().contentSource);
     
@@ -102,8 +105,6 @@ var jwe_emulator =
 
     $("jwe-log").val(this.emulator.getLog());
     
-    Components.utils.import("resource://transit-emulator/1.2.2/Widget.jsm");
-    Components.utils.import("resource://transit-emulator/1.2.2/WidgetManager.jsm");
     Components.utils.import("resource://transit-emulator/1.2.2/SecurityManager.jsm");
     
     jwe_setScrollArea();
@@ -606,7 +607,22 @@ var jwe_emulator =
     // pass the show yes/no dialog to the widget wrapper so it can activate the prompt
     SecurityManager.showYesNoDialog = jwe_emulator.showYesNoDialog;
     SecurityManager.securityContext = $("jwe-emulator-settings-security-level").val();
-
+    
+    if ( this.emulator.deviceProfile.jilAPISpec == "1.0" )
+      this.load_1_0();
+    else if ( this.emulator.deviceProfile.jilAPISpec == "1.2.2" )
+      this.load_1_2_2();
+  },
+  
+  load_1_0 : function()
+  {
+    Components.utils.import("resource://transit-emulator/1.0/Widget.jsm", $("jwe-emulator-content").node.contentWindow.window);
+    Components.utils.import("resource://transit-emulator/1.0/WidgetManager.jsm", $("jwe-emulator-content").node.contentWindow.window);
+    Components.utils.import("resource://transit-emulator/1.0/XMLHttpRequest.jsm", $("jwe-emulator-content").node.contentWindow.window);
+  },
+  
+  load_1_2_2 : function()
+  {
     Components.utils.import("resource://transit-emulator/1.2.2/Widget.jsm", $("jwe-emulator-content").node.contentWindow.window);
     Components.utils.import("resource://transit-emulator/1.2.2/WidgetManager.jsm", $("jwe-emulator-content").node.contentWindow.window);
     Components.utils.import("resource://transit-emulator/1.2.2/XMLHttpRequest.jsm", $("jwe-emulator-content").node.contentWindow.window);

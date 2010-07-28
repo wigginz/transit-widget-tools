@@ -12,8 +12,6 @@ Components.utils.import("resource://transit-emulator/1.0/File.jsm");
 Components.utils.import("resource://transit-emulator/1.0/PositionInfo.jsm");
 Components.utils.import("resource://transit-emulator/1.0/PowerInfo.jsm");
 Components.utils.import("resource://transit-emulator/1.0/RadioInfo.jsm");
-Components.utils.import("resource://transit-emulator/1.0/Exception.jsm");
-Components.utils.import("resource://transit-emulator/1.0/ExceptionTypes.jsm");
 Components.utils.import("resource://transit-emulator/1.0/AddressBookItem.jsm");
 
 function Device()
@@ -127,10 +125,10 @@ Device.prototype.getFile = function(fullName)
     
     if ( jilFile == null )
     {
-      var exc = new Exception();
-      exc.message = "Invalid file name";
-      exc.type = ExceptionTypes.INVALID_PARAMETER;
-      throw(exc);
+//       var exc = new Exception();
+//       exc.message = "Invalid file name";
+//       exc.type = ExceptionTypes.INVALID_PARAMETER;
+//       throw(exc);
     }
     
     wrappedFile = new File();
@@ -191,8 +189,8 @@ Device.prototype.vibrate = function(durationSeconds)
 
 Device.prototype.throwIPException = function(message)
 {
-  var exc = new Exception();
-  exc.message = message;
-  exc.type = ExceptionTypes.INVALID_PARAMETER;
-  throw(exc);
+//   var exc = new Exception();
+//   exc.message = message;
+//   exc.type = ExceptionTypes.INVALID_PARAMETER;
+//   throw(exc);
 };
