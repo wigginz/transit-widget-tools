@@ -19,7 +19,7 @@ var Target_1_2_2_20100722 =
     catch(exception)
     {
       TransitCommon.alert("Error during upgrade to version "+this.version+". Message: "+exception);
-      return(false);
+      throw exception;
     }
     finally 
     {
@@ -37,14 +37,12 @@ var Target_1_2_2_20100722 =
     catch(exception)
     {
       TransitCommon.alert("Error during upgrade to version "+this.version+". Message: "+exception);
-      return(false);
+      throw exception;
     }
     finally 
     {
       stmt.reset();
     }
-    
-    return(true);
   },
 };
 
@@ -56,7 +54,7 @@ var Target_1_2_2_20100729 =
   
   upgrade : function(connection)
   {
-    var stmt = connection.createStatement("ALTER TABLE jwe_device_profile add jil_spec TEXT DEFAULT '1.2.2' NOT NULL");
+    var stmt = connection.createStatement("ALTER TABLE jwe_device_profile add jil_api_spec TEXT DEFAULT '1.2.2' NOT NULL");
 
     try
     {
@@ -65,13 +63,28 @@ var Target_1_2_2_20100729 =
     catch(exception)
     {
       TransitCommon.alert("Error during upgrade to version "+this.version+". Message: "+exception);
-      return(false);
+      throw exception;
     }
     finally 
     {
       stmt.reset();
     }
-    return(true);
+    
+    stmt = connection.createStatement("ALTER TABLE jwe_device_profile add jil_pkg_spec TEXT DEFAULT '1.2.2' NOT NULL");
+
+    try
+    {
+      stmt.executeStep();
+    }
+    catch(exception)
+    {
+      TransitCommon.alert("Error during upgrade to version "+this.version+". Message: "+exception);
+      throw exception;
+    }
+    finally 
+    {
+      stmt.reset();
+    }
   },
 };
 

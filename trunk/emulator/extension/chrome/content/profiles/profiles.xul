@@ -79,6 +79,29 @@
                     </hbox>
                   </vbox>
                 </groupbox>
+                <groupbox>
+                  <caption label="&jwe.profiles.devices.settings.specs;" class="jwe-defaultText" />
+                  <vbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.settings.specs.packaging;" class="jwe-defaultText" style="width: 10em;"/>
+                      <menulist  align="right" oncommand="jwe_Profiles.change('dGeneral');" id="jwe-profiles-device-panel-general-pkgspec">
+                        <menupopup>
+                          <menuitem label="1.0" value="1.0"/>
+                          <menuitem label="1.2.2" value="1.2.2"/>
+                        </menupopup>
+                      </menulist>
+                    </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.settings.specs.api;" class="jwe-defaultText" style="width: 10em;"/>
+                      <menulist align="right" oncommand="jwe_Profiles.change('dGeneral');" id="jwe-profiles-device-panel-general-apispec">
+                        <menupopup>
+                          <menuitem label="1.0" value="1.0"/>
+                          <menuitem label="1.2.2" value="1.2.2"/>
+                        </menupopup>
+                      </menulist>
+                    </hbox>
+                  </vbox>
+                </groupbox>
               </vbox>
 
               <vbox id="jwe-profiles-device-panel-widget" class="jwe-profiles-inner-panel" style="display: none;">
