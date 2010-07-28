@@ -6,6 +6,8 @@ Check here for all the latest details on milestone releases, what's being worked
 <wiki:comment>
 == Thursday July 29, 2010 ==
 
+We've included some major updates included in this release that we're pretty excited about. It's important information if you rely on the emulator, read on for the details.
+
 === Fixes ===
 
 Previously, static data was not being reset properly when a widget was reloaded or device profile changed. For example, the value for phoneScreenHeightDefault would be 800 but when a device profile for a smaller screen device, the API was still reporting a value of 800. This has been fixed anywhere in the API where there are accessible properties.
