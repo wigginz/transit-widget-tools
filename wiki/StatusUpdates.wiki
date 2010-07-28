@@ -25,6 +25,7 @@ Implemented widget config.xml ingestion based on JIL specs. Transit will now be 
 Added support for both JIL API 1.1 revision 4 and 1.2.2. You can choose which API a device supports by changing the value in the Manage Profiles window. By default, all devices will use the 1.2.2 spec, but can be changed to 1.1r4 at any time. If a widget calls a 1.2.2 API using a device profile with 1.1r4 API support, the proper JavaScript errors will be generated. This update also reflects the differences in the security model between the APIs.
 
 TODO: fix exception handling for the 1.1r4 API
+TODO: need to handle preference tags in the config.xml and respect the readonly attribute
 
 === Under the Hood ===
 
