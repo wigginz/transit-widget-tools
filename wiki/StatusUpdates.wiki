@@ -17,6 +17,10 @@ Added a link called "Callback Source" which will pop up a panel showing the sour
 Added a landscape mode toggle for the display section of the general tab in the emulator window. Checking the landscape mode box will swap height and width while maintaining full screen mode if checked. An onScreenChangeDimensions even will be triggered when landscape mode is toggled. Also changed is the behavior of the widget in floating mode. If a widget's height or width is larger than the screen size, the larger dimension will be shrunk to fix on the screen. For example, if a widget has a height of 500 pixels, but the device is only 400 pixels high, the widget will be resized to 400 pixels high.
 
 Implemented widget config.xml ingestion based on JIL spec. Transit will now be able to detect and properly emulate widgets using either the JIL 1.0 or 1.2 packaging spec. This is leading us to full simultaneous JIL spec support for both packaging and API specs (coming soon). New ingestion process also includes per the spec validation and proper handling of all config.xml elements.
+
+=== Under the Hood ===
+
+To ease the process up future upgrades to the SQLite profile database, we've added an upgrade service that will recursively upgrade a database as many patch levels as required to bring it up to the current version. This is done automatically every time the emulator starts .If any problems are encountered, it will rollback ensuring no data is lost during a failed upgrade (which should never happen of course!).
 </wiki:comment>
 
 
