@@ -12,20 +12,16 @@ var service = null;
 function JILProfileService() //#
 {
   Components.utils.import("resource://transit-emulator/TransitCommon.jsm");
+  Components.utils.import("resource://transit-emulator/UpgradeService.jsm");
     
   this.wrappedJSObject = this;
 
   // check to see if the sqlite file has been moved to the proper location outside of the extension directory (to make upgrading less destructive)
   var profDir = Components.classes["@mozilla.org/file/directory_service;1"].getService(Components.interfaces.nsIProperties).get("ProfD", Components.interfaces.nsIFile);
-  
-  //TransitCommon.debug(profDir.path);
-  
+    
   var transitDir = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);  
   transitDir.initWithPath(profDir.path+ TransitCommon.getFileSeparator() +PROF_DIR);
-  
-  //TransitCommon.debug(transitDir.path);
-  //TransitCommon.debug(transitDir.exists());
-  
+    
   // if it doesnt exist, create the directory
   if ( !transitDir.exists() )
     transitDir.create(Components.interfaces.nsIFile.DIRECTORY_TYPE, 0755);
@@ -41,6 +37,9 @@ function JILProfileService() //#
   this.sqlFile = transitDir;
 
   service = this;
+  
+  // see if there is an upgrade needed
+  UpgradeService.checkUpgrade(this.sqlFile);
 }
 
 /***********************************************************/
@@ -4832,38 +4831,3 @@ iePIMAttribute.prototype =
 {
   key: null,
 };
-
-
-/** defaults
-
-var defaultKeys = new Array();
-
-defaultKeys["backlightOn"] = "false";
-defaultKeys["keypadlightOn"] = "false";
-defaultKeys["procUtilization"] = "10";
-defaultKeys["xAxis"] = "0";
-defaultKeys["yAxis"] = "0";
-defaultKeys["zAxis"] = "0";
-defaultKeys["isCharging"] = "false";
-defaultKeys["chargeRemaining"] = "90";
-
-defaultKeys["altitude"] = "0";
-defaultKeys["cellId"] = "0";
-defaultKeys["latitude"] = "37.33275";
-defaultKeys["longitude"] = "-121.901218"; 
-defaultKeys["radioEnabled"] = "true";
-defaultKeys["isRoaming"] = "false";
-defaultKeys["signalSource"] = "GSM";
-defaultKeys["signalStrength"] = "90";
-
-defaultKeys["msgRingtoneVolume"] = "5";
-defaultKeys["ringtoneVolume"] = "5";
-defaultKeys["vibrationSetting"] = "true";
-defaultKeys["isAudioPlaying"] = "false";
-defaultKeys["isVideoPlaying"] = "false";
-defaultKeys["volume"] = "5";
-defaultKeys["clipboard"] = "";
-
-defaultKeys["msisdn"] = "+4400000000000";
-defaultKeys["accountBalance"] = "0";
- **/
