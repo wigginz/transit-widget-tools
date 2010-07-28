@@ -64,7 +64,7 @@ var WidgetIngester_10 =
     }
     
     var widget = {};
-    widget.jilSpec = "1.0";
+    widget.jilPackagingSpec = "1.0";
     widget.baseUrl = baseUrl;
     
     widget.id = config.getAttribute("id");

@@ -6,8 +6,6 @@ Components.utils.import("resource://transit-emulator/1.2.2/SecurityManager.jsm")
 
 Components.utils.import("resource://transit-emulator/1.0/CallRecordTypes.jsm");
 Components.utils.import("resource://transit-emulator/1.0/CallRecord.jsm");
-Components.utils.import("resource://transit-emulator/1.0/Exception.jsm");
-Components.utils.import("resource://transit-emulator/1.0/ExceptionTypes.jsm");
 
 function Telephony()
 {
@@ -126,8 +124,8 @@ Telephony.prototype.testCallRecordType = function(type)
 
 Telephony.prototype.throwIPException = function(message)
 {
-  var exc = new Exception();
-  exc.message = message;
-  exc.type = ExceptionTypes.INVALID_PARAMETER;
-  throw(exc);
+//   var exc = new Exception();
+//   exc.message = message;
+//   exc.type = ExceptionTypes.INVALID_PARAMETER;
+//   throw(exc);
 };
