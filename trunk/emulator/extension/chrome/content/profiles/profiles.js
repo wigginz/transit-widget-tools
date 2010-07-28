@@ -352,15 +352,10 @@ var jwe_Profiles =
     document.getElementById("jwe-profiles-device-panel-general-pimlist").appendChild(pimPopup);
     document.getElementById("jwe-profiles-device-panel-general-pimlist").selectedIndex = pimIndex;
     
-    if ( device.jilAPISpec == "1.0" )
+    if ( device.jilAPISpec == "1.1r4" )
       $("jwe-profiles-device-panel-general-apispec").sel(0);
     else if ( device.jilAPISpec == "1.2.2" )
       $("jwe-profiles-device-panel-general-apispec").sel(1);
-    
-    if ( device.jilPackagingSpec == "1.0" )
-      $("jwe-profiles-device-panel-general-pkgspec").sel(0);
-    else if ( device.jilPackagingSpec == "1.2.2" )
-      $("jwe-profiles-device-panel-general-pkgspec").sel(1);
   },
 
   saveDGeneral : function()
@@ -371,16 +366,11 @@ var jwe_Profiles =
     var pkgSpec = null;
     
     if ( $("jwe-profiles-device-panel-general-apispec").sel() == 0 )
-      apiSpec = "1.0";
+      apiSpec = "1.1r4";
     else if ( $("jwe-profiles-device-panel-general-apispec").sel() == 1 )
       apiSpec = "1.2.2";
-    
-    if ( $("jwe-profiles-device-panel-general-pkgspec").sel() == 0 )
-      pkgSpec = "1.0";
-    else if ( $("jwe-profiles-device-panel-general-pkgspec").sel() == 1 )
-      pkgSpec = "1.2.2";
 
-    JILProfileService.wrappedJSObject.saveDGeneral(jwe_Profiles.state["selDevice"], messageProfileId, pimProfileId, apiSpec, pkgSpec);
+    JILProfileService.wrappedJSObject.saveDGeneral(jwe_Profiles.state["selDevice"], messageProfileId, pimProfileId, apiSpec);
   },
   
   /** load widget subtab **/

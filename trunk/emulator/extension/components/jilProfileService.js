@@ -49,7 +49,7 @@ JILProfileService.prototype = //#
   
   getAllDeviceProfiles : function()
   {
-    var stmt = this.getConnection().createStatement("select dev.name as dname, dev.id as did, dev.uuid as duuid, dev.jil_api_spec as jilAPISpec, dev.jil_pkg_spec as jilPackagingSpec, msg.id as mid, msg.name as mname, pim.id as pid, pim.name as pname from jwe_device_profile dev, jwe_messaging_profile msg, jwe_pim_profile pim where dev.messaging_profile_id = msg.id and dev.pim_profile_id = pim.id");
+    var stmt = this.getConnection().createStatement("select dev.name as dname, dev.id as did, dev.uuid as duuid, dev.jil_api_spec as jilAPISpec, msg.id as mid, msg.name as mname, pim.id as pid, pim.name as pname from jwe_device_profile dev, jwe_messaging_profile msg, jwe_pim_profile pim where dev.messaging_profile_id = msg.id and dev.pim_profile_id = pim.id");
 
     var devices = new Array();
     try 
@@ -61,7 +61,6 @@ JILProfileService.prototype = //#
         device.id = stmt.row.did;  
         device.uuid = stmt.row.duuid;
         device.jilAPISpec = stmt.row.jilAPISpec;
-        device.jilPackagingSpec = stmt.row.jilPackagingSpec;
         device.messageProfileId = stmt.row.mid;
         device.pimProfileId = stmt.row.pid;
         devices.push(device);
@@ -77,7 +76,7 @@ JILProfileService.prototype = //#
 
   getDeviceProfile : function(profileId)
   {
-    var stmt = this.getConnection().createStatement("select dev.name as dname, dev.uuid as duuid, dev.jil_api_spec as jilAPISpec, dev.jil_pkg_spec as jilPkgSpec, msg.id as mid, msg.name as mname, pim.id as pid, pim.name as pname from jwe_device_profile dev, jwe_messaging_profile msg, jwe_pim_profile pim where dev.messaging_profile_id = msg.id and dev.pim_profile_id = pim.id and dev.id = :profileId");
+    var stmt = this.getConnection().createStatement("select dev.name as dname, dev.uuid as duuid, dev.jil_api_spec as jilAPISpec, msg.id as mid, msg.name as mname, pim.id as pid, pim.name as pname from jwe_device_profile dev, jwe_messaging_profile msg, jwe_pim_profile pim where dev.messaging_profile_id = msg.id and dev.pim_profile_id = pim.id and dev.id = :profileId");
     stmt.params.profileId = profileId;
 
     var device = new jilDeviceProfile();
@@ -89,7 +88,6 @@ JILProfileService.prototype = //#
         device.id = profileId;  
         device.uuid = stmt.row.duuid;
         device.jilAPISpec = stmt.row.jilAPISpec;
-        device.jilPackagingSpec = stmt.row.jilPkgSpec;
         device.messageProfileId = stmt.row.mid;
         device.pimProfileId = stmt.row.pid;
       }
@@ -171,13 +169,12 @@ JILProfileService.prototype = //#
     return(device);
   },
 
-  saveDGeneral : function(profileId, messageProfileId, pimProfileId, jilAPISpec, jilPackagingSpec)
+  saveDGeneral : function(profileId, messageProfileId, pimProfileId, jilAPISpec)
   {
-    var stmt = this.getConnection().createStatement("update jwe_device_profile set messaging_profile_id = :messageProfileId, pim_profile_id = :pimProfileId, jil_api_spec = :jilAPISpec, jil_pkg_spec = :jilPackagingSpec where id = :profileId");
+    var stmt = this.getConnection().createStatement("update jwe_device_profile set messaging_profile_id = :messageProfileId, pim_profile_id = :pimProfileId, jil_api_spec = :jilAPISpec where id = :profileId");
     stmt.params.messageProfileId = messageProfileId;
     stmt.params.pimProfileId = pimProfileId;
     stmt.params.jilAPISpec = jilAPISpec;
-    stmt.params.jilPackagingSpec = jilPackagingSpec; 
     stmt.params.profileId = profileId;
     
     try
@@ -3320,7 +3317,6 @@ JILProfileService.prototype = //#
     ep.name = dProfile.name;
     ep.uuid = dProfile.uuid;
     ep.jilAPISpec = dProfile.jilAPISpec;
-    ep.jilPackagingSpec = dProfile.jilPackagingSpec;
 
     var dData = this.getDeviceData(profileId);
     ep.availableApps = new Array();
@@ -3427,11 +3423,10 @@ JILProfileService.prototype = //#
       conn.beginTransaction();
       
       // insert the device profile
-      stmt = conn.createStatement("insert into jwe_device_profile (id, name, messaging_profile_id, pim_profile_id, is_default, uuid, jil_api_spec, jil_pkg_spec) values (null, :name, (select max(id) from jwe_messaging_profile), (select max(id) from jwe_pim_profile), 'false', :uuid, :jilAPISpec, :jilPackagingSpec)");
+      stmt = conn.createStatement("insert into jwe_device_profile (id, name, messaging_profile_id, pim_profile_id, is_default, uuid, jil_api_spec) values (null, :name, (select max(id) from jwe_messaging_profile), (select max(id) from jwe_pim_profile), 'false', :uuid, :jilAPISpec)");
       stmt.params.name = ip.name;
       stmt.params.uuid = ip.uuid;
       stmt.params.jilAPISpec = ip.jilAPISpec;
-      stmt.params.jilPackagingSpec = ip.jilPackagingSpec;
 
       try
       {
@@ -3741,7 +3736,7 @@ JILProfileService.prototype = //#
       conn.beginTransaction();
 
       // insert the message profile
-      stmt = conn.createStatement("insert into jwe_messaging_profile (id, name, jil_api_spec, jil_pkg_dpec) values (null, :name1)");
+      stmt = conn.createStatement("insert into jwe_messaging_profile (id, name) values (null, :name)");
       stmt.params.name = ip.name;
 
       try
@@ -4387,7 +4382,6 @@ jilDeviceProfile.prototype =
   pimProfileId : null,
   uuid : null,
   jilAPISpec : null,
-  jilPackagingSpec : null,
 };
 
 function jilMessagingProfile() {}

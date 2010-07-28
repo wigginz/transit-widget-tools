@@ -6,8 +6,8 @@
 <!ENTITY jwe.emulator.title "Transit Widget Emulator">
 <!ENTITY jwe.emulator.emulating "Emulating: ">
 <!ENTITY jwe-emulator-widget-name-version "Version: ">
-<!ENTITY jwe-emulator-device-jilapispec "JIL API Specification: ">
-<!ENTITY jwe-emulator-widget-jilpkgspec "JIL Packaging Specification: ">
+<!ENTITY jwe-emulator-device-jilapispec "JIL API Spec: ">
+<!ENTITY jwe-emulator-widget-jilpkgspec "JIL Packaging Spec: ">
 <!ENTITY jwe.emulator.pickprofile "Devices">
 <!ENTITY jwe.emulator.tab.settings.devicelabel "Device Details">
 <!ENTITY jwe-emulator-device-name "Device Name: ">
@@ -48,10 +48,6 @@
 <!ENTITY jwe.emulator.tab.devicestate.audiopath.speaker "Speaker">
 <!ENTITY jwe.emulator.tab.devicestate.audiopath.receiver "Receiver">
 <!ENTITY jwe.emulator.tab.devicestate.audiopath.earphone "Earphone">
-
-
-
-
 
 <!ENTITY jwe.emulator.tab.events.list.caption "API: ">
 <!ENTITY jwe.emulator.tab.events.context.none "N/A">
@@ -248,7 +244,6 @@
 <!ENTITY jwe.profiles.devices.settings.pim "PIM Profile: ">
 <!ENTITY jwe.profiles.devices.settings.assoc "Associated Profiles">
 <!ENTITY jwe.profiles.devices.settings.specs "Supported Specifications">
-<!ENTITY jwe.profiles.devices.settings.specs.packaging "JIL Packaging: ">
 <!ENTITY jwe.profiles.devices.settings.specs.api "JIL API: ">
 
 <!ENTITY jwe.profiles.widget.prefs "Emulated Widget">

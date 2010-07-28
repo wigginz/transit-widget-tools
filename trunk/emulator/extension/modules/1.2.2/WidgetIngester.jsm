@@ -64,7 +64,7 @@ var WidgetIngester_122 =
     // if not, we can't ingest it
     if ( widgetNs != "http://www.w3.org/ns/widgets" )
     {
-      //throw {message: "config.xml does not represent a JIL 1.2 widget; widget element namespace not 'http://www.w3.org/ns/widgets'"};
+      TransitCommon.debug("Widget is not 1.2.2, namespace is: "+widgetNs);
       return(null);
     }
     

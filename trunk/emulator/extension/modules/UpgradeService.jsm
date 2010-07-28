@@ -69,22 +69,6 @@ var Target_1_2_2_20100729 =
     {
       stmt.reset();
     }
-    
-    stmt = connection.createStatement("ALTER TABLE jwe_device_profile add jil_pkg_spec TEXT DEFAULT '1.2.2' NOT NULL");
-
-    try
-    {
-      stmt.executeStep();
-    }
-    catch(exception)
-    {
-      TransitCommon.alert("Error during upgrade to version "+this.version+". Message: "+exception);
-      throw exception;
-    }
-    finally 
-    {
-      stmt.reset();
-    }
   },
 };
 
@@ -190,7 +174,7 @@ var UpgradeService =
       }
     }
     else
-       TransitCommon.debug("Your profile database does not require an upgrade, already at current version ("+this.currentVersion+")");
+       TransitCommon.debug("Profile database does not require an upgrade, already at current version ("+this.currentVersion+")");
   },
   
   upgradeVersion : function(target, connection)
