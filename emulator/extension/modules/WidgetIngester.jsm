@@ -16,7 +16,7 @@ var WidgetIngester =
     {
       widget = this.ingest_1_2(domDoc, baseUrl);
       
-      if ( !widget )
+      if ( widget == null )
         widget = this.ingest_1_0(domDoc, baseUrl);
     }
     catch (ex)
@@ -77,9 +77,11 @@ var WidgetIngester =
     // determine if this is a 1.0 widget
     var widgetNs = config.namespaceURI;
     
+    TransitCommon.debug("1.0: "+widgetNs+", "+widgetNs.indexOf("http://www.jil.org/ns/widgets"));
+    
     // if the namespace of the widget is http://www.jil.org/ns/widgets, it's a 1.0 widget
     // if not, we can't ingest it
-    iif ( widgetNs.indexOf("http://www.jil.org/ns/widgets") > 0 )
+    if ( widgetNs.indexOf("http://www.jil.org/ns/widgets") < 0 )
     {
       //throw {message: "config.xml does not represent a JIL 1.0 widget; widget element namespace not 'http://www.jil.org/ns/widgets'"};
       return(null);
@@ -239,9 +241,11 @@ var WidgetIngester =
     // determine if this is a 1.2 widget
     var widgetNs = config.namespaceURI;
     
+    TransitCommon.debug("1.2: "+widgetNs+", "+widgetNs.indexOf("http://www.w3.org/ns/widgets"));
+    
     // if the namespace of the widget is http://www.w3.org/ns/widgets, it's a 1.2 widget
     // if not, we can't ingest it
-    if ( widgetNs.indexOf("http://www.w3.org/ns/widgets") > 0 )
+    if ( widgetNs.indexOf("http://www.w3.org/ns/widgets") < 0 )
     {
       TransitCommon.debug("Widget is not 1.2, namespace is: "+widgetNs);
       return(null);
