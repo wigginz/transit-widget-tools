@@ -80,7 +80,7 @@ var Target_1_2_2_20100805 =
   
   upgrade : function(connection)
   {
-    var stmt = connection.createStatement("CREATE TABLE 'jwe_api_extension' ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL , 'name' INTEGER NOT NULL , 'resource_url' TEXT NOT NULL)");
+    var stmt = connection.createStatement("CREATE TABLE 'jwe_api_extension' ('key' TEXT PRIMARY KEY NOT NULL , 'name' INTEGER NOT NULL , 'resource_url' TEXT NOT NULL)");
 
     try
     {
@@ -96,7 +96,7 @@ var Target_1_2_2_20100805 =
       stmt.reset();
     }
     
-    stmt = connection.createStatement("CREATE TABLE 'jwe_api_extension_map' ('profile_id' INTEGER NOT NULL , 'extension_id' INTEGER NOT NULL, PRIMARY KEY ('profile_id', 'extension_id'), FOREIGN KEY(profile_id) REFERENCES jwe_device_profile(id), FOREIGN KEY(extension_id) REFERENCES jwe_api_extension(id) ON DELETE CASCADE ON UPDATE CASCADE)");
+    stmt = connection.createStatement("CREATE TABLE 'jwe_api_extension_map' ('profile_id' INTEGER NOT NULL , 'extension_key' TEXT NOT NULL, PRIMARY KEY ('profile_id', 'extension_key'), FOREIGN KEY(profile_id) REFERENCES jwe_device_profile(id), FOREIGN KEY(extension_key) REFERENCES jwe_api_extension(key) ON DELETE CASCADE ON UPDATE CASCADE)");
 
     try
     {
@@ -112,7 +112,7 @@ var Target_1_2_2_20100805 =
       stmt.reset();
     }
     
-    stmt = connection.createStatement("insert into jwe_api_extension (id, name, resource_url) values (null, 'Samsung M1/H1', 'resource://transit-emulator/api/samsung/H1_M1/widget.jsm')");
+    stmt = connection.createStatement("insert into jwe_api_extension (key, name, resource_url) values ('samsung360', 'Samsung M1/H1', 'resource://transit-emulator/api/samsung/H1_M1/widget.jsm')");
 
     try
     {

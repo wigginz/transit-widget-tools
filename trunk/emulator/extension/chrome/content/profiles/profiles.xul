@@ -91,6 +91,12 @@
                         </menupopup>
                       </menulist>
                     </hbox>
+                    <hbox align="center">
+                      <label value="&jwe.profiles.devices.settings.specs.extensions;" class="jwe-defaultText" style="width: 10em;"/>
+                      <vbox>
+                        <checkbox flex="1" label="&jwe.profiles.devices.settings.specs.extensions.samsung360;" oncommand="jwe_Profiles.change('dGeneral');"  id="jwe-profiles-device-panel-general-extensions-samsung360"/>
+                      </vbox>
+                    </hbox>
                   </vbox>
                 </groupbox>
               </vbox>

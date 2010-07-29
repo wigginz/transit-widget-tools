@@ -169,7 +169,7 @@ JILProfileService.prototype = //#
     return(device);
   },
 
-  saveDGeneral : function(profileId, messageProfileId, pimProfileId, jilAPISpec)
+  saveDGeneral : function(profileId, messageProfileId, pimProfileId, jilAPISpec, extensionKeys)
   {
     var stmt = this.getConnection().createStatement("update jwe_device_profile set messaging_profile_id = :messageProfileId, pim_profile_id = :pimProfileId, jil_api_spec = :jilAPISpec where id = :profileId");
     stmt.params.messageProfileId = messageProfileId;
@@ -190,6 +190,9 @@ JILProfileService.prototype = //#
     {
       stmt.reset();
     }
+    
+    this.setAPIExtensionsForDevice(profileId, extensionKeys);
+    
     return(true);
   },
 
@@ -241,7 +244,7 @@ JILProfileService.prototype = //#
   
   getAllAPIExtensions : function()
   {
-    var stmt = this.getConnection().createStatement("select id, name, resource_url from jwe_api_extension");
+    var stmt = this.getConnection().createStatement("select key, name, resource_url from jwe_api_extension");
    
     var extensions = new Array();
     try 
@@ -249,7 +252,7 @@ JILProfileService.prototype = //#
       while ( stmt.step() )
       {
         var extension = new jilAPIExtension();
-        extension.id = stmt.row.id;
+        extension.key = stmt.row.key;
         extension.name = stmt.row.name;
         extension.resourceUrl = stmt.row.resource_url;
         extensions.push(extension);
@@ -260,22 +263,24 @@ JILProfileService.prototype = //#
       stmt.reset();
     }
 
-    return(extension);
+    return(extensions);
   },
   
   getAPIExtensionsForDevice : function(profileId)
   {
-    var stmt = this.getConnection().createStatement("select ext.id as ext_id, ext.name as ext_name, ext.resource_url as ext_resource_url from jwe_api_extension ext, jwe_api_extension_map extmap where ext.id = extmap.extension_id and extmap.profile_id = :profileId");
+    var stmt = this.getConnection().createStatement("select ext.key as ext_key, ext.name as ext_name, ext.resource_url as ext_resource_url from jwe_api_extension ext, jwe_api_extension_map extmap where ext.key = extmap.extension_key and extmap.profile_id = :profileId");
     stmt.params.profileId = profileId;
 
-    var extension = new jilAPIExtension();
+    var extensions = new Array();
     try 
     {  
       while ( stmt.step() )
       {
-        extension.id = stmt.row.ext_id;
+        var extension = new jilAPIExtension();
+        extension.key = stmt.row.ext_key;
         extension.name = stmt.row.ext_name;
         extension.resourceUrl = stmt.row.ext_resource_url;
+        extensions.push(extension);
       }
     }
     finally 
@@ -283,18 +288,21 @@ JILProfileService.prototype = //#
       stmt.reset();
     }
 
-    return(extension);
+    return(extensions);
   },
   
-  addAPIExtensionsForDevice : function(profileId, extensionIds)
+  setAPIExtensionsForDevice : function(profileId, extensionKeys)
   {
+    TransitCommon.debug("Enabling "+extensionKeys+" extension keys for device profile "+profileId);
     try
     {
+      var conn = this.getConnection();
+      conn.beginTransaction();
+    
       // first flush existing extension maps    
-      var stmt = this.getConnection().createStatement("delete from jwe_api_extension_map where profile_id = :profileId");
+      var stmt = conn.createStatement("delete from jwe_api_extension_map where profile_id = :profileId");
       stmt.params.profileId = profileId;
 
-      var extension = new jilAPIExtension();
       try 
       {  
         stmt.executeStep();
@@ -304,11 +312,11 @@ JILProfileService.prototype = //#
         stmt.reset();
       }
       
-      for ( var i = 0; i < extensionIds.length; i++ )
+      for ( var i = 0; i < extensionKeys.length; i++ )
       {
-        stmt = this.getConnection().createStatement("insert into jwe_api_extension_map (profile_id, extension_id) values (:profileId, :extensionId)");
+        stmt = conn.createStatement("insert into jwe_api_extension_map (profile_id, extension_key) values (:profileId, :extensionKey)");
         stmt.params.profileId = profileId;
-        stmt.params.extensionId = extensionIds[i];
+        stmt.params.extensionKey = extensionKeys[i];
         
         try 
         {  
@@ -4755,7 +4763,7 @@ jilWidgetPreference.prototype =
 function jilAPIExtension() {}
 jilAPIExtension.prototype =
 {
-  id : null,
+  key : null,
   name : null,
   resourceUrl : null,
 };

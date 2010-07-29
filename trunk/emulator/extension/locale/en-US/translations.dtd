@@ -5,14 +5,17 @@
 <!ENTITY jwe.menu.logviewer "Log Viewer">
 <!ENTITY jwe.emulator.title "Transit Widget Emulator">
 <!ENTITY jwe.emulator.emulating "Emulating: ">
-<!ENTITY jwe-emulator-widget-name-version "Version: ">
-<!ENTITY jwe-emulator-device-jilapispec "JIL API Spec: ">
-<!ENTITY jwe-emulator-widget-jilpkgspec "JIL Packaging Spec: ">
+<!ENTITY jwe.emulator.widget.name.version "Version: ">
+<!ENTITY jwe.emulator.device.jilapispec "JIL API Spec: ">
+<!ENTITY jwe.emulator.widget.jilpkgspec "JIL Packaging Spec: ">
 <!ENTITY jwe.emulator.pickprofile "Devices">
 <!ENTITY jwe.emulator.tab.settings.devicelabel "Device Details">
-<!ENTITY jwe-emulator-device-name "Device Name: ">
+<!ENTITY jwe.emulator.device.name "Device Name: ">
 <!ENTITY jwe.emulator.controls.popout "Pop-out">
 <!ENTITY jwe.menu.profiles "Manage Profiles...">
+<!ENTITY jwe.profiles.devices.settings.specs.extensions "API Extensions: ">
+<!ENTITY jwe.profiles.devices.settings.specs.extensions.samsung360 "Samsung M1/H1">
+<!ENTITY jwe.emulator.device.extensions "API Extensions: ">
 
 <!ENTITY jwe.emulator.tab.settings "General">
 <!ENTITY jwe.emulator.tab.settings.displaylabel "Display">

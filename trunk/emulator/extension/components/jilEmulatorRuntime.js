@@ -248,7 +248,12 @@ JILEmulatorRuntime.prototype = //#
     ww.openWindow(ww.activeWindow, "chrome://transit-emulator/content/emulator/controls.xul",
                         "jwe-controls", "chrome,centerscreen", null).focus();
   },
-
+  
+  getAPIExtensions : function()
+  {
+    return(this.profileService.getAPIExtensionsForDevice(this.deviceProfile.id));
+  },
+  
   getDeviceInfo : function()
   {
     return(this.profileService.getDeviceInfo(this.deviceProfile.id));

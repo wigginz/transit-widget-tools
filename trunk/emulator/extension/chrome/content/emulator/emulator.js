@@ -46,6 +46,7 @@ var jwe_emulator =
   fileSystemMap : new Array(),
   eventsLoaded : false,
   currentPanel : null,
+  extensions : null,
 
   init : function()
   {
@@ -80,6 +81,15 @@ var jwe_emulator =
     
     $("jwe-emulator-device-jilapispec").attr("value", this.emulator.deviceProfile.jilAPISpec);
     $("jwe-emulator-device-name").attr("value", this.emulator.deviceProfile.name);
+    
+    this.extensions = this.emulator.getAPIExtensions();
+    var extNames = "";
+    for ( var i = 0; i < this.extensions.length; i++ )
+      extNames += ", "+this.extensions[i].name;
+    if ( extNames.length > 2 )
+      extNames = extNames.substr(2, extNames.length);
+    
+    $("jwe-emulator-device-extensions").attr("value", extNames);
       
     $("jwe-emulator-content").attr("src", this.emulator.getWidget().contentSource);
     
@@ -612,6 +622,10 @@ var jwe_emulator =
       this.load_1_1r4();
     else if ( this.emulator.deviceProfile.jilAPISpec == "1.2.2" )
       this.load_1_2_2();
+    
+    // inject any api extensions enabled for this device    
+    for ( var i = 0; i < this.extensions.length; i++ )
+      Components.utils.import(this.extensions[i].resourceUrl, $("jwe-emulator-content").node.contentWindow.window);
   },
   
   load_1_1r4 : function()
