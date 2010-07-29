@@ -26,6 +26,7 @@ Added support for both JIL API 1.1 revision 4 and 1.2.2. You can choose which AP
 
 TODO: fix exception handling for the 1.1r4 API
 TODO: need to handle preference tags in the config.xml and respect the readonly attribute
+TODO: drop down on message sending error is broken
 
 === Under the Hood ===
 
