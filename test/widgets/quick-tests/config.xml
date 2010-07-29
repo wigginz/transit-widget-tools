@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<widget  xmlns="http://www.jil.org/ns/widgets"
-         id="0df9f49e-c46d-4300-9ea4-e1c0f1f8398a"
-         version="01.00.Beta"
-         height="412"
-         width="300">
-    <name>APISample</name>
+<widget xmlns="http://www.w3.org/ns/widgets"
+        xmlns:jil="http://www.jil.org/ns/widgets1.2"
+        viewmodes="fullscreen,floating"
+        id="http://jil.org/wid/2ea7ae67d5f0580a3b74c57a2fbc9c18a4d2b51c0a37a93a28ffca60a01b48e2/Transit%20Test%20Cases"
+        version="01.00"
+        height="412"
+        width="300">
+    <name>Transit Test Cases</name>
     <description>A widget to test JIL Handset API</description>
     <author email="">JIL</author>
     <license href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution License</license>
-    <maximum_display_mode height="412" width="300"/>
+    <jil:maximum_display_mode height="412" width="300"/>
     <update href="http://www.jil.org/widgets/" period="1"/>
     <icon src="APISample.png"/>
     <content src="main.html"/>
-    <access network="true" localfs="true" remote_scripts="false"/>
-    <billing required="false"/>
+    <jil:access network="true" localfs="true" remote_scripts="false"/>
+    <jil:billing required="false"/>
     <feature name="http://jil.org/jil/api/1.1/accountInfo" required="false"/>
     <feature name="http://jil.org/jil/api/1.1/addressbook" required="false"/>
     <feature name="http://jil.org/jil/api/1.1/application" required="false"/>
