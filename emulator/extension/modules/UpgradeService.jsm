@@ -112,7 +112,7 @@ var Target_1_2_2_20100805 =
       stmt.reset();
     }
     
-    stmt = connection.createStatement("insert into jwe_api_extension (id, name, resource_url) values (null, 'Samsung M1/H1 Extensions', 'resource://transit-emulator/api/samsung/H1_M1/widget.jsm')");
+    stmt = connection.createStatement("insert into jwe_api_extension (id, name, resource_url) values (null, 'Samsung M1/H1', 'resource://transit-emulator/api/samsung/H1_M1/widget.jsm')");
 
     try
     {
