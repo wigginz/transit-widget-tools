@@ -2,11 +2,11 @@ var EXPORTED_SYMBOLS = ["Telephony"];
 
 var _Telephony_122 = Components.classes["@jil.org/jilapi-telephony;1"].getService(Components.interfaces.jilTelephony);
 
-Components.utils.import("resource://transit-emulator/1.2.2/SecurityManager.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/CallRecordTypes.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/CallRecord.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/Exception.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/ExceptionTypes.jsm");
+Components.utils.import("resource://transit-emulator/api/jil/1.2.2/SecurityManager.jsm");
+Components.utils.import("resource://transit-emulator/api/jil/1.2.2/CallRecordTypes.jsm");
+Components.utils.import("resource://transit-emulator/api/jil/1.2.2/CallRecord.jsm");
+Components.utils.import("resource://transit-emulator/api/jil/1.2.2/Exception.jsm");
+Components.utils.import("resource://transit-emulator/api/jil/1.2.2/ExceptionTypes.jsm");
 
 function Telephony()
 {

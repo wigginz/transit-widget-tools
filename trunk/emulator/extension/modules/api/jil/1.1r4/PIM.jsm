@@ -2,11 +2,11 @@ var EXPORTED_SYMBOLS = ["PIM"];
 
 var _PIM_122 = Components.classes["@jil.org/jilapi-pim;1"].getService(Components.interfaces.jilPIM);
 
-Components.utils.import("resource://transit-emulator/1.2.2/SecurityManager.jsm");
+Components.utils.import("resource://transit-emulator/api/jil/1.2.2/SecurityManager.jsm");
 
-Components.utils.import("resource://transit-emulator/1.1r4/EventRecurrenceTypes.jsm");
-Components.utils.import("resource://transit-emulator/1.1r4/AddressBookItem.jsm");
-Components.utils.import("resource://transit-emulator/1.1r4/CalendarItem.jsm");
+Components.utils.import("resource://transit-emulator/api/jil/1.1r4/EventRecurrenceTypes.jsm");
+Components.utils.import("resource://transit-emulator/api/jil/1.1r4/AddressBookItem.jsm");
+Components.utils.import("resource://transit-emulator/api/jil/1.1r4/CalendarItem.jsm");
 
 function PIM()
 {

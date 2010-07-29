@@ -238,6 +238,33 @@ JILProfileService.prototype = //#
 
     return(pims);
   },
+  
+  getAPIExtensions : function(profileId)
+  {
+    var stmt = this.getConnection().createStatement("select ext.id as ext_id, ext.name as ext_name, ext.resource_url as ext_resource_url from jwe_api_extension ext, jwe_api_extension_map extmap");
+
+        stmt = connection.createStatement("CREATE TABLE 'jwe_api_extension_map' ('profile_id' INTEGER NOT NULL , 'extension_id' INTEGER NOT NULL, PRIMARY KEY ('profile_id', 'extension_id'), FOREIGN KEY(profile_id) REFERENCES jwe_device_profile(id), FOREIGN KEY(extension_id) REFERENCES jwe_api_extension(id) ON DELETE CASCADE ON UPDATE CASCADE)");
+    
+    
+    var extensions = new Array();
+    try 
+    {  
+      while ( stmt.step() )
+      {
+        var extension = new jilExtension();
+        extension.id = stmt.row.id;
+        extension.name = stmt.row.name;
+        extension.resourceUrl = stmt.row.resource_url;
+        extensions.push(extension);
+      }
+    }
+    finally 
+    {
+      stmt.reset();
+    }
+
+    return(extension);
+  },
 
   getEmulatedWidgets : function(profileId)
   {
