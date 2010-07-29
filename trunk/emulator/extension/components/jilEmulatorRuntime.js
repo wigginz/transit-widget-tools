@@ -9,8 +9,7 @@ var service = null;
 function JILEmulatorRuntime() //#
 {
   Components.utils.import("resource://transit-emulator/TransitCommon.jsm");
-  Components.utils.import("resource://transit-emulator/1.2.2/WidgetIngester.jsm");
-  Components.utils.import("resource://transit-emulator/1.0/WidgetIngester.jsm");
+  Components.utils.import("resource://transit-emulator/WidgetIngester.jsm");
   
   this.wrappedJSObject = this;
   this.profileService = Components.classes['@jil.org/jilapi-profileservice;1'].getService().wrappedJSObject;
@@ -105,34 +104,15 @@ JILEmulatorRuntime.prototype = //#
 
     var onError = false;
     
-    // go through the widget ingesters, starting with 1.2
-    var widget = null;
-    try
-    {
-      widget = WidgetIngester_122.ingest(domDoc, baseUrl);
-      
-      if ( !widget )
-      {
-        widget = WidgetIngester_10.ingest(domDoc, baseUrl);
-        if ( widget )
-          this.logAction("Widget is JIL spec 1.0");
-      }
-      else
-        this.logAction("Widget is JIL spec 1.2.x");
-    }
-    catch (ex)
-    {
-      TransitCommon.alert("Could not ingest widget config.xml, reason: "+ex.message+". Cannot load widget.");
-      this.logAction("Could not ingest widget config.xml, reason: "+ex.message+". Cannot load widget.");
-    }
+    var widget = WidgetIngester.ingest(domDoc, baseUrl);
     
     if ( !widget )
     {
-      TransitCommon.alert("Widget config.xml does not conform to JIL 1.0 or 1.2.x specs, cannot load.");
-      this.logAction("Widget config.xml does not conform to JIL 1.0 or 1.2.x specs, cannot load.");
+      TransitCommon.alert("Widget config.xml does not conform to JIL 1.0 or 1.2 packaging specs, cannot load.");
+      this.logAction("Widget config.xml does not conform to JIL 1.0 or 1.2 packging specs, cannot load.");
       return;
     }
-    
+
     try
     { 
       var ww = Components.classes["@mozilla.org/embedcomp/window-watcher;1"]
@@ -163,7 +143,7 @@ JILEmulatorRuntime.prototype = //#
         };
         this.profileService.addEmulatedWidget(emulatedWidget);
         // get it again so we have the ID, should rework the add so we don't have to do this...
-        emulatedWidget = this.profileService.getEmulatedWidgetByAppId(this.deviceProfile.id, widget.id);
+        emulatedWidget = this.profileService.getEmulatedWidgetByAppId(this.deviceProfile.id, widget.id, widget.version);
       }
       // if it does, update it
       else

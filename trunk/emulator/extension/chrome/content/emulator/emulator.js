@@ -80,7 +80,7 @@ var jwe_emulator =
     
     $("jwe-emulator-device-jilapispec").attr("value", this.emulator.deviceProfile.jilAPISpec);
     $("jwe-emulator-device-name").attr("value", this.emulator.deviceProfile.name);
-        
+      
     $("jwe-emulator-content").attr("src", this.emulator.getWidget().contentSource);
     
     $("jwe-emulator-tools-box-profiles-list").node.parentNode.removeChild($("jwe-emulator-tools-box-profiles-list").node);
@@ -608,17 +608,17 @@ var jwe_emulator =
     SecurityManager.showYesNoDialog = jwe_emulator.showYesNoDialog;
     SecurityManager.securityContext = $("jwe-emulator-settings-security-level").val();
     
-    if ( this.emulator.deviceProfile.jilAPISpec == "1.0" )
-      this.load_1_0();
+    if ( this.emulator.deviceProfile.jilAPISpec == "1.1r4" )
+      this.load_1_1r4();
     else if ( this.emulator.deviceProfile.jilAPISpec == "1.2.2" )
       this.load_1_2_2();
   },
   
-  load_1_0 : function()
+  load_1_1r4 : function()
   {
-    Components.utils.import("resource://transit-emulator/1.0/Widget.jsm", $("jwe-emulator-content").node.contentWindow.window);
-    Components.utils.import("resource://transit-emulator/1.0/WidgetManager.jsm", $("jwe-emulator-content").node.contentWindow.window);
-    Components.utils.import("resource://transit-emulator/1.0/XMLHttpRequest.jsm", $("jwe-emulator-content").node.contentWindow.window);
+    Components.utils.import("resource://transit-emulator/1.1r4/Widget.jsm", $("jwe-emulator-content").node.contentWindow.window);
+    Components.utils.import("resource://transit-emulator/1.1r4/WidgetManager.jsm", $("jwe-emulator-content").node.contentWindow.window);
+    Components.utils.import("resource://transit-emulator/1.1r4/XMLHttpRequest.jsm", $("jwe-emulator-content").node.contentWindow.window);
   },
   
   load_1_2_2 : function()
