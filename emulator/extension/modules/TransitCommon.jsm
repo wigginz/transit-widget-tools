@@ -22,7 +22,7 @@ var TransitCommon =
   debug : function(logEntry)
   {
     var tstamp = new Date().getTime();
-    dump(tstamp+": "+logEntry+"\n");
+    dump("\n[Transit/"+tstamp+"]: "+logEntry);
   },
   
   convertMessageToJIL : function(message)
