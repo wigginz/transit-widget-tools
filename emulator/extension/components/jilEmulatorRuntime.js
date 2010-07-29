@@ -126,7 +126,9 @@ JILEmulatorRuntime.prototype = //#
         this.emulatorWindow.focus();
       }
       
-      this.logAction("Starting widget emulation for widget: "+widget.name+", version: "+widget.version);
+      this.logAction("Starting widget emulation for widget: "+widget.names[0].name+", version: "+widget.version);
+      
+      this.logAction("Widget conforms to JIL Packaging specification "+widget.jilPackagingSpec);
 
       // check to see if this widget exists in the database
       var emulatedWidget = this.profileService.getEmulatedWidgetByAppId(this.deviceProfile.id, widget.id, widget.version);
