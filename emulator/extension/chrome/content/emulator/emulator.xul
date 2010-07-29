@@ -135,11 +135,11 @@
                             <label id="jwe-emulator-widget-name"/>
                           </hbox>
                           <hbox>
-                            <label style="width: 14em;" value="&jwe-emulator-widget-name-version;"/>
+                            <label style="width: 14em;" value="&jwe.emulator.widget.name.version;"/>
                             <label id="jwe-emulator-widget-version"/>
                           </hbox>
                           <hbox>
-                            <label style="width: 14em;" value="&jwe-emulator-widget-jilpkgspec;"/>
+                            <label style="width: 14em;" value="&jwe.emulator.widget.jilpkgspec;"/>
                             <label id="jwe-emulator-widget-jilpkgspec"/>
                           </hbox>
                           <hbox>
@@ -168,13 +168,17 @@
                     <caption label="&jwe.emulator.tab.settings.devicelabel;"/>
                     <vbox>
                       <hbox>
-                        <label style="width: 14em;" value="&jwe-emulator-device-name;"/>
+                        <label style="width: 14em;" value="&jwe.emulator.device.name;"/>
                         <label id="jwe-emulator-device-name"/>
                       </hbox>
                       <hbox>
-                        <label style="width: 14em;" value="&jwe-emulator-device-jilapispec;"/>
+                        <label style="width: 14em;" value="&jwe.emulator.device.jilapispec;"/>
                         <label id="jwe-emulator-device-jilapispec"/>
                       </hbox>
+                      <hbox>
+                        <label style="width: 14em;" value="&jwe.emulator.device.extensions;"/>
+                        <textbox id="jwe-emulator-device-extensions" class="plain" style="background-color: transparent;" flex="1" multiline="true" readonly="true" onoverflow="this.height = this.inputField.scrollHeight;" DOMAttrModified="if(event.attrName == 'value') this.value = event.newValue; return true;"/>
+                      </hbox>    
                     </vbox>
                   </groupbox>
                   

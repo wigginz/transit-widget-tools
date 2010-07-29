@@ -357,19 +357,9 @@ var jwe_Profiles =
     else if ( device.jilAPISpec == "1.2.2" )
       $("jwe-profiles-device-panel-general-apispec").sel(1);
     
-    // I'm writing this comment to admit this is a bad way to do this. However! Since I'm
-    // commenting here and admiting it with a killer excuse (I was tired?), no one will think I'm an idiot
-    var extensions = JILProfileService.wrappedJSObject.getAllAPIExtensions();
-    var enabledExtensions = JILProfileService.wrappedJSObject.getAPIExtensionsForDevice(jwe_Profiles.state["selDevice"]);
+    var extensions = JILProfileService.wrappedJSObject.getAPIExtensionsForDevice(jwe_Profiles.state["selDevice"]);
     for ( var i = 0; i < extensions.length; i++ )
-    {
-      var msgItem = jwe_Profiles.createMenuitem(messages[i].name, messages[i].id);
-      msgPopup.appendChild(msgItem);
-      if ( messages[i].id == profile.messageProfileId )
-        msgIndex = i;
-    }
-    document.getElementById("jwe-profiles-device-panel-general-msglist").appendChild(msgPopup);
-    document.getElementById("jwe-profiles-device-panel-general-msglist").selectedIndex = msgIndex;
+      $("jwe-profiles-device-panel-general-extensions-"+extensions[i].key).chk(true);
   },
 
   saveDGeneral : function()
@@ -383,8 +373,16 @@ var jwe_Profiles =
       apiSpec = "1.1r4";
     else if ( $("jwe-profiles-device-panel-general-apispec").sel() == 1 )
       apiSpec = "1.2.2";
+    
+    var selectedExtensions = new Array();
+    var extensions = JILProfileService.wrappedJSObject.getAllAPIExtensions();
+    for ( var i = 0; i < extensions.length; i++ )
+    {
+      if ( $("jwe-profiles-device-panel-general-extensions-"+extensions[i].key).chk() == true )
+        selectedExtensions.push(extensions[i].key);
+    }
 
-    JILProfileService.wrappedJSObject.saveDGeneral(jwe_Profiles.state["selDevice"], messageProfileId, pimProfileId, apiSpec);
+    JILProfileService.wrappedJSObject.saveDGeneral(jwe_Profiles.state["selDevice"], messageProfileId, pimProfileId, apiSpec, selectedExtensions);
   },
   
   /** load widget subtab **/
@@ -1236,6 +1234,10 @@ var jwe_Profiles =
   {
     document.getElementById("jwe-profiles-device-panel-general-msglist").removeAllItems();
     document.getElementById("jwe-profiles-device-panel-general-pimlist").removeAllItems();
+    
+    var extensions = JILProfileService.wrappedJSObject.getAllAPIExtensions();
+    for ( var i = 0; i < extensions.length; i++ )
+      $("jwe-profiles-device-panel-general-extensions-"+extensions[i].key).chk(false);
   },
 
   resetTelephony : function()
