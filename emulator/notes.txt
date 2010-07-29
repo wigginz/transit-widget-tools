@@ -8,6 +8,11 @@ put messages in sent folder when sent via messaging api
 
 ###
 
+TODO: fix exception handling for the 1.1r4 API
+TODO: need to handle preference tags in the config.xml and respect the readonly attribute
+
+###
+
 format and packaging parser 1.2.2
 
 
