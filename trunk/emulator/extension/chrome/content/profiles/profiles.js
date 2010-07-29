@@ -356,6 +356,20 @@ var jwe_Profiles =
       $("jwe-profiles-device-panel-general-apispec").sel(0);
     else if ( device.jilAPISpec == "1.2.2" )
       $("jwe-profiles-device-panel-general-apispec").sel(1);
+    
+    // I'm writing this comment to admit this is a bad way to do this. However! Since I'm
+    // commenting here and admiting it with a killer excuse (I was tired?), no one will think I'm an idiot
+    var extensions = JILProfileService.wrappedJSObject.getAllAPIExtensions();
+    var enabledExtensions = JILProfileService.wrappedJSObject.getAPIExtensionsForDevice(jwe_Profiles.state["selDevice"]);
+    for ( var i = 0; i < extensions.length; i++ )
+    {
+      var msgItem = jwe_Profiles.createMenuitem(messages[i].name, messages[i].id);
+      msgPopup.appendChild(msgItem);
+      if ( messages[i].id == profile.messageProfileId )
+        msgIndex = i;
+    }
+    document.getElementById("jwe-profiles-device-panel-general-msglist").appendChild(msgPopup);
+    document.getElementById("jwe-profiles-device-panel-general-msglist").selectedIndex = msgIndex;
   },
 
   saveDGeneral : function()

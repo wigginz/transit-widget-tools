@@ -239,19 +239,16 @@ JILProfileService.prototype = //#
     return(pims);
   },
   
-  getAPIExtensions : function(profileId)
+  getAllAPIExtensions : function()
   {
-    var stmt = this.getConnection().createStatement("select ext.id as ext_id, ext.name as ext_name, ext.resource_url as ext_resource_url from jwe_api_extension ext, jwe_api_extension_map extmap");
-
-        stmt = connection.createStatement("CREATE TABLE 'jwe_api_extension_map' ('profile_id' INTEGER NOT NULL , 'extension_id' INTEGER NOT NULL, PRIMARY KEY ('profile_id', 'extension_id'), FOREIGN KEY(profile_id) REFERENCES jwe_device_profile(id), FOREIGN KEY(extension_id) REFERENCES jwe_api_extension(id) ON DELETE CASCADE ON UPDATE CASCADE)");
-    
-    
+    var stmt = this.getConnection().createStatement("select id, name, resource_url from jwe_api_extension");
+   
     var extensions = new Array();
     try 
     {  
       while ( stmt.step() )
       {
-        var extension = new jilExtension();
+        var extension = new jilAPIExtension();
         extension.id = stmt.row.id;
         extension.name = stmt.row.name;
         extension.resourceUrl = stmt.row.resource_url;
@@ -264,6 +261,74 @@ JILProfileService.prototype = //#
     }
 
     return(extension);
+  },
+  
+  getAPIExtensionsForDevice : function(profileId)
+  {
+    var stmt = this.getConnection().createStatement("select ext.id as ext_id, ext.name as ext_name, ext.resource_url as ext_resource_url from jwe_api_extension ext, jwe_api_extension_map extmap where ext.id = extmap.extension_id and extmap.profile_id = :profileId");
+    stmt.params.profileId = profileId;
+
+    var extension = new jilAPIExtension();
+    try 
+    {  
+      while ( stmt.step() )
+      {
+        extension.id = stmt.row.ext_id;
+        extension.name = stmt.row.ext_name;
+        extension.resourceUrl = stmt.row.ext_resource_url;
+      }
+    }
+    finally 
+    {
+      stmt.reset();
+    }
+
+    return(extension);
+  },
+  
+  addAPIExtensionsForDevice : function(profileId, extensionIds)
+  {
+    try
+    {
+      // first flush existing extension maps    
+      var stmt = this.getConnection().createStatement("delete from jwe_api_extension_map where profile_id = :profileId");
+      stmt.params.profileId = profileId;
+
+      var extension = new jilAPIExtension();
+      try 
+      {  
+        stmt.executeStep();
+      }
+      finally 
+      {
+        stmt.reset();
+      }
+      
+      for ( var i = 0; i < extensionIds.length; i++ )
+      {
+        stmt = this.getConnection().createStatement("insert into jwe_api_extension_map (profile_id, extension_id) values (:profileId, :extensionId)");
+        stmt.params.profileId = profileId;
+        stmt.params.extensionId = extensionIds[i];
+        
+        try 
+        {  
+          stmt.executeStep();
+        }
+        finally 
+        {
+          stmt.reset();
+        }
+      }
+      
+      conn.commitTransaction();
+    }
+    catch(exception)
+    {
+      dump(exception);
+      conn.rollbackTransaction();
+      return(false);
+    }
+    return(true);
   },
 
   getEmulatedWidgets : function(profileId)
@@ -4686,6 +4751,14 @@ jilWidgetPreference.prototype =
   value : null
 };
 
+
+function jilAPIExtension() {}
+jilAPIExtension.prototype =
+{
+  id : null,
+  name : null,
+  resourceUrl : null,
+};
 
 /** Import/Export objects **/
 
