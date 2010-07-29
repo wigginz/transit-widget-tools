@@ -1,3 +1,12 @@
+var testSamsung = 
+{
+  openURL : function()
+  {
+    widget.openURL("http://www.jil.org");
+    showResult("Samsung widget.openURL", "widget.openURL() called for www.jil.org.");
+  },
+};
+
 var testXMLHttpRequest = 
 {
   testAsync : function()
