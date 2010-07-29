@@ -105,7 +105,7 @@ var jwe_emulator =
 
     $("jwe-log").val(this.emulator.getLog());
     
-    Components.utils.import("resource://transit-emulator/1.2.2/SecurityManager.jsm");
+    Components.utils.import("resource://transit-emulator/api/jil/1.2.2/SecurityManager.jsm");
     
     jwe_setScrollArea();
     
@@ -616,16 +616,16 @@ var jwe_emulator =
   
   load_1_1r4 : function()
   {
-    Components.utils.import("resource://transit-emulator/1.1r4/Widget.jsm", $("jwe-emulator-content").node.contentWindow.window);
-    Components.utils.import("resource://transit-emulator/1.1r4/WidgetManager.jsm", $("jwe-emulator-content").node.contentWindow.window);
-    Components.utils.import("resource://transit-emulator/1.1r4/XMLHttpRequest.jsm", $("jwe-emulator-content").node.contentWindow.window);
+    Components.utils.import("resource://transit-emulator/api/jil/1.1r4/Widget.jsm", $("jwe-emulator-content").node.contentWindow.window);
+    Components.utils.import("resource://transit-emulator/api/jil/1.1r4/WidgetManager.jsm", $("jwe-emulator-content").node.contentWindow.window);
+    Components.utils.import("resource://transit-emulator/api/jil/1.1r4/XMLHttpRequest.jsm", $("jwe-emulator-content").node.contentWindow.window);
   },
   
   load_1_2_2 : function()
   {
-    Components.utils.import("resource://transit-emulator/1.2.2/Widget.jsm", $("jwe-emulator-content").node.contentWindow.window);
-    Components.utils.import("resource://transit-emulator/1.2.2/WidgetManager.jsm", $("jwe-emulator-content").node.contentWindow.window);
-    Components.utils.import("resource://transit-emulator/1.2.2/XMLHttpRequest.jsm", $("jwe-emulator-content").node.contentWindow.window);
+    Components.utils.import("resource://transit-emulator/api/jil/1.2.2/Widget.jsm", $("jwe-emulator-content").node.contentWindow.window);
+    Components.utils.import("resource://transit-emulator/api/jil/1.2.2/WidgetManager.jsm", $("jwe-emulator-content").node.contentWindow.window);
+    Components.utils.import("resource://transit-emulator/api/jil/1.2.2/XMLHttpRequest.jsm", $("jwe-emulator-content").node.contentWindow.window);
   },
   
   toggleSecurityLevel : function()

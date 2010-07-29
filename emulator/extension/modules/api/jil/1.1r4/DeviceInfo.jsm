@@ -2,7 +2,7 @@ var EXPORTED_SYMBOLS = ["DeviceInfo"];
 
 var _DeviceInfo_122 = Components.classes["@jil.org/jilapi-deviceinfo;1"].getService(Components.interfaces.jilDeviceInfo);
 
-Components.utils.import("resource://transit-emulator/1.1r4/AddressBookItem.jsm");
+Components.utils.import("resource://transit-emulator/api/jil/1.1r4/AddressBookItem.jsm");
 
 function DeviceInfo()
 {

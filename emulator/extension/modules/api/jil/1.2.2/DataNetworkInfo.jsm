@@ -1,8 +1,8 @@
 var EXPORTED_SYMBOLS = ["DataNetworkInfo"];
 
-Components.utils.import("resource://transit-emulator/1.2.2/DataNetworkConnectionTypes.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/Exception.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/ExceptionTypes.jsm");
+Components.utils.import("resource://transit-emulator/api/jil/1.2.2/DataNetworkConnectionTypes.jsm");
+Components.utils.import("resource://transit-emulator/api/jil/1.2.2/Exception.jsm");
+Components.utils.import("resource://transit-emulator/api/jil/1.2.2/ExceptionTypes.jsm");
 
 var _DataNetworkInfo_122 = Components.classes["@jil.org/jilapi-datanetworkinfo;1"].getService(Components.interfaces.jilDataNetworkInfo);
 

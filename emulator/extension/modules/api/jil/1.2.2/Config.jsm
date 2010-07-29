@@ -1,8 +1,8 @@
 var EXPORTED_SYMBOLS = ["Config"];
 
-Components.utils.import("resource://transit-emulator/1.2.2/SecurityManager.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/Exception.jsm");
-Components.utils.import("resource://transit-emulator/1.2.2/ExceptionTypes.jsm");
+Components.utils.import("resource://transit-emulator/api/jil/1.2.2/SecurityManager.jsm");
+Components.utils.import("resource://transit-emulator/api/jil/1.2.2/Exception.jsm");
+Components.utils.import("resource://transit-emulator/api/jil/1.2.2/ExceptionTypes.jsm");
 
 var _Config_122 = Components.classes["@jil.org/jilapi-config;1"].getService(Components.interfaces.jilConfig);
 

@@ -1,6 +1,6 @@
 var EXPORTED_SYMBOLS = ["RadioInfo"];
 
-Components.utils.import("resource://transit-emulator/1.2.2/RadioSignalSourceTypes.jsm");
+Components.utils.import("resource://transit-emulator/api/jil/1.2.2/RadioSignalSourceTypes.jsm");
 
 var _RadioInfo_122a = Components.classes["@jil.org/jilapi-radioinfo;1"].getService(Components.interfaces.jilRadioInfo);
 

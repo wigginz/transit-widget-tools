@@ -72,6 +72,66 @@ var Target_1_2_2_20100729 =
   },
 };
 
+var Target_1_2_2_20100805 = 
+{
+  depends : Target_1_2_2_20100729,
+  
+  version : "1_2_2_20100805",
+  
+  upgrade : function(connection)
+  {
+    var stmt = connection.createStatement("CREATE TABLE 'jwe_api_extension' ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL , 'name' INTEGER NOT NULL , 'resource_url' TEXT NOT NULL)");
+
+    try
+    {
+      stmt.executeStep();
+    }
+    catch(exception)
+    {
+      TransitCommon.alert("Error during upgrade to version "+this.version+". Message: "+exception);
+      throw exception;
+    }
+    finally 
+    {
+      stmt.reset();
+    }
+    
+    stmt = connection.createStatement("CREATE TABLE 'jwe_api_extension_map' ('profile_id' INTEGER NOT NULL , 'extension_id' INTEGER NOT NULL, PRIMARY KEY ('profile_id', 'extension_id'), FOREIGN KEY(profile_id) REFERENCES jwe_device_profile(id), FOREIGN KEY(extension_id) REFERENCES jwe_api_extension(id) ON DELETE CASCADE ON UPDATE CASCADE)");
+
+    try
+    {
+      stmt.executeStep();
+    }
+    catch(exception)
+    {
+      TransitCommon.alert("Error during upgrade to version "+this.version+". Message: "+exception);
+      throw exception;
+    }
+    finally 
+    {
+      stmt.reset();
+    }
+    
+    stmt = connection.createStatement("insert into jwe_api_extension (id, name, resource_url) values (null, 'Samsung M1/H1 Extensions', 'resource://transit-emulator/api/samsung/H1_M1/widget.jsm')");
+
+    try
+    {
+      stmt.executeStep();
+    }
+    catch(exception)
+    {
+      TransitCommon.alert("Error during upgrade to version "+this.version+". Message: "+exception);
+      throw exception;
+    }
+    finally 
+    {
+      stmt.reset();
+    }
+  },
+};
+
+
+
 var Target_Current = Target_1_2_2_20100729;
 
 /***********************************************************/
