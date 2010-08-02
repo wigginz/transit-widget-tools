@@ -25,7 +25,7 @@ var WidgetIngester =
       //this.runtime.logAction("Could not ingest widget config.xml, reason: "+ex.message+". Cannot load widget.");
     }
     
-    return(widget);
+    return(this.validateWidget(widget));
   },
 
   /**
@@ -69,7 +69,7 @@ var WidgetIngester =
       widget.authorName
       widget.authorHref
       widget.authorEmail
-      widget.jilSpec
+      widget.jilPackagingSpec
     }
   **/
   ingest_1_0 : function(config, baseUrl)
@@ -77,13 +77,13 @@ var WidgetIngester =
     // determine if this is a 1.0 widget
     var widgetNs = config.namespaceURI;
     
-    TransitCommon.debug("1.0: "+widgetNs+", "+widgetNs.indexOf("http://www.jil.org/ns/widgets"));
+    TransitCommon.debug("Attempting Spec 1.0 ingestion. Widget namespace: "+widgetNs);
     
     // if the namespace of the widget is http://www.jil.org/ns/widgets, it's a 1.0 widget
     // if not, we can't ingest it
     if ( widgetNs.indexOf("http://www.jil.org/ns/widgets") < 0 )
     {
-      //throw {message: "config.xml does not represent a JIL 1.0 widget; widget element namespace not 'http://www.jil.org/ns/widgets'"};
+      TransitCommon.debug("Widget is not 1.0, returning null widget object.");
       return(null);
     }
     
@@ -241,13 +241,13 @@ var WidgetIngester =
     // determine if this is a 1.2 widget
     var widgetNs = config.namespaceURI;
     
-    TransitCommon.debug("1.2: "+widgetNs+", "+widgetNs.indexOf("http://www.w3.org/ns/widgets"));
+    TransitCommon.debug("Attempting Spec 1.2 ingestion. Widget namespace: "+widgetNs);
     
     // if the namespace of the widget is http://www.w3.org/ns/widgets, it's a 1.2 widget
     // if not, we can't ingest it
     if ( widgetNs.indexOf("http://www.w3.org/ns/widgets") < 0 )
     {
-      TransitCommon.debug("Widget is not 1.2, namespace is: "+widgetNs);
+      TransitCommon.debug("Widget is not 1.2, returning null widget object.");
       return(null);
     }
     
@@ -421,5 +421,68 @@ var WidgetIngester =
     }
     
     return(widget);
+  },
+  
+  validateWidget : function(widget)
+  {
+    var errors = new Array();
+    var warnings = new Array();
+    
+    if ( !widget.id )
+      errors.push("widget-id");
+    
+    if ( !widget.version )
+      errors.push("widget-version");
+    
+    if ( !widget.height )
+      warnings.push("widget-height");
+    
+    if ( !widget.width )
+      warnings.push("widget-width");
+    
+    if ( !widget.width )
+      warnings.push("widget.maximum_display_mode.width");
+      
+    if ( !widget.maxHeight )
+      warnings.push("widget.maximum_display_mode.height");
+    
+    if ( !widget.maxWidth )
+      warnings.push("widget.maximum_display_mode.width");
+    
+    if ( !widget.names[0] )
+    {
+      widget.names = new Array();
+      widget.names.push({name: "Unknown",});
+      warnings.push("widget.name");
+    }
+    
+    if ( !widget.icons[0] )
+    {
+      widget.icons = new Array();
+      widget.icons.push({source: "chrome://transit-emulator/skin/images/unknown-icon.png",});
+      warnings.push("widget.icon");
+    }
+    
+    if ( !widget.contentSource )
+      errors.push("widget.content.src");
+    
+    if ( !widget.descriptions[0] )
+    {
+      widget.descriptions = new Array();
+      widget.descriptions.push({description: "Unknown",});
+      warnings.push("widget.description");
+    }
+    
+    if ( !widget.authorName )
+    {
+      widget.authorName = "Unknown";
+      warnings.push("widget.author");
+    }
+    
+    return({
+      widget: widget,
+      errors: errors,
+      warnings: warnings,
+    });
   },
 };
