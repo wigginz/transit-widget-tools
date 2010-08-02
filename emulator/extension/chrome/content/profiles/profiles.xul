@@ -497,7 +497,7 @@
                     </hbox>
                     <hbox align="center">
                       <label value="&jwe.profiles.devices.power.remaining;" class="jwe-defaultText" style="width: 14em;"/>
-                      <textbox type="number" size="3" id="jwe-profiles-devices-power-remaining" min="0" max="100"/><label value="&jwe.profiles.devices.power.remaining.percent;" class="jwe-defaultText" onchange="jwe_Profiles.change('dPower');"/>
+                      <textbox type="number" size="3" id="jwe-profiles-devices-power-remaining" min="0" max="100" onchange="jwe_Profiles.change('dPower');"/><label value="&jwe.profiles.devices.power.remaining.percent;" class="jwe-defaultText"/>
                     </hbox>
                   </vbox>
                 </groupbox>
@@ -529,7 +529,7 @@
                     </hbox>
                     <hbox align="center">
                       <label value="&jwe.profiles.devices.radio.strength;" class="jwe-defaultText" style="width: 14em;"/>
-                      <textbox type="number" size="3" id="jwe-profiles-devices-radio-strength" min="0" max="100"/><label value="&jwe.profiles.devices.radio.strength.percent;" class="jwe-defaultText" onchange="jwe_Profiles.change('dRadio');"/>
+                      <textbox type="number" size="3" id="jwe-profiles-devices-radio-strength" min="0" max="100" onchange="jwe_Profiles.change('dRadio');"/><label value="&jwe.profiles.devices.radio.strength.percent;" class="jwe-defaultText"/>
                     </hbox>
                   </vbox>
                 </groupbox>
