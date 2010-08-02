@@ -104,13 +104,35 @@ JILEmulatorRuntime.prototype = //#
 
     var onError = false;
     
-    var widget = WidgetIngester.ingest(domDoc, baseUrl);
+    var widgetResult = WidgetIngester.ingest(domDoc, baseUrl);
+    var widget = widgetResult.widget;
     
     if ( !widget )
     {
       TransitCommon.alert("Widget config.xml does not conform to JIL 1.0 or 1.2 packaging specs, cannot load.");
       this.logAction("Widget config.xml does not conform to JIL 1.0 or 1.2 packging specs, cannot load.");
       return;
+    }
+    
+    if ( widgetResult.errors.length > 0 )
+    {
+      var errors = "";
+      for ( var i = 0; i < widgetResult.errors.length; i++ )
+        errors += "\n"+widgetResult.errors[i];
+      
+      TransitCommon.alert("Widget config.xml is missing some required components and cannot load. Please correct the following missing components to emulate: \n"+errors);
+      this.logAction("Widget config.xml is missing some required components and cannot load. Please correct the following missing components to emulate: "+errors);
+      return;
+    }
+    
+    if ( widgetResult.warnings.length > 0 )
+    {
+      var warnings = "";
+      for ( var i = 0; i < widgetResult.warnings.length; i++ )
+        warnings += "\n"+widgetResult.warnings[i];
+      
+      TransitCommon.alert("Widget config.xml is missing some components but emulation can proceed. We recommend fixing these missing components: \n"+warnings);
+      this.logAction("Widget config.xml is missing some components but emulation can proceed. We recommend fixing these missing components: "+warnings);
     }
 
     try
