@@ -3,6 +3,15 @@
 
 Check here for all the latest details on milestone releases, what's being worked on and committed, and future plans.
 
+<wiki:comment>
+
+== Thursday August 5, 2010 ==
+
+=== Under the Hood ===
+
+We've added some improved validation for a widget's config.xml which allow the widget to still run even with some missing elements, but the emulator will put in temp values like "Unknown" in the case where an element is missing. There are some elements (widget ID, version, content source, etc.) that will cause emulation to fail, and must be fixed before the widget can load in the emulator.
+</wiki:comment>
+
 
 == Thursday July 29, 2010 ==
 
