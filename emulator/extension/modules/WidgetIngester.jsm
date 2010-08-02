@@ -428,6 +428,8 @@ var WidgetIngester =
     var errors = new Array();
     var warnings = new Array();
     
+    TransitCommon.debug("Starting widget configuration validation.");
+    
     if ( !widget.id )
       errors.push("widget-id");
     
@@ -478,6 +480,8 @@ var WidgetIngester =
       widget.authorName = "Unknown";
       warnings.push("widget.author");
     }
+    
+    TransitCommon.debug("Widget validation check completed with "+errors.length+" errors and "+warnings.length+" warnings.");
     
     return({
       widget: widget,
