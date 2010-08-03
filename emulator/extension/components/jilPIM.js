@@ -112,6 +112,11 @@ JILPIM.prototype = //#
       {
         var rtContacts = Components.classes["@jil.org/jilapi-emulatorruntime;1"].getService().wrappedJSObject.findAddressBookItems(comparisonContact, startInx, endInx);
         
+        service.runtime.logAction("PIM.findAddressBookItems(): found "+rtItems.length+" address book items from search. Returning start "+startInx+" to end "+endInx);
+
+        TransitCommon.debug("Returning address book items from start "+startInx+" and end "+endInx);
+        rtContacts = rtContacts.splice(startInx, endInx);
+        
         var jilContacts = new Array();
         for ( var i = 0; i < rtContacts.length; i++ )
           jilContacts.push(TransitCommon.convertContactToJIL(rtContacts[i]));
@@ -137,6 +142,11 @@ JILPIM.prototype = //#
       run: function()
       {
         var rtItems = Components.classes["@jil.org/jilapi-emulatorruntime;1"].getService().wrappedJSObject.findCalendarItems(itemToMatch, startInx, endInx);
+        
+        service.runtime.logAction("PIM.findCalendarItems(): found "+rtItems.length+" calendar items from search. Returning start "+startInx+" to end "+endInx);
+        
+        TransitCommon.debug("Returning calendar items from start "+startInx+" and end "+endInx);
+        rtItems = rtItems.splice(startInx, endInx);
         
         var jilItems = new Array();
         for ( var i = 0; i < rtItems.length; i++ )

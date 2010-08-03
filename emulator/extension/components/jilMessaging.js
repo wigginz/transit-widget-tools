@@ -141,7 +141,10 @@ JILMessaging.prototype = //#
       {
         var rtMessages = Components.classes["@jil.org/jilapi-emulatorruntime;1"].getService().wrappedJSObject.findMessages(comparisonMsg, folderName, startInx, endInx);
         
-        service.runtime.logAction("Messaging.findMessages(): found "+rtMessages.length+" messages from search");
+        service.runtime.logAction("Messaging.findMessages(): found "+rtMessages.length+" messages from search. Returning start "+startInx+" to end "+endInx);
+        
+        TransitCommon.debug("Returning messages from start "+startInx+" and end "+endInx);
+        rtMessages = rtMessages.splice(startInx, endInx);
         
         var jilMessages = new Array();
         for ( var i = 0; i < rtMessages.length; i++ )
