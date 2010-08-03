@@ -10,7 +10,7 @@ Check here for all the latest details on milestone releases, what's being worked
 === Fixes ===
 
  * Widget.Device.onFilesFound now returns the correct Widget.Device.File objects as results.
- * Widget.Device.findFiles now properly handles the start and end index parameters for returned results.
+ * Widget.Device.findFiles, Widget.PIM.findCalendarItems, Widget.Messaging.findMessages, Widget.PIM.findAddressBookItems now properly handle the start and end index parameters for returned results. Also extended the emulator log to show what start and end index values were used.
 
 === Under the Hood ===
 
