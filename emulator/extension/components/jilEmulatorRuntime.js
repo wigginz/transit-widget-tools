@@ -790,6 +790,7 @@ JILEmulatorRuntime.prototype = //#
   // there's an opportunity to do some caching here if needed, look into it.
   getLocalFile : function(fileName)
   {
+    TransitCommon.debug("Retrieving file details for file name "+fileName);
     // create a map with the virtual root as the key and local root as the value
     var fsys = this.getDeviceData().fileSystems;
     var fsysMap = new Array();
@@ -802,12 +803,15 @@ JILEmulatorRuntime.prototype = //#
     var score = 0;
     for ( var root in fsysMap )
     {
+      TransitCommon.debug("Checking if fileName "+fileName+" is in root "+root);
       if ( (fileName.indexOf(root) > -1) && (root.length > score) )
       {
         score = root.length;
         candidate = root;
       }
     }
+    
+    TransitCommon.debug("Best candidate: "+candidate+", with score: "+score);
     
     // remove the root path from the full file path to get the relative path
     // for the local file
@@ -831,6 +835,67 @@ JILEmulatorRuntime.prototype = //#
     vFile.jilFile = jilFile;
     vFile.localFullPath = realPath;
     vFile.jilFullPath = fileName;
+    
+    TransitCommon.debug("Final file details, local path: "+realPath+", virtual path: "+fileName);
+    
+    return(vFile);
+  },
+
+  getFileByLocalPath : function(fileName)
+  {
+    TransitCommon.debug("Retrieving file details for local file path "+fileName);
+    // create a map with the local root as the key and virtual root as the value
+    var fsys = this.getDeviceData().fileSystems;
+    var fsysMap = new Array();
+    for ( var i = 0; i < fsys.length; i++ )
+      fsysMap[fsys[i].localPath] = fsys[i].rootPath;
+    
+    // find the filesystem this file is supposed to be on by finding the 
+    // longest root path that is still a substring of the full file path
+    var candidate = null;
+    var score = 0;
+    for ( var root in fsysMap )
+    {
+      TransitCommon.debug("Checking if fileName "+fileName+" is in root "+root);
+      if ( (fileName.indexOf(root) > -1) && (root.length > score) )
+      {
+        score = root.length;
+        candidate = root;
+      }
+    }
+    
+    TransitCommon.debug("Best candidate: "+candidate+", with score: "+score);
+    
+    // remove the root path from the full file path to get the relative path
+    // for the local file
+    var relativePath = fileName.substr(score, fileName.length);
+    
+    TransitCommon.debug("Relavite path: "+relativePath);
+    
+    // the real path to the mapped drive 
+    // if local path doesnt have a trailing slash and relative path doesn't have a trailing slash, add one
+    var virtualPath = fsysMap[candidate]+relativePath;
+    if ( (fsysMap[candidate].charAt(fsysMap[candidate].length-1) != "/") &&
+         (relativePath.charAt(0) != "/")
+       )
+      virtualPath = fsysMap[candidate]+ TransitCommon.getFileSeparator() +relativePath;
+    
+    // check for double slash at the beginning
+    if ( virtualPath.indexOf("//") == 0 )
+      virtualPath = virtualPath.substr(1, virtualPath.length);
+    
+    var localFile = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);  
+    localFile.initWithPath(fileName);
+    
+    var jilFile = TransitCommon.convertToJILFile(localFile, fileName);
+
+    var vFile = new VirtualFile();
+    vFile.mozFile = localFile;
+    vFile.jilFile = jilFile;
+    vFile.localFullPath = fileName;
+    vFile.jilFullPath = virtualPath;
+    
+    TransitCommon.debug("Final file details, local path: "+fileName+", virtual path: "+virtualPath);
     
     return(vFile);
   },
@@ -912,7 +977,7 @@ JILEmulatorRuntime.prototype = //#
     return(fileList);
   },
   
-  getRecursiveFileList : function(mozDirectory)
+  getRecursiveFileList : function(mozDirectory, withPath)
   {
     try
     {
@@ -924,9 +989,14 @@ JILEmulatorRuntime.prototype = //#
         var aFile = fileEnum.getNext().QueryInterface(Components.interfaces.nsIFile);
        
         if ( aFile.isDirectory() )
-           fileList = fileList.concat(this.getRecursiveFileList(aFile));
+           fileList = fileList.concat(this.getRecursiveFileList(aFile, withPath));
         else 
-          fileList.push(aFile.leafName);
+        {
+          if ( withPath )
+            fileList.push(aFile.path);
+          else
+            fileList.push(aFile.leafName);
+        }
       }
     }
     catch(ex)

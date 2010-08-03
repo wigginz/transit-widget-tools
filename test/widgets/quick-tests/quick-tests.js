@@ -633,15 +633,15 @@ var testDevice =
   {
     Widget.Device.onFilesFound = function(filesFound) 
     {
-      var result = "Searching for files with '*.hmtl'";
+      var result = "Searching for files with '*.html'<br><br>";
       for ( var i = 0; i < filesFound.length; i++ )
-        result += filesFound[i]+"<br>";
+        result += filesFound[i].fileName+"<br>";
       showResult("Widget.Device.findFiles() [callback]", result);
     };
     
     var match = new Widget.Device.File();
     match.fileName = "*.html";
-    Widget.Device.findFiles(match, 0, 10);
+    Widget.Device.findFiles(match, 0, 20);
   },
   
   getDirectoryFileNames : function()

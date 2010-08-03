@@ -6,6 +6,8 @@ put call records in the call history when a call is initiated via the API
 
 put messages in sent folder when sent via messaging api
 
+put a button on the general emulator tab next to device to edit properties (pop up the manage window)
+
 ###
 
 TODO: fix exception handling for the 1.1r4 API

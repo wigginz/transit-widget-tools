@@ -155,9 +155,22 @@ var Widget =
       emulator.setInCache("onwakeup", newValue);
       _Widget_122.onWakeup = newValue; });
       
-    Widget.Device.watch("onFilesFound", function(id, oldValue, newValue) {
+    Widget.Device.watch("onFilesFound", function(id, oldValue, newValue) 
+    {
       emulator.setInCache("onfilesfound", newValue);
-      _Device_122.onFilesFound = newValue; });
+      
+      _Device_122.onFilesFound = function(results)
+      {
+        var files = new Array();
+        for ( var i = 0; i < results.length; i++ )
+        {
+          var jilFile = new Widget.Device.File();
+          jilFile.setJIL(results[i]);
+          files.push(jilFile);
+        }
+        newValue(files);
+      };
+    });
 
     Widget.Device.DataNetworkInfo.watch("onNetworkConnectionChanged", function(id, oldValue, newValue) {
       emulator.setInCache("onnetworkchange", newValue);
