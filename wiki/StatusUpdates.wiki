@@ -7,6 +7,11 @@ Check here for all the latest details on milestone releases, what's being worked
 
 == Thursday August 5, 2010 ==
 
+=== Fixes ===
+
+ * Widget.Device.onFilesFound now returns the correct Widget.Device.File objects as results.
+ * Widget.Device.findFiles now properly handles the start and end index parameters for returned results.
+
 === Under the Hood ===
 
 We've added some improved validation for a widget's config.xml which allow the widget to still run even with some missing elements, but the emulator will put in temp values like "Unknown" in the case where an element is missing. There are some elements (widget ID, version, content source, etc.) that will cause emulation to fail, and must be fixed before the widget can load in the emulator.
