@@ -206,7 +206,6 @@ var Widget =
     Widget.Device.PowerInfo.watch("onChargeStateChange", function(id, oldValue, newValue) {
       emulator.setInCache("onchargestate", newValue);
       _PowerInfo_122.onChargeStateChange = newValue; 
-      //Widget.Device.PowerInfo.onChargeStateChange = _PowerInfo_122.onChargeStateChange;
     });
       
     Widget.Device.PowerInfo.watch("onLowBattery", function(id, oldValue, newValue) {
@@ -225,9 +224,22 @@ var Widget =
       emulator.setInCache("onmessagesendingfailure", newValue);
       _Messaging_122.onMessageSendingFailure = newValue; });
 
-    Widget.Messaging.watch("onMessagesFound", function(id, oldValue, newValue) {
+    Widget.Messaging.watch("onMessagesFound", function(id, oldValue, newValue) 
+    {
       emulator.setInCache("onmessagesfound", newValue);
-      _Messaging_122.onMessagesFound = newValue; });
+      _Messaging_122.onMessagesFound = function(results)
+      {
+        // convert to wrapped class
+        var jilResults = new Array();
+        for ( var i = 0; i < results.length; i++ )
+        {
+          var jilMessage = new Widget.Messaging.Message();
+          jilMessage.setJIL(results[i]);
+          jilResults.push(jilMessage);
+        }
+        newValue(jilResults);
+      };
+    });
       
     Widget.Multimedia.watch("onCameraCaptured", function(id, oldValue, newValue) {
       emulator.setInCache("oncameracaptured", newValue);
@@ -287,9 +299,22 @@ var Widget =
       emulator.setInCache("oncallevent", newValue);
       _Telephony_122.onCallEvent = newValue; });
       
-    Widget.Telephony.watch("onCallRecordsFound", function(id, oldValue, newValue) {
+    Widget.Telephony.watch("onCallRecordsFound", function(id, oldValue, newValue) 
+    {
       emulator.setInCache("oncallrecordsfound", newValue);
-      _Telephony_122.onCallRecordsFound = newValue; });
+      _Telephony_122.onCallRecordsFound = function(results)
+      {
+        // convert to wrapped class
+        var jilResults = new Array();
+        for ( var i = 0; i < results.length; i++ )
+        {
+          var jilCall = new Widget.Telephony.CallRecord();
+          jilCall.setJIL(results[i]);
+          jilResults.push(jilCall);
+        }
+        newValue(jilResults);
+      };
+    });
 
     _Multimedia_122.monitor = function(currentAudioPlaying, currentVideoPlaying)
     {

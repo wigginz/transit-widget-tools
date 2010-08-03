@@ -1216,14 +1216,14 @@ var testTelephony =
   {
     Widget.Telephony.onCallRecordsFound = function(results) 
     {
-      var result = "Searching for call record with name 'Em*', 0-10<br>";
+      var result = "Searching for call record with name 'Bob*', 0-10<br>";
       for ( var i = 0; i < results.length; i++ )
         result += results[i].callRecordId+": "+results[i].callRecordName+"<br>";
       showResult("Widget.Telephony.findCallRecords() [callback]", result);
     };
     
     var comparison = new Widget.Telephony.CallRecord();
-    comparison.callRecordName = "Em*";
+    comparison.callRecordName = "Bob*";
     Widget.Telephony.findCallRecords(comparison, 0, 10);
   },
   
@@ -1387,7 +1387,7 @@ var testPIM =
     
     var comparison = new Widget.PIM.AddressBookItem();
     comparison.fullName = "Test*";
-    Widget.PIM.findAddressBookItems(comparison, 0, 10);
+    Widget.PIM.findAddressBookItems(comparison, 0, 2);
   },
 
   deleteAddressBookItem : function()
@@ -1478,7 +1478,7 @@ var testPIM =
     
     var comparison = new Widget.PIM.CalendarItem();
     comparison.eventName = "Test Event 2";
-    Widget.PIM.findCalendarItems(comparison, 0, 10);
+    Widget.PIM.findCalendarItems(comparison, 0, 2);
   },
   
   deleteCalendarItem : function()
