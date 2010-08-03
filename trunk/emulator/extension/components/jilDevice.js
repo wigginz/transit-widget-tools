@@ -95,7 +95,7 @@ JILDevice.prototype = //#
 
         var allFiles = new Array();
         for ( var i = 0; i < fsys.length; i++ )
-          allFiles = allFiles.concat(service.runtime.getRecursiveFileList(service.runtime.getLocalFile(fsys[i].rootPath).mozFile));
+          allFiles = allFiles.concat(service.runtime.getRecursiveFileList(service.runtime.getLocalFile(fsys[i].rootPath).mozFile, true));
         
         // now search 'em
         var results = new Array();
@@ -107,14 +107,21 @@ JILDevice.prototype = //#
             results.push(allFiles[i]);
         }
         
-        service.runtime.logAction("Device.findFiles(): found "+results.length+" files from search");
-            
+        service.runtime.logAction("Device.findFiles(): found "+results.length+" files from search, returning start "+startInx+" to end "+endInx);
+        
+        results = results.splice(startInx, endInx);
+
+        // convert them to actual file objects
+        var fileResults = new Array();
+        for ( var i = 0; i < results.length; i++ )
+          fileResults.push(service.runtime.getFileByLocalPath(results[i]).jilFile);
+        
         if ( service.onFilesFound == null )
           Components.classes["@jil.org/jilapi-emulatorruntime;1"].getService().wrappedJSObject.logAction("Device.findFiles(): No callback function set, no where to send results.");
         else
         {
-          var count = {value: results.length};
-          service.onFilesFound.invoke(results, results.length);
+          var count = {value: fileResults.length};
+          service.onFilesFound.invoke(fileResults, fileResults.length);
         }
       }
     }, Components.interfaces.nsIThread.DISPATCH_NORMAL);
