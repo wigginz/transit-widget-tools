@@ -3,8 +3,6 @@
 
 Check here for all the latest details on milestone releases, what's being worked on and committed, and future plans.
 
-<wiki:comment>
-
 == Thursday August 5, 2010 ==
 
 === Fixes ===
@@ -12,10 +10,15 @@ Check here for all the latest details on milestone releases, what's being worked
  * Widget.Device.onFilesFound now returns the correct Widget.Device.File objects as results.
  * Widget.Device.findFiles, Widget.PIM.findCalendarItems, Widget.Messaging.findMessages, Widget.PIM.findAddressBookItems now properly handle the start and end index parameters for returned results. Also extended the emulator log to show what start and end index values were used.
 
+=== New Features ===
+
+Adjusted the full screen toggle in the emulator window general tab to behave per the JIL packaging and format spec. At the moment, the widget will be rendered in floating mode when launched using the widget tag's height and width attribute. When full screen is toggled, the widget will use the jil:maximum_display_mode dimensions. If those dimensions are smaller than the device screen, the widget will be centered and padding added between the widget edge and device edge as stated in the JIL spec.
+
 === Under the Hood ===
 
 We've added some improved validation for a widget's config.xml which allow the widget to still run even with some missing elements, but the emulator will put in temp values like "Unknown" in the case where an element is missing. There are some elements (widget ID, version, content source, etc.) that will cause emulation to fail, and must be fixed before the widget can load in the emulator.
-</wiki:comment>
+
+Download the development build [http://transit-widget-tools.googlecode.com/files/transit-emulator-20100805.xpi transit-emulator-20100805.xpi].
 
 
 == Thursday July 29, 2010 ==
