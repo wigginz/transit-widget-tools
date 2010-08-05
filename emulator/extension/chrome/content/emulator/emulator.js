@@ -66,15 +66,15 @@ var jwe_emulator =
 
     this.deviceWidth = this.emulator.getDeviceInfo().screenWidth;
     this.deviceHeight = this.emulator.getDeviceInfo().screenHeight;
-    this.widgetWidth = this.emulator.getWidget().maxWidth;
-    this.widgetHeight = this.emulator.getWidget().maxHeight;
+    this.widgetWidth = this.emulator.getWidget().width;
+    this.widgetHeight = this.emulator.getWidget().height;
 
     this.resizeScreen();
 
     $("jwe-emulator-widget-name").attr("value", this.emulator.getWidget().names[0].name);
     $("jwe-emulator-widget-version").attr("value", this.emulator.getWidget().version); 
     $("jwe-emulator-widget-author").attr("value", this.emulator.getWidget().authorName);  
-    $("jwe-emulator-widget-heightwidth").attr("value", this.widgetWidth+" x "+this.widgetHeight);
+    $("jwe-emulator-widget-heightwidth").attr("value", this.widgetHeight+" x "+this.widgetWidth);
     $("jwe-emulator-widget-description").attr("value", this.emulator.getWidget().descriptions[0].description);    
     $("jwe-emulator-widget-icon").attr("src", this.emulator.getWidget().icons[0].source);
     $("jwe-emulator-widget-jilpkgspec").attr("value", this.emulator.getWidget().jilPackagingSpec);
@@ -239,6 +239,9 @@ var jwe_emulator =
 
     var contentHeight = this.widgetHeight;
     var contentWidth = this.widgetWidth;
+    
+    $("jwe-emulator-container").attr("maxheight", contentHeight+"px");
+    $("jwe-emulator-container").attr("maxwidth", contentWidth+"px");
 
     $("jwe-emulator-content").css("height", contentHeight+"px");
     $("jwe-emulator-content").css("width", contentWidth+"px");
@@ -270,21 +273,57 @@ var jwe_emulator =
   {
     if ( $("jwe-emulator-settings-fullscreen").chk() )
     { 
-      $("jwe-emulator-content").css("height", this.deviceHeight+"px");
-      $("jwe-emulator-content").css("width", this.deviceWidth+"px");
+      // if maxWidth and maxHeight are defined, these will be the values
+      if ( (this.emulator.getWidget().maxHeight && this.emulator.getWidget().maxWidth) && 
+           ( (this.emulator.getWidget().maxHeight <= this.deviceHeight) && (this.emulator.getWidget().maxWidth <= this.deviceWidth) ) 
+         )
+      {
+        $("jwe-emulator-container").attr("maxheight", this.deviceHeight+"px");
+        $("jwe-emulator-container").attr("maxwidth", this.deviceWidth+"px");
+        $("jwe-emulator-container").css("height", this.deviceHeight+"px");
+        $("jwe-emulator-container").css("width", this.deviceWidth+"px");
+
+        var top = (this.deviceHeight - this.emulator.getWidget().maxHeight)/2;
+        $("jwe-emulator-container").node.style.paddingTop = top+"px";
+        
+        $("jwe-emulator-content").css("height", this.emulator.getWidget().maxHeight+"px");
+        $("jwe-emulator-content").css("width", this.emulator.getWidget().maxWidth+"px");
+      }
+      else
+      {
+        $("jwe-emulator-content").css("height", this.deviceHeight+"px");
+        $("jwe-emulator-content").css("width", this.deviceWidth+"px");
+      }
     }
     else
     {
       // if the widget size is larger than the screen size, size the widget to fit
-      if ( this.emulator.getWidget().maxHeight > this.deviceHeight )
+      $("jwe-emulator-container").node.style.paddingTop = "0px";
+      if ( this.emulator.getWidget().height > this.deviceHeight )
+      {
         $("jwe-emulator-content").css("height", this.deviceHeight-2+"px");
+        $("jwe-emulator-container").css("height", this.deviceHeight-2+"px");
+        $("jwe-emulator-container").attr("maxheight", this.deviceHeight-2+"px");
+      }
       else
-        $("jwe-emulator-content").css("height", this.emulator.getWidget().maxHeight+"px");
+      {
+        $("jwe-emulator-content").css("height", this.emulator.getWidget().height+"px");
+        $("jwe-emulator-container").css("height", this.emulator.getWidget().height+"px");
+        $("jwe-emulator-container").attr("maxheight", this.emulator.getWidget().height+"px");
+      }
       
-      if ( this.emulator.getWidget().maxWidth > this.deviceWidth )
+      if ( this.emulator.getWidget().width > this.deviceWidth )
+      {
         $("jwe-emulator-content").css("width", this.deviceWidth-2+"px");
+        $("jwe-emulator-container").css("width", this.deviceWidth-2+"px");
+        $("jwe-emulator-container").attr("maxwidth", this.deviceWidth-2+"px");
+      }
       else
-        $("jwe-emulator-content").css("width", this.emulator.getWidget().maxWidth+"px");
+      {
+        $("jwe-emulator-content").css("width", this.emulator.getWidget().width+"px");
+        $("jwe-emulator-container").css("width", this.emulator.getWidget().width+"px");
+        $("jwe-emulator-container").attr("maxwidth", this.emulator.getWidget().width+"px");
+      }
     }
     
     // resizing the widget reloads page scope, need to re-inject widget API

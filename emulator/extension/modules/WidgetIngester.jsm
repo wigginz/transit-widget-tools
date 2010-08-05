@@ -358,7 +358,7 @@ var WidgetIngester =
     for ( var i = 0; i < preferenceElements.length; i++ )
     {
       // name is required
-      if ( !preferenceElements[i].name )
+      if ( !preferenceElements[i].getAttribute("name") )
         throw {message: "config.xml contains a preference element that does not define a name."};
       
       widget.preferences.push({name: preferenceElements[i].getAttribute("name"), value: preferenceElements[i].getAttribute("value"), readonly: preferenceElements[i].getAttribute("readonly")});
@@ -441,9 +441,6 @@ var WidgetIngester =
     
     if ( !widget.width )
       warnings.push("widget-width");
-    
-    if ( !widget.width )
-      warnings.push("widget.maximum_display_mode.width");
       
     if ( !widget.maxHeight )
       warnings.push("widget.maximum_display_mode.height");

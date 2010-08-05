@@ -24,8 +24,7 @@
 {
   position:absolute;
   z-index: 100;
-  height: auto;
-  width: auto;
+  background-color: #444444;
 }
 
 #jwe-emulator-container-drag-handle
@@ -107,7 +106,9 @@
 
 #jwe-emulator-content
 {
+  margin: auto;
   position: absolute;
+  top: 0px;
   cursor: auto;
   overflow: auto;
 }
