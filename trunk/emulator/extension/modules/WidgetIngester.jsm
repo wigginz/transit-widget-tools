@@ -431,51 +431,51 @@ var WidgetIngester =
     TransitCommon.debug("Starting widget configuration validation.");
     
     if ( !widget.id )
-      errors.push("widget-id");
+      errors.push("widget.id");
     
     if ( !widget.version )
-      errors.push("widget-version");
+      errors.push("widget.version");
     
     if ( !widget.height )
-      warnings.push("widget-height");
+      warnings.push("widget.height");
     
     if ( !widget.width )
-      warnings.push("widget-width");
+      warnings.push("widget.width");
       
     if ( !widget.maxHeight )
-      warnings.push("widget.maximum_display_mode.height");
+      warnings.push("widget > maximum_display_mode.height");
     
     if ( !widget.maxWidth )
-      warnings.push("widget.maximum_display_mode.width");
+      warnings.push("widget > maximum_display_mode.width");
     
     if ( !widget.names[0] )
     {
       widget.names = new Array();
       widget.names.push({name: "Unknown",});
-      warnings.push("widget.name");
+      warnings.push("widget > name");
     }
     
     if ( !widget.icons[0] )
     {
       widget.icons = new Array();
       widget.icons.push({source: "chrome://transit-emulator/skin/images/unknown-icon.png",});
-      warnings.push("widget.icon");
+      warnings.push("widget > icon");
     }
     
     if ( !widget.contentSource )
-      errors.push("widget.content.src");
+      errors.push("widget > content.src");
     
     if ( !widget.descriptions[0] )
     {
       widget.descriptions = new Array();
       widget.descriptions.push({description: "Unknown",});
-      warnings.push("widget.description");
+      warnings.push("widget > description");
     }
     
     if ( !widget.authorName )
     {
       widget.authorName = "Unknown";
-      warnings.push("widget.author");
+      warnings.push("widget > author");
     }
     
     TransitCommon.debug("Widget validation check completed with "+errors.length+" errors and "+warnings.length+" warnings.");

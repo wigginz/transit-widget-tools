@@ -4,6 +4,84 @@ var TransitCommon =
 {
   fileSep : null,
   
+  getStringSearchStatement : function(column, value)
+  {
+    var statement = null;
+    if ( value )
+    {
+      value = value.toLowerCase();
+      column = "LOWER("+column+")";
+      if ( value == "" )
+        statement = column+" = ''";
+      
+      else if ( value.indexOf("*") )
+        statement = column+" like '"+value.replace("*", "%")+"'";
+      
+      else if ( value != null )
+        statement = column+" = '"+value+"'";
+    }
+    return(statement);
+  },
+  
+  getContainsSearchStatement : function(column, value)
+  {
+    this.debug("column: "+column+", value: "+value);
+    var statement = null;
+    if ( value )
+    {
+      value = value.toLowerCase();
+      column = "LOWER("+column+")";
+      
+      // remove *'s
+      value = value.replace(/\*/g, "");      
+      
+      if ( value == "" )
+        statement = column+" = ''";
+      
+      else
+        statement = column+" like '%"+value+"%'";
+    }
+    return(statement);
+  },
+  
+  getBooleanSearchStatement : function(column, value)
+  {
+    var statement = null;
+
+    if ( value == null )
+      return(null);
+    
+    if ( value )
+      statement = column+" = 1";
+    
+    else if ( !value )
+      statement = column+" = 0";
+      
+    return(statement);
+  },
+  
+  concatSearchArray : function(search)
+  {
+    if ( !search )
+      return;
+    
+    var searchSql = "";
+    for ( var i = 0; i < search.length; i++ )
+    {
+      if ( !search[i] )
+        continue;
+        
+      if ( searchSql.length > 0 )
+        searchSql += " and "+search[i];
+      else
+        searchSql += "and ("+search[i];
+    }
+    if ( searchSql.length > 0 )
+      searchSql += ")";
+    
+    return(searchSql);
+  },
+  
   getFileSeparator : function()
   {
     if ( this.fileSep == null )
