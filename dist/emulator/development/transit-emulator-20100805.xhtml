@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Transit Widget Emulator 1.2.2 build 20100805</title>
+  </head>
+
+  <body>
+
+    <h2>Transit Widget Emulator 1.2.2 build 20100805</h2>
+    <h3>August 5, 2010</h3>
+
+    <p>We've included mostly bug fixes and some configuration parsing updates and widget display adjustments in this release. It's important information, read on for the details.</p>
+
+    <h3>Fixes</h3>
+
+    <ul>
+      <li>Widget.Device.onFilesFound now returns the correct Widget.Device.File objects as results.</li>
+      <li>Widget.Device.findFiles, Widget.PIM.findCalendarItems, Widget.Messaging.findMessages, Widget.PIM.findAddressBookItems now properly handle the start and end index parameters for returned results. Also extended the emulator log to show what start and end index values were used.</li>
+    </ul>
+
+    <h3>New Features</h3>
+
+    <p>Adjusted the full screen toggle in the emulator window general tab to behave per the JIL packaging and format spec. At the moment, the widget will be rendered in floating mode when launched using the widget tag's height and width attribute. When full screen is toggled, the widget will use the jil:maximum_display_mode dimensions. If those dimensions are smaller than the device screen, the widget will be centered and padding added between the widget edge and device edge as stated in the JIL spec.</p>
+    
+    <h3>Under the Hood</h3>
+
+    <p>We've added some improved validation for a widget's config.xml which allow the widget to still run even with some missing elements, but the emulator will put in temp values like "Unknown" in the case where an element is missing. There are some elements (widget ID, version, content source, etc.) that will cause emulation to fail, and must be fixed before the widget can load in the emulator.</p>
+
+  </body>
+
+</html>

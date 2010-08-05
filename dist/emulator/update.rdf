@@ -15,8 +15,8 @@
                 <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
                 <em:minVersion>3.6</em:minVersion>
                 <em:maxVersion>3.9.*</em:maxVersion>
-                <em:updateLink>https://transit-widget-tools.googlecode.com/files/transit-emulator-20100729.xpi</em:updateLink>
-                <em:updateInfoURL>http://dl.dropbox.com/u/119448/transit/transit-emulator-20100729.xhtml</em:updateInfoURL>
+                <em:updateLink>https://transit-widget-tools.googlecode.com/files/transit-emulator-20100805.xpi</em:updateLink>
+                <em:updateInfoURL>http://dl.dropbox.com/u/119448/transit/transit-emulator-20100805.xhtml</em:updateInfoURL>
               </RDF:Description>
             </em:targetApplication>
           </RDF:Description>
