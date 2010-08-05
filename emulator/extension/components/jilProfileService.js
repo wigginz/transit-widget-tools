@@ -2023,15 +2023,33 @@ JILProfileService.prototype = //#
   findMessages : function(msgProfileId, comparison, folderName, start, end)
   {
     var search = new Array();
+       
+    for ( var i = 0; i < comparison.getDestinationAddress().length; i++ )
+    {
+      TransitCommon.debug("comp: "+comparison.getDestinationAddress()[i]);
+      search.push(TransitCommon.getContainsSearchStatement("msg.to_addresses", comparison.getDestinationAddress()[i]));
+    }
     
-    if ( comparison.subject == "" )
-      search.push("msg.subject = ''");
-    else if ( comparison.subject.indexOf("*") )
-      search.push("msg.subject like '"+comparison.subject.replace("*", "%")+"'");
-    else if ( comparison.subject != null )
-      search.push("msg.subject = '"+comparison.subject+"'");
-
-    var stmt = this.getConnection().createStatement("select msg.id as id from jwe_msg_message msg, jwe_msg_folder folder, jwe_msg_email_account account where folder.name = :folderName and folder.account_id = account.id and account.msg_profile_id = :msgProfileId and ("+search+")");
+    for ( var i = 0; i < comparison.getCcAddress().length; i++ )
+      search.push(TransitCommon.getContainsSearchStatement("msg.cc_addresses", comparison.getCcAddress()[i]));
+    for ( var i = 0; i < comparison.getBccAddress().length; i++ )
+      search.push(TransitCommon.getContainsSearchStatement("msg.bcc_addresses", comparison.getBccAddress()[i]));
+    
+    search.push(TransitCommon.getStringSearchStatement("msg.subject", comparison.subject));
+    search.push(TransitCommon.getStringSearchStatement("msg.callback_number", comparison.callbackNumber));
+    search.push(TransitCommon.getStringSearchStatement("msg.id", comparison.messageId));
+    search.push(TransitCommon.getStringSearchStatement("msg.message_type", comparison.messageType));
+    search.push(TransitCommon.getStringSearchStatement("msg.body", comparison.body));
+    search.push(TransitCommon.getStringSearchStatement("msg.source_address", comparison.sourceAddress));
+    search.push(TransitCommon.getStringSearchStatement("msg.time", comparison.time));
+    search.push(TransitCommon.getStringSearchStatement("msg.validity_period_hours", comparison.validityPeriodHours));
+    search.push(TransitCommon.getBooleanSearchStatement("msg.is_read", comparison.isRead));
+    search.push(TransitCommon.getBooleanSearchStatement("msg.message_priority", comparison.messagePriority));
+    
+    var searchSql = TransitCommon.concatSearchArray(search);
+    TransitCommon.debug("Contact'd search string is: "+searchSql);
+    
+    var stmt = this.getConnection().createStatement("select msg.id as id from jwe_msg_message msg, jwe_msg_folder folder, jwe_msg_email_account account where folder.name = :folderName and folder.account_id = account.id and account.msg_profile_id = :msgProfileId "+searchSql);
     stmt.params.folderName = folderName;
     stmt.params.msgProfileId = msgProfileId
 

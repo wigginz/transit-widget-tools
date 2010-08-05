@@ -1132,15 +1132,16 @@ var testMessaging =
   {
     Widget.Messaging.onMessagesFound = function(results, folderName) 
     {
-      var result = "Searching for messages with 'Test*' in the subject in folder "+folderName;
+      var result = "Searching for messages with '3*' in the messageId in folder "+folderName;
       for ( var i = 0; i < results.length; i++ )
         result += results[i].messageId+": "+results[i].subject+"<br>";
       showResult("Widget.Messaging.findMessages() [callback]", result);
     };
     
     var message = new Widget.Messaging.Message();
-    message.subject = "Test*";  
-    Widget.Messaging.findMessages(message, "Test 2", 0, 10);
+    message.isRead = false;
+    message.destinationAddress = ["*jil.org*"];
+    Widget.Messaging.findMessages(message, "inbox", 0, 10);
   },
   
   getFolderNames : function()
