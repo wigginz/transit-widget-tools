@@ -17,6 +17,8 @@ Toggling full screen mode now correctly triggers the respective onMaximize and o
 
 Changed behavior of floating mode a bit. Widgets will now be centered on the device screen at all times. To clarify, widgets will always start in floating mode. In full screen mode, if the widget's maximum_display_mode is smaller than the device's screen, the widget will render in those dimensions, and a dark grey border will fill the gap between the widget's outer edges to the edges of the device screen.
 
+Added functionality to put a message in the respective message type's "sentboxes" when a message is sent. If it's an email message, the message will only copy to the "sentboxes" of the current email account.
+
 </wiki:comment>
 
 == Thursday August 5, 2010 ==
