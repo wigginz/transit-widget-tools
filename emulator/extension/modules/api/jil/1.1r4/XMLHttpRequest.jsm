@@ -6,6 +6,9 @@ Components.utils.import("resource://transit-emulator/api/jil/1.2.2/SecurityManag
 
 function XMLHttpRequest()
 {
+  if ( !SecurityManager.checkInlineSecurity("Internet Access (XMLHttpRequest)", SecurityManager.OP_SESSION, SecurityManager.OP_ALLOWED, SecurityManager.OP_ALLOWED) )
+    return;
+    
   var self = this;
   
   self.wrapped = Components.classes["@mozilla.org/xmlextras/xmlhttprequest;1"].createInstance(Components.interfaces.nsIXMLHttpRequest);
