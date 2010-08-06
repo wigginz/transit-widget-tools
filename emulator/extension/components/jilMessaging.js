@@ -273,7 +273,7 @@ JILMessaging.prototype = //#
         // see if this is an email message, if so, only copy to the current account
         if ( msg.messageType == this.MessageTypes.EmailMessage )
         {
-          if ( folders[i].emailAccountId != this.getCurrentEmailAccount().accountId )
+          if ( folders[i].emailAccountId != this.runtime.getDefaultEmailAccount().id )
           {
             TransitCommon.debug("Folder does not belong to the current email account, skipping.");
             continue;
@@ -282,6 +282,7 @@ JILMessaging.prototype = //#
         }
         // update it so it's in the DB
         TransitCommon.debug("Adding message to folder id "+folders[i].id);
+        this.runtime.logAction("Messaging.sendMessage(): Adding sent message to the sentbox called "+folders[i].name +" for message type "+msg.messageType);
         rMessage.folderId = folders[i].id;
         this.runtime.updateMessage(rMessage);
       }
