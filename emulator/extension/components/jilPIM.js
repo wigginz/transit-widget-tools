@@ -112,7 +112,7 @@ JILPIM.prototype = //#
       {
         var rtContacts = Components.classes["@jil.org/jilapi-emulatorruntime;1"].getService().wrappedJSObject.findAddressBookItems(comparisonContact, startInx, endInx);
         
-        service.runtime.logAction("PIM.findAddressBookItems(): found "+rtItems.length+" address book items from search. Returning start "+startInx+" to end "+endInx);
+        service.runtime.logAction("PIM.findAddressBookItems(): found "+rtContacts.length+" address book items from search. Returning start "+startInx+" to end "+endInx);1
 
         TransitCommon.debug("Returning address book items from start "+startInx+" and end "+endInx);
         rtContacts = rtContacts.splice(startInx, endInx);

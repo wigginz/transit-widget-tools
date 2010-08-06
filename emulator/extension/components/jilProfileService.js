@@ -1516,15 +1516,19 @@ JILProfileService.prototype = //#
   findCallRecords : function(profileId, comparison, start, end)
   {
     var search = new Array();
+
+    search.push(TransitCommon.getStringSearchStatement("address", comparison.address));
+    search.push(TransitCommon.getStringSearchStatement("id", comparison.id));
+    search.push(TransitCommon.getStringSearchStatement("name", comparison.name));
+    search.push(TransitCommon.getStringSearchStatement("type", comparison.type));
+    search.push(TransitCommon.getStringSearchStatement("duration_seconds", comparison.durationSeconds));
+    search.push(TransitCommon.getStringSearchStatement("start_time", comparison.startTime));
+
+    var searchSql = TransitCommon.concatSearchArray(search);
+    TransitCommon.debug("Contact'd search string is: "+searchSql);
     
-    if ( comparison.name == "" )
-      search.push("name = ''");
-    else if ( comparison.name.indexOf("*") )
-      search.push("name like '"+comparison.name.replace("*", "%")+"'");
-    else if ( comparison.name != null )
-      search.push("name = '"+comparison.name+"'");
-    
-    var stmt = this.getConnection().createStatement("select id from jwe_call_record where "+search);
+    var stmt = this.getConnection().createStatement("select id from jwe_call_record where profile_id = :profileId "+searchSql);
+    stmt.params.profileId = profileId;
 
     var records = new Array();
     try
@@ -2496,15 +2500,23 @@ JILProfileService.prototype = //#
   findAddressBookItems : function(pimProfileId, comparison, start, end)
   {
     var search = new Array();
-    
-    if ( comparison.fullName == "" )
-      search.push("full_name = ''");
-    else if ( comparison.fullName.indexOf("*") )
-      search.push("full_name like '"+comparison.fullName.replace("*", "%")+"'");
-    else if ( comparison.fullName != null )
-      search.push("full_name = '"+comparison.fullName+"'");
-    
-    var stmt = this.getConnection().createStatement("select id from jwe_pim_address_book_item where "+search);
+
+    search.push(TransitCommon.getStringSearchStatement("address", comparison.address));
+    search.push(TransitCommon.getStringSearchStatement("id", comparison.addressBookItemId));
+    search.push(TransitCommon.getStringSearchStatement("company", comparison.company));
+    search.push(TransitCommon.getStringSearchStatement("email", comparison.eMail));
+    search.push(TransitCommon.getStringSearchStatement("full_name", comparison.fullName));
+    search.push(TransitCommon.getStringSearchStatement("home_phone", comparison.homePhone));
+    search.push(TransitCommon.getStringSearchStatement("mobile_phone", comparison.mobilePhone));
+    search.push(TransitCommon.getStringSearchStatement("title", comparison.title));
+    search.push(TransitCommon.getStringSearchStatement("work_phone", comparison.workPhone));
+    search.push(TransitCommon.getStringSearchStatement("ringtone_file_url", comparison.ringtone));
+ 
+    var searchSql = TransitCommon.concatSearchArray(search);
+    TransitCommon.debug("Contact'd search string is: "+searchSql);
+
+    var stmt = this.getConnection().createStatement("select id from jwe_pim_address_book_item where pim_profile_id = :pimProfileId "+searchSql);
+    stmt.params.pimProfileId = pimProfileId;
 
     var items = new Array();
     try
@@ -2516,6 +2528,7 @@ JILProfileService.prototype = //#
     {
       stmt.reset();
     }
+    
     return(items);
   },
 
@@ -3256,14 +3269,20 @@ JILProfileService.prototype = //#
   {
     var search = new Array();
     
-    if ( comparison.eventName == "" )
-      search.push("event_name = ''");
-    else if ( comparison.eventName.indexOf("*") )
-      search.push("event_name like '"+comparison.eventName.replace("*", "%")+"'");
-    else if ( comparison.eventName != null )
-      search.push("event_name = '"+comparison.eventName+"'");
-    
-    var stmt = this.getConnection().createStatement("select id from jwe_pim_calendar_item where "+search);
+    search.push(TransitCommon.getStringSearchStatement("alarm_date", comparison.alarmDate));
+    search.push(TransitCommon.getBooleanSearchStatement("alarmed", comparison.alarmed));
+    search.push(TransitCommon.getStringSearchStatement("id", comparison.calendarItemId));
+    search.push(TransitCommon.getStringSearchStatement("event_end_time", comparison.eventEndTime));
+    search.push(TransitCommon.getStringSearchStatement("event_name", comparison.eventName));
+    search.push(TransitCommon.getStringSearchStatement("event_notes", comparison.eventNotes));
+    search.push(TransitCommon.getStringSearchStatement("event_recurrence", comparison.eventRecurrence));
+    search.push(TransitCommon.getStringSearchStatement("event_start_time", comparison.eventStartTime));
+
+    var searchSql = TransitCommon.concatSearchArray(search);
+    TransitCommon.debug("Contact'd search string is: "+searchSql);
+
+    var stmt = this.getConnection().createStatement("select id from jwe_pim_calendar_item where pim_profile_id = :pimProfileId "+searchSql);
+    stmt.params.pimProfileId = pimProfileId;
 
     var items = new Array();
     try

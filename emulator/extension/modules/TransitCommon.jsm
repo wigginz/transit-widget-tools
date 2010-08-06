@@ -14,8 +14,8 @@ var TransitCommon =
       if ( value == "" )
         statement = column+" = ''";
       
-      else if ( value.indexOf("*") )
-        statement = column+" like '"+value.replace("*", "%")+"'";
+      else if ( value.indexOf("*") > -1 )
+        statement = column+" like '"+value.replace(/\*/g, "%")+"'";
       
       else if ( value != null )
         statement = column+" = '"+value+"'";
@@ -25,7 +25,6 @@ var TransitCommon =
   
   getContainsSearchStatement : function(column, value)
   {
-    this.debug("column: "+column+", value: "+value);
     var statement = null;
     if ( value )
     {
