@@ -11,6 +11,8 @@ Check here for all the latest details on milestone releases, what's being worked
 
 More progress on full implementing the "find" APIs. At the moment any comparison objects that are used for "find" APIs that have boolean fields (like isRead) will default to false even if not set to false. I'm proposing to keep this behavior, however this behavior is not commented on in the JIL spec. If this seems wrong, please propose a change and we'll definitely discuss it.
 
+Note that findAddressBookItems does not support searching for group names as there is already a PIM method (getAddressBookGroupMembers) to do that.
+
 </wiki:comment>
 
 == Thursday August 5, 2010 ==
