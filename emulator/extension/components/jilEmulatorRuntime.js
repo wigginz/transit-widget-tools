@@ -688,6 +688,12 @@ JILEmulatorRuntime.prototype = //#
     return(this.profileService.findCallRecords(this.deviceProfile.id, comparison, start, end));
   },
   
+  addCallRecord : function(callRecord)
+  {
+    callRecord.profileId = this.deviceProfile.id;
+    this.profileService.addCallRecord(callRecord);
+  },
+  
   deleteAllCallRecords : function(type)
   {
     this.profileService.deleteAllCallRecords(this.deviceProfile.id, type);
@@ -716,7 +722,6 @@ JILEmulatorRuntime.prototype = //#
   updateMessage : function(message)
   {
     message.msgProfileId = this.deviceProfile.messageProfileId;
-    TransitCommon.debug("Calling profile service updateMessage");
     this.profileService.updateMessage(message);
   },
   
