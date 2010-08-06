@@ -231,17 +231,22 @@ var jwe_emulator =
 
   resizeScreen : function()
   {
-    $("jwe-emulator-workspace").attr("maxheight", this.deviceHeight+2);
-    $("jwe-emulator-workspace").attr("minheight", this.deviceHeight+2);
+    $("jwe-emulator-workspace").attr("maxheight", this.deviceHeight+4);
+    $("jwe-emulator-workspace").attr("minheight", this.deviceHeight+4);
 
-    $("jwe-emulator-workspace").attr("maxwidth", this.deviceWidth+2);
-    $("jwe-emulator-workspace").attr("minwidth", this.deviceWidth+2);
+    $("jwe-emulator-workspace").attr("maxwidth", this.deviceWidth+4);
+    $("jwe-emulator-workspace").attr("minwidth", this.deviceWidth+4);
 
     var contentHeight = this.widgetHeight;
     var contentWidth = this.widgetWidth;
     
-    $("jwe-emulator-container").attr("maxheight", contentHeight+"px");
-    $("jwe-emulator-container").attr("maxwidth", contentWidth+"px");
+    $("jwe-emulator-container").attr("maxheight", this.deviceHeight+"px");
+    $("jwe-emulator-container").attr("maxwidth", this.deviceWidth+"px");
+    $("jwe-emulator-container").css("height", this.deviceHeight+"px");
+    $("jwe-emulator-container").css("width", this.deviceWidth+"px");
+
+    var top = (this.deviceHeight - this.emulator.getWidget().height)/2;
+    $("jwe-emulator-container").node.style.paddingTop = top+"px";
 
     $("jwe-emulator-content").css("height", contentHeight+"px");
     $("jwe-emulator-content").css("width", contentWidth+"px");
@@ -278,52 +283,47 @@ var jwe_emulator =
            ( (this.emulator.getWidget().maxHeight <= this.deviceHeight) && (this.emulator.getWidget().maxWidth <= this.deviceWidth) ) 
          )
       {
-        $("jwe-emulator-container").attr("maxheight", this.deviceHeight+"px");
-        $("jwe-emulator-container").attr("maxwidth", this.deviceWidth+"px");
-        $("jwe-emulator-container").css("height", this.deviceHeight+"px");
-        $("jwe-emulator-container").css("width", this.deviceWidth+"px");
-
         var top = (this.deviceHeight - this.emulator.getWidget().maxHeight)/2;
         $("jwe-emulator-container").node.style.paddingTop = top+"px";
-        
+    
         $("jwe-emulator-content").css("height", this.emulator.getWidget().maxHeight+"px");
         $("jwe-emulator-content").css("width", this.emulator.getWidget().maxWidth+"px");
+        
+        $("jwe-emulator-container").node.style.backgroundColor = "#444444";
       }
       else
       {
         $("jwe-emulator-content").css("height", this.deviceHeight+"px");
         $("jwe-emulator-content").css("width", this.deviceWidth+"px");
+        $("jwe-emulator-container").node.style.paddingTop = "0px";
       }
+      
+      // trigger the onMaximize event
+      this.emulator.invokeWOnMaximize();
     }
     else
     {
+      $("jwe-emulator-container").node.style.backgroundColor = "transparent";
+      
       // if the widget size is larger than the screen size, size the widget to fit
-      $("jwe-emulator-container").node.style.paddingTop = "0px";
+      var top = (this.deviceHeight - this.emulator.getWidget().height)/2;
+      $("jwe-emulator-container").node.style.paddingTop = top+"px";
+      
       if ( this.emulator.getWidget().height > this.deviceHeight )
       {
-        $("jwe-emulator-content").css("height", this.deviceHeight-2+"px");
-        $("jwe-emulator-container").css("height", this.deviceHeight-2+"px");
-        $("jwe-emulator-container").attr("maxheight", this.deviceHeight-2+"px");
+        $("jwe-emulator-content").css("height", this.deviceHeight+"px");
+        $("jwe-emulator-container").node.style.paddingTop = "0px";
       }
       else
-      {
         $("jwe-emulator-content").css("height", this.emulator.getWidget().height+"px");
-        $("jwe-emulator-container").css("height", this.emulator.getWidget().height+"px");
-        $("jwe-emulator-container").attr("maxheight", this.emulator.getWidget().height+"px");
-      }
       
       if ( this.emulator.getWidget().width > this.deviceWidth )
-      {
-        $("jwe-emulator-content").css("width", this.deviceWidth-2+"px");
-        $("jwe-emulator-container").css("width", this.deviceWidth-2+"px");
-        $("jwe-emulator-container").attr("maxwidth", this.deviceWidth-2+"px");
-      }
+        $("jwe-emulator-content").css("width", this.deviceWidth+"px");
       else
-      {
-        $("jwe-emulator-content").css("width", this.emulator.getWidget().width+"px");
-        $("jwe-emulator-container").css("width", this.emulator.getWidget().width+"px");
-        $("jwe-emulator-container").attr("maxwidth", this.emulator.getWidget().width+"px");
-      }
+         $("jwe-emulator-content").css("width", this.emulator.getWidget().width+"px");
+      
+      // trigger the onRestore event
+      this.emulator.invokeWOnRestore();
     }
     
     // resizing the widget reloads page scope, need to re-inject widget API
