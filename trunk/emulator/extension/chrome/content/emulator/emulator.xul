@@ -126,7 +126,7 @@
 
                 <vbox flex="1" class="jwe-emulator-tools-panel">
                 
-                  <groupbox style="width: 100%;">
+                  <groupbox style="width: 100%;" class="jwe-emulator-groupbox">
                     <caption label="&jwe.emulator.tab.settings.infolabel;"/>
                       <hbox>
                         <vbox flex="1">
@@ -164,7 +164,7 @@
                       </hbox>
                   </groupbox>
                   
-                  <groupbox style="width: 100%;">
+                  <groupbox style="width: 100%;" class="jwe-emulator-groupbox">
                     <caption label="&jwe.emulator.tab.settings.devicelabel;"/>
                     <vbox>
                       <hbox>
@@ -182,7 +182,7 @@
                     </vbox>
                   </groupbox>
                   
-                  <groupbox style="width: 100%;">
+                  <groupbox style="width: 100%;" class="jwe-emulator-groupbox">
                     <caption label="&jwe.emulator.tab.settings.displaylabel;"/>
                     <vbox>
                       <checkbox id="jwe-emulator-settings-overflow" label="&jwe.emulator.tab.settings.overflow;" oncommand="jwe_emulator.toggleOverflow();"/>        
@@ -190,7 +190,7 @@
                       <checkbox id="jwe-emulator-settings-landscape" label="&jwe.emulator.tab.settings.landscape;" oncommand="jwe_emulator.toggleLandscape();"/> 
                     </vbox>
                   </groupbox>
-                  <groupbox style="width: 100%;">
+                  <groupbox style="width: 100%;" class="jwe-emulator-groupbox">
                     <caption label="&jwe.emulator.tab.settings.securitylabel;"/>
                     <vbox>
                       <hbox align="center">
@@ -219,7 +219,7 @@
                 
                 <vbox id="jwe-emulator-subtab-widget" style="display: none;">      
                   <vbox class="jwe-emulator-events-panel">
-                    <groupbox>
+                    <groupbox class="jwe-emulator-groupbox">
                       <caption label="&jwe.emulator.tab.events.widget;"/>
                       <radiogroup id="jwe-emulator-subtab-widget-event">
                         <radio label="&jwe.emulator.tab.events.widget.onfocus;" value="onFocus" oncommand="jwe_emulator.showEventContext('onfocus');"/>
@@ -228,7 +228,7 @@
                         <radio label="&jwe.emulator.tab.events.widget.onwakeup;" value="onWakeup" oncommand="jwe_emulator.showEventContext('onwakeup');"/>
                       </radiogroup>
                     </groupbox>
-                    <groupbox>
+                    <groupbox class="jwe-emulator-groupbox">
                       <caption label="&jwe.emulator.tab.events.context;"/>
                       <vbox id="jwe-emulator-subtab-event-context-onfocus">
                         <label value="&jwe.emulator.tab.events.context.none;"/>
@@ -248,13 +248,13 @@
                 
                 <vbox id="jwe-emulator-subtab-device" style="display: none;">
                   <vbox class="jwe-emulator-events-panel">
-                    <groupbox>
+                    <groupbox class="jwe-emulator-groupbox">
                       <caption label="&jwe.emulator.tab.events.device;"/>
                       <radiogroup id="jwe-emulator-subtab-device-event">
                         <radio label="&jwe.emulator.tab.events.device.onfilesfound;" value="onFilesFound" oncommand="jwe_emulator.showEventContext('onfilesfound');"/>
                       </radiogroup>
                     </groupbox>
-                    <groupbox>
+                    <groupbox class="jwe-emulator-groupbox">
                       <caption label="&jwe.emulator.tab.events.context;"/>
                       <vbox id="jwe-emulator-subtab-event-context-onfilesfound" minwidth="400px" maxwidth="400px">
                           <description>&jwe.emulator.tab.events.context.nonevent;</description>
@@ -265,7 +265,7 @@
                 
                 <vbox id="jwe-emulator-subtab-devicestate" style="display: none;">
                   <vbox class="jwe-emulator-events-panel">
-                    <groupbox>
+                    <groupbox class="jwe-emulator-groupbox">
                       <caption label="&jwe.emulator.tab.events.devicestate;"/>
                       <radiogroup id="jwe-emulator-subtab-devicestate-event">
                         <radio label="&jwe.emulator.tab.events.devicestate.onflip;" value="onFlipEvent" oncommand="jwe_emulator.showEventContext('onflip');"/>
@@ -273,7 +273,7 @@
                         <radio label="&jwe.emulator.tab.events.devicestate.onscreenchange;" value="onScreenChangeDimensions" oncommand="jwe_emulator.showEventContext('onscreenchange');"/>
                       </radiogroup>
                     </groupbox>                    
-                    <groupbox>
+                    <groupbox class="jwe-emulator-groupbox">
                       <caption label="&jwe.emulator.tab.events.context;"/>
                       <vbox id="jwe-emulator-subtab-event-context-onflip">
                         <checkbox id="jwe-emulator-subtab-event-context-onflip-fliptrue" label="&jwe.emulator.tab.events.devicestate.onflip.context.fliptrue;" checked="false"/>
@@ -322,7 +322,7 @@
                 
                 <vbox id="jwe-emulator-subtab-power" style="display: none;">
                   <vbox class="jwe-emulator-events-panel">
-                    <groupbox>
+                    <groupbox class="jwe-emulator-groupbox">
                       <caption label="&jwe.emulator.tab.events.power;"/>
                       <radiogroup id="jwe-emulator-subtab-power-event">
                         <radio label="&jwe.emulator.tab.events.power.onchargelevel;" value="onChargeLevelChange" oncommand="jwe_emulator.showEventContext('onchargelevel');"/>
@@ -330,7 +330,7 @@
                         <radio label="&jwe.emulator.tab.events.power.onlowbattery;" value="onLowBattery" oncommand="jwe_emulator.showEventContext('onlowbattery');"/>
                       </radiogroup>
                     </groupbox>
-                    <groupbox>
+                    <groupbox class="jwe-emulator-groupbox">
                       <caption label="&jwe.emulator.tab.events.context;"/>
                       <vbox id="jwe-emulator-subtab-event-context-onchargelevel">
                         <hbox align="center">
@@ -362,13 +362,13 @@
 
                 <vbox id="jwe-emulator-subtab-network" style="display: none;">
                   <vbox class="jwe-emulator-events-panel">
-                    <groupbox>
+                    <groupbox class="jwe-emulator-groupbox">
                       <caption label="&jwe.emulator.tab.events.network;"/>
                       <radiogroup id="jwe-emulator-subtab-network-event">
                         <radio label="&jwe.emulator.tab.events.network.onnetworkchange;" value="onNetworkConnectionChanged" oncommand="jwe_emulator.showEventContext('onnetworkchange');"/>
                       </radiogroup>
                     </groupbox>
-                    <groupbox>
+                    <groupbox class="jwe-emulator-groupbox">
                       <caption label="&jwe.emulator.tab.events.context;"/>
                       <vbox id="jwe-emulator-subtab-event-context-onnetworkchange">
                         <hbox align="center">
@@ -382,13 +382,13 @@
                 
                 <vbox id="jwe-emulator-subtab-radio" style="display: none;">
                   <vbox class="jwe-emulator-events-panel">
-                    <groupbox>
+                    <groupbox class="jwe-emulator-groupbox">
                       <caption label="&jwe.emulator.tab.events.radio;"/>
                       <radiogroup id="jwe-emulator-subtab-radio-event">
                         <radio label="&jwe.emulator.tab.events.radio.onsignalchange;" value="onSignalSourceChange" oncommand="jwe_emulator.showEventContext('onsignalchange');"/>
                       </radiogroup>
                     </groupbox>
-                    <groupbox>
+                    <groupbox class="jwe-emulator-groupbox">
                       <caption label="&jwe.emulator.tab.events.context;"/>
                       <vbox id="jwe-emulator-subtab-event-context-onsignalchange">
                         <hbox align="center">
@@ -411,7 +411,7 @@
                 
                 <vbox id="jwe-emulator-subtab-messaging" style="display: none;">
                   <vbox class="jwe-emulator-events-panel">
-                    <groupbox>
+                    <groupbox class="jwe-emulator-groupbox">
                       <caption label="&jwe.emulator.tab.events.messaging;"/>
                       <radiogroup id="jwe-emulator-subtab-messaging-event">
                         <radio label="&jwe.emulator.tab.events.messaging.onmsgarrived;" value="onMessageArrived" oncommand="jwe_emulator.showEventContext('onmessagearrived');"/>
@@ -419,7 +419,7 @@
                         <radio label="&jwe.emulator.tab.events.messaging.onmsgsfound;" value="onMessagesFound" oncommand="jwe_emulator.showEventContext('onmessagesfound');"/>
                       </radiogroup>
                     </groupbox>
-                    <groupbox>
+                    <groupbox class="jwe-emulator-groupbox">
                       <caption label="&jwe.emulator.tab.events.context;"/>
                       <vbox id="jwe-emulator-subtab-event-context-onmessagearrived">
                         <hbox align="center">
@@ -446,13 +446,13 @@
                 
                 <vbox id="jwe-emulator-subtab-audio" style="display: none;">
                   <vbox class="jwe-emulator-events-panel">
-                    <groupbox>
+                    <groupbox class="jwe-emulator-groupbox">
                     <caption label="&jwe.emulator.tab.events.audio;"/>
                       <radiogroup id="jwe-emulator-subtab-audio-event">
                         <radio label="&jwe.emulator.tab.events.audio.onstatechange;" value="onStateChange" oncommand="jwe_emulator.showEventContext('audioonstatechange');"/>
                       </radiogroup>
                     </groupbox>
-                    <groupbox>
+                    <groupbox class="jwe-emulator-groupbox">
                       <caption label="&jwe.emulator.tab.events.context;"/>
                       <vbox id="jwe-emulator-subtab-event-context-audioonstatechange">
                         <hbox align="center">
@@ -474,13 +474,13 @@
                 
                 <vbox id="jwe-emulator-subtab-video" style="display: none;">
                   <vbox class="jwe-emulator-events-panel">
-                    <groupbox>
+                    <groupbox class="jwe-emulator-groupbox">
                       <caption label="&jwe.emulator.tab.events.video;"/>
                       <radiogroup id="jwe-emulator-subtab-video-event">
                         <radio label="&jwe.emulator.tab.events.video.onstatechange;" value="onStateChange" oncommand="jwe_emulator.showEventContext('videoonstatechange');"/>
                       </radiogroup>
                     </groupbox>
-                    <groupbox>
+                    <groupbox class="jwe-emulator-groupbox">
                       <caption label="&jwe.emulator.tab.events.context;"/>
                       <vbox id="jwe-emulator-subtab-event-context-videoonstatechange">
                         <hbox align="center">
@@ -502,13 +502,13 @@
                 
                 <vbox id="jwe-emulator-subtab-camera" style="display: none;">
                   <vbox class="jwe-emulator-events-panel">
-                    <groupbox>
+                    <groupbox class="jwe-emulator-groupbox">
                       <caption label="&jwe.emulator.tab.events.camera;"/>
                       <radiogroup id="jwe-emulator-subtab-camera-event">
                         <radio label="&jwe.emulator.tab.events.camera.oncaptured;" value="onCameraCaptured" oncommand="jwe_emulator.showEventContext('oncameracaptured');"/>
                       </radiogroup>
                     </groupbox>
-                    <groupbox>
+                    <groupbox class="jwe-emulator-groupbox">
                       <caption label="&jwe.emulator.tab.events.context;"/>
                       <vbox id="jwe-emulator-subtab-event-context-oncameracaptured">
                         <hbox align="center">
@@ -541,7 +541,7 @@
                 
                 <vbox id="jwe-emulator-subtab-pim" style="display: none;">
                   <vbox class="jwe-emulator-events-panel">
-                    <groupbox>
+                    <groupbox class="jwe-emulator-groupbox">
                       <caption label="&jwe.emulator.tab.events.pim;"/>
                       <radiogroup id="jwe-emulator-subtab-pim-event">
                         <radio label="&jwe.emulator.tab.events.pim.onaddrfound;" value="onAddressBookItemsFound" oncommand="jwe_emulator.showEventContext('onaddressbookitemsfound');"/>
@@ -550,7 +550,7 @@
                         <radio label="&jwe.emulator.tab.events.pim.onvcardexport;" value="onVCardExportingFinish" oncommand="jwe_emulator.showEventContext('onvcardexportingfinish');"/>
                       </radiogroup>
                     </groupbox>
-                    <groupbox>
+                    <groupbox class="jwe-emulator-groupbox">
                       <caption label="&jwe.emulator.tab.events.context;"/>
                       <vbox id="jwe-emulator-subtab-event-context-onaddressbookitemsfound" minwidth="400px" maxwidth="400px">
                           <description>&jwe.emulator.tab.events.context.nonevent;</description>
@@ -573,14 +573,14 @@
 
                 <vbox id="jwe-emulator-subtab-telephony" style="display: none;">
                   <vbox class="jwe-emulator-events-panel">
-                    <groupbox>
+                    <groupbox class="jwe-emulator-groupbox">
                       <caption label="&jwe.emulator.tab.events.telephony;"/>
                       <radiogroup id="jwe-emulator-subtab-telephony-event">
                         <radio label="&jwe.emulator.tab.events.telephony.oncall;" value="onCallEvent" oncommand="jwe_emulator.showEventContext('oncallevent');"/>
                         <radio label="&jwe.emulator.tab.events.telephony.oncallrecfound;" value="onCallRecordsFound" oncommand="jwe_emulator.showEventContext('oncallrecordsfound');"/>
                       </radiogroup>
                     </groupbox>
-                    <groupbox>
+                    <groupbox class="jwe-emulator-groupbox">
                       <caption label="&jwe.emulator.tab.events.context;"/>
                       <vbox id="jwe-emulator-subtab-event-context-oncallevent">
                         <hbox align="center">
@@ -621,7 +621,7 @@
 
 
               <vbox flex="1" class="jwe-emulator-tools-panel">
-                <groupbox>
+                <groupbox class="jwe-emulator-groupbox">
                   <caption label="&jwe.emulator.log.status.label;"/>
                   <vbox>
                     <label value="&jwe.emulator.log.warning.caption;"/>

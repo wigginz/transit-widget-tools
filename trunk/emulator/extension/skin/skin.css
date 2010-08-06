@@ -27,6 +27,16 @@
   background-color: #444444;
 }
 
+.jwe-emulator-groupbox
+{
+  color: black;
+}
+
+.jwe-emulator-groupbox caption
+{
+  font-weight: bold;
+}
+
 #jwe-emulator-container-drag-handle
 {
   float: right;
