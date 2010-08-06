@@ -11,7 +11,7 @@
     <description>A widget to test JIL Handset API</description>
     <author email="">JIL</author>
     <license href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution License</license>
-    <jil:maximum_display_mode height="700" width="380"/>
+    <jil:maximum_display_mode height="800" width="480"/>
     <update href="http://www.jil.org/widgets/" period="1"/>
     <icon src="APISample.png"/>
     <content src="main.html"/>
