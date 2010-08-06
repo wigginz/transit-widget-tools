@@ -278,23 +278,31 @@ var jwe_emulator =
   {
     if ( $("jwe-emulator-settings-fullscreen").chk() )
     { 
+      // if maxWidth is defined, these will be the values
+      if ( (this.emulator.getWidget().maxWidth) && 
+           (this.emulator.getWidget().maxWidth <= this.deviceWidth)
+         )
+      {
+        $("jwe-emulator-content").css("width", this.emulator.getWidget().maxWidth+"px");        
+        $("jwe-emulator-container").node.style.backgroundColor = "#444444";
+      }
+      else
+        $("jwe-emulator-content").css("width", this.deviceWidth+"px");
+      
       // if maxWidth and maxHeight are defined, these will be the values
-      if ( (this.emulator.getWidget().maxHeight && this.emulator.getWidget().maxWidth) && 
-           ( (this.emulator.getWidget().maxHeight <= this.deviceHeight) && (this.emulator.getWidget().maxWidth <= this.deviceWidth) ) 
+      if ( (this.emulator.getWidget().maxHeight) && 
+           (this.emulator.getWidget().maxHeight <= this.deviceHeight)
          )
       {
         var top = (this.deviceHeight - this.emulator.getWidget().maxHeight)/2;
         $("jwe-emulator-container").node.style.paddingTop = top+"px";
     
-        $("jwe-emulator-content").css("height", this.emulator.getWidget().maxHeight+"px");
-        $("jwe-emulator-content").css("width", this.emulator.getWidget().maxWidth+"px");
-        
+        $("jwe-emulator-content").css("height", this.emulator.getWidget().maxHeight+"px");        
         $("jwe-emulator-container").node.style.backgroundColor = "#444444";
       }
       else
       {
         $("jwe-emulator-content").css("height", this.deviceHeight+"px");
-        $("jwe-emulator-content").css("width", this.deviceWidth+"px");
         $("jwe-emulator-container").node.style.paddingTop = "0px";
       }
       
