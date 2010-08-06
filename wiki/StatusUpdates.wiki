@@ -21,6 +21,8 @@ Added functionality to put a message in the respective message type's "sentboxes
 
 Added the creation of an outgoing call record when Telephony.initiateCall is called. Uses new default property of 'outgoing-call-duration-seconds' to use for duration of all outgoing call records. Requires a database change via the update manager.
 
+Implemented security restrictions for XMLHttpRequest per the JIL 1.1r4 and 1.2.2 specs. Operator, identified domains are allowed, unidentified is prompt for user confirmation in a session context.
+
 </wiki:comment>
 
 == Thursday August 5, 2010 ==
