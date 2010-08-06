@@ -96,6 +96,21 @@ JILTelephony.prototype =
     this.runtime.logAction("Telephony.initiateVoiceCall(): simulating voice call to: "+phoneNumber);
     
     TransitCommon.alert("Simulating voice call to: "+phoneNumber);
+    
+    // now create an outgoing call record
+    
+    var record = 
+    {
+      address : phoneNumber,
+      name: "",
+      type : this.CallRecordTypes.OUTGOING,
+      startTime : new Date().getTime(),
+    };
+    
+    TransitCommon.debug("Adding outgoing call record for this call to number "+phoneNumber);
+    this.runtime.logAction("Telephony.initiateVoiceCall(): Adding outgoing call record for this call to number  "+phoneNumber);
+    
+    this.runtime.addCallRecord(record);
   },
 
   reload : function()

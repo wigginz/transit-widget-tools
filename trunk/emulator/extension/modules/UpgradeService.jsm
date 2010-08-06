@@ -61,10 +61,25 @@ var Target_1_2_2_20100729 =
   },
 };
 
+var Target_1_2_2_20100812 = 
+{
+  depends : Target_1_2_2_20100729,
+  
+  version : "1_2_2_20100812",
+  
+  upgrade : function(connection)
+  {
+    var stmt = connection.createStatement("insert into jwe_default_values (key, value) values ('outgoing-call-duration-seconds', '60')");
+
+    try { stmt.executeStep(); }
+    catch(exception) { TransitCommon.alert("Error during upgrade to version "+this.version+". Message: "+exception); throw exception; }
+    finally { stmt.reset(); }
+  },
+};
 
 
 
-var Target_Current = Target_1_2_2_20100729;
+var Target_Current = Target_1_2_2_20100812;
 
 /***********************************************************/
 

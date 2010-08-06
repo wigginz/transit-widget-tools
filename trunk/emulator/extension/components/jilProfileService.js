@@ -1550,8 +1550,17 @@ JILProfileService.prototype = //#
     stmt.params.address = record.address;
     stmt.params.name = record.name;
     stmt.params.type = record.type;
-    stmt.params.durationSeconds = record.durationSeconds;
     stmt.params.startTime = record.startTime;
+    
+    // if duration seconds is not present, use the default
+    if ( !record.durationSeconds )
+    {
+      var defaults = this.getDefaultValues();
+      TransitCommon.debug("No duration seconds attached to new call record, using default of "+defaults["outgoing-call-duration-seconds"]);
+      stmt.params.durationSeconds = defaults["outgoing-call-duration-seconds"];
+    }
+    else
+      stmt.params.durationSeconds = record.durationSeconds;
 
     try
     {
