@@ -2285,6 +2285,14 @@ JILProfileService.prototype = //#
 
   updateMessage : function(message)
   {
+    // if message id is not there, add it
+    if ( !message.id )
+    {
+      TransitCommon.debug("Not able to update message without a message ID, adding it instead.");
+      this.addMessage(message);
+      return;
+    }
+    
     var stmt = this.getConnection().createStatement("update jwe_msg_message set folder_id = :folderId, body = :body, callback_number = :callback, is_read = :isRead, message_priority = :priority, message_type = :type, source_address = :from, subject = :subject, time = :time, validity_period_hours = :validity, to_addresses = :to, cc_addresses = :cc, bcc_addresses = :bcc, attachments = :attachments where id = :id");
     if ( message.folderId == null )
       stmt.params.folderId = 0;

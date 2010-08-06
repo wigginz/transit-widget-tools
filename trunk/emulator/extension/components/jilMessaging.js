@@ -13,6 +13,7 @@ function JILMessaging() //#
   
   this.Account  = Components.classes["@jil.org/jilapi-account;1"].createInstance(Components.interfaces.jilAccount);
   this.MessageTypes  = Components.classes["@jil.org/jilapi-messagetypes;1"].createInstance(Components.interfaces.jilMessageTypes);
+  this.MessageFolderTypes  = Components.classes["@jil.org/jilapi-messagefoldertypes;1"].createInstance(Components.interfaces.jilMessageFolderTypes);
 
   this.runtime = Components.classes["@jil.org/jilapi-emulatorruntime;1"].getService().wrappedJSObject;
   
@@ -254,6 +255,37 @@ JILMessaging.prototype = //#
     TransitCommon.alert("Messaging.sendMessage(): emulating send action for message with subject '"+msg.subject+"' and destination address '"+msg.getDestinationAddress()+"'");
     
     this.runtime.logAction("Messaging.sendMessage(): emulating send action for message with subject '"+msg.subject+"' and destination address '"+msg.getDestinationAddress()+"'");
+    
+    // put the message in the sent folder(s) of the current account
+    // get the sent folders for this type
+    var folders = this.runtime.getMessageFolders();
+    TransitCommon.debug("Adding sent message to all sentbox type folders for this message type. If email, will only copy for sentbox of current email account.");
+    var rMessage = TransitCommon.convertJILToMessage(msg);
+    
+    for ( var i = 0; i < folders.length; i++ )
+    {
+      if ( (folders[i].messageType == msg.messageType) &&
+           (folders[i].type == this.MessageFolderTypes.SENTBOX) 
+         )
+      {
+        TransitCommon.debug("Folder is of message type "+folders[i].messageType+", and folder type "+folders[i].type);
+        
+        // see if this is an email message, if so, only copy to the current account
+        if ( msg.messageType == this.MessageTypes.EmailMessage )
+        {
+          if ( folders[i].emailAccountId != this.getCurrentEmailAccount().accountId )
+          {
+            TransitCommon.debug("Folder does not belong to the current email account, skipping.");
+            continue;
+          }
+          TransitCommon.debug("Folder is of the current email account, adding the message to folder id "+folders[i].id);
+        }
+        // update it so it's in the DB
+        TransitCommon.debug("Adding message to folder id "+folders[i].id);
+        rMessage.folderId = folders[i].id;
+        this.runtime.updateMessage(rMessage);
+      }
+    }
   },
 
   setCurrentEmailAccount : function(accountId)

@@ -716,6 +716,7 @@ JILEmulatorRuntime.prototype = //#
   updateMessage : function(message)
   {
     message.msgProfileId = this.deviceProfile.messageProfileId;
+    TransitCommon.debug("Calling profile service updateMessage");
     this.profileService.updateMessage(message);
   },
   
@@ -765,6 +766,11 @@ JILEmulatorRuntime.prototype = //#
   getFolderNames : function(messageType)
   {
     return(this.profileService.getFolderNames(this.deviceProfile.messageProfileId, messageType));
+  },
+  
+  getMessageFolders : function()
+  {
+    return(this.profileService.getMessageFolders(this.deviceProfile.messageProfileId));
   },
 
   getMessage : function(messageId)
