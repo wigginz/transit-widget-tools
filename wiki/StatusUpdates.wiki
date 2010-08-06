@@ -19,6 +19,8 @@ Changed behavior of floating mode a bit. Widgets will now be centered on the dev
 
 Added functionality to put a message in the respective message type's "sentboxes" when a message is sent. If it's an email message, the message will only copy to the "sentboxes" of the current email account.
 
+Added the creation of an outgoing call record when Telephony.initiateCall is called. Uses new default property of 'outgoing-call-duration-seconds' to use for duration of all outgoing call records. Requires a database change via the update manager.
+
 </wiki:comment>
 
 == Thursday August 5, 2010 ==
