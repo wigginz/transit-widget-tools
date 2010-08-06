@@ -332,6 +332,14 @@ var TransitCommon =
     promptService = null; 
   },
   
+  confirm: function(aMsg)
+  {
+    var promptService = Components.classes["@mozilla.org/embedcomp/prompt-service;1"].getService(Components.interfaces.nsIPromptService);
+    var result = promptService.confirm(null, "Transit Emulator Alert", aMsg);
+    promptService = null; 
+    return(result);
+  },
+  
   dumpall : function(name,obj,niv) 
   {
     if (!niv) niv=1;

@@ -4,8 +4,18 @@ Components.utils.import("resource://transit-emulator/TransitCommon.jsm");
 
 Components.utils.import("resource://transit-emulator/api/jil/1.2.2/SecurityManager.jsm");
 
+/*
+  SecurityManager.checkSecurity("Copy File (Device.copyFile)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
+  {
+    result = _Device_122.copyFile(originalFile, destinationFullName);
+  });
+*/
+
 function XMLHttpRequest()
 {
+  if ( !SecurityManager.checkInlineSecurity("Internet Access (XMLHttpRequest)", SecurityManager.OP_SESSION, SecurityManager.OP_ALLOWED, SecurityManager.OP_ALLOWED) )
+    return;
+  
   var self = this;
 
   self.wrapped = Components.classes["@mozilla.org/xmlextras/xmlhttprequest;1"].createInstance(Components.interfaces.nsIXMLHttpRequest);
