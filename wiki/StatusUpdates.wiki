@@ -13,6 +13,10 @@ More progress on full implementation of the "find" APIs. Unless noted, all field
 
 Note that findAddressBookItems does not support searching for group names as there is already a PIM method (getAddressBookGroupMembers) to do that.
 
+Toggling full screen mode now correctly triggers the respective onMaximize and onRestore events.
+
+Changed behavior of floating mode a bit. Widgets will now be centered on the device screen at all times. To clarify, widgets will always start in floating mode. In full screen mode, if the widget's maximum_display_mode is smaller than the device's screen, the widget will render in those dimensions, and a dark grey border will fill the gap between the widget's outer edges to the edges of the device screen.
+
 </wiki:comment>
 
 == Thursday August 5, 2010 ==
