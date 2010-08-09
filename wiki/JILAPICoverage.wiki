@@ -1,3 +1,4 @@
+#labels Featured
 == JIL API Coverage ==
 
 Unless otherwise noted here, all JIL APIs for the 1.1r4 and 1.2.2 specs are fully supported in the emulator as of build 1.2.2.20100812. This information is also included in the Getting Started document available on the Project Home page.
