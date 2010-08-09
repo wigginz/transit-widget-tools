@@ -77,6 +77,41 @@ JILEmulatorRuntime.prototype = //#
     return(this.cache[key]);
   },
 
+  checkFeature : function(feature)
+  {
+    TransitCommon.debug("Feature check requested for feature "+feature);
+    
+    if ( ! this.widget.features )
+    {
+      TransitCommon.debug("Widget has not configured any requested features, denying access.");
+      this.logAction("Widget has not configured any requested features, denying access to "+feature);
+      return(false);
+    }
+    
+    var found = false;
+    for ( var i = 0; i < this.widget.features.length; i++ )
+    {
+      if ( this.widget.features[i].name == feature )
+      {
+        found = true;
+        break;
+      }
+    }
+    
+    if ( ! found )
+    {
+      TransitCommon.debug("Widget has not requested access to feature denying access.");
+      this.logAction("Widget has not requested access to this feature "+feature+", denying access.");
+      return(false);
+    }
+    else
+    {
+      TransitCommon.debug("Widget has requested access to this feature allowing access.");
+      this.logAction("Widget has requested access to this feature "+feature+", allowing access.");
+      return(true);
+    }
+  },
+  
   emulateWidget : function(configUri, domDoc, profileId, openWindow)
   {
     if ( profileId == null )
