@@ -1,10 +1,21 @@
-= Introduction =
+== JIL API Coverage ==
 
-This page details the current status of implementation and support by the Transit Emulator for JIL APIs and other specifications.
+Unless otherwise noted here, all JIL APIs for the 1.1r4 and 1.2.2 specs are fully supported in the emulator as of build 1.2.2.20100812. This information is also included in the Getting Started document available on the Project Home page.
 
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+|| *JIL API* || *Limitation or Note* ||
+|| Widget.Device.findFiles || Only searching the "fileName" field. Currently working to include all other fields. ||
+|| Widget.PIM.findAddressBookItems || Only searching the "fullName" field. Currently working to include all other fields. ||
+|| Widget.PIM.onVCardExportingFinish || Not yet implemented. ||
+|| Widget.PIM.AddressBookItem.setAttributeValue || Not setting attributes that are defined as fields of the AddressBookItem object. The requirement is not clear in the JIL specification whether this should work or not. Currently requesting clarification of the requirement from JIL. ||
+|| Widget.Device.File.createDate || File create date is not available through the Mozilla nsIFile interface, currently setting the value to the same as the file's lastModifiedDate field value. ||
+|| Widget.Multimedia.Camera.captureImage || Camera integration has been implemented yet. Currently working to integrate a connected webcam if available. ||
+|| Widget.Multimedia.Camera.startVideoCapture || Camera integration has been implemented yet. Currently working to integrate a connected webcam if available. ||
+|| Widget.Multimedia.Camera.stopVideoCapture || Camera integration has been implemented yet. Currently working to integrate a connected webcam if available. ||
+|| Widget.PIM.exportAsVCard || Not yet implemented. ||
+|| Widget.PIM.findCalendarItems || Only searching the "name" field. Currently working to include all other fields. ||
+|| Widget.PIM.onCalendarItemAlert || Calendar alert events are not triggered by an actual clock. Alarms must be triggered manually through the "API Events" interface. ||
+|| Widget.Messaging.Message.saveAttachment || Currently works as a copy operation, taking the file referenced in the attachment and copying it to the specified file location. ||
+|| Widget.Messaging.createFolder || When creating a folder, the folder defaults to "INBOX" folder type. ||
+|| Widget.Messaging.findMessages || Only searching the "subject" field. Currently working to include all other fields. ||
+|| Widget.Messaging.getMessage || The "index" field is treated as the position of the message in the folder sorted by message date, descending. ||
+|| Widget.Multimedia.Camera.setWindow || Camera integration has been implemented yet. Currently working to integrate a connected webcam if available. ||
