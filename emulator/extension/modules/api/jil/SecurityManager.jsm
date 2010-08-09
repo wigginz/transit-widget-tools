@@ -189,6 +189,7 @@ var SecurityManager =
     this.securityContext = null;
   },
   
+  /** 1.2 packaging spec **/
   AccelerometerInfo_1_1    : "http://jil.org/jil/api/1.1/accelerometerinfo",
   Account_1_1              : "http://jil.org/jil/api/1.1/account",
   AccountInfo_1_1          : "http://jil.org/jil/api/1.1/accountinfo",
@@ -229,4 +230,19 @@ var SecurityManager =
   Exception_1_1_5                  : "http://jil.org/jil/api/1.1.5/exception",
   ExceptionTypes_1_1_5             : "http://jil.org/jil/api/1.1.5/exceptiontypes",
   RadioSignalSourceTypes_1_1_5     : "http://jil.org/jil/api/1.1.5/radiosignalsourcetypes",
+    
+  /** differences for 1.0 packaging spec **/
+  AccountInfo_1_1a   : "http://jil.org/jil/api/1.1/accountInfo",
+  AddressBook_1_1    : "http://jil.org/jil/api/1.1/addressbook",
+  Application1_1     : "http://jil.org/jil/api/1.1/application",
+  Calendar_1_1       : "http://jil.org/jil/api/1.1/calendar",
+  Camera_1_1         : "http://jil.org/jil/api/1.1/camera",
+  Clipboard_1_1      : "http://jil.org/jil/api/1.1/clipboard",
+  DeviceInfo_1_1a    : "http://jil.org/jil/api/1.1/deviceInfo",
+  FileSystem_1_1     : "http://jil.org/jil/api/1.1/filesystem",
+  Location_1_1       : "http://jil.org/jil/api/1.1/location",
+  Telephony_1_1      : "http://jil.org/jil/api/1.1/telephony",
+  Url_1_1            : "http://jil.org/jil/api/1.1/url",
+  WidgetManager_1_1  : "http://jil.org/jil/api/1.1/widgetManager",
+  XmlHttpRequest_1_1 : "http://jil.org/jil/api/1.1/xmlHttpRequest",
 };
