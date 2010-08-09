@@ -115,7 +115,7 @@ var jwe_emulator =
 
     $("jwe-log").val(this.emulator.getLog());
     
-    Components.utils.import("resource://transit-emulator/api/jil/1.2.2/SecurityManager.jsm");
+    Components.utils.import("resource://transit-emulator/api/jil/SecurityManager.jsm");
     
     jwe_setScrollArea();
     
