@@ -9,7 +9,6 @@ var service = null;
 function JILEmulatorRuntime() //#
 {
   Components.utils.import("resource://transit-emulator/TransitCommon.jsm");
-  Components.utils.import("resource://transit-emulator/WidgetIngester.jsm");
   
   this.wrappedJSObject = this;
   this.profileService = Components.classes['@jil.org/jilapi-profileservice;1'].getService().wrappedJSObject;
@@ -103,6 +102,7 @@ JILEmulatorRuntime.prototype = //#
     }
 
     var onError = false;
+    Components.utils.import("resource://transit-emulator/packaging/jil/WidgetIngester.jsm");
     
     var widgetResult = WidgetIngester.ingest(domDoc, baseUrl);
     var widget = widgetResult.widget;

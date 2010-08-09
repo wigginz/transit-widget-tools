@@ -3,7 +3,7 @@ var EXPORTED_SYMBOLS = ["Widget"];
 Components.utils.import("resource://transit-emulator/TransitCommon.jsm");
 
 // use the 1.2.2 security manager since it wasn't different in 1.0
-Components.utils.import("resource://transit-emulator/api/jil/1.2.2/SecurityManager.jsm");
+Components.utils.import("resource://transit-emulator/api/jil/SecurityManager.jsm");
 
 Components.utils.import("resource://transit-emulator/api/jil/1.1r4/Multimedia.jsm");
 Components.utils.import("resource://transit-emulator/api/jil/1.1r4/Device.jsm");
