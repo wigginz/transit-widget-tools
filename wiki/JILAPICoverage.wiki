@@ -19,3 +19,5 @@ Unless otherwise noted here, all JIL APIs for the 1.1r4 and 1.2.2 specs are full
 || Widget.Messaging.findMessages || Only searching the "subject" field. Currently working to include all other fields. <font color="green">Completed API Included in build 20100812</font>||
 || Widget.Messaging.getMessage || The "index" field is treated as the position of the message in the folder sorted by message date, descending. ||
 || Widget.Multimedia.Camera.setWindow || Camera integration has been implemented yet. Currently working to integrate a connected webcam if available. ||
+
+JIL API Security restrictions are applied to widgets with the Transit emulator, see the section Advanced Features in this document. Currently only functions are being monitored by the security manager and not API properties (Widget.Device.AccountInfo.phoneMSISDN, etc). 
