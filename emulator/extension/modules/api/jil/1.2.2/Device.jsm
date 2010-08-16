@@ -3,6 +3,7 @@ var EXPORTED_SYMBOLS = ["Device"];
 var _Device_122 = Components.classes["@jil.org/jilapi-device;1"].getService(Components.interfaces.jilDevice);
 
 Components.utils.import("resource://transit-emulator/api/jil/SecurityManager.jsm");
+Components.utils.import("resource://transit-emulator/api/jil/1.2.2/WidgetCommon.jsm");
 Components.utils.import("resource://transit-emulator/api/jil/1.2.2/AccountInfo.jsm");
 Components.utils.import("resource://transit-emulator/api/jil/1.2.2/ApplicationTypes.jsm");
 Components.utils.import("resource://transit-emulator/api/jil/1.2.2/DataNetworkInfo.jsm");
@@ -12,11 +13,7 @@ Components.utils.import("resource://transit-emulator/api/jil/1.2.2/File.jsm");
 Components.utils.import("resource://transit-emulator/api/jil/1.2.2/PositionInfo.jsm");
 Components.utils.import("resource://transit-emulator/api/jil/1.2.2/PowerInfo.jsm");
 Components.utils.import("resource://transit-emulator/api/jil/1.2.2/RadioInfo.jsm");
-Components.utils.import("resource://transit-emulator/api/jil/1.2.2/Exception.jsm");
-Components.utils.import("resource://transit-emulator/api/jil/1.2.2/ExceptionTypes.jsm");
 Components.utils.import("resource://transit-emulator/api/jil/1.2.2/AddressBookItem.jsm");
-
-var device_runtime = Components.classes["@jil.org/jilapi-emulatorruntime;1"].getService().wrappedJSObject;
 
 function Device()
 {
@@ -74,9 +71,6 @@ Device.prototype.onFilesFound = null;
 
 Device.prototype.copyFile = function(originalFile, destinationFullName)
 {
-  if ( !device_runtime.checkFeature(SecurityManager.Device_1_1) )
-    this.throwSecurityException(SecurityManager.Device_1_1);
-  
   var result = null;
   SecurityManager.checkSecurity("Copy File (Device.copyFile)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
   {
@@ -87,9 +81,6 @@ Device.prototype.copyFile = function(originalFile, destinationFullName)
 
 Device.prototype.deleteFile = function(destinationFullName)
 {
-  if ( !device_runtime.checkFeature(SecurityManager.Device_1_1) )
-    this.throwSecurityException(SecurityManager.Device_1_1);
-  
   var result = null;
   SecurityManager.checkSecurity("Delete File (Device.deleteFile)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
   {
@@ -100,9 +91,6 @@ Device.prototype.deleteFile = function(destinationFullName)
 
 Device.prototype.findFiles = function(matchFile, startInx, endInx)
 {
-  if ( !device_runtime.checkFeature(SecurityManager.Device_1_1) )
-    this.throwSecurityException(SecurityManager.Device_1_1);
-  
   SecurityManager.checkSecurity("File Search (Device.findFiles)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
   {
     _Device_122.findFiles(matchFile.updateJIL(), startInx, endInx);
@@ -111,9 +99,6 @@ Device.prototype.findFiles = function(matchFile, startInx, endInx)
 
 Device.prototype.getAvailableApplications = function()
 {
-  if ( !device_runtime.checkFeature(SecurityManager.Device_1_1) )
-    this.throwSecurityException(SecurityManager.Device_1_1);
-  
   var result = null;
   SecurityManager.checkSecurity("Get Available Applications (Device.getAvailableApplications)", SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, SecurityManager.OP_ALLOWED, function()
   {
@@ -124,9 +109,6 @@ Device.prototype.getAvailableApplications = function()
 
 Device.prototype.getDirectoryFileNames = function(sourceDirectory)
 {
-  if ( !device_runtime.checkFeature(SecurityManager.Device_1_1) )
-    this.throwSecurityException(SecurityManager.Device_1_1);
-  
   var result = null;
   SecurityManager.checkSecurity("List Files in a Folder (Device.getDirectoryFileNames)", SecurityManager.OP_BLANKET, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
   {
@@ -137,9 +119,6 @@ Device.prototype.getDirectoryFileNames = function(sourceDirectory)
 
 Device.prototype.getFile = function(fullName)
 {
-  if ( !device_runtime.checkFeature(SecurityManager.Device_1_1) )
-    this.throwSecurityException(SecurityManager.Device_1_1);
-  
   var wrappedFile = null;
   SecurityManager.checkSecurity("Access a File (Device.getFile)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
   {
@@ -153,9 +132,6 @@ Device.prototype.getFile = function(fullName)
 
 Device.prototype.getFileSystemRoots = function()
 {
-  if ( !device_runtime.checkFeature(SecurityManager.Device_1_1) )
-    this.throwSecurityException(SecurityManager.Device_1_1);
-  
   var result = null;
   SecurityManager.checkSecurity("List File Systems (Device.getFileSystemRoots)", SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, SecurityManager.OP_ALLOWED, function()
   {
@@ -166,17 +142,11 @@ Device.prototype.getFileSystemRoots = function()
 
 Device.prototype.getFileSystemSize = function(fileSystemRoot)
 {
-  if ( !device_runtime.checkFeature(SecurityManager.Device_1_1) )
-    this.throwSecurityException(SecurityManager.Device_1_1);
-  
   return(_Device_122.getFileSystemSize(fileSystemRoot));
 };
 
 Device.prototype.launchApplication = function(application, startParameter)
 {
-  if ( !device_runtime.checkFeature(SecurityManager.Device_1_1) )
-    this.throwSecurityException(SecurityManager.Device_1_1);
-  
   SecurityManager.checkSecurity("Launch Application (Device.launchApplication)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
   {
     _Device_122.launchApplication(application, startParameter);
@@ -185,9 +155,6 @@ Device.prototype.launchApplication = function(application, startParameter)
 
 Device.prototype.moveFile = function(originalFile, destinationFullName)
 {
-  if ( !device_runtime.checkFeature(SecurityManager.Device_1_1) )
-    this.throwSecurityException(SecurityManager.Device_1_1);
-  
   var result = null;
   SecurityManager.checkSecurity("Move File (Device.moveFile)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
   {
@@ -198,14 +165,11 @@ Device.prototype.moveFile = function(originalFile, destinationFullName)
 
 Device.prototype.setRingtone = function(ringtoneFileUrl, addressBookItem)
 {
-  if ( !device_runtime.checkFeature(SecurityManager.Device_1_1) )
-    this.throwSecurityException(SecurityManager.Device_1_1);
-  
   if ( (ringtoneFileUrl == null) || (ringtoneFileUrl.constructor != String) )
-    this.throwIPException("Invalid argument type for ringtoneFileUrl in Device.setRingtone");
+    WidgetCommon.throwIPException("Invalid argument type for ringtoneFileUrl in Device.setRingtone");
 
   if ( (addressBookItem == null) || !(addressBookItem instanceof AddressBookItem) )
-    this.throwIPException("Invalid argument type for addressBookItem in Device.setRingtone");
+    WidgetCommon.throwIPException("Invalid argument type for addressBookItem in Device.setRingtone");
 
   SecurityManager.checkSecurity("Set Contact Ringtone (Device.setRingtone)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
   {
@@ -215,27 +179,8 @@ Device.prototype.setRingtone = function(ringtoneFileUrl, addressBookItem)
 
 Device.prototype.vibrate = function(durationSeconds)
 {
-  if ( !device_runtime.checkFeature(SecurityManager.Device_1_1) )
-    this.throwSecurityException(SecurityManager.Device_1_1);
-  
   if ( (durationSeconds == null) || !(durationSeconds > -1) )
-    this.throwIPException("Invalid argument type for durationSeconds in Device.vibrate");
+    WidgetCommon.throwIPException("Invalid argument type for durationSeconds in Device.vibrate");
   
   _Device_122.vibrate(durationSeconds);
-};
-
-Device.prototype.throwIPException = function(message)
-{
-  var exc = new Exception();
-  exc.message = message;
-  exc.type = ExceptionTypes.INVALID_PARAMETER;
-  throw(exc);
-};
-
-Device.prototype.throwSecurityException = function(feature)
-{
-  var exc = new Exception();
-  exc.message = "Feature "+feature+" has not been configured for this widget (check feature tags in config.xml; case sensitive).";
-  exc.type = ExceptionTypes.SECURITY;
-  throw(exc);
 };
