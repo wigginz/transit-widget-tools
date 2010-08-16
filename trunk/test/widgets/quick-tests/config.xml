@@ -19,6 +19,7 @@
     <jil:billing required="false"/>
     
     <feature name="http://jil.org/jil/api/1.1/device" required="true"/>
+    <feature name="http://jil.org/jil/api/1.1/accelerometerinfo" required="true"/>
     
 <!--    <feature name="http://jil.org/jil/api/1.1/accountInfo" required="false"/>
     <feature name="http://jil.org/jil/api/1.1/addressbook" required="false"/>
