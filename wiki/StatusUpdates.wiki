@@ -3,9 +3,8 @@
 
 Check here for all the latest details on milestone releases, what's being worked on and committed, and future plans.
 
-<wiki:comment>
 
-== Thursday August 12, 2010 ==
+== Thursday August 17, 2010 ==
 
 === Fixes ===
 
@@ -23,7 +22,8 @@ Added the creation of an outgoing call record when Telephony.initiateCall is cal
 
 Implemented security restrictions for XMLHttpRequest per the JIL 1.1r4 and 1.2.2 specs. Operator, identified domains are allowed, unidentified is prompt for user confirmation in a session context.
 
-</wiki:comment>
+Download the development build [http://transit-widget-tools.googlecode.com/files/transit-emulator-20100817.xpi transit-emulator-20100817.xpi].
+
 
 == Thursday August 5, 2010 ==
 
