@@ -61,11 +61,11 @@ var Target_1_2_2_20100729 =
   },
 };
 
-var Target_1_2_2_20100812 = 
+var Target_1_2_2_20100817 = 
 {
   depends : Target_1_2_2_20100729,
   
-  version : "1_2_2_20100812",
+  version : "1_2_2_20100817",
   
   upgrade : function(connection)
   {
@@ -79,7 +79,7 @@ var Target_1_2_2_20100812 =
 
 
 
-var Target_Current = Target_1_2_2_20100812;
+var Target_Current = Target_1_2_2_20100817;
 
 /***********************************************************/
 
