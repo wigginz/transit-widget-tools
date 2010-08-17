@@ -1,8 +1,7 @@
 var EXPORTED_SYMBOLS = ["DataNetworkInfo"];
 
+Components.utils.import("resource://transit-emulator/api/jil/1.2.2/WidgetCommon.jsm");
 Components.utils.import("resource://transit-emulator/api/jil/1.2.2/DataNetworkConnectionTypes.jsm");
-Components.utils.import("resource://transit-emulator/api/jil/1.2.2/Exception.jsm");
-Components.utils.import("resource://transit-emulator/api/jil/1.2.2/ExceptionTypes.jsm");
 
 var _DataNetworkInfo_122 = Components.classes["@jil.org/jilapi-datanetworkinfo;1"].getService(Components.interfaces.jilDataNetworkInfo);
 
@@ -34,7 +33,7 @@ DataNetworkInfo.prototype.onNetworkConnectionChanged = null;
 DataNetworkInfo.prototype.getNetworkConnectionName = function(networkConnecionType)
 {
   if ( ! this.testDataNetworkConnectionTypes(networkConnecionType) )
-    this.throwIPException("Invalid argument type for networkConnecionType in DataNetworkInfo.getNetworkConnectionName");      
+    WidgetCommon.throwIPException("Invalid argument type for networkConnecionType in DataNetworkInfo.getNetworkConnectionName");      
   
   return(_DataNetworkInfo_122.getNetworkConnectionName(networkConnecionType));
 };
@@ -53,12 +52,4 @@ DataNetworkInfo.prototype.testDataNetworkConnectionTypes = function(type)
     return(false);
   else
     return(true);
-};
-
-DataNetworkInfo.prototype.throwIPException = function(message)
-{
-  var exc = new Exception();
-  exc.message = message;
-  exc.type = ExceptionTypes.INVALID_PARAMETER;
-  throw(exc);
 };

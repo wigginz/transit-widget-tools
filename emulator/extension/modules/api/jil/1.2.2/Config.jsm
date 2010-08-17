@@ -1,8 +1,7 @@
 var EXPORTED_SYMBOLS = ["Config"];
 
 Components.utils.import("resource://transit-emulator/api/jil/SecurityManager.jsm");
-Components.utils.import("resource://transit-emulator/api/jil/1.2.2/Exception.jsm");
-Components.utils.import("resource://transit-emulator/api/jil/1.2.2/ExceptionTypes.jsm");
+Components.utils.import("resource://transit-emulator/api/jil/1.2.2/WidgetCommon.jsm");
 
 var _Config_122 = Components.classes["@jil.org/jilapi-config;1"].getService(Components.interfaces.jilConfig);
 
@@ -31,7 +30,7 @@ Config.prototype.vibrationSetting = null;
 Config.prototype.setAsWallpaper = function(wallpaperFileUrl)
 {
   if ( (wallpaperFileUrl == null) || (wallpaperFileUrl.constructor != String) )
-    this.throwIPException("Invalid argument type for wallpaperFileUrl in Config.setAsWallpaper");
+    WidgetCommon.throwIPException("Invalid argument type for wallpaperFileUrl in Config.setAsWallpaper");
   
   SecurityManager.checkSecurity("Set Wallpaper (Config.setAsWallpaper)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_BLANKET, function()
   {
@@ -42,18 +41,10 @@ Config.prototype.setAsWallpaper = function(wallpaperFileUrl)
 Config.prototype.setDefaultRingtone = function(ringtoneFileUrl)
 {
   if ( (ringtoneFileUrl == null) || (ringtoneFileUrl.constructor != String) )
-    this.throwIPException("Invalid argument type for ringtoneFileUrl in Config.setDefaultRingtone");
+    WidgetCommon.throwIPException("Invalid argument type for ringtoneFileUrl in Config.setDefaultRingtone");
 
   SecurityManager.checkSecurity("Set Default Ringtone (Config.setDefaultRingtone)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_BLANKET, function()
   {
     _Config_122.setDefaultRingtone(ringtoneFileUrl);
   });
-};
-
-Config.prototype.throwIPException = function(message)
-{
-  var exc = new Exception();
-  exc.message = message;
-  exc.type = ExceptionTypes.INVALID_PARAMETER;
-  throw(exc);
 };

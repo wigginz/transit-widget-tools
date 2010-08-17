@@ -3,10 +3,9 @@ var EXPORTED_SYMBOLS = ["Telephony"];
 var _Telephony_122 = Components.classes["@jil.org/jilapi-telephony;1"].getService(Components.interfaces.jilTelephony);
 
 Components.utils.import("resource://transit-emulator/api/jil/SecurityManager.jsm");
+Components.utils.import("resource://transit-emulator/api/jil/1.2.2/WidgetCommon.jsm");
 Components.utils.import("resource://transit-emulator/api/jil/1.2.2/CallRecordTypes.jsm");
 Components.utils.import("resource://transit-emulator/api/jil/1.2.2/CallRecord.jsm");
-Components.utils.import("resource://transit-emulator/api/jil/1.2.2/Exception.jsm");
-Components.utils.import("resource://transit-emulator/api/jil/1.2.2/ExceptionTypes.jsm");
 
 function Telephony()
 {
@@ -48,11 +47,11 @@ Telephony.prototype.deleteCallRecord = function(callRecordType, id)
 Telephony.prototype.findCallRecords = function(comparisonRecord, startInx, endInx)
 {
   if ( !(comparisonRecord instanceof CallRecord) )
-    this.throwIPException("Invalid argument type for comparisonRecord in Telephony.findCallRecords");
+    WidgetCommon.throwIPException("Invalid argument type for comparisonRecord in Telephony.findCallRecords");
   if ( !(startInx > -1) )
-    this.throwIPException("Invalid argument type for startIdx in Telephony.findCallRecords");
+    WidgetCommon.throwIPException("Invalid argument type for startIdx in Telephony.findCallRecords");
   if ( !(endInx > -1) )
-    this.throwIPException("Invalid argument type for endIdx in Telephony.findCallRecords");
+    WidgetCommon.throwIPException("Invalid argument type for endIdx in Telephony.findCallRecords");
   
   SecurityManager.checkSecurity("Search Call Records (Telephony.findCallRecords)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
   {
@@ -63,10 +62,10 @@ Telephony.prototype.findCallRecords = function(comparisonRecord, startInx, endIn
 Telephony.prototype.getCallRecord = function(callRecordType, id)
 {
   if ( ! this.testCallRecordType(callRecordType) )
-    this.throwIPException("Invalid argument type for callRecordType in Telephony.getCallRecord");
+    WidgetCommon.throwIPException("Invalid argument type for callRecordType in Telephony.getCallRecord");
   
   if ( id == null )
-    this.throwIPException("Invalid argument type for id in Telephony.getCallRecord");
+    WidgetCommon.throwIPException("Invalid argument type for id in Telephony.getCallRecord");
   
   var result = null;
   SecurityManager.checkSecurity("Search Call Records (Telephony.findCallRecords)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
@@ -82,7 +81,7 @@ Telephony.prototype.getCallRecord = function(callRecordType, id)
 Telephony.prototype.getCallRecordCnt = function(callRecordType)
 {
   if ( ! this.testCallRecordType(callRecordType) )
-    this.throwIPException("Invalid argument type for callRecordType in Telephony.getCallRecordCnt");
+    WidgetCommon.throwIPException("Invalid argument type for callRecordType in Telephony.getCallRecordCnt");
   
   var result = null;
   SecurityManager.checkSecurity("Count Call Records (Telephony.getCallRecordCnt)", SecurityManager.OP_SESSION, SecurityManager.OP_ALLOWED, SecurityManager.OP_ALLOWED, function()
@@ -95,7 +94,7 @@ Telephony.prototype.getCallRecordCnt = function(callRecordType)
 Telephony.prototype.initiateVoiceCall = function(phoneNumber)
 {
   if ( !(phoneNumber > -1) )
-    this.throwIPException("Invalid argument type for phoneNumber in Telephony.initiateVoiceCall");
+    WidgetCommon.throwIPException("Invalid argument type for phoneNumber in Telephony.initiateVoiceCall");
   
   //var phoneNumberPattern = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
   //if ( !(phoneNumberPattern.test(phoneNumber)) )
@@ -121,12 +120,4 @@ Telephony.prototype.testCallRecordType = function(type)
     return(false);
   else
     return(true);
-};
-
-Telephony.prototype.throwIPException = function(message)
-{
-  var exc = new Exception();
-  exc.message = message;
-  exc.type = ExceptionTypes.INVALID_PARAMETER;
-  throw(exc);
 };

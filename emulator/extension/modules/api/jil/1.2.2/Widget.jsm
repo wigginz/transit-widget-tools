@@ -2,6 +2,7 @@ var EXPORTED_SYMBOLS = ["Widget"];
 
 Components.utils.import("resource://transit-emulator/TransitCommon.jsm");
 
+Components.utils.import("resource://transit-emulator/api/jil/1.2.2/WidgetCommon.jsm");
 Components.utils.import("resource://transit-emulator/api/jil/1.2.2/Multimedia.jsm");
 Components.utils.import("resource://transit-emulator/api/jil/1.2.2/Device.jsm");
 Components.utils.import("resource://transit-emulator/api/jil/1.2.2/PositionInfo.jsm");
@@ -63,7 +64,7 @@ var Widget =
   openURL : function(url) 
   {
     if ( (url == null) || (url.constructor != String) )
-      Widget.throwIPException("Invalid argument type for url in Widget.openUrl");
+      WidgetCommon.throwIPException("Invalid argument type for url in Widget.openUrl");
     
     _Widget_122.openURL(url);
   },
@@ -76,14 +77,6 @@ var Widget =
   setPreferenceForKey : function(preference, key) 
   {
     _Widget_122.setPreferenceForKey(preference, key);
-  },
-
-  throwIPException : function(message)
-  {
-    var exc = new Widget.Exception();
-    exc.message = message;
-    exc.type = Widget.ExceptionTypes.INVALID_PARAMETER;
-    throw(exc);
   },
 
   reset : function()
