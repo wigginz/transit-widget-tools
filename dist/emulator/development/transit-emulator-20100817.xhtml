@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Transit Widget Emulator 1.2.2 build 20100817</title>
+  </head>
+
+  <body>
+
+    <h2>Transit Widget Emulator 1.2.2 build 20100817</h2>
+    <h3>August 17, 2010</h3>
+
+    <!--<p>We've included mostly bug fixes and some configuration parsing updates and widget display adjustments in this release. It's important information, read on for the details.</p>-->
+
+    <h3>Fixes</h3>
+
+    <ul>
+      <li>More progress on full implementation of the "find" APIs. Unless noted, all fields are currently being searched. At the moment any comparison objects that are used for "find" APIs that have boolean fields (like isRead) will default to false even if not set to false. We're proposing to keep this behavior, however this specific case is not commented on in the JIL spec. If this seems wrong, please propose a change and we'll definitely discuss it. Note that findAddressBookItems does not support searching for group names as there is already a PIM method (getAddressBookGroupMembers) to do that.</li>
+
+      <li>Toggling full screen mode now correctly triggers the respective onMaximize and onRestore events.</li>
+
+      <li>Changed behavior of floating mode a bit. Widgets will now be centered on the device screen at all times. To clarify, widgets will always start in floating mode. In full screen mode, if the widget's maximum_display_mode is smaller than the device's screen, the widget will render in those dimensions, and a dark grey border will fill the gap between the widget's outer edges to the edges of the device screen.</li>
+
+      <li>Added functionality to put a message in the respective message type's "sentboxes" (may be more than one) when a message is sent. If it's an email message, the message will only copy to the "sentboxes" of the current email account.</li>
+
+      <li>Added the creation of an outgoing call record when Telephony.initiateCall is called. Uses new default property of 'outgoing-call-duration-seconds' to use for duration of all outgoing call records. Requires a database change via the update manager.</li>
+
+      <li>Implemented security restrictions for XMLHttpRequest per the JIL 1.1r4 and 1.2.2 specs. Operator, identified domains are allowed, unidentified is prompt for user confirmation in a session context.</li>
+
+    </ul>
+
+  </body>
+
+</html>
