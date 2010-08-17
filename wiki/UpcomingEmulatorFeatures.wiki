@@ -5,12 +5,11 @@ This is the current list of features and improvements we plan to implement in th
 
 == High Priority ==
 
- * More accurate emulation of full screen and floating mode (ongoing). <font color="green">Implementation per JIL specs complete in 20100812 build.</font>
  * Proper signature verification, feature tag enforcement, etc. and support for preferences defined in the config.xml.
  * Allow PPI emulation for better CSS media query support.
  * Ensure SVG and SVG Tiny is properly supported.
  * Implementation of Camera capture APIs via attached webcam (or other input stream if possible).
- * Integrate usage of XMLHttpRequest to the security manager as defined in the JIL Spec. Additionally integrate object properties with the security manager (only methods are currently monitored by the security manager). <font color="green">Implementation per JIL specs for XMLHttpRequest complete in 20100812 build.</font>
+ * Additionally integrate object properties with the security manager (only methods are currently monitored by the security manager).
  * Support for multiple languages for an emulated widget and the ability to change runtime language at runtime.
 
 == Medium Priority ==
@@ -49,3 +48,5 @@ This is the current list of features and improvements we plan to implement in th
  * Proper validation of config.xml to automatically detect packaging spec version.
  * Implement a framework for adding additional non-JIL APIs (Opera, W3C, proprietary, etc.).
  * Add display of more widget details such as icon, details, security info, etc.
+ * More accurate emulation of full screen and floating mode (ongoing).
+ * Integrate usage of XMLHttpRequest to the security manager as defined in the JIL Spec.
