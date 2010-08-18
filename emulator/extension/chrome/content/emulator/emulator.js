@@ -106,7 +106,7 @@ var jwe_emulator =
       menuitem.setAttribute("value", profiles[i].id);
       menuitem.setAttribute("type", "radio");
       menuitem.setAttribute("name", "jwe-device-profiles");
-      menuitem.setAttribute("oncommand", "jwe_emulator.reload(this);");
+      menuitem.setAttribute("oncommand", "jwe_emulator.reload(this, true);");
       if ( profiles[i].id == this.emulator.deviceProfile.id )
         menuitem.setAttribute("checked", "true");
       menupopup.appendChild(menuitem);
@@ -356,7 +356,7 @@ var jwe_emulator =
     this.toggleFullScreen();
   },
 
-  reload: function(element)
+  reload: function(element, reloadRuntime)
   {
     $("jwe-log").val(this.emulator.getLog());
     $("jwe-emulator-content").attr("src", "about:blank");
@@ -366,7 +366,7 @@ var jwe_emulator =
 
     if ( element != null )
       this.emulator.reload(element.value);
-    else
+    else if ( reloadRuntime )
       this.emulator.reload(this.emulator.deviceProfile.id);
       
     SecurityManager.reset();
@@ -738,7 +738,7 @@ var jwe_emulator =
       req.open("GET", "file://"+fp.file.path, false); 
       req.send(null);
       this.emulator.emulateWidget(fp.file.path, req.responseXML.documentElement, null, this.debugMode);
-      this.reload();
+      this.reload(null, false);
     }
   },
   
@@ -812,7 +812,7 @@ var jwe_emulator =
         req.open("GET", "file://"+wgtDir.path+TransitCommon.getFileSeparator()+"config.xml", false); 
         req.send(null);
         this.emulator.emulateWidget(wgtDir.path+TransitCommon.getFileSeparator()+"config.xml", req.responseXML.documentElement, null, this.debugMode);
-        this.reload();
+        this.reload(null, false);
       }
     }
   },
