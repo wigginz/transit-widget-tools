@@ -14,7 +14,8 @@
           <menuitem label="&jwe.menu.emulate;" oncommand="jwe_emulator.readConfig(false);"/>
           <menuitem label="&jwe.menu.emulateintab;" oncommand="jwe_emulator.readConfig(true);"/>
           <menuseparator/>
-          <menuitem label="&jwe.menu.emulatePackage;" oncommand="jwe_emulator.openWidgetPackage();"/>
+          <menuitem label="&jwe.menu.emulatePackage;" oncommand="jwe_emulator.openWidgetPackage(false);"/>
+          <menuitem label="&jwe.menu.emulatePackageDebug;" oncommand="jwe_emulator.openWidgetPackage(true);"/>
           <menuseparator/>
           <menuitem label="&jwe.menu.profiles;" oncommand="jwe_emulator.launchProfiles();"/>
           <!--menuitem label="Controls" oncommand="jwe_emulator.launchControls();"/-->
@@ -30,6 +31,9 @@
       <menupopup id="jwe-status-bar-menu">
         <menuitem label="&jwe.menu.emulate;" oncommand="jwe_emulator.readConfig(false);"/>
         <menuitem label="&jwe.menu.emulateintab;" oncommand="jwe_emulator.readConfig(true);"/>
+        <menuseparator/>
+        <menuitem label="&jwe.menu.emulatePackage;" oncommand="jwe_emulator.openWidgetPackage(false);"/>
+        <menuitem label="&jwe.menu.emulatePackageDebug;" oncommand="jwe_emulator.openWidgetPackage(true);"/>
         <menuseparator/>
         <menuitem label="&jwe.menu.profiles;" oncommand="jwe_emulator.launchProfiles();"/>
       </menupopup>
