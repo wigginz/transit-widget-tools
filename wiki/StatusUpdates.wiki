@@ -3,6 +3,16 @@
 
 Check here for all the latest details on milestone releases, what's being worked on and committed, and future plans.
 
+<wiki:comment>
+
+== Thursday August 26, 2010 ==
+
+=== New Features ===
+
+Added two new context menu items (in the status bar icon and the "Tools > Transit Widget Emulator" menu) to directly emulate a widget using the .wgt package. The emulator will open the WGT file, ensure it is valid, unzip the package to the local machine's temporary directory (usually /tmp or c:\Documents and Settings\username\Local Settings\Temp), and finally opens the config.xml just as it does when reading the config.xml from an already exploded widget package. The option to open WGT file and emulate for debugging is also available.
+
+</wiki:comment>
+
 
 == Thursday August 17, 2010 ==
 
