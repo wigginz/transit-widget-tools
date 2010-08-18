@@ -1,7 +1,8 @@
 <!ENTITY jwe.menu.group "Transit Widget Emulator">
-<!ENTITY jwe.menu.emulate "Emulate Widget">
-<!ENTITY jwe.menu.emulateintab "Emulate Widget (debug)">
-<!ENTITY jwe.menu.emulatePackage "Emulate Widget Package (.wgt)">
+<!ENTITY jwe.menu.emulate "Emulate Widget (config.xml)">
+<!ENTITY jwe.menu.emulateintab "Emulate and Debug Widget (config.xml)">
+<!ENTITY jwe.menu.emulatePackage "Emulate Widget (.wgt)">
+<!ENTITY jwe.menu.emulatePackageDebug "Emulate and Debug Widget (.wgt)">
 <!ENTITY jwe.status.bar.launch "Launch Transit Emulator">
 <!ENTITY jwe.menu.logviewer "Log Viewer">
 <!ENTITY jwe.emulator.title "Transit Widget Emulator">

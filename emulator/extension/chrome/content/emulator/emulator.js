@@ -34,6 +34,8 @@ function jwe_setScrollArea()
   $("jwe-scroll-container").attr("minheight", windowHeight-21);
 }
 
+Components.utils.import("resource://transit-emulator/TransitCommon.jsm");  
+
 var jwe_emulator = 
 {
   emulator : Components.classes["@jil.org/jilapi-emulatorruntime;1"].getService().wrappedJSObject,
@@ -47,12 +49,10 @@ var jwe_emulator =
   eventsLoaded : false,
   currentPanel : null,
   extensions : null,
-  debugMode: null,
+  debugMode : false,
 
   init : function()
   {
-    Components.utils.import("resource://transit-emulator/TransitCommon.jsm");  
-
     this.emulator.setEmulatorWindow(window);
     
     try
@@ -394,14 +394,14 @@ var jwe_emulator =
   {
   },
 
-  readConfig : function(inTab, event)
+  readConfig : function(debugMode, event)
   {
     if ( (event != null) && (event.button != 0) )
       return;
     
-    this.debugMode = inTab;
-    
-    if ( inTab )
+    this.debugMode = debugMode;
+        
+    if ( debugMode )
     {
       this.emulator.emulateWidget(content.location.pathname, content.document.documentElement, null, false);
       gBrowser.selectedTab = gBrowser.addTab("chrome://transit-emulator/content/emulator/emulator.xul");
@@ -742,7 +742,7 @@ var jwe_emulator =
     }
   },
   
-  openWidgetPackage : function()
+  openWidgetPackage : function(debugMode)
   {
     var nsIFilePicker = Components.interfaces.nsIFilePicker;
     var fp = Components.classes["@mozilla.org/filepicker;1"].createInstance(nsIFilePicker);
@@ -811,7 +811,16 @@ var jwe_emulator =
         var req = new XMLHttpRequest();
         req.open("GET", "file://"+wgtDir.path+TransitCommon.getFileSeparator()+"config.xml", false); 
         req.send(null);
-        this.emulator.emulateWidget(wgtDir.path+TransitCommon.getFileSeparator()+"config.xml", req.responseXML.documentElement, null, this.debugMode);
+
+        if ( debugMode )
+        {
+          this.emulator.emulateWidget(wgtDir.path+TransitCommon.getFileSeparator()+"config.xml", req.responseXML.documentElement, null, false);
+          gBrowser.selectedTab = gBrowser.addTab("chrome://transit-emulator/content/emulator/emulator.xul");
+        }
+        else
+          this.emulator.emulateWidget(wgtDir.path+TransitCommon.getFileSeparator()+"config.xml", req.responseXML.documentElement, null, true);
+         
+        this.debugMode = debugMode;
         this.reload(null, false);
       }
     }
