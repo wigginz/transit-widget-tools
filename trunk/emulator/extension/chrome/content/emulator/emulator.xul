@@ -24,7 +24,7 @@
       <menupopup>
          <menuitem label="&jwe.emulator.menubar.file.openConfig;" oncommand="jwe_emulator.openWidgetFile();"/>
          <menuitem label="&jwe.emulator.menubar.file.openWgt;" oncommand="jwe_emulator.openWidgetPackage();"/>
-         <menuitem label="&jwe.emulator.menubar.file.reload;" oncommand="jwe_emulator.reload();"/>
+         <menuitem label="&jwe.emulator.menubar.file.reload;" oncommand="jwe_emulator.reload(null, true);"/>
          <menuseparator/>
          <menuitem label="&jwe.emulator.menubar.file.exit;" oncommand="window.close();"/>
       </menupopup>
@@ -116,7 +116,7 @@
             
             <toolbarseparator/>     
             
-            <toolbarbutton id="jwe-emulator-tools-box-reload" image="chrome://transit-emulator/skin/images/reload.png" label="&jwe.emulator.reload;" oncommand="jwe_emulator.reload();"/> 
+            <toolbarbutton id="jwe-emulator-tools-box-reload" image="chrome://transit-emulator/skin/images/reload.png" label="&jwe.emulator.reload;" oncommand="jwe_emulator.reload(null, true);"/> 
             
           </toolbar>
         </toolbox>

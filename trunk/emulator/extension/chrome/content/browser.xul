@@ -14,6 +14,8 @@
           <menuitem label="&jwe.menu.emulate;" oncommand="jwe_emulator.readConfig(false);"/>
           <menuitem label="&jwe.menu.emulateintab;" oncommand="jwe_emulator.readConfig(true);"/>
           <menuseparator/>
+          <menuitem label="&jwe.menu.emulatePackage;" oncommand="jwe_emulator.openWidgetPackage();"/>
+          <menuseparator/>
           <menuitem label="&jwe.menu.profiles;" oncommand="jwe_emulator.launchProfiles();"/>
           <!--menuitem label="Controls" oncommand="jwe_emulator.launchControls();"/-->
           <!--menuitem label="&jwe.menu.logviewer;" oncommand="jwe_emulator.logViewer();"/-->
