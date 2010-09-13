@@ -26,6 +26,7 @@
    <extension
          id="org.jil.ide.widgetBuilder"
          name="JILPackageBuilder"
+         isConfigurable="true"
          point="org.eclipse.core.resources.builders">
       <builder hasNature="true">
          <run class="org.jil.ide.builder.WidgetBuilder"/>
@@ -119,7 +120,7 @@
    <extension  
          point="org.eclipse.ui.propertyPages" >
          <page id="org.jil.ide.ui.JILPropertyPage"
-            name="JIL Property Page"
+            name="JIL"
             objectClass="org.eclipse.core.resources.IProject"
             class="org.jil.ide.ui.JILPropertyPage">
       	 </page>
