@@ -3,10 +3,22 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.jil.ide.widget;singleton:=true
 Bundle-Version: 1.0.0
-Bundle-ClassPath: org.jil.ide
+Bundle-ClassPath: lib/xmlsec-1.4.3.jar, .
 Bundle-Activator: org.jil.ide.Activator
 Bundle-Vendor: %Bundle-Vendor
-Export-Package: org.jil.ide,org.jil.ide.builder,org.jil.ide.libraries,org.jil.ide.preferences,org.jil.ide.resources,org.jil.ide.security,org.jil.ide.util,org.jil.ide.wizard
+Export-Package: org,
+ org.jil,
+ org.jil.ide,
+ org.jil.ide.builder,
+ org.jil.ide.builder.validation,
+ org.jil.ide.feature,
+ org.jil.ide.libraries,
+ org.jil.ide.preferences,
+ org.jil.ide.resources,
+ org.jil.ide.security,
+ org.jil.ide.ui,
+ org.jil.ide.util,
+ org.jil.ide.wizard
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.core.resources,
@@ -19,7 +31,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.workbench.texteditor;bundle-version="3.5.0",
  org.eclipse.ui.forms;bundle-version="3.4.1",
  org.eclipse.ui.browser;bundle-version="3.2.300",
- org.apache.xml.security;bundle-version="1.4.3";visibility:=reexport,
- org.apache.xerces;bundle-version="2.9.0";visibility:=reexport
+ org.apache.xerces;bundle-version="2.9.0";visibility:=reexport,
+ org.apache.commons.logging;bundle-version="1.0.4",
+ org.apache.xalan;bundle-version="2.7.1"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6,J2SE-1.5
 Bundle-ActivationPolicy: lazy
