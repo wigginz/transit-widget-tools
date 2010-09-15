@@ -22,12 +22,9 @@ import org.jil.ide.util.Common;
 
 public class ConfigEditor {
 
-	private IProject project;
 	private ProjectProperties properties;
-	
 
 	public ConfigEditor(IProject proj) {
-		this.project = proj;
 		this.properties = new ProjectProperties(proj);
 	}
 
@@ -56,7 +53,7 @@ public class ConfigEditor {
 				.compile("//[[\\s*\\w*\\n$][\\p{Punct}*\\n$]][^\\n]*");
 		Pattern pattern4 = Pattern.compile("(\")([^\"]*)(\")");
 		for (File jsf : jsfiles) {
-			
+
 			String jsfileString = Common.convertFile2String(jsf);
 			Matcher m4 = pattern4.matcher(jsfileString);
 			jsfileString = m4.replaceAll("");
@@ -67,28 +64,30 @@ public class ConfigEditor {
 			checkFeatureGroup(jsfileString, jsf, apiGroup);
 		}
 		for (File f : fileDir.listFiles())
-			if (f.isDirectory()){
+			if (f.isDirectory()) {
 				checkJSfilesFromDir(f);
 			}
-		
+
 	}
 
 	public void checkFeatureGroup(String jsfileString, File file,
 			ArrayList<APIGroup> apiGroup) {
-		
-		IWorkspace workspace= ResourcesPlugin.getWorkspace();
-		IPath location= Path.fromOSString(file.getAbsolutePath());
-		IFile iFile= workspace.getRoot().getFileForLocation(location); 
+
+		IWorkspace workspace = ResourcesPlugin.getWorkspace();
+		IPath location = Path.fromOSString(file.getAbsolutePath());
+		IFile iFile = workspace.getRoot().getFileForLocation(location);
 		MarkerUtility.deleteMarkers(iFile);
-		
+
 		for (APIGroup g : apiGroup) {
-			if (g != null &&  !g.isFeatureUsed()) {
+			if (g != null && !g.isFeatureUsed()) {
 				for (String api : g.getApiList())
 					if (jsfileString.contains(api)) {
 						g.setFeatureUsed(true);
-						    System.out.println(" using feature " + api + " \t " + g.getCategory().toString() );
-						    MarkerUtility.addMarker(iFile, g.getCategory().toString(), 0, 0);
-				 }
+						System.out.println(" using feature " + api + " \t "
+								+ g.getCategory().toString());
+						MarkerUtility.addMarker(iFile, g.getCategory()
+								.toString(), 0, 0);
+					}
 			}
 		}
 	}

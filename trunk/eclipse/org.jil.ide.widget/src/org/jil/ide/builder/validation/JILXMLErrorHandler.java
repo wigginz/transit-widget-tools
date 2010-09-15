@@ -7,6 +7,7 @@ import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class JILXMLErrorHandler extends DefaultHandler {
+	
 	private boolean validationError = false;
 	private SAXParseException saxParseException = null;
 	

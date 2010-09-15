@@ -18,11 +18,7 @@ public class CPWidgetLibraryElement extends CPUserLibraryElement {
 		super(name, children);
 		
 		JsGlobalScopeContainerInitializer initializer = JavaScriptCore.getJsGlobalScopeContainerInitializer(CONTAINER_ID);
-		
-		
-		
 		//initializer.requestJsGlobalScopeContainerUpdate(containerPath, project, containerSuggestion)
-		
 		
 	}
 

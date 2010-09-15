@@ -1,7 +1,5 @@
 package org.jil.ide.libraries;
 
-import java.io.File;
-
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -11,7 +9,6 @@ import org.eclipse.wst.jsdt.core.IJsGlobalScopeContainer;
 import org.eclipse.wst.jsdt.core.IJsGlobalScopeContainerInitializer;
 import org.eclipse.wst.jsdt.core.JsGlobalScopeContainerInitializer;
 import org.eclipse.wst.jsdt.core.compiler.libraries.LibraryLocation;
-import org.eclipse.wst.jsdt.core.compiler.libraries.SystemLibraryLocation;
 import org.jil.ide.Activator;
 
 public class WidgetLibInitializer extends JsGlobalScopeContainerInitializer

@@ -2,7 +2,6 @@ package org.jil.ide.util;
 
 import javax.xml.transform.TransformerException;
 
-import org.eclipse.core.internal.content.Activator;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
@@ -10,7 +9,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.ui.views.navigator.ResourceNavigator;
-import org.jil.ide.util.PluginConstants;
 import org.xml.sax.SAXException;
 
 /**

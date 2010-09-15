@@ -1,17 +1,12 @@
 package org.jil.ide.libraries;
 
-import java.io.File;
-
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.wst.jsdt.core.compiler.libraries.LibraryLocation;
 import org.eclipse.wst.jsdt.core.compiler.libraries.SystemLibraryLocation;
 import org.jil.ide.Activator;
 import org.jil.ide.ui.ProjectProperties;
 import org.jil.ide.util.JILConstants;
-import org.jil.ide.util.PluginTools;
 
 public class WidgetLibLocationNew extends SystemLibraryLocation {
 
