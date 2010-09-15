@@ -18,6 +18,7 @@ import org.eclipse.wst.jsdt.core.LibrarySuperType;
 import org.eclipse.wst.jsdt.internal.core.JavaProject;
 
 
+
 public class JavaScriptNature implements IProjectNature {
 
 	private static final String[] NATURE_IDS = { "org.eclipse.wst.jsdt.core.jsNature" };
@@ -56,7 +57,7 @@ public class JavaScriptNature implements IProjectNature {
 		if (monitor != null)
 			this.monitor = monitor;
 		else
-			monitor = new NullProgressMonitor();
+			this.monitor = new NullProgressMonitor();
 	}
 
 	public static void addJsNature(IProject project, IProgressMonitor monitor)
@@ -92,7 +93,7 @@ public class JavaScriptNature implements IProjectNature {
 		return true;
 	}
 
-/*	public static void removeJsNature(IProject project, IProgressMonitor monitor)
+	public static void removeJsNature(IProject project, IProgressMonitor monitor)
 			throws CoreException {
 		if ((monitor != null) && (monitor.isCanceled())) {
 			throw new OperationCanceledException();
@@ -117,7 +118,7 @@ public class JavaScriptNature implements IProjectNature {
 		} else if (monitor != null) {
 			monitor.worked(1);
 		}
-	}*/
+	}
 
 	@SuppressWarnings("restriction")
 	@Override
@@ -154,8 +155,7 @@ public class JavaScriptNature implements IProjectNature {
 			System.out.println(e);
 		}
 
-		LibrarySuperType superType = new LibrarySuperType(new Path(
-				"org.eclipse.wst.jsdt.launching.baseBrowserLibrary"),
+		LibrarySuperType superType = new LibrarySuperType(new Path(SUPER_TYPE_LIBRARY),
 				getJavaProject(), SUPER_TYPE_NAME);
 		getJavaProject().setCommonSuperType(superType);
 
@@ -171,10 +171,11 @@ public class JavaScriptNature implements IProjectNature {
 		this.classPathEntries.add(JavaScriptCore.newSourceEntry(projectPath));
 	}
 
+	
 	@SuppressWarnings({ "unchecked", "restriction" })
 	@Override
 	public void deconfigure() throws CoreException {
-		/*Vector badEntries = new Vector();
+		Vector badEntries = new Vector();
 		IIncludePathEntry defaultJRELibrary = getJreEntry();
 		IIncludePathEntry[] localEntries = initLocalClassPath();
 		badEntries.add(defaultJRELibrary);
@@ -194,7 +195,7 @@ public class JavaScriptNature implements IProjectNature {
 				this.monitor);
 		getJavaProject().deconfigure();
 		//removeJsNature(this.fCurrProject, this.monitor);
-		this.fCurrProject.refreshLocal(2, this.monitor);*/
+		this.fCurrProject.refreshLocal(2, this.monitor);
 
 	}
 
@@ -251,8 +252,7 @@ public class JavaScriptNature implements IProjectNature {
 	}
 
 	private IIncludePathEntry getJreEntry() {
-		return JavaScriptCore.newContainerEntry(new Path(
-				"org.eclipse.wst.jsdt.launching.JRE_CONTAINER"));
+		return JavaScriptCore.newContainerEntry(new Path(DEFAULT_JRE_PATH));
 	}
 
 	private void initJREEntry() {

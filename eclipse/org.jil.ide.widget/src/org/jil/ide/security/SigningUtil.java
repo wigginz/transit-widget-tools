@@ -4,6 +4,8 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.security.KeyStore;
 import java.security.PrivateKey;
@@ -13,13 +15,11 @@ import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.Enumeration;
 
-
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.apache.xml.security.algorithms.MessageDigestAlgorithm;
 import org.apache.xml.security.c14n.Canonicalizer;
 import org.apache.xml.security.keys.KeyInfo;
 import org.apache.xml.security.keys.content.X509Data;
@@ -121,13 +121,12 @@ public class SigningUtil {
 			doc.appendChild(signature.getElement());
 
 			System.out.println(" NamespaceURI  " + doc.getNamespaceURI());
+			
 			String filepath ="";
-
-		
+			
 			addDocuments(signature, srcFolder);
 			
-			
-			SignedInfo s = signature.getSignedInfo();
+			/*SignedInfo s = signature.getSignedInfo();*/
 			signature.sign(privateKey);
 			
 			
@@ -156,14 +155,24 @@ public class SigningUtil {
 				String password, String alias, String keystoreType) {
 
 			PrivateKeyEntry keyEntry = null;
+			InputStream stream = null;
 			try {
 				// Load the KeyStore and get the signing key and certificate.
 				KeyStore ks = KeyStore.getInstance(keystoreType);
-				ks.load(new FileInputStream(ketstore), password.toCharArray());
+				stream = new FileInputStream(ketstore);
+				ks.load(stream, password.toCharArray());
 				keyEntry = (KeyStore.PrivateKeyEntry) ks.getEntry(alias,
 						new KeyStore.PasswordProtection(password.toCharArray()));
 			} catch (Exception ex) {
 				ex.printStackTrace();
+			}finally{
+				if( stream != null){
+					try {
+						stream.close();
+					} catch (IOException e) {
+								e.printStackTrace();
+					}
+				}
 			}
 			return keyEntry;
 		}
@@ -201,7 +210,7 @@ public class SigningUtil {
 					IResource projectMember = projectMembers[i];
 					if(projectMember instanceof IFile){
 						java.io.File file= new java.io.File(projectMember.getLocation().toOSString());
-						if(!projectMember.getName().equals("signature.xml") && !projectMember.getName().equals(".project"))
+						if(!projectMember.getName().equals("author-signature.xml") && !projectMember.getName().startsWith("signature"))
 						{
 							if(file.exists() == true && file.isHidden()==false && !file.getName().endsWith("~") )
 									//&& !checkForWgtPackage(projectMember))
@@ -212,11 +221,11 @@ public class SigningUtil {
 									path = path.substring(4);
 								}
 								try {
-									System.out.println(" addDocument  path    -->"   + path);
 //									signature.addDocument(path);
-									signature.addDocument(path, null,"http://www.w3.org/2001/04/xmlenc#sha256");
+									signature.addDocument( path.replace("\\", "/"), null,"http://www.w3.org/2001/04/xmlenc#sha256");
 								} catch (org.apache.xml.security.signature.XMLSignatureException e) {
-									e.printStackTrace();
+									
+									 e.printStackTrace();
 								}
 							}
 						}
@@ -254,11 +263,21 @@ public class SigningUtil {
 	 
 	 private static  KeyStore loadKeystore(String keystoreFile, String keystorePass) throws Exception{
 		 KeyStore ks = KeyStore.getInstance(KEYSTORE_TYPE);
+		 InputStream stream=  null;
 	 	 try{
-	 		 ks.load(new FileInputStream(keystoreFile), keystorePass.toCharArray());
+	 		 stream = new FileInputStream(keystoreFile);
+	 		 ks.load(stream, keystorePass.toCharArray());
 	 	 }catch(Exception ex){
 	 		 ex.printStackTrace();
 	 		 throw ex;
+	 	 }finally{
+	 		if( stream != null){
+				try {
+					stream.close();
+				} catch (IOException e) {
+							e.printStackTrace();
+				}
+			}
 	 	 }
 		 return ks;
 	 }

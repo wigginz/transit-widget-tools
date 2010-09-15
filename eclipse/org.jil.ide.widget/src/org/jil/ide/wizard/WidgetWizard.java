@@ -31,14 +31,12 @@ import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.jil.ide.builder.WidgetNature;
-import org.jil.ide.libraries.WidgetLibLocationNew;
 import org.jil.ide.ui.ProjectProperties;
 import org.jil.ide.util.Common;
 import org.jil.ide.util.JILConstants;
 import org.jil.ide.util.PluginConstants;
 import org.jil.ide.util.PluginTools;
 import org.jil.ide.util.Resources;
-import org.jil.ide.wizard.WidgetWizardPage.DevelopeName;
 
 public class WidgetWizard extends Wizard implements INewWizard, PluginConstants {
 	/**
@@ -243,6 +241,7 @@ public class WidgetWizard extends Wizard implements INewWizard, PluginConstants 
 
 	private String replaceParameters(String configStr,
 			Map<String, String> parameters) {
+		
 		for (String key : parameters.keySet()) {
 			configStr = configStr.replaceAll(key, (String) parameters.get(key));
 		}

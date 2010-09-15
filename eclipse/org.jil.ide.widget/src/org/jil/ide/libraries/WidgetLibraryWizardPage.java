@@ -1,8 +1,8 @@
 package org.jil.ide.libraries;
 
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.wst.jsdt.core.IIncludePathEntry;
 import org.eclipse.wst.jsdt.core.IJavaScriptProject;
 import org.eclipse.wst.jsdt.core.JavaScriptCore;

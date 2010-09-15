@@ -8,9 +8,9 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
-import org.jil.ide.libraries.WidgetLibInitializer;
 
 public class WidgetNature implements IProjectNature {
+	
 	private IProject mProject;
 
 	public void configure() throws CoreException {

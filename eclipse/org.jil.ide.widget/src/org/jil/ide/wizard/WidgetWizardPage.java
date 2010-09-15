@@ -1,8 +1,6 @@
 package org.jil.ide.wizard;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FormAttachment;
-import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -13,6 +11,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
+import org.jil.ide.util.Resources;
 
 public class WidgetWizardPage extends WizardNewProjectCreationPage {
 
@@ -55,7 +54,7 @@ public class WidgetWizardPage extends WizardNewProjectCreationPage {
 		// layout.numColumns = 2;
 		layout.verticalSpacing = 9;
 		Label label = new Label(composite, SWT.NULL);
-		label.setText("&JIL Developer ID:");
+		label.setText(Resources.getString("jil.wizard.developer.lable")); //$NON-NLS-1$
 		label.setLayoutData(new GridData(GridData.FILL, GridData.BEGINNING,
 				true, false));
 
@@ -75,18 +74,18 @@ public class WidgetWizardPage extends WizardNewProjectCreationPage {
 		jilVGroup.setLayout(jilVGroupLayout);
 		GridData jilVGroupLData = new GridData();
 		jilVGroup.setLayoutData(jilVGroupLData);
-		jilVGroup.setText("JIL Widget Version");
+		jilVGroup.setText(Resources.getString("jil.wizard.version.lable")); //$NON-NLS-1$
 		
 		jil12 = new Button(jilVGroup, SWT.RADIO | SWT.LEFT);
 		jil12.setSelection(true);
 		GridData jil12BtLData = new GridData();
 		jil12.setLayoutData(jil12BtLData);
-		jil12.setText("JIL1.2");
+		jil12.setText(Resources.getString("jil.wizard.version.12.lable")); //$NON-NLS-1$
 		
 		jil11 = new Button(jilVGroup, SWT.RADIO | SWT.LEFT);
 		GridData jil11BtLData = new GridData();
 		jil11.setLayoutData(jil11BtLData);
-		jil11.setText("JIL1.0");
+		jil11.setText(Resources.getString("jil.wizard.version.10.lable")); //$NON-NLS-1$
 
 		Group catGroup = new Group(composite, SWT.NONE);
 		GridLayout catGroupLayout = new GridLayout();
@@ -98,23 +97,23 @@ public class WidgetWizardPage extends WizardNewProjectCreationPage {
 		catGroupLData.width = 292;
 		catGroupLData.height = 89;*/
 		catGroup.setLayoutData(catGroupLData);
-		catGroup.setText("Select Category");
+		catGroup.setText(Resources.getString("jil.wizard.select.category")); //$NON-NLS-1$
 		
 		bronzeBt = new Button(catGroup, SWT.RADIO | SWT.LEFT);
 		bronzeBt.setSelection(true);  // default set bronze to true 
 		GridData bronzeBtLData = new GridData();
 		bronzeBt.setLayoutData(bronzeBtLData);
-		bronzeBt.setText("Bronze");
+		bronzeBt.setText(Resources.getString("jil.wizard.category.bronze")); //$NON-NLS-1$
 		
 		silverBt = new Button(catGroup, SWT.RADIO | SWT.LEFT);
 		GridData silverBtLData = new GridData();
 		silverBt.setLayoutData(silverBtLData);
-		silverBt.setText("Silver");
+		silverBt.setText(Resources.getString("jil.wizard.category.silver")); //$NON-NLS-1$
 		
 		goldBt = new Button(catGroup, SWT.RADIO | SWT.LEFT);
 		GridData goldBtLData = new GridData();
 		goldBt.setLayoutData(goldBtLData);
-		goldBt.setText("Gold");
+		goldBt.setText(Resources.getString("jil.wizard.category.gold")); //$NON-NLS-1$
 		
 
 		// setPageComplete(validatePage());

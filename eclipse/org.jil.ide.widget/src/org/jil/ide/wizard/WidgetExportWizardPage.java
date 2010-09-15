@@ -1,7 +1,6 @@
 package org.jil.ide.wizard;
 
 import java.io.File;
-import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -21,7 +20,6 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.WizardExportResourcesPage;
 import org.jil.ide.Activator;
@@ -121,7 +119,7 @@ public class WidgetExportWizardPage extends WizardExportResourcesPage {
 				true, false));
 		pwd.addListener(SWT.Modify, pwdModifyListener);
 		pwd.addFocusListener(new FocusAdapter(){
-	           boolean ignore;
+//	           boolean ignore;
 	             public void focusLost(FocusEvent evt) {
 	                 if( !pwd.getText().equals("")) {
 	                	 displaySubject(pwd.getText());

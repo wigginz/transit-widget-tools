@@ -1,7 +1,5 @@
 package org.jil.ide.builder.validation;
 
-import java.io.File;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 
