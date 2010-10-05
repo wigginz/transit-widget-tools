@@ -88,6 +88,7 @@
                         <menupopup>
                           <menuitem label="1.1r4" value="1.1r4"/>
                           <menuitem label="1.2.2" value="1.2.2"/>
+                          <menuitem label="WAC 1.0" value="WAC 1.0"/>
                         </menupopup>
                       </menulist>
                     </hbox>

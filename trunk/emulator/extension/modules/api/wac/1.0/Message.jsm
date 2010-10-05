@@ -47,16 +47,6 @@ Message.prototype.time = null;
 
 Message.prototype.validityPeriodHours = null;
 
-Message.prototype.updateAddress = function(type, address)
-{
-  if ( type == "cc" )
-    this.ccAddress = this._jilMessage.getCcAddress();
-  else if ( type == "bcc" )
-    this.bccAddress = this._jilMessage.getBccAddress();
-  else if ( type == "destination" )
-    this.destinationAddress = this._jilMessage.getDestinationAddress();
-};
-
 Message.prototype.addAddress = function(type, address)
 {
   this.updateJIL();

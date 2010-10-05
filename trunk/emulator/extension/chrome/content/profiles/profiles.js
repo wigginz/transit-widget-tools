@@ -356,6 +356,8 @@ var jwe_Profiles =
       $("jwe-profiles-device-panel-general-apispec").sel(0);
     else if ( device.jilAPISpec == "1.2.2" )
       $("jwe-profiles-device-panel-general-apispec").sel(1);
+    else if ( device.jilAPISpec == "WAC 1.0" )
+      $("jwe-profiles-device-panel-general-apispec").sel(2);
     
     var extensions = JILProfileService.wrappedJSObject.getAPIExtensionsForDevice(jwe_Profiles.state["selDevice"]);
     for ( var i = 0; i < extensions.length; i++ )
@@ -373,6 +375,8 @@ var jwe_Profiles =
       apiSpec = "1.1r4";
     else if ( $("jwe-profiles-device-panel-general-apispec").sel() == 1 )
       apiSpec = "1.2.2";
+    else if ( $("jwe-profiles-device-panel-general-apispec").sel() == 2 )
+      apiSpec = "WAC 1.0";
     
     var selectedExtensions = new Array();
     var extensions = JILProfileService.wrappedJSObject.getAllAPIExtensions();
