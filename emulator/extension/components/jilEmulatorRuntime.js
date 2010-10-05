@@ -226,6 +226,95 @@ JILEmulatorRuntime.prototype = //#
     }   
   },
  
+  openWidgetPackage : function(debugMode)
+  {
+    var nsIFilePicker = Components.interfaces.nsIFilePicker;
+    var fp = Components.classes["@mozilla.org/filepicker;1"].createInstance(nsIFilePicker);
+    fp.init(window, "Select a JIL Widget Package", nsIFilePicker.modeOpen);
+    fp.appendFilter("JIL Widget Package File (*.wgt)","*.wgt");
+    
+    var res = fp.show();
+    // accept an OK 
+    if ( res == nsIFilePicker.returnOK )
+    {
+      var zipReader = Components.classes["@mozilla.org/libjar/zip-reader;1"]
+                .createInstance(Components.interfaces.nsIZipReader);
+      zipReader.open(fp.file);
+      zipReader.test(null);      
+      TransitCommon.debug("Opening widget package from path "+fp.file.path);
+      
+      // create a temp directory
+      var tempDirectory = Components.classes["@mozilla.org/file/directory_service;1"].getService(Components.interfaces.nsIProperties).get("TmpD", Components.interfaces.nsIFile);
+      TransitCommon.debug("Local machine temp directory is "+tempDirectory.path);
+      
+      var wgtDir = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);
+      wgtDir.initWithPath(tempDirectory.path+TransitCommon.getFileSeparator()+fp.file.leafName);
+      TransitCommon.debug("Creating directory to unzip widget contents to: "+tempDirectory.path+TransitCommon.getFileSeparator()+fp.file.leafName);
+      
+      // if it exists, delete it
+      if ( wgtDir.exists() )
+      {
+        TransitCommon.debug("Directory already exists, removing it and re-creating it.");
+        wgtDir.remove(true);
+      } 
+      wgtDir.create(Components.interfaces.nsILocalFile.DIRECTORY_TYPE, 0777);
+      
+      var entries = zipReader.findEntries(null);
+      var foundConfig = false;
+      while (entries.hasMore()) 
+      {
+        var fileName = entries.getNext();
+        if ( fileName.indexOf("config.xml") > -1 )
+          foundConfig = true;
+        
+        TransitCommon.debug("Extracting file: "+fileName+" to: "+wgtDir.path+TransitCommon.getFileSeparator()+fileName);
+
+        var extractedFile = this.getItemFile(wgtDir, fileName); 
+        
+        if ( extractedFile.exists() )
+          continue;     
+        
+        try 
+        {
+          extractedFile.create(Components.interfaces.nsILocalFile.DIRECTORY_TYPE, 0777);
+        }
+        catch (e)
+        {
+          TransitCommon.alert("Failed to create target file for extraction " +
+                " file = " + extractedFile.path + ", exception = " + e + "\n");
+        }        
+        zipReader.extract(fileName, extractedFile);
+      }
+      zipReader.close();
+      
+      if ( !foundConfig )
+        TransitCommon.alert("Widget package does not appear to be a valid widget package, no config.xml file found within package.");
+      else
+      {
+        var req = new XMLHttpRequest();
+        req.open("GET", "file://"+wgtDir.path+TransitCommon.getFileSeparator()+"config.xml", false); 
+        req.send(null);
+
+        if ( debugMode )
+        {
+          this.emulateWidget(wgtDir.path+TransitCommon.getFileSeparator()+"config.xml", req.responseXML.documentElement, null, false);
+          gBrowser.selectedTab = gBrowser.addTab("chrome://transit-emulator/content/emulator/emulator.xul");
+        }
+        else
+          this.emulateWidget(wgtDir.path+TransitCommon.getFileSeparator()+"config.xml", req.responseXML.documentElement, null, true);
+      }
+    }
+  },
+  
+  getItemFile : function (wgtDir, filePath) 
+  {
+    var itemLocation = wgtDir.clone();
+    var parts = filePath.split("/");
+    for (var i = 0; i < parts.length; ++i)
+      itemLocation.append(parts[i]);
+    return itemLocation;
+  },
+  
   unload : function(internalId)
   {
     this.emulatorWindow = null;

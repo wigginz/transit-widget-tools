@@ -21,7 +21,7 @@ var WidgetIngester =
     }
     catch (ex)
     {
-      TransitCommon.alert("Could not ingest widget config.xml, reason: "+ex.message+". Cannot load widget.");
+      TransitCommon.alert("Could not ingest widget config.xml, reason: "+ex.message+". Cannot load JIL widget.");
       //this.runtime.logAction("Could not ingest widget config.xml, reason: "+ex.message+". Cannot load widget.");
     }
     
@@ -252,7 +252,7 @@ var WidgetIngester =
     }
     
     var widget = {};
-    widget.jilPackagingSpec = "1.2";
+    widget.jilPackagingSpec = "JIL 1.2/WAC 1.0";
     widget.baseUrl = baseUrl;
     
     widget.id = config.getAttribute("id");
