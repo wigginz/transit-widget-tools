@@ -11,29 +11,28 @@
     <menupopup id="menu_ToolsPopup">
       <menu id="menu_jwe_manu" label="&jwe.menu.group;">
         <menupopup id="menu_jwe_manu_popup">
-          <menuitem label="&jwe.menu.emulate;" oncommand="jwe_emulator.readConfig(false);"/>
-          <menuitem label="&jwe.menu.emulateintab;" oncommand="jwe_emulator.readConfig(true);"/>
-          <menuseparator/>
-          <menuitem label="&jwe.menu.emulatePackage;" oncommand="jwe_emulator.openWidgetPackage(false);"/>
-          <menuitem label="&jwe.menu.emulatePackageDebug;" oncommand="jwe_emulator.openWidgetPackage(true);"/>
+          <menuitem label="&jwe.menu.emulateintab;" oncommand="jwe_emulator.readConfig();"/>
+          <menuitem label="&jwe.menu.emulatePackageDebug;" oncommand="jwe_emulator.readPackage();"/>
           <menuseparator/>
           <menuitem label="&jwe.menu.profiles;" oncommand="jwe_emulator.launchProfiles();"/>
-          <!--menuitem label="Controls" oncommand="jwe_emulator.launchControls();"/-->
-          <!--menuitem label="&jwe.menu.logviewer;" oncommand="jwe_emulator.logViewer();"/-->
+          <!--
+          <menuseparator/>
+          <menuitem label="&jwe.menu.emulatePackage;" oncommand="jwe_emulator.openWidgetPackage(false);"/>
+          <menuitem label="&jwe.menu.emulate;" oncommand="jwe_emulator.readConfig(false);"/>
+          <menuitem label="Controls" oncommand="jwe_emulator.launchControls();"/>
+          <menuitem label="&jwe.menu.logviewer;" oncommand="jwe_emulator.logViewer();"/>
+          -->
         </menupopup>
       </menu>
     </menupopup>
     
     <statusbar id="status-bar">
-      <statusbarpanel id="jwe-status-bar" role="button" context="jwe-status-bar-menu" onmouseup="jwe_emulator.readConfig(false, event);" tooltiptext="&jwe.status.bar.launch;">
+      <statusbarpanel id="jwe-status-bar" role="button" context="jwe-status-bar-menu" onmouseup="jwe_emulator.readConfig(event);" tooltiptext="&jwe.status.bar.launch;">
         <image id="jwe-status-icon" src="chrome://transit-emulator/skin/images/transit-enabled.ico"/>
       </statusbarpanel>
       <menupopup id="jwe-status-bar-menu">
-        <menuitem label="&jwe.menu.emulate;" oncommand="jwe_emulator.readConfig(false);"/>
-        <menuitem label="&jwe.menu.emulateintab;" oncommand="jwe_emulator.readConfig(true);"/>
-        <menuseparator/>
-        <menuitem label="&jwe.menu.emulatePackage;" oncommand="jwe_emulator.openWidgetPackage(false);"/>
-        <menuitem label="&jwe.menu.emulatePackageDebug;" oncommand="jwe_emulator.openWidgetPackage(true);"/>
+        <menuitem label="&jwe.menu.emulateintab;" oncommand="jwe_emulator.readConfig();"/>
+        <menuitem label="&jwe.menu.emulatePackageDebug;" oncommand="jwe_emulator.readPackage();"/>
         <menuseparator/>
         <menuitem label="&jwe.menu.profiles;" oncommand="jwe_emulator.launchProfiles();"/>
       </menupopup>
