@@ -394,20 +394,19 @@ var jwe_emulator =
   {
   },
 
-  readConfig : function(debugMode, event)
+  readConfig : function(event)
   {
     if ( (event != null) && (event.button != 0) )
       return;
-    
-    this.debugMode = debugMode;
-        
-    if ( debugMode )
-    {
-      this.emulator.emulateWidget(content.location.pathname, content.document.documentElement, null, false);
-      gBrowser.selectedTab = gBrowser.addTab("chrome://transit-emulator/content/emulator/emulator.xul");
-    }
-    else
-      this.emulator.emulateWidget(content.location.pathname, content.document.documentElement, null, true);
+
+    this.emulator.emulateWidget(content.location.pathname, content.document.documentElement, null, false);
+    gBrowser.selectedTab = gBrowser.addTab("chrome://transit-emulator/content/emulator/emulator.xul");
+  },
+  
+  readPackage : function()
+  {
+    this.emulator.openWidgetPackage(window);
+    gBrowser.selectedTab = gBrowser.addTab("chrome://transit-emulator/content/emulator/emulator.xul");
   },
 
   logViewer : function()

@@ -226,13 +226,13 @@ JILEmulatorRuntime.prototype = //#
     }   
   },
  
-  openWidgetPackage : function(debugMode)
+  openWidgetPackage : function(window)
   {
     var nsIFilePicker = Components.interfaces.nsIFilePicker;
     var fp = Components.classes["@mozilla.org/filepicker;1"].createInstance(nsIFilePicker);
     fp.init(window, "Select a JIL Widget Package", nsIFilePicker.modeOpen);
     fp.appendFilter("JIL Widget Package File (*.wgt)","*.wgt");
-    
+
     var res = fp.show();
     // accept an OK 
     if ( res == nsIFilePicker.returnOK )
@@ -291,17 +291,11 @@ JILEmulatorRuntime.prototype = //#
         TransitCommon.alert("Widget package does not appear to be a valid widget package, no config.xml file found within package.");
       else
       {
-        var req = new XMLHttpRequest();
+        var req = Components.classes["@mozilla.org/xmlextras/xmlhttprequest;1"].createInstance(Components.interfaces.nsIXMLHttpRequest);
         req.open("GET", "file://"+wgtDir.path+TransitCommon.getFileSeparator()+"config.xml", false); 
         req.send(null);
 
-        if ( debugMode )
-        {
-          this.emulateWidget(wgtDir.path+TransitCommon.getFileSeparator()+"config.xml", req.responseXML.documentElement, null, false);
-          gBrowser.selectedTab = gBrowser.addTab("chrome://transit-emulator/content/emulator/emulator.xul");
-        }
-        else
-          this.emulateWidget(wgtDir.path+TransitCommon.getFileSeparator()+"config.xml", req.responseXML.documentElement, null, true);
+        this.emulateWidget(wgtDir.path+TransitCommon.getFileSeparator()+"config.xml", req.responseXML.documentElement, null, false);
       }
     }
   },
