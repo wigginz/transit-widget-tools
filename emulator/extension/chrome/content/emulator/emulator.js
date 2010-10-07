@@ -405,7 +405,13 @@ var jwe_emulator =
   
   readPackage : function()
   {
-    this.emulator.openWidgetPackage(window);
+    var configFile = this.emulator.openWidgetPackage(window);
+	content.location = configFile;
+
+	//alert("Widget package has been loaded.");
+    jwe_waitForDelay(500);
+
+    this.emulator.emulateWidget(content.location.pathname, content.document.documentElement, null, false);
     gBrowser.selectedTab = gBrowser.addTab("chrome://transit-emulator/content/emulator/emulator.xul");
   },
 

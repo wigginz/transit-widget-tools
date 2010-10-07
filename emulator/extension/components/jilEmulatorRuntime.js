@@ -233,6 +233,8 @@ JILEmulatorRuntime.prototype = //#
     fp.init(window, "Select a JIL Widget Package", nsIFilePicker.modeOpen);
     fp.appendFilter("JIL Widget Package File (*.wgt)","*.wgt");
 
+    var configFile = null;
+
     var res = fp.show();
     // accept an OK 
     if ( res == nsIFilePicker.returnOK )
@@ -277,13 +279,13 @@ JILEmulatorRuntime.prototype = //#
         try 
         {
           extractedFile.create(Components.interfaces.nsILocalFile.DIRECTORY_TYPE, 0777);
+		  zipReader.extract(fileName, extractedFile);
         }
         catch (e)
         {
-          TransitCommon.alert("Failed to create target file for extraction " +
-                " file = " + extractedFile.path + ", exception = " + e + "\n");
-        }        
-        zipReader.extract(fileName, extractedFile);
+          TransitCommon.debug("Failed to create target file for extraction " +
+                " file = " + extractedFile.path + ", exception = " + e);
+        }
       }
       zipReader.close();
       
@@ -291,13 +293,16 @@ JILEmulatorRuntime.prototype = //#
         TransitCommon.alert("Widget package does not appear to be a valid widget package, no config.xml file found within package.");
       else
       {
-        var req = Components.classes["@mozilla.org/xmlextras/xmlhttprequest;1"].createInstance(Components.interfaces.nsIXMLHttpRequest);
-        req.open("GET", "file://"+wgtDir.path+TransitCommon.getFileSeparator()+"config.xml", false); 
-        req.send(null);
+        //var req = Components.classes["@mozilla.org/xmlextras/xmlhttprequest;1"].createInstance(Components.interfaces.nsIXMLHttpRequest);
+        //req.open("GET", "file://"+wgtDir.path+TransitCommon.getFileSeparator()+"config.xml", false); 
+        //req.send(null);
 
-        this.emulateWidget(wgtDir.path+TransitCommon.getFileSeparator()+"config.xml", req.responseXML.documentElement, null, false);
+        //window.location = "file://"+wgtDir.path+TransitCommon.getFileSeparator()+"config.xml";
+        //this.emulateWidget(window.location.pathname, window.document.documentElement, null, false);
+		configFile = "file://"+wgtDir.path+TransitCommon.getFileSeparator()+"config.xml";
       }
     }
+	return(configFile);
   },
   
   getItemFile : function (wgtDir, filePath) 
