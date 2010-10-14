@@ -5,11 +5,11 @@
    <extension
        point="org.eclipse.ui.newWizards">
        <category
-            name="JIL"
+            name="WAC/JIL"
             id="org.jil.ide.wizard.WidgetWizard">
       </category>
       <wizard
-            name="JIL Widget Project"
+            name="WAC/JIL Widget Project"
             icon="icons/new.png"
             finalPerspective="org.eclipse.jdt.ui.JavaPerspective"
             category="org.jil.ide.wizard.WidgetWizard"
@@ -18,7 +18,7 @@
             id="org.jil.ide.wizard.WidgetWizard"
             preferredPerspectives="org.eclipse.jdt.ui.JavaPerspective">
          <description>
-            Create a JIL Widget Project.
+            Create a WAC/JIL Widget Project.
          </description>
       </wizard>
    </extension>
@@ -72,18 +72,18 @@
    <extension
          point="org.eclipse.ui.preferencePages">
           <category
-            name="JIL"
+            name="WAC/JIL"
             id="org.jil.ide.preferences.jil">
            </category> 
          <page
             class="org.jil.ide.preferences.WidgetPreferencePage"
             id="org.jil.ide.preferences.jil"
-            name="JIL Widget Preference Page"/>
+            name="WAC/JIL Widget Preference Page"/>
    </extension>
    <extension
          point="org.eclipse.ui.exportWizards">
          <category
-            name="JIL"
+            name="WAC/JIL"
             id="org.jil.ide.wizard.widgetExportWizard">
            </category> 
          <wizard 
@@ -120,7 +120,7 @@
    <extension  
          point="org.eclipse.ui.propertyPages" >
          <page id="org.jil.ide.ui.JILPropertyPage"
-            name="JIL"
+            name="WAC/JIL"
             objectClass="org.eclipse.core.resources.IProject"
             class="org.jil.ide.ui.JILPropertyPage">
       	 </page>
