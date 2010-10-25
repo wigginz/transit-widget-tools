@@ -86,8 +86,8 @@
                       <label value="&jwe.profiles.devices.settings.specs.api;" class="jwe-defaultText" style="width: 10em;"/>
                       <menulist align="right" oncommand="jwe_Profiles.change('dGeneral');" id="jwe-profiles-device-panel-general-apispec">
                         <menupopup>
-                          <menuitem label="1.1r4" value="1.1r4"/>
-                          <menuitem label="1.2.2" value="1.2.2"/>
+                          <menuitem label="JIL 1.1r4" value="1.1r4"/>
+                          <menuitem label="JIL 1.2.2" value="1.2.2"/>
                           <menuitem label="WAC 1.0" value="WAC 1.0"/>
                         </menupopup>
                       </menulist>
@@ -96,6 +96,7 @@
                       <label value="&jwe.profiles.devices.settings.specs.extensions;" class="jwe-defaultText" style="width: 10em;"/>
                       <vbox>
                         <checkbox flex="1" label="&jwe.profiles.devices.settings.specs.extensions.samsung360;" oncommand="jwe_Profiles.change('dGeneral');"  id="jwe-profiles-device-panel-general-extensions-samsung360"/>
+                        <checkbox flex="1" label="&jwe.profiles.devices.settings.specs.extensions.waccharging;" oncommand="jwe_Profiles.change('dGeneral');"  id="jwe-profiles-device-panel-general-extensions-waccharging"/>
                       </vbox>
                     </hbox>
                   </vbox>
