@@ -78,8 +78,24 @@ var Target_1_2_2_20100817 =
 };
 
 
+var Target_1_2_2_20101025 = 
+{
+  depends : Target_1_2_2_20100817,
+  
+  version : "1_2_2_20101025",
+  
+  upgrade : function(connection)
+  {
+    var stmt = connection.createStatement("insert into jwe_api_extension (key, name, resource_url) values ('waccharging', 'WAC In Widget Charging', 'resource://transit-emulator/api/wac/extensions/charging.jsm')");
 
-var Target_Current = Target_1_2_2_20100817;
+    try { stmt.executeStep(); }
+    catch(exception) { TransitCommon.alert("Error during upgrade to version "+this.version+". Message: "+exception); throw exception; }
+    finally { stmt.reset(); }
+  },
+};
+
+
+var Target_Current = Target_1_2_2_20101025;
 
 /***********************************************************/
 

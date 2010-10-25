@@ -1,3 +1,12 @@
+var testWAC = 
+{
+  testWAC : function()
+  {
+    var ret = Widget.Billing.getHash("test1234");
+    showResult("Widget.Billing.", "Widget.Billing. called, returned: "+ret);
+  },
+};
+
 var testSamsung = 
 {
   openURL : function()

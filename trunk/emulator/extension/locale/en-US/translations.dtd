@@ -17,6 +17,7 @@
 <!ENTITY jwe.menu.profiles "Manage Profiles...">
 <!ENTITY jwe.profiles.devices.settings.specs.extensions "API Extensions: ">
 <!ENTITY jwe.profiles.devices.settings.specs.extensions.samsung360 "Samsung M1/H1">
+<!ENTITY jwe.profiles.devices.settings.specs.extensions.waccharging "In Widget Charging (WAC API Only)">
 <!ENTITY jwe.emulator.device.extensions "API Extensions: ">
 
 <!ENTITY jwe.emulator.tab.settings "General">
@@ -250,7 +251,7 @@
 <!ENTITY jwe.profiles.devices.settings.pim "PIM Profile: ">
 <!ENTITY jwe.profiles.devices.settings.assoc "Associated Profiles">
 <!ENTITY jwe.profiles.devices.settings.specs "Supported Specifications">
-<!ENTITY jwe.profiles.devices.settings.specs.api "JIL API: ">
+<!ENTITY jwe.profiles.devices.settings.specs.api "Widget API: ">
 
 <!ENTITY jwe.profiles.widget.prefs "Emulated Widget">
 <!ENTITY jwe.profiles.widget.prefs.name "Widget Name">
