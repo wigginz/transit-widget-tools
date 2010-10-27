@@ -4,12 +4,6 @@ Components.utils.import("resource://transit-emulator/TransitCommon.jsm");
 
 Components.utils.import("resource://transit-emulator/api/jil/SecurityManager.jsm");
 
-/*
-  SecurityManager.checkSecurity("Copy File (Device.copyFile)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
-  {
-    result = _Device_122.copyFile(originalFile, destinationFullName);
-  });
-*/
 
 function XMLHttpRequest()
 {

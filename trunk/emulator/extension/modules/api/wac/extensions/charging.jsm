@@ -20,42 +20,53 @@
 // 
 //   Response : HTTP code
 
-var EXPORTED_SYMBOLS = [];
+// TODO to clarify:
+// 
+//   - everything but a 200 would be an error?
+
+
+var EXPORTED_SYMBOLS = ["OpCoStore"];
 
 Components.utils.import("resource://transit-emulator/TransitCommon.jsm");
 
 Components.utils.import("resource://transit-emulator/api/wac/1.0/Widget.jsm");
 
+var runtime = Components.classes["@jil.org/jilapi-emulatorruntime;1"].getService().wrappedJSObject;
+
+var OpCoStore =
+{
+  showStoreDialog : null,
+};
+
 var Billing =
 {
-  catalogHost : "http://example.com",
+  opcoStoreRootUrl : runtime.getOpcoStoreRootUrl(),
   
-  // failures: (itemId, ErrorDescription, CSGErrorCode, CSGErrorDescription)
-  CancelSubscription_onFailureCallback : null,
-  checkItemAuthorization_onFailureCallback : null,
-  getPricePoints_onFailureCallback : null,
-  requestPurchase_onFailureCallback : null,
-  
+  // failures: (itemId, ErrorDescription, CSGErrorCode, CSGErrorDescription)  
   // successes: (itemId, Success, CSGStatusCode)
-  CancelSubscription_onSuccessCallback : null,
-  checkItemAuthorization_onSuccessCallback : null,
-  getPricePoints_onSuccessCallback : null,
-  requestPurchase_onSuccessCallback : null,
   
-  CancelSubscription : function(itemId, onSuccessCallback, onFailureCallback)
+  initiatePurchase : function(itemId, version, onSuccessCallback, onFailureCallback)
   {
+    TransitCommon.alert(this.opcoStoreRootUrl);
     var req = Components.classes["@mozilla.org/xmlextras/xmlhttprequest;1"].createInstance(Components.interfaces.nsIXMLHttpRequest);
 
     var widHash = this.getHash(itemId);
-    req.open("GET", this.catalogHost+"/opco-sandbox/store/catalog/id/"+widHash+"{", true);
+    req.open("GET", this.opcoStoreRootUrl+"/store/catalog/id/"+widHash+"/version/", true);
     req.onreadystatechange = function () 
     {
       if ( (req.readyState == 4) && (req.status == 200) )
       {
-        req.responseText
+        var response = JSON.parse(req.responseText);
+      }
+      else
+      {
       }
     };
     req.send(null);
+  },
+  
+  CancelSubscription : function(itemId, onSuccessCallback, onFailureCallback)
+  {    
   },
    
   checkItemAuthorization : function(itemId, onSuccessCallback, onFailureCallback)
