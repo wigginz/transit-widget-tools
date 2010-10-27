@@ -73,6 +73,22 @@
                </hbox>
               </vbox>  
             </vbox> 
+            
+            <vbox class="runtime-dialog-bg" flex="1" id="jwe-runtime-store-dialog-bg"> 
+              <vbox class="runtime-dialog-container" id="jwe-runtime-store-dialog">
+                <hbox class="runtime-dialog-title-bar">
+                  <description class="runtime-dialog-title" id="jwe-runtime-store-dialog-title-text"/> 
+                </hbox>  
+                <hbox class="runtime-dialog-body" style="overflow: hidden;">
+                  <textbox id="jwe-runtime-store-dialog-body-text" class="plain" style="background-color: transparent;" flex="1" multiline="true" readonly="true" onoverflow="this.height = this.inputField.scrollHeight;" DOMAttrModified="if(event.attrName == 'value') this.value = event.newValue; return true;"/>
+                </hbox>
+                <hbox pack="center">
+                  <label class="runtime-dialog-button" id="jwe-runtime-store-dialog-purchase" value="Purchase"/>
+                  <label class="runtime-dialog-button" id="jwe-runtime-store-dialog-cancel" value="Cancel"/>
+               </hbox>
+              </vbox>  
+            </vbox> 
+            
           </stack>          
         </hbox>         
       </hbox>

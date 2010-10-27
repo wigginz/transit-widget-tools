@@ -1142,6 +1142,11 @@ JILEmulatorRuntime.prototype = //#
     
     return(fileList);
   },
+  
+  getOpcoStoreRootUrl : function()
+  {
+    return(this.profileService.getDefaultValue("operator-store-root-url"));
+  },
 
   QueryInterface: function(aIID)
   {

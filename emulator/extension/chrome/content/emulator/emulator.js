@@ -736,6 +736,31 @@ var jwe_emulator =
     $("jwe-runtime-dialog-bg").css("width", jwe_emulator.deviceWidth+"px");
   },
   
+  showStoreDialog : function(title, price, priceId, widgetId, purchaseCallback, cancelCallback)
+  {
+    $("jwe-runtime-store-dialog-purchase").node.onclick = function()
+    {
+      $("jwe-runtime-store-dialog-bg").css("display", "none");
+      
+      purchaseCallback.call();
+    };
+        
+    $("jwe-runtime-store-dialog-cancel").node.onclick = function()
+    {
+      $("jwe-runtime-store-dialog-bg").css("display", "none");
+      
+      cancelCallback.call();
+    };
+    
+    $("jwe-runtime-dialog-title-text").val(title);
+    $("jwe-runtime-dialog-body-text").val(body);
+    
+    $("jwe-runtime-dialog-bg").css("display", "block");
+        
+    $("jwe-runtime-dialog-bg").css("height", jwe_emulator.deviceHeight+"px");
+    $("jwe-runtime-dialog-bg").css("width", jwe_emulator.deviceWidth+"px");
+  },
+  
   openWidgetFile : function()
   {
     var nsIFilePicker = Components.interfaces.nsIFilePicker;

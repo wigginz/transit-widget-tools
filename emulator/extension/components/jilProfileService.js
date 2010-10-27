@@ -3457,6 +3457,25 @@ JILProfileService.prototype = //#
 
     return(values);
   },
+  
+  getDefaultValue : function(key)
+  {    
+    var stmt = this.getConnection().createStatement("select value from jwe_default_values where key = :key");
+    stmt.params.key = key;
+    
+    var value = null;
+    try 
+    {  
+      while ( stmt.step() )
+        value = stmt.row.value;
+    }
+    finally 
+    {
+      stmt.reset();
+    }
+
+    return(value);
+  },
 
   exportDeviceProfile : function(profileId)
   {
