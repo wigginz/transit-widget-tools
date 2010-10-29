@@ -2,8 +2,15 @@ var testWAC =
 {
   testWAC : function()
   {
-    var ret = Widget.Billing.getHash("test1234");
-    showResult("Widget.Billing.", "Widget.Billing. called, returned: "+ret);
+    Widget.Billing.initiatePurchase("1",
+      function(ret)
+      {
+        showResult("Widget.Billing.", "Purchase successful.");
+      },
+      function(ret)
+      {
+        showResult("Widget.Billing.", "Purchase cancelled.");
+      });         
   },
 };
 

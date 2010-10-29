@@ -703,6 +703,9 @@ var jwe_emulator =
   {
     Components.utils.import("resource://transit-emulator/api/wac/1.0/Widget.jsm", $("jwe-emulator-content").node.contentWindow.window);
     Components.utils.import("resource://transit-emulator/api/wac/1.0/XMLHttpRequest.jsm", $("jwe-emulator-content").node.contentWindow.window);
+    
+    // set the show store dialog function in cache so the extension can access it if it's used
+    this.emulator.setInCache("store-dialog", this.showStoreDialog);
   },
   
   toggleSecurityLevel : function()
@@ -736,7 +739,7 @@ var jwe_emulator =
     $("jwe-runtime-dialog-bg").css("width", jwe_emulator.deviceWidth+"px");
   },
   
-  showStoreDialog : function(title, price, priceId, widgetId, purchaseCallback, cancelCallback)
+  showStoreDialog : function(title, price, purchaseCallback, cancelCallback)
   {
     $("jwe-runtime-store-dialog-purchase").node.onclick = function()
     {
@@ -751,14 +754,14 @@ var jwe_emulator =
       
       cancelCallback.call();
     };
+
+    $("jwe-runtime-store-dialog-desc").val(title);
+    $("jwe-runtime-store-dialog-price").val(price);
     
-    $("jwe-runtime-dialog-title-text").val(title);
-    $("jwe-runtime-dialog-body-text").val(body);
-    
-    $("jwe-runtime-dialog-bg").css("display", "block");
+    $("jwe-runtime-store-dialog-bg").css("display", "block");
         
-    $("jwe-runtime-dialog-bg").css("height", jwe_emulator.deviceHeight+"px");
-    $("jwe-runtime-dialog-bg").css("width", jwe_emulator.deviceWidth+"px");
+    $("jwe-runtime-store-dialog-bg").css("height", jwe_emulator.deviceHeight+"px");
+    $("jwe-runtime-store-dialog-bg").css("width", jwe_emulator.deviceWidth+"px");
   },
   
   openWidgetFile : function()
