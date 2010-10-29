@@ -20,6 +20,12 @@
 <!ENTITY jwe.profiles.devices.settings.specs.extensions.waccharging "In Widget Charging (WAC API Only)">
 <!ENTITY jwe.emulator.device.extensions "API Extensions: ">
 
+<!ENTITY jwe.emulator.store.title "Purchase Widget?">
+<!ENTITY jwe.emulator.store.purchase "Purchase">
+<!ENTITY jwe.emulator.store.cancel "Cancel">
+<!ENTITY jwe.emulator.store.widget.title "Widget Name: ">
+<!ENTITY jwe.emulator.store.widget.price "Price: ">
+
 <!ENTITY jwe.emulator.tab.settings "General">
 <!ENTITY jwe.emulator.tab.settings.displaylabel "Display">
 <!ENTITY jwe.emulator.tab.settings.infolabel "Widget Details">

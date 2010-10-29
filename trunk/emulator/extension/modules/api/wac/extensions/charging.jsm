@@ -45,18 +45,28 @@ var Billing =
   // failures: (itemId, ErrorDescription, CSGErrorCode, CSGErrorDescription)  
   // successes: (itemId, Success, CSGStatusCode)
   
-  initiatePurchase : function(itemId, version, onSuccessCallback, onFailureCallback)
+  initiatePurchase : function(itemId, onSuccessCallback, onFailureCallback)
   {
-    TransitCommon.alert(this.opcoStoreRootUrl);
+    var storeDialog = runtime.getFromCache("store-dialog");
+    
     var req = Components.classes["@mozilla.org/xmlextras/xmlhttprequest;1"].createInstance(Components.interfaces.nsIXMLHttpRequest);
-
+    
     var widHash = this.getHash(itemId);
-    req.open("GET", this.opcoStoreRootUrl+"/store/catalog/id/"+widHash+"/version/", true);
+    req.open("GET", this.opcoStoreRootUrl+"/store/catalog/id/"+widHash, true);
     req.onreadystatechange = function () 
     {
       if ( (req.readyState == 4) && (req.status == 200) )
       {
         var response = JSON.parse(req.responseText);
+        storeDialog(response.title, response.price[0].value, 
+          function()
+          {
+            onSuccessCallback(true);
+          },
+          function()
+          {
+            onFailureCallback(false);
+          });
       }
       else
       {
@@ -95,7 +105,7 @@ var Billing =
     var data = converter.convertToByteArray(toHash, result);
     var ch = Components.classes["@mozilla.org/security/hash;1"]
                        .createInstance(Components.interfaces.nsICryptoHash);
-    ch.init(ch.SHA256);
+    ch.init(ch.SHA1);
     ch.update(data, data.length);
     var hash = ch.finish(false);
 

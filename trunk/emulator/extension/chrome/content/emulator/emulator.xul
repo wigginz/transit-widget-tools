@@ -77,14 +77,21 @@
             <vbox class="runtime-dialog-bg" flex="1" id="jwe-runtime-store-dialog-bg"> 
               <vbox class="runtime-dialog-container" id="jwe-runtime-store-dialog">
                 <hbox class="runtime-dialog-title-bar">
-                  <description class="runtime-dialog-title" id="jwe-runtime-store-dialog-title-text"/> 
+                  <description class="runtime-dialog-title" id="jwe-runtime-store-dialog-title-text" value="&jwe.emulator.store.title;"/> 
                 </hbox>  
                 <hbox class="runtime-dialog-body" style="overflow: hidden;">
-                  <textbox id="jwe-runtime-store-dialog-body-text" class="plain" style="background-color: transparent;" flex="1" multiline="true" readonly="true" onoverflow="this.height = this.inputField.scrollHeight;" DOMAttrModified="if(event.attrName == 'value') this.value = event.newValue; return true;"/>
+                  <vbox>
+                    <hbox>
+                      <label value="&jwe.emulator.store.widget.title;" style="width: 14em;"/> <label id="jwe-runtime-store-dialog-desc"/>
+                    </hbox>
+                    <hbox>
+                      <label value="&jwe.emulator.store.widget.price;" style="width: 14em;"/> <label id="jwe-runtime-store-dialog-price"/>
+                    </hbox>
+                  </vbox>
                 </hbox>
                 <hbox pack="center">
-                  <label class="runtime-dialog-button" id="jwe-runtime-store-dialog-purchase" value="Purchase"/>
-                  <label class="runtime-dialog-button" id="jwe-runtime-store-dialog-cancel" value="Cancel"/>
+                  <label class="runtime-dialog-button" id="jwe-runtime-store-dialog-purchase" value="&jwe.emulator.store.purchase;"/>
+                  <label class="runtime-dialog-button" id="jwe-runtime-store-dialog-cancel" value="&jwe.emulator.store.cancel;"/>
                </hbox>
               </vbox>  
             </vbox> 
