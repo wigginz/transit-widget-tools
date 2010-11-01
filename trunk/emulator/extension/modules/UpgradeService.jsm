@@ -92,7 +92,7 @@ var Target_1_2_2_20101025 =
     catch(exception) { TransitCommon.alert("Error during upgrade to version "+this.version+". Message: "+exception); throw exception; }
     finally { stmt.reset(); }
     
-    stmt = connection.createStatement("insert into jwe_default_values (key, value) values ('operator-store-root-url', 'http://localhost:8080/opco-sandbox')");
+    stmt = connection.createStatement("insert into jwe_default_values (key, value) values ('cross-sell-url', 'http://localhost:8080/opco-sandbox/store/catalog/id/{widgetId}')");
 
     try { stmt.executeStep(); }
     catch(exception) { TransitCommon.alert("Error during upgrade to version "+this.version+". Message: "+exception); throw exception; }

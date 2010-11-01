@@ -40,7 +40,7 @@ var OpCoStore =
 
 var Billing =
 {
-  opcoStoreRootUrl : runtime.getOpcoStoreRootUrl(),
+  crossSellUrl : runtime.getCrossSellUrl(),
   
   // failures: (itemId, ErrorDescription, CSGErrorCode, CSGErrorDescription)  
   // successes: (itemId, Success, CSGStatusCode)
@@ -51,8 +51,10 @@ var Billing =
     
     var req = Components.classes["@mozilla.org/xmlextras/xmlhttprequest;1"].createInstance(Components.interfaces.nsIXMLHttpRequest);
     
-    var widHash = this.getHash(itemId);
-    req.open("GET", this.opcoStoreRootUrl+"/store/catalog/id/"+widHash, true);
+    var widHash = this.getHash(itemId);    
+    var realUrl = this.crossSellUrl.replace(/\{widgetId\}/, widHash);
+    req.open("GET", realUrl, true);
+    
     req.onreadystatechange = function () 
     {
       if ( (req.readyState == 4) && (req.status == 200) )

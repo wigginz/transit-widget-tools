@@ -1143,9 +1143,9 @@ JILEmulatorRuntime.prototype = //#
     return(fileList);
   },
   
-  getOpcoStoreRootUrl : function()
+  getCrossSellUrl : function()
   {
-    return(this.profileService.getDefaultValue("operator-store-root-url"));
+    return(this.profileService.getDefaultValue("cross-sell-url"));
   },
 
   QueryInterface: function(aIID)
