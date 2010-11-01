@@ -739,7 +739,7 @@ var jwe_emulator =
     $("jwe-runtime-dialog-bg").css("width", jwe_emulator.deviceWidth+"px");
   },
   
-  showStoreDialog : function(title, price, purchaseCallback, cancelCallback)
+  showStoreDialog : function(title, desc, price, purchaseCallback, cancelCallback)
   {
     $("jwe-runtime-store-dialog-purchase").node.onclick = function()
     {
@@ -755,7 +755,8 @@ var jwe_emulator =
       cancelCallback.call();
     };
 
-    $("jwe-runtime-store-dialog-desc").val(title);
+    $("jwe-runtime-store-dialog-title").val(title);
+    $("jwe-runtime-store-dialog-description").val(desc);
     $("jwe-runtime-store-dialog-price").val(price);
     
     $("jwe-runtime-store-dialog-bg").css("display", "block");
