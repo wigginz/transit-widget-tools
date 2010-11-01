@@ -82,7 +82,11 @@
                 <hbox class="runtime-dialog-body" style="overflow: hidden;">
                   <vbox>
                     <hbox>
-                      <label value="&jwe.emulator.store.widget.title;" style="width: 14em;"/> <label id="jwe-runtime-store-dialog-desc"/>
+                      <label value="&jwe.emulator.store.widget.title;" style="width: 14em;"/> <label id="jwe-runtime-store-dialog-title"/>
+                    </hbox>
+                    <hbox style="margin-top: 20px;">
+                      <label value="&jwe.emulator.store.widget.description;" style="width: 14em;"/>
+                      <textbox id="jwe-runtime-store-dialog-description" class="plain" flex="1" multiline="true" readonly="true" onoverflow="this.height = this.inputField.scrollHeight;" DOMAttrModified="if(event.attrName == 'value') this.value = event.newValue; return true;"/>
                     </hbox>
                     <hbox>
                       <label value="&jwe.emulator.store.widget.price;" style="width: 14em;"/> <label id="jwe-runtime-store-dialog-price"/>

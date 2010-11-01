@@ -25,6 +25,7 @@
 <!ENTITY jwe.emulator.store.cancel "Cancel">
 <!ENTITY jwe.emulator.store.widget.title "Widget Name: ">
 <!ENTITY jwe.emulator.store.widget.price "Price: ">
+<!ENTITY jwe.emulator.store.widget.description "Description: ">
 
 <!ENTITY jwe.emulator.tab.settings "General">
 <!ENTITY jwe.emulator.tab.settings.displaylabel "Display">

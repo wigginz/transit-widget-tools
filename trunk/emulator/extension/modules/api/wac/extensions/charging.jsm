@@ -58,7 +58,7 @@ var Billing =
       if ( (req.readyState == 4) && (req.status == 200) )
       {
         var response = JSON.parse(req.responseText);
-        storeDialog(response.title, response.price[0].value, 
+        storeDialog(response.title, response.description, response.price[0].value, 
           function()
           {
             onSuccessCallback(true);

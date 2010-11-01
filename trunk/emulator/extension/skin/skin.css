@@ -278,3 +278,9 @@ groupbox caption
   border-bottom: 1px solid #999999;
   margin-right: 10px;
 }
+
+.plain
+{
+  background-color: transparent;
+  margin-left: 100px;
+}
