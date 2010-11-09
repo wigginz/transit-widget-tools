@@ -3,15 +3,15 @@
 
 Check here for all the latest details on milestone releases, what's being worked on and committed, and future plans.
 
-<wiki:comment>
 
-== Thursday August 26, 2010 ==
+== Thursday November 9, 2010 ==
 
 === New Features ===
 
-Added two new context menu items (in the status bar icon and the "Tools > Transit Widget Emulator" menu) to directly emulate a widget using the .wgt package. The emulator will open the WGT file, ensure it is valid, unzip the package to the local machine's temporary directory (usually /tmp or c:\Documents and Settings\username\Local Settings\Temp), and finally opens the config.xml just as it does when reading the config.xml from an already exploded widget package. The option to open WGT file and emulate for debugging is also available.
-
-</wiki:comment>
+ * WAC 1.0 API Support. The initial draft of WAC 1.0 API has been added to the emulator. To use it, create a new device profile or edit an existing one and choose the "WAC 1.0 API" on the "Manage Profiles..." dialog general panel. See wholesaleapplicationscommunity.com for detailed information about the WAC API. WAC Packaging is based on the JIL 1.2 packaging spec and is currently supported in the emulator.
+ * The non-debug pop-up window has been removed from the emulator as is wasn't terribly useful for development purposes, especially with smaller resolution screens.
+ * Directly opening widget packages (.wgt files) is now possible with the new menu option in the Transit menus. To emulate a packaged widget, choose the "Emulate and Debug Widget (.wgt)" menu item and then choose the .wgt file in the file chooser dialog. The widget will be unzipped in your operatin system's temp folder and opened in the emulator window automatically. Temp directories are usually cleaned out on reboot, depending on your operating system.
+ * Some experimental and undocumented features have been prototyped and tested with this release. If an option is amrked as expiremental, we recommend not using it as it has not yet been documented.
 
 
 == Thursday August 17, 2010 ==
