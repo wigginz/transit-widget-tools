@@ -49,12 +49,6 @@ AddressBookItem.prototype.getAvailableAttributes = function()
   return(this._jilAddrItem.getAvailableAttributes());
 };
 
-AddressBookItem.prototype.setAddressGroupNames = function(groups)
-{
-  this.updateJIL();
-  this._jilAddrItem.setAddressGroupNames(groups, groups.length);
-};
-
 AddressBookItem.prototype.setAttributeValue = function(attr, value)
 {
   this.updateJIL();

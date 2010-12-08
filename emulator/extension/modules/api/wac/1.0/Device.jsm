@@ -13,6 +13,7 @@ function Device()
 {
   this.ApplicationTypes = new ApplicationTypes();
   this.DeviceStateInfo = new DeviceStateInfo();
+  this.PositionInfo = new PositionInfo();
 }
 
 Device.prototype = function()
@@ -27,6 +28,8 @@ Device.prototype.toString = function()
 Device.prototype.ApplicationTypes = null;
 
 Device.prototype.DeviceStateInfo = null;
+
+Device.prototype.PositionInfo = null;
 
 // the isEmulator flag is not part of this spec, but provided in case there's a need
 Device.prototype.isEmulator = true;

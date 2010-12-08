@@ -34,6 +34,16 @@ var Widget =
   Multimedia : new Multimedia(),
 
   PIM : new PIM(),
+  
+  // events //
+
+  onFocus : null,
+
+  onMaximize : null,
+
+  onRestore : null,
+
+  onWakeup : null,
 
   // regular methods //
 
@@ -62,6 +72,11 @@ var Widget =
     this.Multimedia = new Multimedia();
     this.PIM = new PIM();
     
+    this.onFocus = null;
+    this.onMaximize = null;
+    this.onRestore = null;
+    this.onWakeup = null;
+    
     this.init();
   },
   
@@ -83,6 +98,22 @@ var Widget =
   init : function()
   {   
     this.loadConstructors();
+    
+    Widget.watch("onFocus", function(id, oldValue, newValue) {
+      emulator.setInCache("onfocus", newValue);
+      _Widget_122.onFocus = newValue; });
+      
+    Widget.watch("onMaximize", function(id, oldValue, newValue) {
+      emulator.setInCache("onmaximize", newValue);
+      _Widget_122.onMaximize = newValue; });
+      
+    Widget.watch("onRestore", function(id, oldValue, newValue) {
+      emulator.setInCache("onrestore", newValue);
+      _Widget_122.onRestore = newValue; });
+      
+    Widget.watch("onWakeup", function(id, oldValue, newValue) {
+      emulator.setInCache("onwakeup", newValue);
+      _Widget_122.onWakeup = newValue; });
 
     Widget.Device.DeviceStateInfo.watch("onPositionRetrieved", function(id, oldValue, newValue) 
     {
@@ -125,6 +156,21 @@ var Widget =
           jilResults.push(jilContact);
         }
         newValue(jilResults);
+      };
+    });
+    
+    Widget.Device.DeviceStateInfo.watch("onPositionRetrieved", function(id, oldValue, newValue) 
+    {
+      emulator.setInCache("onposition", newValue);
+      _DeviceStateInfo_122.onPositionRetrieved = function(position, method)
+      {
+        var jilPosition = new Widget.Device.PositionInfo();
+        if ( position.failure == true )
+          jilPosition = {};
+        else
+          jilPosition.setJIL(position);
+      
+        newValue(jilPosition, method);
       };
     });
 
