@@ -19,8 +19,6 @@ Message.prototype.toString = function()
 
 Message.prototype._jilMessage = null;
 
-Message.prototype.attachments = null;
-
 Message.prototype.bccAddress = null;
 
 Message.prototype.body = null;
@@ -47,18 +45,21 @@ Message.prototype.time = null;
 
 Message.prototype.validityPeriodHours = null;
 
+Message.prototype.updateAddress = function(type, address)
+{
+  if ( type == "cc" )
+    this.ccAddress = this._jilMessage.getCcAddress();
+  else if ( type == "bcc" )
+    this.bccAddress = this._jilMessage.getBccAddress();
+  else if ( type == "destination" )
+    this.destinationAddress = this._jilMessage.getDestinationAddress();
+};
+
 Message.prototype.addAddress = function(type, address)
 {
   this.updateJIL();
   this._jilMessage.addAddress(type, address);
   this.updateAddress(type);
-};
-
-Message.prototype.addAttachment = function(fileFullName)
-{
-  this.updateJIL();
-  this._jilMessage.addAttachment(fileFullName);
-  this.attachments = this._jilMessage.getAttachments();
 };
 
 Message.prototype.deleteAddress = function(type, address)
@@ -75,31 +76,6 @@ Message.prototype.deleteAddress = function(type, address)
     this._jilMessage.deleteAddress(type, address);
     this.updateAddress(type);
   }
-};
-
-Message.prototype.deleteAttachment = function(attachment)
-{
-  SecurityManager.checkSecurity("Remove Message Attachment (Message.deleteAttachment)", SecurityManager.OP_DISALLOWED, SecurityManager.OP_ONE_SHOT, SecurityManager.OP_ALLOWED, function()
-  {
-    this.updateJIL();
-    this._jilMessage.deleteAttachment(attachment.updateJIL());
-    this.attachments = this._jilMessage().getAttachments();
-  });
-};
-
-Message.prototype.saveAttachment = function(fileFullName, attachment)
-{
-  SecurityManager.checkSecurity("Save Message Attachment (Message.saveAttachment)", SecurityManager.OP_ONE_SHOT, SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, function()
-  {
-    this.updateJIL();
-    this._jilMessage.saveAttachment(fileFullName, attachment.updateJIL());
-    this.attachments = this._jilMessage.getAttachments();
-  });
-};
-
-Message.prototype.update = function()
-{
-  this.updateJIL().update();
 };
 
 Message.prototype.setJIL = function(jilMessage)
