@@ -8,6 +8,13 @@ var Issues =
             
       showResult("Issue 6", "msg.addAddress called. value for msg.destinationAddress: "+msg.destinationAddress);
     },
+    
+    test_7 : function()
+    {
+      var apps = Widget.Device.getAvailableApplications();
+      showResult("Issue 7", "Widget.Device.getAvailableApplications() returns: "+apps);
+    },
+    
 }
 
 function showResult(title, result)

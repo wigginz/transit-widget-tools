@@ -115,9 +115,7 @@ var jwe_emulator =
     //$("jwe-emulator-tools-box-profiles").sel(profileIndex);
 
     $("jwe-log").val(this.emulator.getLog());
-    
-    Components.utils.import("resource://transit-emulator/api/jil/SecurityManager.jsm");
-    
+
     jwe_setScrollArea();
     
     window.onresize = jwe_setScrollArea;
@@ -669,10 +667,6 @@ var jwe_emulator =
   
   injectScripts : function()
   {
-    // pass the show yes/no dialog to the widget wrapper so it can activate the prompt
-    SecurityManager.showYesNoDialog = jwe_emulator.showYesNoDialog;
-    SecurityManager.securityContext = $("jwe-emulator-settings-security-level").val();
-    
     if ( this.emulator.deviceProfile.jilAPISpec == "1.1r4" )
       this.load_1_1r4();
     else if ( this.emulator.deviceProfile.jilAPISpec == "1.2.2" )
@@ -683,6 +677,10 @@ var jwe_emulator =
     // inject any api extensions enabled for this device    
     for ( var i = 0; i < this.extensions.length; i++ )
       Components.utils.import(this.extensions[i].resourceUrl, $("jwe-emulator-content").node.contentWindow.window);
+    
+    // pass the show yes/no dialog to the widget wrapper so it can activate the prompt
+    SecurityManager.showYesNoDialog = jwe_emulator.showYesNoDialog;
+    SecurityManager.securityContext = $("jwe-emulator-settings-security-level").val();
   },
   
   load_1_1r4 : function()
@@ -690,6 +688,8 @@ var jwe_emulator =
     Components.utils.import("resource://transit-emulator/api/jil/1.1r4/Widget.jsm", $("jwe-emulator-content").node.contentWindow.window);
     Components.utils.import("resource://transit-emulator/api/jil/1.1r4/WidgetManager.jsm", $("jwe-emulator-content").node.contentWindow.window);
     Components.utils.import("resource://transit-emulator/api/jil/1.1r4/XMLHttpRequest.jsm", $("jwe-emulator-content").node.contentWindow.window);
+    
+    Components.utils.import("resource://transit-emulator/api/jil/SecurityManager.jsm");
   },
   
   load_1_2_2 : function()
@@ -697,12 +697,16 @@ var jwe_emulator =
     Components.utils.import("resource://transit-emulator/api/jil/1.2.2/Widget.jsm", $("jwe-emulator-content").node.contentWindow.window);
     Components.utils.import("resource://transit-emulator/api/jil/1.2.2/WidgetManager.jsm", $("jwe-emulator-content").node.contentWindow.window);
     Components.utils.import("resource://transit-emulator/api/jil/1.2.2/XMLHttpRequest.jsm", $("jwe-emulator-content").node.contentWindow.window);
+    
+    Components.utils.import("resource://transit-emulator/api/jil/SecurityManager.jsm");
   },
   
   load_wac_1_0 : function()
   {
     Components.utils.import("resource://transit-emulator/api/wac/1.0/Widget.jsm", $("jwe-emulator-content").node.contentWindow.window);
     Components.utils.import("resource://transit-emulator/api/wac/1.0/XMLHttpRequest.jsm", $("jwe-emulator-content").node.contentWindow.window);
+    
+    Components.utils.import("resource://transit-emulator/api/wac/SecurityManager.jsm");
     
     // set the show store dialog function in cache so the extension can access it if it's used
     this.emulator.setInCache("store-dialog", this.showStoreDialog);
