@@ -546,10 +546,14 @@ JILProfileService.prototype = //#
   updateWidgetPreference : function(widget, key, value)
   {
     var stmt = this.getConnection().createStatement("update jwe_widget_preference set value = :value where widget_id = :widgetId and key = :key");
-    stmt.params.value = value;
+
     stmt.params.widgetId = widget.id;
     stmt.params.key = key;
 
+    if ( value == null )
+      value = "";
+    stmt.params.value = value;
+    
     try
     {
       stmt.executeStep();
