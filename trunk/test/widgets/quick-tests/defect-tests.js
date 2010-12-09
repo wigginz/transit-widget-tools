@@ -15,6 +15,18 @@ var Issues =
       showResult("Issue 7", "Widget.Device.getAvailableApplications() returns: "+apps);
     },
     
+    test_8 : function()
+    {
+      var count = Widget.PIM.getAddressBookItemsCount();
+      var count2 = count+10;
+      showResult("Issue 8", "Widget.PIM.getAddressBookItemsCount() returns: "+count2);
+    },
+    
+    test_9 : function()
+    {
+      Widget.setPreferenceForKey(null,"smth");
+      showResult("Issue 9", "Widget.setPreferenceForKey() with null value called");
+    },
 }
 
 function showResult(title, result)
