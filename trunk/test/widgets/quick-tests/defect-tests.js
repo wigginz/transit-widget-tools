@@ -27,6 +27,30 @@ var Issues =
       Widget.setPreferenceForKey(null,"smth");
       showResult("Issue 9", "Widget.setPreferenceForKey() with null value called");
     },
+    
+    test_10a : function()
+    {
+      try
+      {
+        Widget.Multimedia.AudioPlayer.open();
+      }
+      catch(exception)
+      {
+        showResult("Issue 10a", "Exception caught when calling Widget.Multimedia.AudioPlayer.open() with NO parameter. Type: "+exception.type);
+      }
+    },
+    
+    test_10b : function()
+    {
+      try
+      {
+        Widget.Multimedia.AudioPlayer.open(null);
+      }
+      catch(exception)
+      {
+        showResult("Issue 10b", "Exception caught when calling Widget.Multimedia.AudioPlayer.open() with NULL parameter. Type: "+exception.type);
+      }
+    },
 }
 
 function showResult(title, result)
