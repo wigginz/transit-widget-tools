@@ -111,6 +111,19 @@ var Issues =
       showResult("Issue 11d", "Exception caught when calling Widget.PIM.getAddressBookItem() with NULL parameter. Type: "+exception.type);
     }
   }, 
+  
+  test_15 : function()
+  {
+    Widget.Multimedia.AudioPlayer.open('test-short.ogg'); // consider audio length is 10 seconds.
+    Widget.Multimedia.AudioPlayer.play(1);
+    alert("isPlaying: " + Widget.Multimedia.isAudioPlaying); // here is true.
+    setTimeout('alert("isPlaying: " + Widget.Multimedia.isAudioPlaying)', 15 * 1000); // is still true, should be false.
+  },
+  
+  test_isAudioPlaying : function()
+  {
+    alert("isPlaying: " + Widget.Multimedia.isAudioPlaying);
+  },
 }
 
 function showResult(title, result)
