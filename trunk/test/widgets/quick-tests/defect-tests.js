@@ -1,56 +1,104 @@
 var Issues = 
 {
-    test_6 : function()
+  test_6 : function()
+  {
+    var msg = Widget.Messaging.createMessage("SMSMessage");
+    msg.addAddress("destination", "123456789");
+    msg.addAddress("destination", "11111");
+          
+    showResult("Issue 6", "msg.addAddress called. value for msg.destinationAddress: "+msg.destinationAddress);
+  },
+  
+  test_7 : function()
+  {
+    var apps = Widget.Device.getAvailableApplications();
+    showResult("Issue 7", "Widget.Device.getAvailableApplications() returns: "+apps);
+  },
+  
+  test_8 : function()
+  {
+    var count = Widget.PIM.getAddressBookItemsCount();
+    var count2 = count+10;
+    showResult("Issue 8", "Widget.PIM.getAddressBookItemsCount() returns: "+count2);
+  },
+  
+  test_9 : function()
+  {
+    Widget.setPreferenceForKey(null,"smth");
+    showResult("Issue 9", "Widget.setPreferenceForKey() with null value called");
+  },
+  
+  test_10a : function()
+  {
+    try
     {
-      var msg = Widget.Messaging.createMessage("SMSMessage");
-      msg.addAddress("destination", "123456789");
-      msg.addAddress("destination", "11111");
-            
-      showResult("Issue 6", "msg.addAddress called. value for msg.destinationAddress: "+msg.destinationAddress);
-    },
+      Widget.Multimedia.AudioPlayer.open();
+    }
+    catch(exception)
+    {
+      showResult("Issue 10a", "Exception caught when calling Widget.Multimedia.AudioPlayer.open() with NO parameter. Type: "+exception.type);
+    }
+  },
+  
+  test_10b : function()
+  {
+    try
+    {
+      Widget.Multimedia.AudioPlayer.open(null);
+    }
+    catch(exception)
+    {
+      showResult("Issue 10b", "Exception caught when calling Widget.Multimedia.AudioPlayer.open() with NULL parameter. Type: "+exception.type);
+    }
+  },
     
-    test_7 : function()
+  test_11a : function()
+  {
+    try
     {
-      var apps = Widget.Device.getAvailableApplications();
-      showResult("Issue 7", "Widget.Device.getAvailableApplications() returns: "+apps);
-    },
-    
-    test_8 : function()
+      Widget.Multimedia.AudioPlayer.play(null);
+    }
+    catch(exception)
     {
-      var count = Widget.PIM.getAddressBookItemsCount();
-      var count2 = count+10;
-      showResult("Issue 8", "Widget.PIM.getAddressBookItemsCount() returns: "+count2);
-    },
-    
-    test_9 : function()
+      showResult("Issue 11a", "Exception caught when calling Widget.Multimedia.AudioPlayer.play() with NULL parameter. Type: "+exception.type);
+    }
+  },  
+  
+  test_11b : function()
+  {
+    try
     {
-      Widget.setPreferenceForKey(null,"smth");
-      showResult("Issue 9", "Widget.setPreferenceForKey() with null value called");
-    },
-    
-    test_10a : function()
+      Widget.Multimedia.AudioPlayer.play();
+    }
+    catch(exception)
     {
-      try
-      {
-        Widget.Multimedia.AudioPlayer.open();
-      }
-      catch(exception)
-      {
-        showResult("Issue 10a", "Exception caught when calling Widget.Multimedia.AudioPlayer.open() with NO parameter. Type: "+exception.type);
-      }
-    },
-    
-    test_10b : function()
+      showResult("Issue 11b", "Exception caught when calling Widget.Multimedia.AudioPlayer.play() with NO parameter. Type: "+exception.type);
+    }
+  }, 
+  
+  test_11c : function()
+  {
+    try
     {
-      try
-      {
-        Widget.Multimedia.AudioPlayer.open(null);
-      }
-      catch(exception)
-      {
-        showResult("Issue 10b", "Exception caught when calling Widget.Multimedia.AudioPlayer.open() with NULL parameter. Type: "+exception.type);
-      }
-    },
+      Widget.Multimedia.AudioPlayer.play("not a number");
+    }
+    catch(exception)
+    {
+      showResult("Issue 11c", "Exception caught when calling Widget.Multimedia.AudioPlayer.play() with STRING parameter. Type: "+exception.type);
+    }
+  }, 
+  
+  test_11d : function()
+  {
+    try
+    {
+      Widget.Multimedia.AudioPlayer.play(-10);
+    }
+    catch(exception)
+    {
+      showResult("Issue 11d", "Exception caught when calling Widget.Multimedia.AudioPlayer.play() with NEGATIVE parameter. Type: "+exception.type);
+    }
+  }, 
 }
 
 function showResult(title, result)

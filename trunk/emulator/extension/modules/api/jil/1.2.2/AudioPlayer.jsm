@@ -35,6 +35,9 @@ AudioPlayer.prototype.pause = function()
 
 AudioPlayer.prototype.play = function(repeatTimes)
 {
+  if ( (repeatTimes == null) || (repeatTimes.constructor != Number) || (repeatTimes < 0) )
+    WidgetCommon.throwIPException("Invalid argument type for repeatTimes in AudioPlayer.play");
+      
   _AudioPlayer_122.play(repeatTimes);
 };
 
