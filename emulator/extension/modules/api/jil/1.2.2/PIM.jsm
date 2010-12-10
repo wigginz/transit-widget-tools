@@ -2,6 +2,8 @@ var EXPORTED_SYMBOLS = ["PIM"];
 
 var _PIM_122 = Components.classes["@jil.org/jilapi-pim;1"].getService(Components.interfaces.jilPIM);
 
+Components.utils.import("resource://transit-emulator/api/jil/1.2.2/WidgetCommon.jsm");
+
 Components.utils.import("resource://transit-emulator/api/jil/SecurityManager.jsm");
 Components.utils.import("resource://transit-emulator/api/jil/1.2.2/EventRecurrenceTypes.jsm");
 Components.utils.import("resource://transit-emulator/api/jil/1.2.2/AddressBookItem.jsm");
@@ -138,6 +140,9 @@ PIM.prototype.getAddressBookGroupMembers = function(groupName)
 
 PIM.prototype.getAddressBookItem = function(id)
 {
+  if ( id == null )
+    WidgetCommon.throwIPException("Invalid argument type for id in PIM.getAddressBookItem");
+    
   var wrappedItem = null;
   SecurityManager.checkSecurity("Get Contact (PIM.getAddressBookItem)", SecurityManager.OP_SESSION, SecurityManager.OP_BLANKET, SecurityManager.OP_ALLOWED, function()
   {
