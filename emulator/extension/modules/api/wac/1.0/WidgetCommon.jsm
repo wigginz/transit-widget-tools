@@ -1,12 +1,14 @@
 var EXPORTED_SYMBOLS = ["WidgetCommon"];
 
-Components.utils.import("resource://transit-emulator/api/jil/SecurityManager.jsm");
+Components.utils.import("resource://transit-emulator/api/wac/SecurityManager.jsm");
 
-Components.utils.import("resource://transit-emulator/api/jil/1.2.2/Exception.jsm");
-Components.utils.import("resource://transit-emulator/api/jil/1.2.2/ExceptionTypes.jsm");
+Components.utils.import("resource://transit-emulator/api/wac/1.0/Exception.jsm");
+Components.utils.import("resource://transit-emulator/api/wac/1.0/ExceptionTypes.jsm");
 
 var WidgetCommon = 
 {
+  ExceptionTypes : new ExceptionTypes(),
+  
   runtime : Components.classes["@jil.org/jilapi-emulatorruntime;1"].getService().wrappedJSObject,
   
   checkFeature : function(feature)
@@ -19,7 +21,7 @@ var WidgetCommon =
   {
     var exc = new Exception();
     exc.message = message;
-    exc.type = ExceptionTypes.INVALID_PARAMETER;
+    exc.type = this.ExceptionTypes.INVALID_PARAMETER;
     throw(exc);
   },
 
@@ -27,7 +29,7 @@ var WidgetCommon =
   {
     var exc = new Exception();
     exc.message = "Feature "+feature+" has not been configured for this widget (check feature tags in config.xml; case sensitive).";
-    exc.type = ExceptionTypes.SECURITY;
+    exc.type = this.ExceptionTypes.SECURITY;
     throw(exc);
   },
 };
