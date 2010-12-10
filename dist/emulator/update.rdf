@@ -9,14 +9,14 @@
 
         <RDF:li>
           <RDF:Description>
-            <em:version>1.2.2.20101025</em:version>
+            <em:version>1.2.2.20101210</em:version>
             <em:targetApplication>
               <RDF:Description>
                 <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
                 <em:minVersion>3.6</em:minVersion>
                 <em:maxVersion>3.9.*</em:maxVersion>
-                <em:updateLink>https://transit-widget-tools.googlecode.com/files/transit-emulator-20101025.xpi</em:updateLink>
-                <em:updateInfoURL>http://dl.dropbox.com/u/119448/transit/transit-emulator-20101025.xhtml</em:updateInfoURL>
+                <em:updateLink>https://transit-widget-tools.googlecode.com/files/transit-emulator-20101210.xpi</em:updateLink>
+                <em:updateInfoURL>http://dl.dropbox.com/u/119448/transit/transit-emulator-20101210.xhtml</em:updateInfoURL>
               </RDF:Description>
             </em:targetApplication>
           </RDF:Description>
