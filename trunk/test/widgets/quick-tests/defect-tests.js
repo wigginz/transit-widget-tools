@@ -99,6 +99,18 @@ var Issues =
       showResult("Issue 11d", "Exception caught when calling Widget.Multimedia.AudioPlayer.play() with NEGATIVE parameter. Type: "+exception.type);
     }
   }, 
+  
+  test_12 : function()
+  {
+    try
+    {
+      Widget.PIM.getAddressBookItem();
+    }
+    catch(exception)
+    {
+      showResult("Issue 11d", "Exception caught when calling Widget.PIM.getAddressBookItem() with NULL parameter. Type: "+exception.type);
+    }
+  }, 
 }
 
 function showResult(title, result)
