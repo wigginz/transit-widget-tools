@@ -2,7 +2,7 @@ var EXPORTED_SYMBOLS = ["XMLHttpRequest"];
 
 Components.utils.import("resource://transit-emulator/TransitCommon.jsm");
 
-Components.utils.import("resource://transit-emulator/api/jil/SecurityManager.jsm");
+Components.utils.import("resource://transit-emulator/api/wac/SecurityManager.jsm");
 
 
 function XMLHttpRequest()
