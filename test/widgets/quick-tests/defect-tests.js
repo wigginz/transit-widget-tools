@@ -111,6 +111,18 @@ var Issues =
       showResult("Issue 11d", "Exception caught when calling Widget.PIM.getAddressBookItem() with NULL parameter. Type: "+exception.type);
     }
   }, 
+    
+  test_13 : function()
+  {
+    Widget.PIM.onAddressBookItemsFound = function(results)
+    {
+      alert("Widget.PIM.onAddressBookItemsFound callback function called");
+    };
+    
+    var comparison = Widget.PIM.createAddressBookItem();
+    comparison.fullName = "Test setRingtone";
+    Widget.PIM.findAddressBookItems(comparison, 0, 10);
+  },
   
   test_15 : function()
   {

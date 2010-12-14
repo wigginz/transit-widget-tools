@@ -28,7 +28,7 @@
     
     <statusbar id="status-bar">
       <statusbarpanel id="jwe-status-bar" role="button" context="jwe-status-bar-menu" onmouseup="jwe_emulator.readConfig(event);" tooltiptext="&jwe.status.bar.launch;">
-        <image id="jwe-status-icon" src="chrome://transit-emulator/skin/images/transit-enabled.ico"/>
+        <image id="jwe-status-icon" src="chrome://transit-emulator/skin/images/transit-enabled.png"/>
       </statusbarpanel>
       <menupopup id="jwe-status-bar-menu">
         <menuitem label="&jwe.menu.emulateintab;" oncommand="jwe_emulator.readConfig();"/>

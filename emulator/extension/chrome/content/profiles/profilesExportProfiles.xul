@@ -127,7 +127,7 @@ function jwe_export(type, saveMessage)
   var nsIFilePicker = Components.interfaces.nsIFilePicker;
   var fp = Components.classes["@mozilla.org/filepicker;1"].createInstance(nsIFilePicker);
   fp.init(window, "Select a File", nsIFilePicker.modeSave);
-  fp.appendFilter("JIL Widget Emulator File (*.json)","*.json");
+  fp.appendFilter("Transit Widget Emulator File (*.json)","*.json");
   fp.defaultString = profileName+".json";
   
   var res = fp.show();
