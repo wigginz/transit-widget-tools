@@ -773,8 +773,8 @@ var jwe_emulator =
   {
     var nsIFilePicker = Components.interfaces.nsIFilePicker;
     var fp = Components.classes["@mozilla.org/filepicker;1"].createInstance(nsIFilePicker);
-    fp.init(window, "Select a JIL Widget config.xml", nsIFilePicker.modeOpen);
-    fp.appendFilter("JIL Widget config.xml File (*.xml)","*.xml");
+    fp.init(window, "Select a Widget config.xml", nsIFilePicker.modeOpen);
+    fp.appendFilter("Widget config.xml File (*.xml)","*.xml");
     
     var res = fp.show();
     // accept an OK 

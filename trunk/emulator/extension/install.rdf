@@ -8,7 +8,7 @@
     <em:version>1.2.2.20101210</em:version>
     <em:type>2</em:type>
     <em:creator>Kyle Wilgus</em:creator>
-    <em:description>The Transit Widget Emulator for developing JIL Widgets.</em:description>
+    <em:description>The Transit Widget Emulator for developing Wholesale Applications Community (WAC) Widgets.</em:description>
     <em:homepageURL>http://code.google.com/p/transit-widget-tools</em:homepageURL>
 
     <em:targetApplication>
@@ -19,7 +19,7 @@
       </Description>
     </em:targetApplication>
     
-    <em:iconURL>chrome://transit-emulator/skin/images/transit-enabled.ico</em:iconURL>
+    <em:iconURL>chrome://transit-emulator/skin/images/transit-enabled.png</em:iconURL>
     <em:updateURL>https://transit-widget-tools.googlecode.com/svn/dist/emulator/update.rdf</em:updateURL>
     
   </Description>
