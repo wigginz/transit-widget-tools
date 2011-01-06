@@ -1,0 +1,24 @@
+#summary Knowledge base entry for KB item 1001
+#labels knowledge-base
+
+== Description ==
+
+The Transit Emulator only supports audio playback for OGG Vorbis and WAV formats. Actual device runtimes may not have this limitation. 
+
+== Specifications Covered ==
+
+WAC 1.0, JIL 1.2.2, and JIL 1.1r4 
+
+== Explanation ==
+
+Due to licensing restrictions and the open souce nature of the Firefox browser, only non-proprietary audio formats will play with the emulator. File formats such as MP3 will not play and may cause the API to report incorrect states such as "AudioPlayer.isAudioPlaying" as well as audio related triggered events. 
+
+Note that device runtimes may not have this limitation, but this is determined on a case by case basis as specifying madatory support for specific audio formats is outside of the scope of WAC 1.0. 
+
+== Recommendations ==
+
+To avoid any potential licensing issues and compatibility problems with device runtimes, we recommend sticking with WAV for short audio effects, and OGG Vorbis audio for longer audio tracks such as music or speech as OGG provides more options for compression to reduce file sizes.
+
+== See Also ==
+
+N/A
