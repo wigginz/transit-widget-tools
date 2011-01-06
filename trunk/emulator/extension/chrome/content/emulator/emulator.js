@@ -55,6 +55,9 @@ var jwe_emulator =
   {
     this.emulator.setEmulatorWindow(window);
     
+    // indicate emulator has stared
+    this.emulator.updateStatusMessage("Emulator services have started successfully.");
+    
     try
     {
       document.getElementById("jwe-emulator-content").addProgressListener(jweInjector);

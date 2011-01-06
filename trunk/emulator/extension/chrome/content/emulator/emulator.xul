@@ -48,61 +48,75 @@
   </menubar>
 
   <vbox id="jwe-scroll-container" style="overflow: auto;"> 
-    
+  
+    <toolbox id="jwe-emulator-status-box">    
+      <toolbar align="center" role="toolbar" id="jwe-emulator-status-bar">
+        <label value="Status: "/> <label id="jwe-emulator-status-bar-message"/>
+      </toolbar>
+    </toolbox>
+   
     <hbox>
 
-      <hbox id="jwe-emulator-workspace-container" minheight="800px" minwidth="480px">
-        <hbox id="jwe-emulator-workspace">
-        
-          <stack>
-            <hbox id="jwe-emulator-container">
-              <browser id="jwe-emulator-content" type="chrome" disablehistory="true">
-              </browser>
-            </hbox>
-            <vbox class="runtime-dialog-bg" flex="1" id="jwe-runtime-dialog-bg"> 
-              <vbox class="runtime-dialog-container" id="jwe-runtime-dialog">
-                <hbox class="runtime-dialog-title-bar">
-                  <description class="runtime-dialog-title" id="jwe-runtime-dialog-title-text"/> 
-                </hbox>  
-                <hbox class="runtime-dialog-body" style="overflow: hidden;">
-                  <textbox id="jwe-runtime-dialog-body-text" class="plain" style="background-color: transparent;" flex="1" multiline="true" readonly="true" onoverflow="this.height = this.inputField.scrollHeight;" DOMAttrModified="if(event.attrName == 'value') this.value = event.newValue; return true;"/>
-                </hbox>
-                <hbox pack="center">
-                  <label class="runtime-dialog-button" id="jwe-runtime-dialog-yes" value="Yes"/>
-                  <label class="runtime-dialog-button" id="jwe-runtime-dialog-no" value="No"/>
-               </hbox>
-              </vbox>  
-            </vbox> 
-            
-            <vbox class="runtime-dialog-bg" flex="1" id="jwe-runtime-store-dialog-bg"> 
-              <vbox class="runtime-dialog-container" id="jwe-runtime-store-dialog">
-                <hbox class="runtime-dialog-title-bar">
-                  <description class="runtime-dialog-title" id="jwe-runtime-store-dialog-title-text" value="&jwe.emulator.store.title;"/> 
-                </hbox>  
-                <hbox class="runtime-dialog-body" style="overflow: hidden;">
-                  <vbox>
-                    <hbox>
-                      <label value="&jwe.emulator.store.widget.title;" style="width: 14em;"/> <label id="jwe-runtime-store-dialog-title"/>
-                    </hbox>
-                    <hbox style="margin-top: 20px;">
-                      <label value="&jwe.emulator.store.widget.description;" style="width: 14em;"/>
-                      <textbox id="jwe-runtime-store-dialog-description" class="plain" flex="1" multiline="true" readonly="true" onoverflow="this.height = this.inputField.scrollHeight;" DOMAttrModified="if(event.attrName == 'value') this.value = event.newValue; return true;"/>
-                    </hbox>
-                    <hbox>
-                      <label value="&jwe.emulator.store.widget.price;" style="width: 14em;"/> <label id="jwe-runtime-store-dialog-price"/>
-                    </hbox>
-                  </vbox>
-                </hbox>
-                <hbox pack="center">
-                  <label class="runtime-dialog-button" id="jwe-runtime-store-dialog-purchase" value="&jwe.emulator.store.purchase;"/>
-                  <label class="runtime-dialog-button" id="jwe-runtime-store-dialog-cancel" value="&jwe.emulator.store.cancel;"/>
-               </hbox>
-              </vbox>  
-            </vbox> 
-            
-          </stack>          
-        </hbox>         
-      </hbox>
+      <vbox>
+
+        <!-- placeholder, put anything here to have it at the top of the emulator panel -->
+
+	<hbox id="jwe-emulator-workspace-container" minheight="800px" minwidth="480px">
+	
+	  <hbox id="jwe-emulator-workspace">
+	  
+	    <stack>
+	      <hbox id="jwe-emulator-container">
+		<browser id="jwe-emulator-content" type="chrome" disablehistory="true">
+		</browser>
+	      </hbox>
+	      <vbox class="runtime-dialog-bg" flex="1" id="jwe-runtime-dialog-bg"> 
+		<vbox class="runtime-dialog-container" id="jwe-runtime-dialog">
+		  <hbox class="runtime-dialog-title-bar">
+		    <description class="runtime-dialog-title" id="jwe-runtime-dialog-title-text"/> 
+		  </hbox>  
+		  <hbox class="runtime-dialog-body" style="overflow: hidden;">
+		    <textbox id="jwe-runtime-dialog-body-text" class="plain" style="background-color: transparent;" flex="1" multiline="true" readonly="true" onoverflow="this.height = this.inputField.scrollHeight;" DOMAttrModified="if(event.attrName == 'value') this.value = event.newValue; return true;"/>
+		  </hbox>
+		  <hbox pack="center">
+		    <label class="runtime-dialog-button" id="jwe-runtime-dialog-yes" value="Yes"/>
+		    <label class="runtime-dialog-button" id="jwe-runtime-dialog-no" value="No"/>
+		</hbox>
+		</vbox>  
+	      </vbox> 
+	      
+	      <vbox class="runtime-dialog-bg" flex="1" id="jwe-runtime-store-dialog-bg"> 
+		<vbox class="runtime-dialog-container" id="jwe-runtime-store-dialog">
+		  <hbox class="runtime-dialog-title-bar">
+		    <description class="runtime-dialog-title" id="jwe-runtime-store-dialog-title-text" value="&jwe.emulator.store.title;"/> 
+		  </hbox>  
+		  <hbox class="runtime-dialog-body" style="overflow: hidden;">
+		    <vbox>
+		      <hbox>
+			<label value="&jwe.emulator.store.widget.title;" style="width: 14em;"/> <label id="jwe-runtime-store-dialog-title"/>
+		      </hbox>
+		      <hbox style="margin-top: 20px;">
+			<label value="&jwe.emulator.store.widget.description;" style="width: 14em;"/>
+			<textbox id="jwe-runtime-store-dialog-description" class="plain" flex="1" multiline="true" readonly="true" onoverflow="this.height = this.inputField.scrollHeight;" DOMAttrModified="if(event.attrName == 'value') this.value = event.newValue; return true;"/>
+		      </hbox>
+		      <hbox>
+			<label value="&jwe.emulator.store.widget.price;" style="width: 14em;"/> <label id="jwe-runtime-store-dialog-price"/>
+		      </hbox>
+		    </vbox>
+		  </hbox>
+		  <hbox pack="center">
+		    <label class="runtime-dialog-button" id="jwe-runtime-store-dialog-purchase" value="&jwe.emulator.store.purchase;"/>
+		    <label class="runtime-dialog-button" id="jwe-runtime-store-dialog-cancel" value="&jwe.emulator.store.cancel;"/>
+		</hbox>
+		</vbox>  
+	      </vbox> 
+	      
+	    </stack>          
+	  </hbox>  
+	  
+	</hbox>
+      
+      </vbox>
       
       <splitter resizeafter="grow" id="jwe-emulator-splitter"/>
       
