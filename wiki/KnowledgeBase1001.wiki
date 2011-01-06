@@ -1,4 +1,4 @@
-#summary Knowledge base entry for KB item 1001
+#summary Knowledge base entry for KB item 1001 (WAC 1.0)
 #labels knowledge-base
 
 == Description ==
