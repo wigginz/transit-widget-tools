@@ -20,6 +20,13 @@
   z-index: 101;
 }
 
+#jwe-emulator-status-bar-message-link
+{
+  display: none; 
+  color: blue;
+  text-decoration: underline;
+}
+
 #jwe-emulator-container
 {
   position:absolute;

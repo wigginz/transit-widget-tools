@@ -51,7 +51,7 @@
   
     <toolbox id="jwe-emulator-status-box">    
       <toolbar align="center" role="toolbar" id="jwe-emulator-status-bar">
-        <label value="Status: "/> <label id="jwe-emulator-status-bar-message"/>
+        <label value="Status: "/> <label id="jwe-emulator-status-bar-message"/> <label id="jwe-emulator-status-bar-message-link" value="&jwe.emulator.status.kb.more;"/>
       </toolbar>
     </toolbox>
    

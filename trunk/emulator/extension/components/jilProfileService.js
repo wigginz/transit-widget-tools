@@ -4410,6 +4410,37 @@ JILProfileService.prototype = //#
     return(true);
   },
   
+  getKnowledgeBaseMessage : function(key, locale)
+  {
+    if ( locale == null )
+      locale = "en-US";
+    
+    var stmt = this.getConnection().createStatement("select message, more_link from jwe_kb_message where key = :key and locale = :locale");
+    stmt.params.key = key;
+    stmt.params.locale = locale;
+
+    var message = null;
+    try 
+    {
+      while ( stmt.step() )
+      {
+        message = 
+        {
+	  key: key,
+	  locale: locale,
+	  message: stmt.row.message, 
+	  moreLink: stmt.row.more_link
+	};
+      }
+    }
+    finally 
+    {
+      stmt.reset();
+    }
+    
+    return(message);
+  },
+  
   getBoolean : function(test)
   {
     if ( test == 1 )

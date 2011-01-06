@@ -324,6 +324,7 @@ JILEmulatorRuntime.prototype = //#
   
   updateStatusMessage : function(message, warn)
   {
+    this.getEmulatorWindow().document.getElementById("jwe-emulator-status-bar-message-link").style.display = "none";
     this.getEmulatorWindow().document.getElementById("jwe-emulator-status-bar-message").value = message;
     
     if ( warn )
@@ -337,6 +338,18 @@ JILEmulatorRuntime.prototype = //#
       this.logAction("Status change: "+message);
     }
   },  
+  
+  updateStatusWithKBMessage : function(key, locale)
+  {
+    var message = this.profileService.getKnowledgeBaseMessage(key, locale);
+    
+    this.getEmulatorWindow().document.getElementById("jwe-emulator-status-bar-message").value = message.message;
+    this.getEmulatorWindow().document.getElementById("jwe-emulator-status-bar-message-link").setAttribute("onclick", "jwe_emulator.openKBPage('"+message.moreLink+"')");
+    this.getEmulatorWindow().document.getElementById("jwe-emulator-status-bar-message-link").style.display = "block";
+    
+    this.getEmulatorWindow().document.getElementById("jwe-emulator-status-bar-message").style.color = "red";
+    this.logAction("WARNING: "+message.message+". See "+message.moreLink+" for more information.");
+  },
 
   getWidget : function() 
   {

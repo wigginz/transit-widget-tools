@@ -19,6 +19,7 @@
 <!ENTITY jwe.profiles.devices.settings.specs.extensions.samsung360 "Samsung M1/H1">
 <!ENTITY jwe.profiles.devices.settings.specs.extensions.waccharging "In Widget Charging (Expiremental, WAC API Only)">
 <!ENTITY jwe.emulator.device.extensions "API Extensions: ">
+<!ENTITY jwe.emulator.status.kb.more "More Info">
 
 <!ENTITY jwe.emulator.store.title "Purchase Widget?">
 <!ENTITY jwe.emulator.store.purchase "Purchase">
