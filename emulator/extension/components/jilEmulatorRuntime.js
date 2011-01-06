@@ -321,6 +321,22 @@ JILEmulatorRuntime.prototype = //#
     this.logAction("Emulator widget: "+this.widget.name+", version: "+this.widget.version+", has been unloaded. Stopping widget emulation.");
     this.widget = null;
   },
+  
+  updateStatusMessage : function(message, warn)
+  {
+    this.getEmulatorWindow().document.getElementById("jwe-emulator-status-bar-message").value = message;
+    
+    if ( warn )
+    {
+      this.getEmulatorWindow().document.getElementById("jwe-emulator-status-bar-message").style.color = "red";
+      this.logAction("Status WARNING: "+message);
+    }
+    else
+    {
+      this.getEmulatorWindow().document.getElementById("jwe-emulator-status-bar-message").style.color = "green";
+      this.logAction("Status change: "+message);
+    }
+  },  
 
   getWidget : function() 
   {

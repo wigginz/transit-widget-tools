@@ -66,7 +66,7 @@ var testWidgetManager =
 };
 
 var testMultimedia = 
-{
+{  
   isAudioPlaying : function()
   {
     alert("Audio will start playing and test will be made five seconds in, then stopped.");
@@ -150,6 +150,11 @@ var testMultimedia =
 
 var testAudioPlayer = 
 {
+  unsupportedAudio : function()
+  {
+    Widget.Multimedia.AudioPlayer.open("test.O1");
+  },
+  
   open : function()
   {
     Widget.Multimedia.AudioPlayer.open("test.ogg");
