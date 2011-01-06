@@ -3,6 +3,10 @@
 
 Check here for all the latest details on milestone releases, what's being worked on and committed, and future plans.
 
+<wiki:comment>
+Added a status bar at the top of the emulator window to display changes in emulation state, contextual tips to improve the running widget's code, and warnings about any common pitfalls. For example, if the widget attempts to play an MP3 file, the status will warn that the emulator only supports OGG and WAV, but actual devices may not have that limitation. SVN revision 307.
+</wiki:comment>
+
 
 == Friday December 10, 2010 ==
 
