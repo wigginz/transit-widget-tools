@@ -42,7 +42,7 @@ JILAudioPlayer.prototype = //#
   {
     // indicate a warning message if the widget is trying to open anything but an OGG or WAV
     if ( (fileUrl.search(/\.ogg/i) < 0) && (fileUrl.search(/\.wav/i) < 0) )
-      this.runtime.updateStatusMessage("Emulator only plays OGG and WAV audio files. Actual devices may not have this limiatation.", true);
+      this.runtime.updateStatusWithKBMessage("wac_1-0_kb1001");
     
     var eWindow = this.runtime.getEmulatorWindow();
     var baseUrl = this.runtime.getWidget().baseUrl;

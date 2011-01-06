@@ -100,8 +100,30 @@ var Target_1_2_2_20101025 =
   },
 };
 
+var Target_1_2_2_20110106 = 
+{
+  depends : Target_1_2_2_20101025,
+  
+  version : "1_2_2_20110106",
+  
+  upgrade : function(connection)
+  {
+    var stmt = connection.createStatement("CREATE TABLE jwe_kb_message (key VARCHAR PRIMARY KEY  NOT NULL , message VARCHAR, locale VARCHAR DEFAULT 'en-US', more_link VARCHAR)");
 
-var Target_Current = Target_1_2_2_20101025;
+    try { stmt.executeStep(); }
+    catch(exception) { TransitCommon.alert("Error during upgrade to version "+this.version+". Message: "+exception); throw exception; }
+    finally { stmt.reset(); }
+    
+    stmt = connection.createStatement("insert into jwe_kb_message (key, message, locale, more_link) values ('wac_1-0_kb1001', 'Emulator only plays OGG and WAV audio files. Actual devices may not have this limiatation.', 'en-US', 'http://code.google.com/p/transit-widget-tools/wiki/KnowledgeBase1001')");
+
+    try { stmt.executeStep(); }
+    catch(exception) { TransitCommon.alert("Error during upgrade to version "+this.version+". Message: "+exception); throw exception; }
+    finally { stmt.reset(); }
+  },
+};
+
+
+var Target_Current = Target_1_2_2_20110106;
 
 /***********************************************************/
 

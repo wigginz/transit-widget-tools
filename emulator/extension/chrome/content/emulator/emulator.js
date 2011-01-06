@@ -819,6 +819,13 @@ var jwe_emulator =
     mainWindow.gBrowser.selectedTab = mainWindow.gBrowser.addTab("http://www.jil.org");
   },
   
+  openKBPage : function(url)
+  {
+    var wm = Components.classes["@mozilla.org/appshell/window-mediator;1"].getService(Components.interfaces.nsIWindowMediator);
+    var mainWindow = wm.getMostRecentWindow("navigator:browser");
+    mainWindow.gBrowser.selectedTab = mainWindow.gBrowser.addTab(url);
+  },
+  
   openAboutDialog: function()
   {
     var em = Components.classes["@mozilla.org/extensions/manager;1"].getService(Components.interfaces.nsIExtensionManager);
