@@ -5,6 +5,8 @@ Check here for all the latest details on milestone releases, what's being worked
 
 <wiki:comment>
 Added a status bar at the top of the emulator window to display changes in emulation state, contextual tips to improve the running widget's code, and warnings about any common pitfalls. For example, if the widget attempts to play an MP3 file, the status will warn that the emulator only supports OGG and WAV, but actual devices may not have that limitation. SVN revision 307.
+
+Hooked in a databsae table with the contextual status bar so a link to a wiki page can be clicked on for more information on the details of what the warning is about. Since the status message must be short, the wiki page can provide information and code recommendations about the specific warning. SVN revision 312.
 </wiki:comment>
 
 
@@ -33,74 +35,6 @@ The non-debug pop-up window has been removed from the emulator as is wasn't terr
 Directly opening widget packages (.wgt files) is now possible with the new menu option in the Transit menus. To emulate a packaged widget, choose the "Emulate and Debug Widget (.wgt)" menu item and then choose the .wgt file in the file chooser dialog. The widget will be unzipped in your operatin system's temp folder and opened in the emulator window automatically. Temp directories are usually cleaned out on reboot, depending on your operating system.
 
 Some experimental and undocumented features have been prototyped and tested with this release. If an option is marked as expiremental, we recommend not using it as it has not yet been documented.
-
-
-== Thursday August 17, 2010 ==
-
-=== Fixes ===
-
-More progress on full implementation of the "find" APIs. Unless noted, all fields are currently being searched. At the moment any comparison objects that are used for "find" APIs that have boolean fields (like isRead) will default to false even if not set to false. I'm proposing to keep this behavior, however this behavior is not commented on in the JIL spec. If this seems wrong, please propose a change and we'll definitely discuss it.
-
-Note that findAddressBookItems does not support searching for group names as there is already a PIM method (getAddressBookGroupMembers) to do that.
-
-Toggling full screen mode now correctly triggers the respective onMaximize and onRestore events.
-
-Changed behavior of floating mode a bit. Widgets will now be centered on the device screen at all times. To clarify, widgets will always start in floating mode. In full screen mode, if the widget's maximum_display_mode is smaller than the device's screen, the widget will render in those dimensions, and a dark grey border will fill the gap between the widget's outer edges to the edges of the device screen.
-
-Added functionality to put a message in the respective message type's "sentboxes" when a message is sent. If it's an email message, the message will only copy to the "sentboxes" of the current email account.
-
-Added the creation of an outgoing call record when Telephony.initiateCall is called. Uses new default property of 'outgoing-call-duration-seconds' to use for duration of all outgoing call records. Requires a database change via the update manager.
-
-Implemented security restrictions for XMLHttpRequest per the JIL 1.1r4 and 1.2.2 specs. Operator, identified domains are allowed, unidentified is prompt for user confirmation in a session context.
-
-Download the development build [http://transit-widget-tools.googlecode.com/files/transit-emulator-20100817.xpi transit-emulator-20100817.xpi].
-
-
-== Thursday August 5, 2010 ==
-
-=== Fixes ===
-
- * Widget.Device.onFilesFound now returns the correct Widget.Device.File objects as results.
- * Widget.Device.findFiles, Widget.PIM.findCalendarItems, Widget.Messaging.findMessages, Widget.PIM.findAddressBookItems now properly handle the start and end index parameters for returned results. Also extended the emulator log to show what start and end index values were used.
-
-=== New Features ===
-
-Adjusted the full screen toggle in the emulator window general tab to behave per the JIL packaging and format spec. At the moment, the widget will be rendered in floating mode when launched using the widget tag's height and width attribute. When full screen is toggled, the widget will use the jil:maximum_display_mode dimensions. If those dimensions are smaller than the device screen, the widget will be centered and padding added between the widget edge and device edge as stated in the JIL spec.
-
-=== Under the Hood ===
-
-We've added some improved validation for a widget's config.xml which allow the widget to still run even with some missing elements, but the emulator will put in temp values like "Unknown" in the case where an element is missing. There are some elements (widget ID, version, content source, etc.) that will cause emulation to fail, and must be fixed before the widget can load in the emulator.
-
-Download the development build [http://transit-widget-tools.googlecode.com/files/transit-emulator-20100805.xpi transit-emulator-20100805.xpi].
-
-
-== Thursday July 29, 2010 ==
-
-We've included some major updates included in this release. It's important information, read on for the details.
-
-=== Fixes ===
-
-Previously, static data was not being reset properly when a widget was reloaded or device profile changed. For example, the value for phoneScreenHeightDefault would be 800 but when a device profile for a smaller screen device, the API was still reporting a value of 800. This has been fixed anywhere in the API where there are accessible properties.
-
-XMLHttpRequest now functions correctly and responseXML properly parses the response and returns a DOM object. Keep in mind the emulator wraps the native XMLHttpRequest object, please let us know if you find anything missing in the wrapper.
-
-=== New Features ===
-
-Added a link called "Callback Source" which will pop up a panel showing the source code of the event picked via the radio buttons for event contexts. 
-
-Added a landscape mode toggle for the display section of the general tab in the emulator window. Checking the landscape mode box will swap height and width while maintaining full screen mode, if checked. An onScreenChangeDimensions even will be triggered when landscape mode is toggled. Also changed is the behavior of the widget in floating mode. If a widget's height or width is larger than the screen size, the larger dimension will be shrunk to fix on the screen. For example, if a widget has a height of 500 pixels, but the device is only 400 pixels high, the widget will be resized to 400 pixels high.
-
-Implemented widget config.xml ingestion based on JIL specs. Transit will now be able to automatically detect and properly emulate widgets using either the JIL 1.0 or 1.2 packaging spec. New ingestion process also includes per the spec validation and proper handling of more config.xml elements. Feature tag enforcement and signature file detection is not yet implemented.
-
-Added support for both JIL API 1.1 revision 4 and 1.2.2. You can choose which API a device supports by changing the value in the Manage Profiles window. By default, all devices will use the 1.2.2 spec, but can be changed to 1.1r4 at any time. If a widget calls a 1.2.2 API using a device profile with 1.1r4 API support, the normal JavaScript errors will be generated. This update also reflects the differences in the security matrix between the APIs.
-
-Introduced the API Extensions framework. These are 3rd party APIs that fall outside of the JIL specifications such as Opera, BONDI, etc. You can choose which extensions a device profile will support and any widget running with that profile will have access to those APIs. The first (and only at the moment) extension is for supporting the additional APIs in the Samsung M1/H1 runtime. More details can be found on the [APIExtensions API Extensions] page. More extensions to come, keep an eye on that page for details.
-
-=== Under the Hood ===
-
-To ease the process up future upgrades to the SQLite profile database, we've added an upgrade service that will recursively upgrade a database as many patch levels as required to bring it up to the current version. This check is done automatically every time the emulator starts. If any problems are encountered, it will rollback ensuring no data is lost during a failed upgrade.
-
-Download the development build [http://transit-widget-tools.googlecode.com/files/transit-emulator-20100729.xpi transit-emulator-20100729.xpi].
 
 ----
 
