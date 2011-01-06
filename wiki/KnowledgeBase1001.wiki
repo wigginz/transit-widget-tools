@@ -11,7 +11,7 @@ WAC 1.0, JIL 1.2.2, and JIL 1.1r4
 
 == Explanation ==
 
-Due to licensing restrictions and the open souce nature of the Firefox browser, only non-proprietary audio formats will play with the emulator. File formats such as MP3 will not play and may cause the API to report incorrect states such as "AudioPlayer.isAudioPlaying" as well as audio related triggered events. 
+Due to licensing restrictions and the open souce nature of the Firefox browser, only common FOSS audio formats will play with the emulator. File formats such as MP3 will not play and may cause the API to report incorrect states such as "AudioPlayer.isAudioPlaying" as well as audio related triggered events. 
 
 Note that device runtimes may not have this limitation, but this is determined on a case by case basis as specifying madatory support for specific audio formats is outside of the scope of WAC 1.0. 
 
