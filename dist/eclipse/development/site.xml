@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/TransitWidgetTools_1.0.0.20100914.jar" id="TransitWidgetTools" version="1.0.0.20100914"/>
+   <feature url="features/TransitWidgetTools_1.2.2.20100712.jar" id="TransitWidgetTools" version="1.2.2.20100712"/>
 </site>
