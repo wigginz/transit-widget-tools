@@ -3,22 +3,59 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.jil.ide.widget;singleton:=true
 Bundle-Version: 1.0.0
-Bundle-ClassPath: lib/xmlsec-1.4.3.jar, .
+Bundle-ClassPath: .,
+ lib/xmlsec-1.4.3.jar
 Bundle-Activator: org.jil.ide.Activator
 Bundle-Vendor: %Bundle-Vendor
 Export-Package: org,
  org.jil,
- org.jil.ide,
- org.jil.ide.builder,
- org.jil.ide.builder.validation,
+ org.jil.ide;
+  uses:="org.eclipse.jface.preference,
+   org.eclipse.ui.plugin,
+   org.osgi.framework,
+   org.jil.ide.util",
+ org.jil.ide.builder;
+  uses:="org.eclipse.wst.jsdt.core,
+   org.eclipse.core.runtime,
+   org.eclipse.core.resources,
+   org.eclipse.wst.jsdt.internal.core",
+ org.jil.ide.builder.validation;
+  uses:="org.eclipse.core.resources,
+   javax.xml.validation,
+   org.xml.sax.helpers,
+   org.xml.sax",
  org.jil.ide.feature,
- org.jil.ide.libraries,
- org.jil.ide.preferences,
+ org.jil.ide.libraries;
+  uses:="org.eclipse.wst.jsdt.core,
+   org.eclipse.core.runtime,
+   org.eclipse.jface.resource,
+   org.eclipse.wst.jsdt.core.compiler.libraries,
+   org.eclipse.wst.jsdt.core.ast,
+   org.eclipse.wst.jsdt.internal.ui,
+   org.eclipse.core.resources,
+   org.eclipse.wst.jsdt.ui.wizards,
+   org.eclipse.swt.widgets,
+   org.eclipse.wst.jsdt.internal.ui.wizards.buildpaths,
+   org.eclipse.wst.jsdt.core.infer",
+ org.jil.ide.preferences;uses:="org.eclipse.osgi.util,org.eclipse.jface.preference,org.eclipse.ui",
  org.jil.ide.resources,
- org.jil.ide.security,
- org.jil.ide.ui,
- org.jil.ide.util,
- org.jil.ide.wizard
+ org.jil.ide.security;uses:="org.eclipse.core.resources",
+ org.jil.ide.ui;
+  uses:="org.eclipse.core.runtime,
+   org.eclipse.core.resources,
+   org.eclipse.ui.dialogs,
+   org.eclipse.swt.widgets,
+   org.jil.ide.util",
+ org.jil.ide.util;uses:="org.eclipse.core.runtime,org.eclipse.core.resources",
+ org.jil.ide.wizard;
+  uses:="org.eclipse.jface.wizard,
+   org.eclipse.core.runtime,
+   org.eclipse.ui,
+   org.eclipse.core.resources,
+   org.eclipse.jface.viewers,
+   org.eclipse.ui.dialogs,
+   org.eclipse.swt.widgets,
+   org.jil.ide.util"
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.core.resources,

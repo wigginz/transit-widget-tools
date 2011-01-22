@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.security.KeyStore;
 import java.security.PrivateKey;
+import java.security.SecureRandom;
 import java.security.KeyStore.PrivateKeyEntry;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateFactory;
@@ -23,8 +24,11 @@ import javax.xml.transform.stream.StreamResult;
 import org.apache.xml.security.c14n.Canonicalizer;
 import org.apache.xml.security.keys.KeyInfo;
 import org.apache.xml.security.keys.content.X509Data;
-import org.apache.xml.security.signature.SignedInfo;
+import org.apache.xml.security.signature.ObjectContainer;
+import org.apache.xml.security.signature.SignatureProperties;
+import org.apache.xml.security.signature.SignatureProperty;
 import org.apache.xml.security.signature.XMLSignature;
+import org.apache.xml.security.transforms.Transforms;
 import org.apache.xml.security.utils.Constants;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
@@ -34,6 +38,8 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.w3c.dom.Element;
+import org.w3c.dom.Text;
 
 
 
@@ -46,13 +52,7 @@ public class SigningUtil {
 	 static{ org.apache.xml.security.Init.init();	}
 	 
 	 public static  boolean signWidget(String certPath, String password, IProject project) throws Exception{
-		  /*
-		   *  step1 : get the certificate path from Pref
-		   *  step2 : get the widget from bin 
-		   *  				get the Project handle
-		   *  step3: identify  weather its jil1.0 or jil.12 project  
-		   *  step3 : create auth-signature.xml 
-		   */
+		 
 		   Constants.setSignatureSpecNSprefix("");
 		   selectedProject = project;
 		   String keystoreFile = certPath ;
@@ -109,8 +109,7 @@ public class SigningUtil {
 			KeyInfo ki = signature.getKeyInfo();
 
 			Certificate[] certificates = ks.getCertificateChain(keyAliase);
-			System.out.println(" \n\n\n Certifiate chain  length  "
-					+ certificates.length);
+			System.out.println(" \n\n\n Certifiate chain  length  "	+ certificates.length);
 
 			X509Data x509Data = new X509Data(doc);
 			ki.add(x509Data);
@@ -125,6 +124,49 @@ public class SigningUtil {
 			String filepath ="";
 			
 			addDocuments(signature, srcFolder);
+			
+			ObjectContainer object = new ObjectContainer(doc);
+			object.setId("prop");
+	        SignatureProperties sps = new SignatureProperties(doc);
+	        
+	        sps.setXPathNamespaceContext("dsp", "http://www.w3.org/2009/xmldsig-properties");
+	        
+	        SignatureProperty roleProp =  new SignatureProperty(doc, "#AuthorSignature");
+	        roleProp.setId("role");
+	        Element roleElement =  doc.createElement("dsp:Role");
+	        roleElement.setAttribute("URI", "http://www.w3.org/ns/widgets-digsig#role-author");
+	        roleProp.appendChild(roleElement);
+	        
+	        SignatureProperty profileProp =  new SignatureProperty(doc, "#AuthorSignature");
+	        profileProp.setId("profile");
+	    	Element profileElement =  doc.createElement("dsp:Profile");
+	    	profileElement.setAttribute("URI", "http://www.w3.org/ns/widgets-digsig#profile");
+	    	profileProp.appendChild(profileElement);
+	        
+	        SignatureProperty identifierProp = new SignatureProperty(doc, "#AuthorSignature");
+	        identifierProp.setId("identifier");
+	        
+	        Element identElement = doc.createElement("dsp:Identifier");
+	        
+	        X509Certificate cert = (X509Certificate)certificates[0];
+			
+	        Text idenntText =  doc.createTextNode("JIL Widget: " +  cert.getSubjectDN().getName() + " " +  cert.getSerialNumber().toString()
+	        		 + " "  + SecureRandom.getSeed(20));
+	       	identElement.appendChild(idenntText);
+	        
+	    	identifierProp.appendChild(identElement);
+	    	
+	        sps.addSignatureProperty(profileProp);
+	        sps.addSignatureProperty(roleProp);
+	        sps.addSignatureProperty(identifierProp);
+	        object.appendChild(sps.getElement());
+	        signature.appendObject(object);
+
+	        Transforms transforms = new Transforms(doc);
+	        transforms.addTransform(Transforms.TRANSFORM_C14N11_OMIT_COMMENTS);
+	        
+	        signature.addDocument("#prop",transforms,"http://www.w3.org/2001/04/xmlenc#sha256" );
+			
 			
 			/*SignedInfo s = signature.getSignedInfo();*/
 			signature.sign(privateKey);
@@ -223,8 +265,7 @@ public class SigningUtil {
 								try {
 //									signature.addDocument(path);
 									signature.addDocument( path.replace("\\", "/"), null,"http://www.w3.org/2001/04/xmlenc#sha256");
-								} catch (org.apache.xml.security.signature.XMLSignatureException e) {
-									
+								} catch (Exception e) {
 									 e.printStackTrace();
 								}
 							}
