@@ -1,0 +1,190 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://transit-emulator/skin/skin.css" type="text/css"?>
+<!DOCTYPE jilemulator SYSTEM "chrome://transit-emulator/locale/translations.dtd">
+
+
+
+<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        xmlns:html="http://www.w3.org/1999/xhtml"
+        id="jwe-profiles-popup-addrgrp"        
+        title="&jwe.profiles.popup.addrgrp.title;"
+        buttons="accept,cancel"
+        onload="jwe_populateForm();"
+        ondialogaccept="return jwe_saveForm();"
+        ondialogcancel="return true;">
+        
+<html:script type="application/x-javascript" src="chrome://transit-emulator/content/profiles/profiles.js" />
+
+  <vbox flex="1">
+
+    <dialogheader title="&jwe.profiles.popup.addrgrp.caption;"/>
+
+    <vbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.addrgrp.groupname;" class="jwe-defaultText" style="width: 10em;"/>
+        <textbox id="jwe-profiles-popup-addrgrp-name" size="25"/>
+      </hbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.addrgrp.members;" class="jwe-defaultText" style="width: 10em;"/>
+        <vbox>
+          <listbox style="width: 500px; height: 200px;" id="jwe-profiles-popup-addrgrp-items" onselect="jwe_selectAttribute();">
+            <listhead>
+              <listheader label="&jwe.profiles.popup.addrgrp.name;" />
+              <listheader label="&jwe.profiles.popup.addrgrp.mobilephone;" />
+            </listhead>
+            <listcols>
+              <listcol flex="1" />
+              <splitter class="tree-splitter" />
+              <listcol flex="1" />
+            </listcols>
+          </listbox>
+          <hbox pack="end" class="jwe-profiles-buttons">
+            <button label="&jwe.profiles.popup.addrgrp.add;" id="jwe-profiles-popup-addrgrp-add" oncommand="jwe_newAddressGroupMember();" />
+            <button label="&jwe.profiles.popup.addrgrp.remove;" id="jwe-profiles-popup-addrgrp-remove" oncommand="jwe_deleteAddressGroupMember();" disabled="true"/> 
+          </hbox>
+        </vbox>
+      </hbox>
+    </vbox>
+
+    <hbox pack="right" class="jwe-profiles-buttons">
+      <spacer flex="1"/>
+      <button dlgtype="accept" label="&jwe.profiles.popup.addrgrp.ok;"/> 
+      <button dlgtype="cancel" label="&jwe.profiles.popup.addrgrp.cancel;"/>
+    </hbox>
+    
+  </vbox>
+  
+<html:script>
+<![CDATA[
+
+var members = new Array();
+var availableMembers = new Array();
+
+function jwe_selectAttribute()
+{
+  document.getElementById("jwe-profiles-popup-addrgrp-remove").disabled = false;
+}
+
+function jwe_populateForm()
+{
+  var pimProfileId = window.arguments[0].inn.pimProfileId;
+  var group = window.arguments[0].inn.group;
+  
+  if ( group != null )
+  {
+    if ( group.members == null )
+      group.members = JILProfileService.wrappedJSObject.getAddressBookItems(pimProfileId, group.id);
+
+    for ( var i = 0; i < group.members.length; i++ )
+    {
+      var listitem = document.createElement("listitem");
+      listitem.setAttribute("value", group.members[i].id);
+      
+      var nameCell = document.createElement("listcell");
+      var mobileCell = document.createElement("listcell");
+
+      nameCell.setAttribute("label", group.members[i].fullName); 
+      nameCell.setAttribute("id", group.members[i]+"-name");
+      mobileCell.setAttribute("label", group.members[i].mobilePhone); 
+      mobileCell.setAttribute("id", group.members[i]+"-mobile");
+      
+      members[group.members[i].id] = group.members[i];
+      
+      listitem.appendChild(nameCell);
+      listitem.appendChild(mobileCell);
+      
+      document.getElementById("jwe-profiles-popup-addrgrp-items").appendChild(listitem);
+    }
+
+    document.getElementById("jwe-profiles-popup-addrgrp-name").value = group.name;
+    var tempMembers = JILProfileService.wrappedJSObject.getAddressBookItems(pimProfileId, group.id, true);
+    for ( var i = 0; i < tempMembers.length; i++ )
+      availableMembers[tempMembers[i].id] = tempMembers[i];
+  }
+  else
+  {
+    var tempMembers = JILProfileService.wrappedJSObject.getAddressBookItems(pimProfileId);
+    for ( var i = 0; i < tempMembers.length; i++ )
+      availableMembers[tempMembers[i].id] = tempMembers[i];
+  }    
+}
+
+function jwe_newAddressGroupMember()
+{
+  var pimProfileId = window.arguments[0].inn.pimProfileId;
+  var groupId = null;
+  if ( window.arguments[0].inn.group != null )
+    groupId = window.arguments[0].inn.group.id;
+
+  var params = {inn:{pimProfileId: pimProfileId, groupId: groupId, availableMembers: availableMembers}, out:null};       
+  window.openDialog("chrome://transit-emulator/content/profiles/profilesAddressGroupMembers.xul", "jwe-profiles-popup-addrgrpm", "dialog, modal", params).focus();
+  
+  if ( params.out )
+  {
+    for ( var i = 0; i < params.out.items.length; i++ )
+    {
+      var listitem = document.createElement("listitem");
+      listitem.setAttribute("value", params.out.items[i].id);
+      
+      var nameCell = document.createElement("listcell");
+      var mobileCell = document.createElement("listcell");
+
+      nameCell.setAttribute("label", params.out.items[i].fullName); 
+      nameCell.setAttribute("id", params.out.items[i]+"-name");
+      mobileCell.setAttribute("label", params.out.items[i].mobilePhone); 
+      mobileCell.setAttribute("id", params.out.items[i]+"-mobile");
+
+      members[params.out.items[i].id] = params.out.items[i];
+      delete availableMembers[params.out.items[i].id];
+      
+      listitem.appendChild(nameCell);
+      listitem.appendChild(mobileCell);
+      
+      document.getElementById("jwe-profiles-popup-addrgrp-items").appendChild(listitem);
+    }
+  }
+}
+
+function jwe_deleteAddressGroupMember()
+{
+  var item = members[document.getElementById("jwe-profiles-popup-addrgrp-items").getItemAtIndex(document.getElementById("jwe-profiles-popup-addrgrp-items").selectedIndex).value];
+
+  document.getElementById("jwe-profiles-popup-addrgrp-items").removeItemAt(document.getElementById("jwe-profiles-popup-addrgrp-items").selectedIndex);
+  
+  availableMembers[item.id] = item;
+  delete members[item.id];
+}
+
+function jwe_saveForm(message)
+{
+  var newMembers = new Array();
+  for ( var i in members )
+    newMembers.push(members[i]);
+    
+  var group =
+  {
+    name: document.getElementById("jwe-profiles-popup-addrgrp-name").value,
+    members: newMembers,
+    pimProfileId: window.arguments[0].inn.pimProfileId
+  };
+  
+  if ( window.arguments[0].inn.group )
+  {
+    group.id = window.arguments[0].inn.group.id;
+    group.isChanged = true;
+  }
+  else
+  {
+    group.id = new Date().getTime();
+    group.isNew = true;
+  }
+
+  window.arguments[0].out = {group: group};
+  return(true);
+}
+
+]]>
+</html:script>
+
+</dialog>

@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://transit-emulator/skin/skin.css" type="text/css"?>
+<!DOCTYPE jilemulator SYSTEM "chrome://transit-emulator/locale/translations.dtd">
+
+
+
+<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        xmlns:html="http://www.w3.org/1999/xhtml"
+        id="jwe-profiles-popup-attraddrv"        
+        title="&jwe.profiles.popup.attraddrv.title;"
+        buttons="accept,cancel"
+        onload="jwe_populateForm();"
+        ondialogaccept="return jwe_saveForm();"
+        ondialogcancel="return true;">
+
+  <vbox flex="1">
+
+    <dialogheader title="&jwe.profiles.popup.attraddrv.caption;"/>
+    
+    <vbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.attraddrv.key;" class="jwe-defaultText" style="width: 10em;"/>
+        <menulist align="right" oncommand="" id="jwe-profiles-popup-attraddrv-keylist"/>
+      </hbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.attraddrv.value;" class="jwe-defaultText" style="width: 10em;"/>
+        <textbox id="jwe-profiles-popup-attraddrv-value" size="25"/>
+      </hbox>
+    </vbox>
+
+    <hbox pack="right" class="jwe-profiles-buttons">
+      <spacer flex="1"/>
+      <button dlgtype="accept" label="&jwe.profiles.popup.attraddrv.ok;"/> 
+      <button dlgtype="cancel" label="&jwe.profiles.popup.attraddrv.cancel;"/>
+    </hbox>
+    
+  </vbox>
+
+<html:script>
+<![CDATA[
+
+function jwe_populateForm()
+{
+  var pimProfileId = window.arguments[0].inn.pimProfileId;
+  var key = window.arguments[0].inn.key;
+  var value = window.arguments[0].inn.value;
+  
+  var menupopup = document.createElement("menupopup");
+  menupopup.setAttribute("id", "jwe-profiles-popup-attraddrv-keys");
+  var attributes = JILProfileService.wrappedJSObject.getAddressAvailableAttributes(pimProfileId);
+  var attributeIndex = 0;
+  for ( var i = 0; i < attributes.length; i++ )
+  {
+    var menuitem = document.createElement("menuitem");
+    menuitem.setAttribute("label", attributes[i].key);
+    menuitem.setAttribute("value", attributes[i].key);
+    menupopup.appendChild(menuitem);
+    if ( (key != null) && (attributes[i].key == key) )
+      attributeIndex = i;
+  }
+  document.getElementById("jwe-profiles-popup-attraddrv-keylist").appendChild(menupopup);
+  document.getElementById("jwe-profiles-popup-attraddrv-keylist").selectedIndex = attributeIndex;    
+  
+  
+  if ( value != null )
+    document.getElementById("jwe-profiles-popup-attraddrv-value").value = value;
+}
+
+function jwe_saveForm(message)
+{
+  window.arguments[0].out = {key: document.getElementById("jwe-profiles-popup-attraddrv-keylist").getItemAtIndex(document.getElementById("jwe-profiles-popup-attraddrv-keylist").selectedIndex).value, value: document.getElementById("jwe-profiles-popup-attraddrv-value").value};
+
+  return(true);
+}
+
+]]>
+</html:script>
+
+</dialog>

@@ -1,0 +1,199 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://transit-emulator/skin/skin.css" type="text/css"?>
+<!DOCTYPE jilemulator SYSTEM "chrome://transit-emulator/locale/translations.dtd">
+
+
+
+<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        xmlns:html="http://www.w3.org/1999/xhtml"
+        id="jwe-profiles-popup-mfolder"        
+        title="&jwe.profiles.popup.message.title;"
+        buttons="accept,cancel"
+        onload="jwe_populateForm();"
+        ondialogaccept="return jwe_saveForm();"
+        ondialogcancel="return true;">
+
+  <vbox flex="1">
+
+    <dialogheader title="&jwe.profiles.popup.message.caption;"/>
+    
+    <description style="width: 300px;">&jwe.profiles.popup.message.warning;</description>
+    
+    <vbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.message.from;" class="jwe-defaultText" style="width: 10em;"/>
+        <textbox id="jwe-profiles-popup-message-from" size="25"/>
+      </hbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.message.to;" class="jwe-defaultText" style="width: 10em;"/>
+        <textbox id="jwe-profiles-popup-message-to" size="25"/>
+      </hbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.message.cc;" class="jwe-defaultText" style="width: 10em;"/>
+        <textbox id="jwe-profiles-popup-message-cc" size="25"/>
+      </hbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.message.bcc;" class="jwe-defaultText" style="width: 10em;"/>
+        <textbox id="jwe-profiles-popup-message-bcc" size="25"/>
+      </hbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.message.priority;" class="jwe-defaultText" style="width: 10em;"/>
+        <checkbox label="&jwe.profiles.popup.message.priority.enabled;" value="priority" id="jwe-profiles-popup-message-priority" oncommand=""/>
+      </hbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.message.isread;" class="jwe-defaultText" style="width: 10em;"/>
+        <checkbox label="&jwe.profiles.popup.message.isread.enabled;" value="isread" id="jwe-profiles-popup-message-isread" oncommand=""/>
+      </hbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.message.type;" class="jwe-defaultText" style="width: 10em;"/>
+        <menulist align="right" oncommand="" id="jwe-profiles-popup-message-typelist">
+          <menupopup id="jwe-profiles-popup-message-type">
+            <menuitem label="&jwe.profiles.popup.message.email;" value="EmailMessage"/>
+            <menuitem label="&jwe.profiles.popup.message.mms;" value="MMSMessage"/>
+            <menuitem label="&jwe.profiles.popup.message.sms;" value="SMSMessage"/>
+          </menupopup>
+        </menulist>
+      </hbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.message.folder;" class="jwe-defaultText" style="width: 10em;"/>
+        <menulist align="right" oncommand="" id="jwe-profiles-popup-message-folderlist"/>
+      </hbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.message.callback;" class="jwe-defaultText" style="width: 10em;"/>
+        <textbox id="jwe-profiles-popup-message-callback" size="25"/>
+      </hbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.message.time;" class="jwe-defaultText" style="width: 10em;"/>
+        <datepicker type="popup" id="jwe-profiles-popup-message-date"/> <timepicker id="jwe-profiles-popup-message-time"/>
+      </hbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.message.validity;" class="jwe-defaultText" style="width: 10em;"/>
+        <textbox id="jwe-profiles-popup-message-validity" size="5" min="0" type="number"/>
+      </hbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.message.subject;" class="jwe-defaultText" style="width: 10em;"/>
+        <textbox id="jwe-profiles-popup-message-subject" size="35"/>
+      </hbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.message.body;" class="jwe-defaultText" style="width: 10em;"/>
+        <textbox id="jwe-profiles-popup-message-body" multiline="true" cols="35" rows="5" />
+      </hbox>
+    </vbox>
+
+    <hbox pack="right" class="jwe-profiles-buttons">
+      <spacer flex="1"/>
+      <button dlgtype="accept" label="&jwe.profiles.popup.message.save;"/> 
+      <button dlgtype="cancel" label="&jwe.profiles.popup.message.cancel;"/>
+    </hbox>
+    
+  </vbox>
+  
+<html:script>
+<![CDATA[
+
+function jwe_populateForm()
+{
+  var msgProfileId = window.arguments[0].inn.msgProfileId;
+  var message = window.arguments[0].inn.message;
+  
+  // load the email accounts
+  var folders = JILProfileService.wrappedJSObject.getMessageFolders(msgProfileId);
+
+  var menupopup = document.createElement("menupopup");
+  menupopup.setAttribute("id", "jwe-profiles-popup-message-folders");
+  var folderIndex = 0;
+  for ( var i = 0; i < folders.length; i++ )
+  {
+    var menuitem = document.createElement("menuitem");
+    menuitem.setAttribute("label", folders[i].name);
+    menuitem.setAttribute("value", folders[i].id);
+    menupopup.appendChild(menuitem);
+    if ( (message != null) && (folders[i].id == message.folderId) )
+      folderIndex = i;
+  }
+  document.getElementById("jwe-profiles-popup-message-folderlist").appendChild(menupopup);
+  document.getElementById("jwe-profiles-popup-message-folderlist").selectedIndex = folderIndex;    
+    
+  if ( message != null )
+  {
+    document.getElementById("jwe-profiles-popup-message-from").value = message.sourceAddress;
+    document.getElementById("jwe-profiles-popup-message-to").value = message.toAddress;
+    document.getElementById("jwe-profiles-popup-message-cc").value = message.ccAddress;
+    document.getElementById("jwe-profiles-popup-message-bcc").value = message.bccAddress;
+    document.getElementById("jwe-profiles-popup-message-callback").value = message.callback;    
+    document.getElementById("jwe-profiles-popup-message-validity").value = message.validity;
+    document.getElementById("jwe-profiles-popup-message-subject").value = message.subject;
+    document.getElementById("jwe-profiles-popup-message-body").value = message.body;
+    
+    var datetime = message.date.split(" ");
+    document.getElementById("jwe-profiles-popup-message-date").value = datetime[0];
+    document.getElementById("jwe-profiles-popup-message-time").value = datetime[1];
+        
+    if ( message.priority == true )
+      document.getElementById("jwe-profiles-popup-message-priority").checked = true;
+    else
+      document.getElementById("jwe-profiles-popup-message-priority").checked = false;
+    
+    if ( message.isRead == true )
+      document.getElementById("jwe-profiles-popup-message-isread").checked = true;
+    else
+      document.getElementById("jwe-profiles-popup-message-isread").checked = false;
+    
+    if ( message.type == "EmailMessage" )
+      document.getElementById("jwe-profiles-popup-message-typelist").selectedIndex = 0;
+    else if ( message.type == "MMSMessage" )
+      document.getElementById("jwe-profiles-popup-message-typelist").selectedIndex = 1;
+    else if ( message.type == "SMSMessage" )
+      document.getElementById("jwe-profiles-popup-message-typelist").selectedIndex = 2;
+  }
+}
+
+function jwe_saveForm()
+{  
+  var priority = false;
+  if ( document.getElementById("jwe-profiles-popup-message-priority").checked == true )
+    priority = true;
+    
+  var isRead = false;
+  if ( document.getElementById("jwe-profiles-popup-message-isread").checked == true )
+    isRead = true;
+  
+  var message =
+  {
+    toAddress: document.getElementById("jwe-profiles-popup-message-to").value,
+    sourceAddress : document.getElementById("jwe-profiles-popup-message-from").value,
+    subject : document.getElementById("jwe-profiles-popup-message-subject").value,
+    ccAddress : document.getElementById("jwe-profiles-popup-message-cc").value,
+    bccAddress : document.getElementById("jwe-profiles-popup-message-bcc").value,
+    priority : priority,
+    isRead : isRead,
+    callback : document.getElementById("jwe-profiles-popup-message-callback").value,
+    date : document.getElementById("jwe-profiles-popup-message-date").value + " "+document.getElementById("jwe-profiles-popup-message-time").value,
+    validity : document.getElementById("jwe-profiles-popup-message-validity").value,
+    body : document.getElementById("jwe-profiles-popup-message-body").value,
+    type: document.getElementById("jwe-profiles-popup-message-typelist").getItemAtIndex(document.getElementById("jwe-profiles-popup-message-typelist").selectedIndex).value,
+    folderId: document.getElementById("jwe-profiles-popup-message-folderlist").getItemAtIndex(document.getElementById("jwe-profiles-popup-message-folderlist").selectedIndex).value,
+    folderName: document.getElementById("jwe-profiles-popup-message-folderlist").getItemAtIndex(document.getElementById("jwe-profiles-popup-message-folderlist").selectedIndex).getAttribute("label"),
+    msgProfileId: window.arguments[0].inn.msgProfileId,
+  };
+  
+  if ( window.arguments[0].inn.message )
+  {
+    message.id = window.arguments[0].inn.message.id;
+    message.isChanged = true;
+  }
+  else
+  {
+    message.id = new Date().getTime();
+    message.isNew = true;
+  }
+
+  window.arguments[0].out = {message: message};
+  return(true);
+}
+
+]]>
+</html:script>
+  
+</dialog>

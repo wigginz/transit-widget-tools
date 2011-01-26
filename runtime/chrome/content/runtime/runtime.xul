@@ -1,0 +1,90 @@
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://transit-runtime/skin/skin.css" type="text/css"?>
+
+<!DOCTYPE window SYSTEM "chrome://transit-runtime/locale/translations.dtd">
+
+<window id="twr-runtime" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:h="http://www.w3.org/1999/xhtml">
+  
+  <script src="chrome://transit-runtime/content/runtime/runtime.js" />
+  
+  <vbox>
+    
+  <hbox id="jwe-emulator-workspace-container" minheight="800px" minwidth="480px">
+      
+    <hbox id="jwe-emulator-workspace">
+    
+      <stack>
+        <hbox id="jwe-emulator-container" minwidth="480px">
+          <browser id="jwe-emulator-content" type="chrome" disablehistory="true">
+          </browser>
+        </hbox>
+        <vbox class="runtime-dialog-bg" flex="1" id="jwe-runtime-dialog-bg"> 
+          <vbox class="runtime-dialog-container" id="jwe-runtime-dialog">
+            <hbox class="runtime-dialog-title-bar">
+              <description class="runtime-dialog-title" id="jwe-runtime-dialog-title-text"/> 
+            </hbox>  
+            <hbox class="runtime-dialog-body" style="overflow: hidden;">
+              <textbox id="jwe-runtime-dialog-body-text" class="plain" style="background-color: transparent;" flex="1" multiline="true" readonly="true" onoverflow="this.height = this.inputField.scrollHeight;" DOMAttrModified="if(event.attrName == 'value') this.value = event.newValue; return true;"/>
+            </hbox>
+            <hbox pack="center">
+              <label class="runtime-dialog-button" id="jwe-runtime-dialog-yes" value="Yes"/>
+              <label class="runtime-dialog-button" id="jwe-runtime-dialog-no" value="No"/>
+            </hbox>
+          </vbox>  
+        </vbox> 
+        
+        <vbox class="runtime-dialog-bg" flex="1" id="jwe-runtime-store-dialog-bg"> 
+          <vbox class="runtime-dialog-container" id="jwe-runtime-store-dialog">
+            <hbox class="runtime-dialog-title-bar">
+              <description class="runtime-dialog-title" id="jwe-runtime-store-dialog-title-text" value="&twr.runtime.store.title;"/> 
+            </hbox>  
+            <hbox class="runtime-dialog-body" style="overflow: hidden;">
+              <vbox>
+                <hbox>
+                  <label value="&twr.runtime.store.widget.title;" style="width: 14em;"/> <label id="jwe-runtime-store-dialog-title"/>
+                </hbox>
+                <hbox style="margin-top: 20px;">
+                  <label value="&twr.runtime.store.widget.description;" style="width: 14em;"/>
+                  <textbox id="jwe-runtime-store-dialog-description" class="plain" flex="1" multiline="true" readonly="true" onoverflow="this.height = this.inputField.scrollHeight;" DOMAttrModified="if(event.attrName == 'value') this.value = event.newValue; return true;"/>
+                </hbox>
+                <hbox>
+                  <label value="&twr.runtime.store.widget.price;" style="width: 14em;"/> <label id="jwe-runtime-store-dialog-price"/>
+                </hbox>
+              </vbox>
+            </hbox>
+            <hbox pack="center">
+              <label class="runtime-dialog-button" id="jwe-runtime-store-dialog-purchase" value="&twr.runtime.store.purchase;"/>
+              <label class="runtime-dialog-button" id="jwe-runtime-store-dialog-cancel" value="&twr.runtime.store.cancel;"/>
+            </hbox>
+          </vbox>  
+        </vbox> 
+        
+      </stack> 
+      
+    </hbox>
+    
+  </hbox>
+    
+    <toolbox id="jwr-runtime-menu">
+      
+      <toolbar align="center" role="toolbar" id="jwr-runtime-menbu-bar">
+
+        <toolbarseparator/>
+        
+        <toolbarbutton id="jwr-runtime-menu-bar-home" image="chrome://transit-runtime/skin/images/rt-home.png" label="&twr.runtime.menu.home;" oncommand=""/> 
+        
+        <toolbarseparator/>
+        
+        <toolbarbutton id="jwr-runtime-menu-bar-reload" image="chrome://transit-runtime/skin/images/rt-reload.png" label="&twr.runtime.menu.reload;" oncommand=""/> 
+        
+        <toolbarseparator/>
+        
+        <toolbarbutton id="jwr-runtime-menu-bar-close" image="chrome://transit-runtime/skin/images/rt-close.png" label="&twr.runtime.menu.close;" oncommand=""/> 
+        
+      </toolbar>
+      
+    </toolbox>
+    
+  </vbox>
+
+</window>

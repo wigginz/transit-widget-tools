@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://transit-emulator/skin/skin.css" type="text/css"?>
+<!DOCTYPE jilemulator SYSTEM "chrome://transit-emulator/locale/translations.dtd">
+
+<overlay id="jilemulator" 
+  xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+  xmlns:html="http://www.w3.org/1999/xhtml">
+
+    <script src="chrome://transit-emulator/content/emulator/emulator.js" />
+    
+    <menupopup id="menu_ToolsPopup">
+      <menu id="menu_jwe_manu" label="&jwe.menu.group;">
+        <menupopup id="menu_jwe_manu_popup">
+          <menuitem label="&jwe.menu.emulateintab;" oncommand="jwe_emulator.readConfig();"/>
+          <menuitem label="&jwe.menu.emulatePackageDebug;" oncommand="jwe_emulator.readPackage();"/>
+          <menuseparator/>
+          <menuitem label="&jwe.menu.profiles;" oncommand="jwe_emulator.launchProfiles();"/>
+          <!--
+          <menuseparator/>
+          <menuitem label="&jwe.menu.emulatePackage;" oncommand="jwe_emulator.openWidgetPackage(false);"/>
+          <menuitem label="&jwe.menu.emulate;" oncommand="jwe_emulator.readConfig(false);"/>
+          <menuitem label="Controls" oncommand="jwe_emulator.launchControls();"/>
+          <menuitem label="&jwe.menu.logviewer;" oncommand="jwe_emulator.logViewer();"/>
+          -->
+        </menupopup>
+      </menu>
+    </menupopup>
+    
+    <statusbar id="status-bar">
+      <statusbarpanel id="jwe-status-bar" role="button" context="jwe-status-bar-menu" onmouseup="jwe_emulator.readConfig(event);" tooltiptext="&jwe.status.bar.launch;">
+        <image id="jwe-status-icon" src="chrome://transit-emulator/skin/images/transit-enabled.png"/>
+      </statusbarpanel>
+      <menupopup id="jwe-status-bar-menu">
+        <menuitem label="&jwe.menu.emulateintab;" oncommand="jwe_emulator.readConfig();"/>
+        <menuitem label="&jwe.menu.emulatePackageDebug;" oncommand="jwe_emulator.readPackage();"/>
+        <menuseparator/>
+        <menuitem label="&jwe.menu.profiles;" oncommand="jwe_emulator.launchProfiles();"/>
+      </menupopup>
+    </statusbar>
+
+</overlay>

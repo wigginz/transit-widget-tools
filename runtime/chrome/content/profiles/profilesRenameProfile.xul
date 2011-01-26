@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://transit-emulator/skin/skin.css" type="text/css"?>
+<!DOCTYPE jilemulator SYSTEM "chrome://transit-emulator/locale/translations.dtd">
+
+
+
+<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        xmlns:html="http://www.w3.org/1999/xhtml"
+        id="jwe-profiles-popup-renameprofile"        
+        title="&jwe.profiles.popup.renameprofile.title;"
+        buttons="accept,cancel"
+        onload="jwe_populateForm();"
+        ondialogaccept="return jwe_saveForm();"
+        ondialogcancel="return true;">
+
+  <script src="chrome://transit-emulator/content/utils/utils.js" />
+
+  <vbox flex="1">
+  
+    <dialogheader title="&jwe.profiles.popup.renameprofile.header;"/>
+
+    <vbox minwidth="400px" maxwidth="400px">
+      <description>&jwe.profiles.popup.renameprofile.caption;</description>
+      <hbox align="center" style="margin-top: 20px;">
+        <label value="&jwe.profiles.popup.renameprofile.name;" style="width: 10em; font-weight: bold;"/>
+        <textbox id="jwe-profiles-renameprofile-name" size="25"/>
+      </hbox>
+    </vbox>
+
+    <hbox pack="right" class="jwe-profiles-buttons">
+      <spacer flex="1"/>
+      <button dlgtype="accept" label="&jwe.profiles.popup.renameprofile.ok;"/> 
+      <button dlgtype="cancel" label="&jwe.profiles.popup.renameprofile.cancel;"/>
+    </hbox>
+    
+  </vbox>
+  
+<html:script>
+<![CDATA[
+
+function jwe_populateForm()
+{
+  var profileName = window.arguments[0].inn.profileName;
+  $("jwe-profiles-renameprofile-name").val(profileName);
+}
+
+function jwe_saveForm()
+{
+  window.arguments[0].out = {profileName: $("jwe-profiles-renameprofile-name").val()};
+  return(true);
+}
+
+]]>
+</html:script>
+
+</dialog>

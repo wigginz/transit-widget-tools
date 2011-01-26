@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://transit-emulator/skin/skin.css" type="text/css"?>
+<!DOCTYPE jilemulator SYSTEM "chrome://transit-emulator/locale/translations.dtd">
+
+
+
+<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        xmlns:html="http://www.w3.org/1999/xhtml"
+        id="jwe-profiles-popup-addrgrpm"        
+        title="&jwe.profiles.popup.addrgrpm.title;"
+        buttons="accept,cancel"
+        onload="jwe_populateForm();"
+        ondialogaccept="return jwe_saveForm();"
+        ondialogcancel="return true;">
+
+  <vbox flex="1">
+
+    <dialogheader title="&jwe.profiles.popup.addrgrpm.caption;"/>
+    
+    <description style="width: 300px;">&jwe.profiles.popup.addrgrpm.caution;</description>
+
+    <vbox>
+      <listbox id="jwe-profiles-popup-addrgrpm-members" style="width: 500px;" seltype="multiple">
+        <listhead>
+          <listheader label="&jwe.profiles.popup.addrgrpm.name;" />
+          <listheader label="&jwe.profiles.popup.addrgrpm.mobile;" />            
+        </listhead>
+        <listcols>
+          <listcol flex="1" />
+          <splitter class="tree-splitter" />
+          <listcol flex="1" />
+        </listcols>
+      </listbox>
+    </vbox>
+
+    <hbox pack="right" class="jwe-profiles-buttons">
+      <spacer flex="1"/>
+      <button dlgtype="accept" label="&jwe.profiles.popup.addrgrpm.ok;"/> 
+      <button dlgtype="cancel" label="&jwe.profiles.popup.addrgrpm.cancel;"/>
+    </hbox>
+    
+  </vbox>
+
+<html:script>
+<![CDATA[
+
+var availableItems = new Array();
+
+function jwe_populateForm()
+{
+  var pimProfileId = window.arguments[0].inn.pimProfileId;
+  var groupId = window.arguments[0].inn.groupId;
+  var availableMembers = window.arguments[0].inn.availableMembers;
+  
+  for ( var i in availableMembers )
+  {
+    var listitem = document.createElement("listitem");
+    listitem.setAttribute("value", availableMembers[i].id);
+    
+    var nameCell = document.createElement("listcell");
+    var mobileCell = document.createElement("listcell");
+
+    nameCell.setAttribute("label", availableMembers[i].fullName); 
+    nameCell.setAttribute("id", availableMembers[i]+"-name");
+    mobileCell.setAttribute("label", availableMembers[i].mobilePhone); 
+    mobileCell.setAttribute("id", availableMembers[i]+"-mobile");
+    
+    availableItems[availableMembers[i].id] = availableMembers[i];
+    
+    listitem.appendChild(nameCell);
+    listitem.appendChild(mobileCell);
+    
+    document.getElementById("jwe-profiles-popup-addrgrpm-members").appendChild(listitem);
+  }
+}
+
+function jwe_saveForm(message)
+{
+  var items = new Array();
+  
+  var selectedItems = document.getElementById("jwe-profiles-popup-addrgrpm-members").selectedItems;
+
+  for ( var i = 0; i < selectedItems.length; i++ )
+    items.push(availableItems[selectedItems[i].value]);
+
+  window.arguments[0].out = {items: items};
+  return(true);
+}
+
+]]>
+</html:script>
+
+</dialog>

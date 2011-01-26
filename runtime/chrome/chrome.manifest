@@ -1,0 +1,7 @@
+content transit-runtime file:content/ xpcnativewrappers=no contentaccessible=yes
+
+skin transit-runtime classic/1.0 file:skin/
+
+locale transit-runtime en-US file:locale/en-US/
+
+resource transit-runtime file:modules/

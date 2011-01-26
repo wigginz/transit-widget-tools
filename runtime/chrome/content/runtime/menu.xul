@@ -1,0 +1,61 @@
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://transit-runtime/skin/runtime.css" type="text/css"?>
+
+<!DOCTYPE window SYSTEM "chrome://transit-runtime/locale/translations.dtd">
+
+<window 
+  id="twr-home" 
+  xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" 
+  xmlns:html="http://www.w3.org/1999/xhtml" 
+  xmlns:h="http://www.w3.org/1999/xhtml"
+  title="&twr.home.window.title;"
+>
+
+  <script src="chrome://transit-runtime/content/runtime/runtime.js" />
+  
+  <vbox>
+    
+  <hbox id="twr-home-workspace-container" minheight="800px" minwidth="480px">
+      
+    <hbox id="twr-home-workspace">
+    
+      <stack>
+        
+        <hbox id="twr-home-container" minwidth="480px">
+          <browser id="twr-home-content" type="chrome" disablehistory="true">
+          </browser>
+        </hbox>
+        
+      </stack>
+      
+    </hbox>
+    
+  </hbox>
+    
+    <toolbox id="jwr-home-menu">
+      
+      <toolbar align="center" role="toolbar" id="jwr-home-menbu-bar">
+
+        <toolbarseparator/>
+        
+        <toolbarbutton id="jwr-home-menu-bar-install" class="twr-home-menu-button" image="chrome://transit-runtime/skin/images/home-install.png" label="&twr.home.menu.install;" oncommand="twr_runtime.readPackage();"/> 
+        
+        <toolbarseparator/>
+        
+        <toolbarbutton id="jwr-runtime-menu-bar-reorder" class="twr-home-menu-button" image="chrome://transit-runtime/skin/images/home-reorder.png" label="&twr.home.menu.reorder;" oncommand=""/> 
+        
+        <toolbarseparator/>
+        
+        <toolbarbutton id="jwr-runtime-menu-bar-settings" class="twr-home-menu-button" image="chrome://transit-runtime/skin/images/home-settings.png" label="&twr.home.menu.settings;" oncommand=""/> 
+        
+        <toolbarseparator/>
+        
+        <toolbarbutton id="jwr-runtime-menu-bar-exit" class="twr-home-menu-button" image="chrome://transit-runtime/skin/images/home-exit.png" label="&twr.home.menu.exit;" oncommand=""/> 
+        
+      </toolbar>
+      
+    </toolbox>
+    
+  </vbox>
+
+</window>
