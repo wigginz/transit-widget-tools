@@ -1,0 +1,17 @@
+<!ENTITY twr.runtime.menu.home "Home">
+<!ENTITY twr.runtime.menu.reload "Reload">
+<!ENTITY twr.runtime.menu.close "Close">
+
+<!ENTITY twr.runtime.store.title "Purchase Widget?">
+<!ENTITY twr.runtime.store.purchase "Purchase">
+<!ENTITY twr.runtime.store.cancel "Cancel">
+<!ENTITY twr.runtime.store.widget.title "Widget Name: ">
+<!ENTITY twr.runtime.store.widget.price "Price: ">
+<!ENTITY twr.runtime.store.widget.description "Description: ">
+
+<!ENTITY twr.home.window.title "Transit Widget Runtime">
+<!ENTITY twr.home.menu.install "Get a Widget">
+<!ENTITY twr.home.menu.reorder "Reorder">
+<!ENTITY twr.home.menu.uninstall "Uninstall">
+<!ENTITY twr.home.menu.settings "Settings">
+<!ENTITY twr.home.menu.exit "Exit">

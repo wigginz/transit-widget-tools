@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://transit-emulator/skin/skin.css" type="text/css"?>
+<!DOCTYPE jilemulator SYSTEM "chrome://transit-emulator/locale/translations.dtd">
+
+
+
+<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        xmlns:html="http://www.w3.org/1999/xhtml"
+        id="jwe-profiles-popup-email"        
+        title="&jwe.profiles.popup.email.title;"
+        buttons="accept,cancel"
+        onload="jwe_populateForm();"
+        ondialogaccept="return jwe_saveForm();"
+        ondialogcancel="return true;">
+
+  <vbox flex="1">
+
+    <dialogheader title="&jwe.profiles.popup.email.caption;"/>
+    
+    <vbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.email.name;" class="jwe-defaultText" style="width: 10em;"/>
+        <textbox id="jwe-profiles-popup-email-name" size="25"/>
+      </hbox>
+    </vbox>
+
+    <hbox pack="right" class="jwe-profiles-buttons">
+      <spacer flex="1"/>
+      <button dlgtype="accept" label="&jwe.profiles.popup.email.save;"/> 
+      <button dlgtype="cancel" label="&jwe.profiles.popup.email.cancel;"/>
+    </hbox>
+    
+  </vbox>
+  
+<html:script>
+<![CDATA[
+
+function jwe_populateForm()
+{
+  var msgProfileId = window.arguments[0].inn.msgProfileId;
+  var account = window.arguments[0].inn.account;
+    
+  if ( account != null )
+  {
+    document.getElementById("jwe-profiles-popup-email-name").value = account.name;
+  }
+}
+
+function jwe_saveForm()
+{
+  var account =
+  {
+    name: document.getElementById("jwe-profiles-popup-email-name").value,
+    msgProfileId: window.arguments[0].inn.msgProfileId,
+  };
+  
+  if ( window.arguments[0].inn.account )
+  {
+    account.id = window.arguments[0].inn.account.id;
+    account.isChanged = true;
+  }
+  else
+  {
+    account.id = new Date().getTime();
+    account.isNew = true;
+  }
+
+  window.arguments[0].out = {account: account};
+  return(true);
+}
+
+]]>
+</html:script>
+
+</dialog>

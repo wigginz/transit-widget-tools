@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://transit-emulator/skin/skin.css" type="text/css"?>
+<!DOCTYPE jilemulator SYSTEM "chrome://transit-emulator/locale/translations.dtd">
+
+
+
+<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        xmlns:html="http://www.w3.org/1999/xhtml"
+        id="jwe-profiles-popup-newdevice"        
+        title="&jwe.profiles.popup.newdevice.title;"
+        buttons="accept,cancel"
+        onload="jwe_populateForm();"
+        ondialogaccept="return jwe_saveForm('&jwe.profiles.popup.newdevice.saveSuccess;', '&jwe.profiles.popup.newdevice.saveFailure;');"
+        ondialogcancel="return true;">
+
+  <script src="chrome://transit-emulator/content/utils/utils.js" />
+
+  <vbox flex="1">
+  
+    <dialogheader title="&jwe.profiles.popup.newdevice.header;"/>
+
+    <vbox minwidth="400px" maxwidth="400px">
+      <description>&jwe.profiles.popup.newdevice.caption;</description>
+      <hbox align="center" style="margin-top: 20px;">
+        <label value="&jwe.profiles.popup.newdevice.name;" style="width: 10em; font-weight: bold;"/>
+        <textbox id="jwe-profiles-newdevice-name" size="25"/>
+      </hbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.newdevice.uuid;" style="width: 10em; font-weight: bold;"/>
+        <textbox id="jwe-profiles-newdevice-uuid" size="25"/>
+      </hbox>
+      <hbox align="center" style="margin-bottom: 20px;">
+        <label value="&jwe.profiles.popup.newdevice.devicelist;" style="width: 10em; font-weight: bold;"/>
+        <menulist id="jwe-profiles-newdevice-copy"/>
+      </hbox>
+    </vbox>
+
+    <hbox pack="right" class="jwe-profiles-buttons">
+      <spacer flex="1"/>
+      <button dlgtype="accept" label="&jwe.profiles.popup.newdevice.ok;"/> 
+      <button dlgtype="cancel" label="&jwe.profiles.popup.newdevice.cancel;"/>
+    </hbox>
+    
+  </vbox>
+  
+<html:script>
+<![CDATA[
+
+//var deviceNames = new Array();
+
+function jwe_populateForm()
+{
+  var devices = JILProfileService.wrappedJSObject.getAllDeviceProfiles();
+  $("jwe-profiles-newdevice-copy").node.removeAllItems();
+  var menupopup = document.createElement("menupopup");
+  menupopup.setAttribute("id", "jwe-profiles-newdevice-copy-list");
+  for ( var i = 0; i < devices.length; i++ )
+  {
+    var menuitem = document.createElement("menuitem");
+    menuitem.setAttribute("label", devices[i].name);
+    menuitem.setAttribute("value", devices[i].id);
+    menupopup.appendChild(menuitem);
+    //deviceNames[devices[i].id] = devices[i].name;
+  }
+  $("jwe-profiles-newdevice-copy").add(menupopup);
+  $("jwe-profiles-newdevice-copy").sel(0);
+}
+
+function jwe_saveForm(saveMessage, failMessage)
+{
+  var copyId = $("jwe-profiles-newdevice-copy").selValue();
+  var name = $("jwe-profiles-newdevice-name").val();
+  var uuid = $("jwe-profiles-newdevice-uuid").val();
+  
+  if ( JILProfileService.wrappedJSObject.createNewDeviceProfile(name, uuid, copyId) )
+  {
+    alert(saveMessage);
+    return(true);
+  }
+  else 
+  {
+    alert(failMessage);
+    return(false);
+  }
+}
+
+]]>
+</html:script>
+
+</dialog>

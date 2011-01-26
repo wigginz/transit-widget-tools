@@ -1,0 +1,35 @@
+#twr-home-workspace
+{
+  border: 2px solid #504F61; 
+  background-repeat: no-repeat;
+  background-position: center center;
+  overflow: hidden;
+  background-color: black;
+  z-index: 101;
+}
+
+#twr-home-workspace-container
+{
+  background-color: #878a8d;
+  padding: 10px;
+}
+
+#twr-home-container
+{
+  position:absolute;
+  z-index: 100;
+}
+
+#twr-home-content
+{
+  margin: auto;
+  position: absolute;
+  top: 0px;
+  cursor: auto;
+  overflow: auto;
+}
+
+.twr-home-menu-button
+{
+  margin: 5px;
+}
