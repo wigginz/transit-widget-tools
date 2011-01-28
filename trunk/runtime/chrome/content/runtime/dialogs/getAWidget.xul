@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://transit-runtime/skin/runtime.css" type="text/css"?>
+
+<!DOCTYPE window SYSTEM "chrome://transit-runtime/locale/translations.dtd">
+
+<window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+  xmlns:h="http://www.w3.org/1999/xhtml"
+  id="twr.getAWidget"
+  title="&twr.dialog.getAWidget.title;"
+>
+
+  <vbox style="padding: 20px;">
+    
+    <button label="&twr.dialog.getAWidget.appStore;" style="margin: 10px;"/>
+    <button label="&twr.dialog.getAWidget.file;" oncommand="installWidgetPackage();" style="margin: 10px;"/>
+    
+  </vbox>
+   
+
+<script type="text/javascript">
+<![CDATA[
+
+Components.utils.import("resource://transit-runtime/runtime/WidgetManager.jsm");
+
+function installWidgetPackage()
+{
+  window.close();
+  WidgetManager.installWidgetPackage();
+}
+
+]]>
+</script>
+
+</window>

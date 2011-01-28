@@ -1,3 +1,36 @@
+// new functions to replace the old emulator.js (move all functions to modules/services and only have utility functions here)
+
+Components.utils.import("resource://transit-runtime/TransitCommon.jsm");  
+Components.utils.import("resource://transit-runtime/runtime/WidgetManager.jsm");  
+Components.utils.import("resource://transit-runtime/runtime/RuntimeManager.jsm");  
+
+var twr_runtime_helper =
+{
+  getAWidget : function()
+  {
+    // open the dialog allowing the user to choose where to get a widget from (local filesystem or app store)
+    RuntimeManager.openDialog(RuntimeManager.dialogs.GET_A_WIDGET);
+  },
+  
+  exit : function()
+  {
+    RuntimeManager.exit();
+  },
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // progress listener to inject the widget script as quickly as possible for the widget's browser
 var jweInjector =
 {
@@ -408,14 +441,12 @@ var twr_runtime =
   {
     if ( this.emulator == null )
       this.emulator = Components.classes["@jil.org/jilapi-emulatorruntime;1"].getService().wrappedJSObject;
-
-    Components.classes["@jil.org/jilapi-widgetmanager;1"].getService().wrappedJSObject;
     
     var configFile = this.emulator.openWidgetPackage(window);
 	  content.location = configFile;
 
 	  //alert("Widget package has been loaded.");
-    jwe_waitForDelay(500);
+    twr_waitForDelay(500);
 
     this.emulator.emulateWidget(content.location.pathname, content.document.documentElement, null, false);
     gBrowser.selectedTab = gBrowser.addTab("chrome://transit-emulator/content/emulator/emulator.xul");
@@ -456,7 +487,7 @@ var twr_runtime =
       $("jwe-emulator-subtab-event-trigger-button").disable(true);
     
     // wait x milliseconds before triggering the event
-    jwe_waitForDelay(delay);
+    twr_waitForDelay(delay);
     
     if ( selected == "widget" )
       this.triggerWidgetEvent();
@@ -860,7 +891,7 @@ var twr_runtime =
   },
 };
 
-function jwe_waitForDelay(delay) 
+function twr_waitForDelay(delay) 
 {
   try
   {

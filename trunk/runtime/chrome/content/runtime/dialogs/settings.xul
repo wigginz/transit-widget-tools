@@ -1,0 +1,154 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://transit-runtime/skin/runtime.css" type="text/css"?>
+<!DOCTYPE window SYSTEM "chrome://transit-runtime/locale/translations.dtd">
+
+<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        xmlns:html="http://www.w3.org/1999/xhtml"
+        id="jwe-profiles-popup-export"        
+        title="&jwe.profiles.popup.export.title;"
+        buttons="accept"
+        onload="jwe_populateForm();"
+        ondialogaccept="return true;">
+
+  <script src="chrome://transit-emulator/content/utils/utils.js" />
+
+  <vbox flex="1">
+  
+    <dialogheader title="&jwe.profiles.popup.export.header;"/>
+
+    <vbox minwidth="400px" maxwidth="400px">
+      <description>&jwe.profiles.popup.export.caption;</description>
+      <hbox align="center" style="margin-top: 20px; margin-bottom: 20px;">
+        <label value="&jwe.profiles.popup.export.devicelist;" style="width: 12em; font-weight: bold;"/>
+        <menulist id="jwe-profiles-export-device" style="width: 16em;"/>
+        <button label="&jwe.profiles.popup.export.button;" oncommand="jwe_export('device', '&jwe.profiles.popup.export.saveSuccess;');"/> 
+      </hbox>
+      <hbox align="center">
+        <label value="&jwe.profiles.popup.export.messaginglist;" style="width: 12em; font-weight: bold;"/>
+        <menulist id="jwe-profiles-export-messaging" style="width: 16em;"/>
+        <button label="&jwe.profiles.popup.export.button;" oncommand="jwe_export('messaging', '&jwe.profiles.popup.export.saveSuccess;');"/> 
+      </hbox>
+      <hbox align="center" style="margin-top: 20px; margin-bottom: 20px;">
+        <label value="&jwe.profiles.popup.export.pimlist;" style="width: 12em; font-weight: bold;"/>
+        <menulist id="jwe-profiles-export-pim" style="width: 16em;"/>
+        <button label="&jwe.profiles.popup.export.button;" oncommand="jwe_export('pim', '&jwe.profiles.popup.export.saveSuccess;');"/> 
+      </hbox>
+    </vbox>
+
+    <hbox pack="right" class="jwe-profiles-buttons">
+      <spacer flex="1"/>
+      <button dlgtype="accept" label="&jwe.profiles.popup.export.ok;"/> 
+    </hbox>
+    
+  </vbox>
+  
+<html:script>
+<![CDATA[
+
+var deviceNames = new Array();
+var messagingNames = new Array();
+var pimNames = new Array();
+
+function jwe_populateForm()
+{
+  // devices
+  var devices = JILProfileService.wrappedJSObject.getAllDeviceProfiles();
+  $("jwe-profiles-export-device").node.removeAllItems();
+  var menupopup = document.createElement("menupopup");
+  menupopup.setAttribute("id", "jwe-profiles-export-device-list");
+  for ( var i = 0; i < devices.length; i++ )
+  {
+    var menuitem = document.createElement("menuitem");
+    menuitem.setAttribute("label", devices[i].name);
+    menuitem.setAttribute("value", devices[i].id);
+    menupopup.appendChild(menuitem);
+    deviceNames[devices[i].id] = devices[i].name;
+  }
+  $("jwe-profiles-export-device").add(menupopup);    
+  $("jwe-profiles-export-device").sel(0);  
+  
+  // messaginglist
+  var messaging = JILProfileService.wrappedJSObject.getAllMessageProfiles();
+  $("jwe-profiles-export-messaging").node.removeAllItems();
+  var menupopupMsg = document.createElement("menupopup");
+  menupopupMsg.setAttribute("id", "jwe-profiles-export-messaging-list");
+  for ( var i = 0; i < messaging.length; i++ )
+  {
+    var menuitem = document.createElement("menuitem");
+    menuitem.setAttribute("label", messaging[i].name);
+    menuitem.setAttribute("value", messaging[i].id);
+    menupopupMsg.appendChild(menuitem);
+    messagingNames[messaging[i].id] = messaging[i].name;
+  }
+  $("jwe-profiles-export-messaging").add(menupopupMsg);    
+  $("jwe-profiles-export-messaging").sel(0); 
+  
+  // pim
+  var pims = JILProfileService.wrappedJSObject.getAllPIMProfiles();
+  $("jwe-profiles-export-pim").node.removeAllItems();
+  var menupopupPim = document.createElement("menupopup");
+  menupopupPim.setAttribute("id", "jwe-profiles-export-pim-list");
+  for ( var i = 0; i < pims.length; i++ )
+  {
+    var menuitem = document.createElement("menuitem");
+    menuitem.setAttribute("label", pims[i].name);
+    menuitem.setAttribute("value", pims[i].id);
+    menupopupPim.appendChild(menuitem);
+    pimNames[pims[i].id] = pims[i].name;
+  }
+  $("jwe-profiles-export-pim").add(menupopupPim);    
+  $("jwe-profiles-export-pim").sel(0); 
+}
+
+function jwe_export(type, saveMessage)
+{
+  var jsonString = null;
+  var profileName = null;
+  
+  if ( type == "device" )
+  {
+    jsonString = JILProfileService.wrappedJSObject.exportDeviceProfile($("jwe-profiles-export-device").selValue());
+    profileName = "device-"+deviceNames[$("jwe-profiles-export-device").selValue()];
+  }
+  else if ( type == "messaging" )
+  {
+    jsonString = JILProfileService.wrappedJSObject.exportMessagingProfile($("jwe-profiles-export-messaging").selValue());
+    profileName = "messaging-"+messagingNames[$("jwe-profiles-export-messaging").selValue()];
+  }
+  else if ( type == "pim" )
+  {
+    jsonString = JILProfileService.wrappedJSObject.exportPIMProfile($("jwe-profiles-export-messaging").selValue());
+    profileName = "pim-"+pimNames[$("jwe-profiles-export-pim").selValue()];
+  }
+  
+  var nsIFilePicker = Components.interfaces.nsIFilePicker;
+  var fp = Components.classes["@mozilla.org/filepicker;1"].createInstance(nsIFilePicker);
+  fp.init(window, "Select a File", nsIFilePicker.modeSave);
+  fp.appendFilter("Transit Widget Emulator File (*.json)","*.json");
+  fp.defaultString = profileName+".json";
+  
+  var res = fp.show();
+  // accept an OK or replace
+  if ( (res == nsIFilePicker.returnOK) || (res == nsIFilePicker.returnReplace) )
+  {
+    var foStream = Components.classes["@mozilla.org/network/file-output-stream;1"].createInstance(Components.interfaces.nsIFileOutputStream);
+    foStream.init(fp.file, 0x02 | 0x08 | 0x20, 0666, 0); 
+    
+    var converter = Components.classes["@mozilla.org/intl/converter-output-stream;1"].createInstance(Components.interfaces.nsIConverterOutputStream);
+    converter.init(foStream, "UTF-8", 0, 0);
+    converter.writeString(jsonString);
+    converter.close();
+    
+    alert(saveMessage);
+    
+    return(true);
+  }
+  else 
+    return(false);
+}
+
+]]>
+</html:script>
+
+</dialog>

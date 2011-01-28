@@ -2,8 +2,8 @@ const CLASS_ID = Components.ID("c37a7321-3dd3-11df-9879-0800200c9a66"); //#
 const CLASS_NAME = "JIL API Profile Service"; //#
 const CONTRACT_ID = "@jil.org/jilapi-profileservice;1"; //#
 
-const SQL_FILE = "transit-emulator_1-2-2-20100709.sqlite";
-const PROF_DIR = "transit";
+const SQL_FILE = "transit-runtime.sqlite";
+const PROF_DIR = "prof-db";
 
 /***********************************************************/
 
@@ -368,7 +368,7 @@ JILProfileService.prototype = //#
 
   getEmulatedWidgetByAppId : function(profileId, appId, version)
   {
-    var stmt = this.getConnection().createStatement("select id, name, version, author from jwe_emulated_widget where profile_id = :profileId and application_id = :appId and version = :version");
+    var stmt = this.getConnection().createStatement("select id, name, version, author, uuid from jwe_emulated_widget where profile_id = :profileId and application_id = :appId and version = :version");
     stmt.params.profileId = profileId;
     stmt.params.appId = appId;
     stmt.params.version = version;
@@ -384,6 +384,7 @@ JILProfileService.prototype = //#
         widget.name = stmt.row.name;
         widget.version = version;
         widget.author = stmt.row.author;
+	widget.uuid = stmt.row.uuid;
       }
     }
     finally 
@@ -399,13 +400,14 @@ JILProfileService.prototype = //#
 
   updateEmulatedWidget : function(widget)
   {
-    var stmt = this.getConnection().createStatement("update jwe_emulated_widget set application_id = :appId, version = :version, name = :name, author = :author where profile_id = :profileId and id = :widgetId");
+    var stmt = this.getConnection().createStatement("update jwe_emulated_widget set application_id = :appId, version = :version, name = :name, author = :author, uuid = :uuid where profile_id = :profileId and id = :widgetId");
     stmt.params.appId = widget.applicationId;
     stmt.params.version = widget.version;
     stmt.params.name = widget.name;
     stmt.params.author = widget.author;
     stmt.params.profileId = widget.profileId;
     stmt.params.widgetId = widget.id;
+    stmt.params.uuid = widget.uuid;
 
     try
     {
@@ -424,13 +426,14 @@ JILProfileService.prototype = //#
   },
 
   addEmulatedWidget : function(widget)
-  {
-    var stmt = this.getConnection().createStatement("insert into jwe_emulated_widget (id, profile_id, application_id, version, name, author) values (null, :profileId, :appId, :version, :name, :author)");
+  { 
+    var stmt = this.getConnection().createStatement("insert into jwe_emulated_widget (id, profile_id, application_id, version, name, author, uuid) values (null, :profileId, :appId, :version, :name, :author, :wuuid)");
     stmt.params.profileId = widget.profileId;
     stmt.params.appId = widget.applicationId;
     stmt.params.version = widget.version;
     stmt.params.name = widget.name;
     stmt.params.author = widget.author;
+    stmt.params.wuuid = widget.uuid;
 
     try
     {

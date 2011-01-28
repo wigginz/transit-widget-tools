@@ -3,6 +3,16 @@ var EXPORTED_SYMBOLS = ["TransitCommon"];
 var TransitCommon = 
 {
   fileSep : null,
+
+  getDomDocFromFile : function(fileUrl)
+  {
+    var req = Components.classes["@mozilla.org/xmlextras/xmlhttprequest;1"].createInstance(Components.interfaces.nsIXMLHttpRequest);
+    req.open("GET", fileUrl, false); 
+    req.send(null);
+    // print the name of the root element or error message
+    var dom = req.responseXML;
+    return(dom.documentElement);
+  },
   
   getStringSearchStatement : function(column, value)
   {
