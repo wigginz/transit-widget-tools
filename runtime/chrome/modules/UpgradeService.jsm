@@ -183,10 +183,10 @@ var UpgradeService =
 
     if ( (Target_Current.version != this.currentVersion) || upgradeAll )
     {
-      if ( upgradeAll )
-        TransitCommon.alert("Your profile database requires an upgrade to DB "+Target_Current.version+" to use this version of the Transit Emulator. Will be upgrading from very first patchable DB.");
-      else
-        TransitCommon.alert("Your profile database requires upgrade to DB "+Target_Current.version+" to use this version of the Transit Emulator. Will be upgrading from DB "+this.currentVersion+". If an error occurs, your profile database will not be changed.");
+      //if ( upgradeAll )
+      //  TransitCommon.alert("Your profile database requires an upgrade to DB "+Target_Current.version+" to use this version of the Transit Emulator. Will be upgrading from very first patchable DB.");
+      //else
+      //  TransitCommon.alert("Your profile database requires upgrade to DB "+Target_Current.version+" to use this version of the Transit Emulator. Will be upgrading from DB "+this.currentVersion+". If an error occurs, your profile database will not be changed.");
       
       connection.beginTransaction();
       
@@ -215,7 +215,7 @@ var UpgradeService =
         
         connection.commitTransaction();
         
-        TransitCommon.alert("Your profile database has been successfull upgraded to the current version.");  
+        //TransitCommon.alert("Your profile database has been successfull upgraded to the current version.");  
       }
       catch(ex)
       {

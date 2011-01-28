@@ -15,3 +15,7 @@
 <!ENTITY twr.home.menu.uninstall "Uninstall">
 <!ENTITY twr.home.menu.settings "Settings">
 <!ENTITY twr.home.menu.exit "Exit">
+
+<!ENTITY twr.dialog.getAWidget.title "Get A Widget">
+<!ENTITY twr.dialog.getAWidget.appStore "From the Widget Store">
+<!ENTITY twr.dialog.getAWidget.file "From a Widget File">

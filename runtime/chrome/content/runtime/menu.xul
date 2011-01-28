@@ -38,7 +38,7 @@
 
         <toolbarseparator/>
         
-        <toolbarbutton id="jwr-home-menu-bar-install" class="twr-home-menu-button" image="chrome://transit-runtime/skin/images/home-install.png" label="&twr.home.menu.install;" oncommand="twr_runtime.readPackage();"/> 
+        <toolbarbutton id="jwr-home-menu-bar-install" class="twr-home-menu-button" image="chrome://transit-runtime/skin/images/home-install.png" label="&twr.home.menu.install;" oncommand="twr_runtime_helper.getAWidget();"/> 
         
         <toolbarseparator/>
         
@@ -50,7 +50,7 @@
         
         <toolbarseparator/>
         
-        <toolbarbutton id="jwr-runtime-menu-bar-exit" class="twr-home-menu-button" image="chrome://transit-runtime/skin/images/home-exit.png" label="&twr.home.menu.exit;" oncommand=""/> 
+        <toolbarbutton id="jwr-runtime-menu-bar-exit" class="twr-home-menu-button" image="chrome://transit-runtime/skin/images/home-exit.png" label="&twr.home.menu.exit;" oncommand="twr_runtime_helper.exit();"/> 
         
       </toolbar>
       

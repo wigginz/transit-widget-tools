@@ -8,7 +8,7 @@
   <script src="chrome://transit-runtime/content/runtime/runtime.js" />
   
   <vbox>
-    
+
   <hbox id="jwe-emulator-workspace-container" minheight="800px" minwidth="480px">
       
     <hbox id="jwe-emulator-workspace">
