@@ -9,7 +9,12 @@ var twr_runtime_helper =
   getAWidget : function()
   {
     // open the dialog allowing the user to choose where to get a widget from (local filesystem or app store)
-    RuntimeManager.openDialog(RuntimeManager.dialogs.GET_A_WIDGET);
+    var widget = RuntimeManager.openDialog(RuntimeManager.dialogs.GET_A_WIDGET);
+    
+    if ( widget )
+    {
+      $("jwe-emulator-content").attr("src", widget.contentSource);
+    }
   },
   
   exit : function()

@@ -155,7 +155,7 @@ var WidgetManager =
     // finally, update the profile database
     RuntimeManager.updateInstalledWidget(emulatedWidget);
 
-    widget.emulatedWidget
-    return(
+    widget.emulatedWidget = emulatedWidget;
+    return(widget);
   },
 }
