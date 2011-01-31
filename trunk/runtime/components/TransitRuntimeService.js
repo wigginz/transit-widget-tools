@@ -151,6 +151,11 @@ TransitRuntimeService.prototype =
   {
     return(this.services.profiles.getAPIExtensionsForDevice(this.context.deviceProfile.id));
   },
+  
+  getEmulatedWidgets : function()
+  {
+    return(this.services.profiles.getEmulatedWidgets(this.context.deviceProfile.id));
+  },
 };
 
 
