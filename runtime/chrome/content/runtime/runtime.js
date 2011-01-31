@@ -8,12 +8,14 @@ var twr_runtime_helper =
 {
   getAWidget : function()
   {
-    // open the dialog allowing the user to choose where to get a widget from (local filesystem or app store)
-    var widget = RuntimeManager.openDialog(RuntimeManager.dialogs.GET_A_WIDGET);
+    var params = {out: null};
     
-    if ( widget )
+    // open the dialog allowing the user to choose where to get a widget from (local filesystem or app store)
+    var widget = RuntimeManager.openDialog(RuntimeManager.dialogs.GET_A_WIDGET, params);
+
+    if ( params.out && params.out.widget ) 
     {
-      $("jwe-emulator-content").attr("src", widget.contentSource);
+      this.runWidget(params.out.widget);
     }
   },
   
@@ -21,9 +23,41 @@ var twr_runtime_helper =
   {
     RuntimeManager.exit();
   },
+  
+  runWidget : function(widget)
+  {
+    // make sure the runtime is initialized. it should aways be, but in case, dont want to crash 
+    //RuntimeManager.initDevice();
+    
+    // set up this widget's display panel
+    this.setupWidgetPanel(widget);
+    
+    $("twr-home-content").attr("src", widget.contentSource);
+  },
+  
+  setupWidgetPanel : function(widget)
+  {
+    var dHeight = 800;
+    var dWidth = 480;
+    
+    $("twr-home-workspace").attr("maxheight", dHeight+4);
+    $("twr-home-workspace").attr("minheight", dHeight+4);
+
+    $("twr-home-workspace").attr("maxwidth", dWidth+4);
+    $("twr-home-workspace").attr("minwidth", dWidth+4);
+    
+    $("twr-home-workspace").attr("maxheight", dHeight+"px");
+    $("twr-home-workspace").attr("maxwidth", dWidth+"px");
+    $("twr-home-workspace").css("height", dHeight+"px");
+    $("twr-home-workspace").css("width", dWidth+"px");
+    
+    var top = (dWidth - widget.height)/2;
+    $("twr-home-container").node.style.paddingTop = top+"px";
+
+    $("twr-home-content").css("height", widget.height+"px");
+    $("twr-home-content").css("width", widget.width+"px");
+  },
 }
-
-
 
 
 

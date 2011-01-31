@@ -151,6 +151,14 @@ var WidgetManager =
     
     wgtDir.copyTo(widgetInstallDir, emulatedWidget.uuid);
     wgtDir.remove(true);
+    
+    var newContentSource = "file://"+
+      widgetInstallDir.path+
+      TransitCommon.getFileSeparator()+
+      emulatedWidget.uuid+
+      TransitCommon.getFileSeparator()+
+      widget.contentLeafName;
+    widget.contentSource = newContentSource;    
 
     // finally, update the profile database
     RuntimeManager.updateInstalledWidget(emulatedWidget);

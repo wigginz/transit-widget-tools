@@ -135,6 +135,7 @@ var WidgetIngester =
     {
       widget.contentType = contentElement.getAttribute("type");
       widget.contentSource = "file://"+baseUrl+contentElement.getAttribute("src");
+      widget.contentLeafName = contentElement.getAttribute("src");
       widget.contentEncoding = contentElement.getAttribute("charset");
     }
     
@@ -311,6 +312,7 @@ var WidgetIngester =
     {
       widget.contentType = contentElement.getAttribute("type");
       widget.contentSource = "file://"+baseUrl+contentElement.getAttribute("src");
+      widget.contentLeafName = contentElement.getAttribute("src");
       widget.contentEncoding = contentElement.getAttribute("encoding");
     }
     

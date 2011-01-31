@@ -12,10 +12,11 @@
 >
 
   <script src="chrome://transit-runtime/content/runtime/runtime.js" />
+  <script src="chrome://transit-runtime/content/utils/utils.js" />
   
   <vbox>
     
-  <hbox id="twr-home-workspace-container" minheight="800px" minwidth="480px">
+  <hbox id="twr-home-workspace-container" minheight="820px" minwidth="500px">
       
     <hbox id="twr-home-workspace">
     

@@ -22,11 +22,12 @@
 <![CDATA[
 
 Components.utils.import("resource://transit-runtime/runtime/WidgetManager.jsm");
+Components.utils.import("resource://transit-runtime/TransitCommon.jsm");  
 
 function installWidgetPackage()
 {
   window.close();
-  WidgetManager.installWidgetPackage();
+  window.arguments[0].out = {widget: WidgetManager.installWidgetPackage()};
 }
 
 ]]>
