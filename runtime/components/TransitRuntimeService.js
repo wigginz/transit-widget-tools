@@ -26,6 +26,8 @@ TransitRuntimeService.prototype =
   services :
   {
     profiles : null,
+    // need to get rid of this and merge it with the runtime manager
+    emulator : null,
   },
 
   dialogs : 
@@ -54,11 +56,15 @@ TransitRuntimeService.prototype =
   init : function()
   {
     this.services.profiles = Components.classes['@jil.org/jilapi-profileservice;1'].getService().wrappedJSObject;
+    this.services.emulator = Components.classes['@jil.org/jilapi-emulatorruntime;1'].getService().wrappedJSObject,
   
     this.context.deviceProfile = this.services.profiles.getAllDeviceProfiles()[0];
     
     this.context.deviceWidth = this.getDeviceInfo().screenWidth;
     this.context.deviceHeight = this.getDeviceInfo().screenHeight;
+    
+    // config the emulator
+    this.services.emulator.deviceProfile = this.context.deviceProfile;
   },
   
   getDeviceInfo : function()
