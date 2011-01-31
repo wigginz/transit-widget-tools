@@ -3,22 +3,22 @@ var EXPORTED_SYMBOLS = ["Widget"];
 Components.utils.import("resource://transit-emulator/TransitCommon.jsm");
 
 // use the 1.2.2 security manager since it wasn't different in 1.0
-Components.utils.import("resource://transit-emulator/api/jil/SecurityManager.jsm");
+Components.utils.import("resource://transit-runtime/api/jil/SecurityManager.jsm");
 
-Components.utils.import("resource://transit-emulator/api/jil/1.1r4/Multimedia.jsm");
-Components.utils.import("resource://transit-emulator/api/jil/1.1r4/Device.jsm");
-Components.utils.import("resource://transit-emulator/api/jil/1.1r4/PositionInfo.jsm");
-Components.utils.import("resource://transit-emulator/api/jil/1.1r4/File.jsm");
-Components.utils.import("resource://transit-emulator/api/jil/1.1r4/Messaging.jsm");
-Components.utils.import("resource://transit-emulator/api/jil/1.1r4/Account.jsm");
-Components.utils.import("resource://transit-emulator/api/jil/1.1r4/MessageQuantities.jsm");
-Components.utils.import("resource://transit-emulator/api/jil/1.1r4/Message.jsm");
-Components.utils.import("resource://transit-emulator/api/jil/1.1r4/Attachment.jsm");
-Components.utils.import("resource://transit-emulator/api/jil/1.1r4/AddressBookItem.jsm");
-Components.utils.import("resource://transit-emulator/api/jil/1.1r4/CalendarItem.jsm");
-Components.utils.import("resource://transit-emulator/api/jil/1.1r4/PIM.jsm");
-Components.utils.import("resource://transit-emulator/api/jil/1.1r4/Telephony.jsm");
-Components.utils.import("resource://transit-emulator/api/jil/1.1r4/CallRecord.jsm");
+Components.utils.import("resource://transit-runtime/api/jil/1.1r4/Multimedia.jsm");
+Components.utils.import("resource://transit-runtime/api/jil/1.1r4/Device.jsm");
+Components.utils.import("resource://transit-runtime/api/jil/1.1r4/PositionInfo.jsm");
+Components.utils.import("resource://transit-runtime/api/jil/1.1r4/File.jsm");
+Components.utils.import("resource://transit-runtime/api/jil/1.1r4/Messaging.jsm");
+Components.utils.import("resource://transit-runtime/api/jil/1.1r4/Account.jsm");
+Components.utils.import("resource://transit-runtime/api/jil/1.1r4/MessageQuantities.jsm");
+Components.utils.import("resource://transit-runtime/api/jil/1.1r4/Message.jsm");
+Components.utils.import("resource://transit-runtime/api/jil/1.1r4/Attachment.jsm");
+Components.utils.import("resource://transit-runtime/api/jil/1.1r4/AddressBookItem.jsm");
+Components.utils.import("resource://transit-runtime/api/jil/1.1r4/CalendarItem.jsm");
+Components.utils.import("resource://transit-runtime/api/jil/1.1r4/PIM.jsm");
+Components.utils.import("resource://transit-runtime/api/jil/1.1r4/Telephony.jsm");
+Components.utils.import("resource://transit-runtime/api/jil/1.1r4/CallRecord.jsm");
 
 var _Device_122 = Components.classes["@jil.org/jilapi-device;1"].getService(Components.interfaces.jilDevice);
 var _DataNetworkInfo_122 = Components.classes["@jil.org/jilapi-datanetworkinfo;1"].getService(Components.interfaces.jilDataNetworkInfo);

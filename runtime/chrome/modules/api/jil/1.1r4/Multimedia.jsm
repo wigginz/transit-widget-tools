@@ -1,8 +1,8 @@
 var EXPORTED_SYMBOLS = ["Multimedia"];
 
-Components.utils.import("resource://transit-emulator/api/jil/1.1r4/Camera.jsm");
-Components.utils.import("resource://transit-emulator/api/jil/1.1r4/AudioPlayer.jsm");
-Components.utils.import("resource://transit-emulator/api/jil/1.1r4/VideoPlayer.jsm");
+Components.utils.import("resource://transit-runtime/api/jil/1.1r4/Camera.jsm");
+Components.utils.import("resource://transit-runtime/api/jil/1.1r4/AudioPlayer.jsm");
+Components.utils.import("resource://transit-runtime/api/jil/1.1r4/VideoPlayer.jsm");
 
 var _Multimedia_122 = Components.classes["@jil.org/jilapi-multimedia;1"].getService(Components.interfaces.jilMultimedia);
 

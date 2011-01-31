@@ -2,18 +2,18 @@ var EXPORTED_SYMBOLS = ["Device"];
 
 var _Device_122 = Components.classes["@jil.org/jilapi-device;1"].getService(Components.interfaces.jilDevice);
 
-Components.utils.import("resource://transit-emulator/api/jil/SecurityManager.jsm");
-Components.utils.import("resource://transit-emulator/api/jil/1.2.2/WidgetCommon.jsm");
-Components.utils.import("resource://transit-emulator/api/jil/1.2.2/AccountInfo.jsm");
-Components.utils.import("resource://transit-emulator/api/jil/1.2.2/ApplicationTypes.jsm");
-Components.utils.import("resource://transit-emulator/api/jil/1.2.2/DataNetworkInfo.jsm");
-Components.utils.import("resource://transit-emulator/api/jil/1.2.2/DeviceInfo.jsm");
-Components.utils.import("resource://transit-emulator/api/jil/1.2.2/DeviceStateInfo.jsm");
-Components.utils.import("resource://transit-emulator/api/jil/1.2.2/File.jsm");
-Components.utils.import("resource://transit-emulator/api/jil/1.2.2/PositionInfo.jsm");
-Components.utils.import("resource://transit-emulator/api/jil/1.2.2/PowerInfo.jsm");
-Components.utils.import("resource://transit-emulator/api/jil/1.2.2/RadioInfo.jsm");
-Components.utils.import("resource://transit-emulator/api/jil/1.2.2/AddressBookItem.jsm");
+Components.utils.import("resource://transit-runtime/api/jil/SecurityManager.jsm");
+Components.utils.import("resource://transit-runtime/api/jil/1.2.2/WidgetCommon.jsm");
+Components.utils.import("resource://transit-runtime/api/jil/1.2.2/AccountInfo.jsm");
+Components.utils.import("resource://transit-runtime/api/jil/1.2.2/ApplicationTypes.jsm");
+Components.utils.import("resource://transit-runtime/api/jil/1.2.2/DataNetworkInfo.jsm");
+Components.utils.import("resource://transit-runtime/api/jil/1.2.2/DeviceInfo.jsm");
+Components.utils.import("resource://transit-runtime/api/jil/1.2.2/DeviceStateInfo.jsm");
+Components.utils.import("resource://transit-runtime/api/jil/1.2.2/File.jsm");
+Components.utils.import("resource://transit-runtime/api/jil/1.2.2/PositionInfo.jsm");
+Components.utils.import("resource://transit-runtime/api/jil/1.2.2/PowerInfo.jsm");
+Components.utils.import("resource://transit-runtime/api/jil/1.2.2/RadioInfo.jsm");
+Components.utils.import("resource://transit-runtime/api/jil/1.2.2/AddressBookItem.jsm");
 
 function Device()
 {

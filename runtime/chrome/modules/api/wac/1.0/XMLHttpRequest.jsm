@@ -1,8 +1,8 @@
 var EXPORTED_SYMBOLS = ["XMLHttpRequest"];
 
-Components.utils.import("resource://transit-emulator/TransitCommon.jsm");
+Components.utils.import("resource://transit-runtime/TransitCommon.jsm");
 
-Components.utils.import("resource://transit-emulator/api/wac/SecurityManager.jsm");
+Components.utils.import("resource://transit-runtime/api/wac/SecurityManager.jsm");
 
 
 function XMLHttpRequest()

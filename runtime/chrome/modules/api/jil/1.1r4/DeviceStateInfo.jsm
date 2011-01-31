@@ -1,9 +1,9 @@
 var EXPORTED_SYMBOLS = ["DeviceStateInfo"];
 
-Components.utils.import("resource://transit-emulator/api/jil/SecurityManager.jsm");
+Components.utils.import("resource://transit-runtime/api/jil/SecurityManager.jsm");
 
-Components.utils.import("resource://transit-emulator/api/jil/1.1r4/AccelerometerInfo.jsm");
-Components.utils.import("resource://transit-emulator/api/jil/1.1r4/Config.jsm");
+Components.utils.import("resource://transit-runtime/api/jil/1.1r4/AccelerometerInfo.jsm");
+Components.utils.import("resource://transit-runtime/api/jil/1.1r4/Config.jsm");
 
 var _DeviceStateInfo_122 = Components.classes["@jil.org/jilapi-devicestateinfo;1"].getService(Components.interfaces.jilDeviceStateInfo);
 

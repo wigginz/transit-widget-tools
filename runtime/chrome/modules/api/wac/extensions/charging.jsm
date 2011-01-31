@@ -27,9 +27,9 @@
 
 var EXPORTED_SYMBOLS = ["OpCoStore"];
 
-Components.utils.import("resource://transit-emulator/TransitCommon.jsm");
+Components.utils.import("resource://transit-runtime/TransitCommon.jsm");
 
-Components.utils.import("resource://transit-emulator/api/wac/1.0/Widget.jsm");
+Components.utils.import("resource://transit-runtime/api/wac/1.0/Widget.jsm");
 
 var runtime = Components.classes["@jil.org/jilapi-emulatorruntime;1"].getService().wrappedJSObject;
 

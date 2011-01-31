@@ -6,6 +6,10 @@ Components.utils.import("resource://transit-runtime/runtime/RuntimeManager.jsm")
 
 var twr_runtime_helper =
 {
+  runtime : Components.classes['@transit/runtime-service;1'].getService().wrappedJSObject,
+  
+  extensions : null,
+  
   getAWidget : function()
   {
     var params = {out: null};
@@ -26,19 +30,33 @@ var twr_runtime_helper =
   
   runWidget : function(widget)
   {
-    // make sure the runtime is initialized. it should aways be, but in case, dont want to crash 
-    //RuntimeManager.initDevice();
-    
     // set up this widget's display panel
     this.setupWidgetPanel(widget);
+    
+    this.extensions = this.runtime.getAPIExtensions();
+    var extNames = "";
+    for ( var i = 0; i < this.extensions.length; i++ )
+      extNames += ", "+this.extensions[i].name;
+    if ( extNames.length > 2 )
+      extNames = extNames.substr(2, extNames.length);
+    
+    try
+    {
+      document.getElementById("twr-home-content").addProgressListener(twrInjector);
+    }
+    catch(ex)
+    {
+      // ignore, probably already registered
+      //dump("Could not load progress listener. Message: "+ex.message);
+    }
     
     $("twr-home-content").attr("src", widget.contentSource);
   },
   
   setupWidgetPanel : function(widget)
-  {
-    var dHeight = 800;
-    var dWidth = 480;
+  {    
+    var dHeight = this.runtime.context.deviceHeight;
+    var dWidth = this.runtime.context.deviceWidth;
     
     $("twr-home-workspace").attr("maxheight", dHeight+4);
     $("twr-home-workspace").attr("minheight", dHeight+4);
@@ -57,21 +75,58 @@ var twr_runtime_helper =
     $("twr-home-content").css("height", widget.height+"px");
     $("twr-home-content").css("width", widget.width+"px");
   },
+  
+  injectScripts : function()
+  {
+    if ( this.runtime.context.deviceProfile.jilAPISpec == "1.1r4" )
+      this.load_1_1r4();
+    else if ( this.runtime.context.deviceProfile.jilAPISpec == "1.2.2" )
+      this.load_1_2_2();
+    else if ( this.runtime.context.deviceProfile.jilAPISpec == "WAC 1.0" )
+      this.load_wac_1_0();
+    
+    // inject any api extensions enabled for this device    
+    for ( var i = 0; i < this.extensions.length; i++ )
+      Components.utils.import(this.extensions[i].resourceUrl, $("twr-home-content").node.contentWindow.window);
+    
+    // pass the show yes/no dialog to the widget wrapper so it can activate the prompt
+    //SecurityManager.showYesNoDialog = jwe_emulator.showYesNoDialog;
+    //SecurityManager.securityContext = $("jwe-emulator-settings-security-level").val();
+  },
+  
+  load_1_1r4 : function()
+  {
+    Components.utils.import("resource://transit-runtime/api/jil/1.1r4/Widget.jsm", $("twr-home-content").node.contentWindow.window);
+    Components.utils.import("resource://transit-runtime/api/jil/1.1r4/WidgetManager.jsm", $("twr-home-content").node.contentWindow.window);
+    Components.utils.import("resource://transit-runtime/api/jil/1.1r4/XMLHttpRequest.jsm", $("twr-home-content").node.contentWindow.window);
+    
+    Components.utils.import("resource://transit-runtime/api/jil/SecurityManager.jsm");
+  },
+  
+  load_1_2_2 : function()
+  {
+    Components.utils.import("resource://transit-runtime/api/jil/1.2.2/Widget.jsm", $("twr-home-content").node.contentWindow.window);
+    Components.utils.import("resource://transit-runtime/api/jil/1.2.2/WidgetManager.jsm", $("twr-home-content").node.contentWindow.window);
+    Components.utils.import("resource://transit-runtime/api/jil/1.2.2/XMLHttpRequest.jsm", $("twr-home-content").node.contentWindow.window);
+    
+    Components.utils.import("resource://transit-runtime/api/jil/SecurityManager.jsm");
+  },
+  
+  load_wac_1_0 : function()
+  {
+    Components.utils.import("resource://transit-runtime/api/wac/1.0/Widget.jsm", $("twr-home-content").node.contentWindow.window);
+    Components.utils.import("resource://transit-runtime/api/wac/1.0/XMLHttpRequest.jsm", $("twr-home-content").node.contentWindow.window);
+    
+    Components.utils.import("resource://transit-runtime/api/wac/SecurityManager.jsm");
+    
+    // set the show store dialog function in cache so the extension can access it if it's used
+    this.emulator.setInCache("store-dialog", this.showStoreDialog);
+  },
 }
 
 
-
-
-
-
-
-
-
-
-
-
 // progress listener to inject the widget script as quickly as possible for the widget's browser
-var jweInjector =
+var twrInjector =
 {
   isLoaded : false,
   
@@ -87,12 +142,26 @@ var jweInjector =
   onStateChange: function(aWebProgress, aRequest, aFlag, aStatus)
   {
     if (aFlag & Components.interfaces.nsIWebProgressListener.STATE_START)
-      jwe_emulator.injectScripts();
+      twr_runtime_helper.injectScripts();
   },
   onProgressChange: function(aWebProgress, aRequest, curSelf, maxSelf, curTot, maxTot) {},
   onStatusChange: function(aWebProgress, aRequest, aStatus, aMessage) {},
   onSecurityChange: function(aWebProgress, aRequest, aState) {}
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function jwe_setScrollArea()
 {

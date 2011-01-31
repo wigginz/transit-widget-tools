@@ -2,7 +2,7 @@ var EXPORTED_SYMBOLS = ["CalendarItem"];
 
 var _PIM_122 = Components.classes["@jil.org/jilapi-pim;1"].getService(Components.interfaces.jilPIM);
 
-Components.utils.import("resource://transit-emulator/api/jil/SecurityManager.jsm");
+Components.utils.import("resource://transit-runtime/api/jil/SecurityManager.jsm");
 
 function CalendarItem()
 {

@@ -1,17 +1,17 @@
 var EXPORTED_SYMBOLS = ["Widget"];
 
-Components.utils.import("resource://transit-emulator/TransitCommon.jsm");
+Components.utils.import("resource://transit-runtime/TransitCommon.jsm");
 
-Components.utils.import("resource://transit-emulator/api/wac/1.0/WidgetCommon.jsm");
-Components.utils.import("resource://transit-emulator/api/wac/1.0/Multimedia.jsm");
-Components.utils.import("resource://transit-emulator/api/wac/1.0/Device.jsm");
-Components.utils.import("resource://transit-emulator/api/wac/1.0/PositionInfo.jsm");
-Components.utils.import("resource://transit-emulator/api/wac/1.0/Exception.jsm");
-Components.utils.import("resource://transit-emulator/api/wac/1.0/ExceptionTypes.jsm");
-Components.utils.import("resource://transit-emulator/api/wac/1.0/Messaging.jsm");
-Components.utils.import("resource://transit-emulator/api/wac/1.0/Message.jsm");
-Components.utils.import("resource://transit-emulator/api/wac/1.0/AddressBookItem.jsm");
-Components.utils.import("resource://transit-emulator/api/wac/1.0/PIM.jsm");
+Components.utils.import("resource://transit-runtime/api/wac/1.0/WidgetCommon.jsm");
+Components.utils.import("resource://transit-runtime/api/wac/1.0/Multimedia.jsm");
+Components.utils.import("resource://transit-runtime/api/wac/1.0/Device.jsm");
+Components.utils.import("resource://transit-runtime/api/wac/1.0/PositionInfo.jsm");
+Components.utils.import("resource://transit-runtime/api/wac/1.0/Exception.jsm");
+Components.utils.import("resource://transit-runtime/api/wac/1.0/ExceptionTypes.jsm");
+Components.utils.import("resource://transit-runtime/api/wac/1.0/Messaging.jsm");
+Components.utils.import("resource://transit-runtime/api/wac/1.0/Message.jsm");
+Components.utils.import("resource://transit-runtime/api/wac/1.0/AddressBookItem.jsm");
+Components.utils.import("resource://transit-runtime/api/wac/1.0/PIM.jsm");
 
 var _Device_122 = Components.classes["@jil.org/jilapi-device;1"].getService(Components.interfaces.jilDevice);
 var _DeviceStateInfo_122 = Components.classes["@jil.org/jilapi-devicestateinfo;1"].getService(Components.interfaces.jilDeviceStateInfo);
