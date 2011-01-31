@@ -19,7 +19,7 @@ var RuntimeManager =
     {
       resource : "chrome://transit-runtime/content/runtime/dialogs/getAWidget.xul",
       name : "twr_get_a_widget",
-      args : "chrome,centerscreen",
+      args : "dialog, modal",
     },
   },
 
@@ -30,6 +30,9 @@ var RuntimeManager =
   context :
   {
     deviceProfile : null,
+    deviceWidth : null,
+    deviceHeight : null,
+    initialized : false,
   },
 
   /** methods **/
@@ -38,6 +41,19 @@ var RuntimeManager =
     this.services.profiles = Components.classes['@jil.org/jilapi-profileservice;1'].getService().wrappedJSObject;
 
     this.context.deviceProfile = this.services.profiles.getAllDeviceProfiles()[0];
+    
+    //this.initDevice();
+  },
+  
+  initDevice : function()
+  {
+    TransitCommon.alert("in device init");
+    if ( !this.context.initialized )
+    {
+      TransitCommon.alert("in device init");
+      this.context.deviceWidth = this.context.deviceProfile.screenWidth;
+      this.context.deviceHeight = this.context.deviceProfile.screenHeight;
+    }
   },
 
   getStringPref : function(key)
@@ -52,10 +68,14 @@ var RuntimeManager =
     return(value);
   },
 
-  openDialog : function(dialog)
+  openDialog : function(dialog, params)
   {
     var ww = Components.classes["@mozilla.org/embedcomp/window-watcher;1"].getService(Components.interfaces.nsIWindowWatcher);
-    ww.openWindow(ww.activeWindow, dialog.resource, dialog.name, dialog.args, null).focus();
+    ww.activeWindow.openDialog(dialog.resource, dialog.name, dialog.args, params).focus();
+    
+      //window.openDialog("chrome://transit-emulator/content/profiles/profilesCalendarItem.xul", "jwe-widget-calitem-popup", "dialog, modal", params).focus();
+      
+      
   },
 
   exit : function()
