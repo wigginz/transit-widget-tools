@@ -341,7 +341,7 @@ JILProfileService.prototype = //#
 
   getEmulatedWidgets : function(profileId)
   {
-    var stmt = this.getConnection().createStatement("select id, application_id, name, version, author from jwe_emulated_widget where profile_id = :profileId");
+    var stmt = this.getConnection().createStatement("select id, application_id, name, version, author, uuid, icon_file, content_file from jwe_emulated_widget where profile_id = :profileId");
     stmt.params.profileId = profileId;
 
     var widgets = new Array();
@@ -355,6 +355,9 @@ JILProfileService.prototype = //#
         widget.name = stmt.row.name;
         widget.version = stmt.row.version;
         widget.author = stmt.row.author;
+	widget.uuid = stmt.row.uuid;
+	widget.iconFile = stmt.row.icon_file;
+	widget.contentFile = stmt.row.content_file;
         widgets.push(widget);
       }
     }
@@ -368,7 +371,7 @@ JILProfileService.prototype = //#
 
   getEmulatedWidgetByAppId : function(profileId, appId, version)
   {
-    var stmt = this.getConnection().createStatement("select id, name, version, author, uuid from jwe_emulated_widget where profile_id = :profileId and application_id = :appId and version = :version");
+    var stmt = this.getConnection().createStatement("select id, name, version, author, uuid, icon_file, content_file from jwe_emulated_widget where profile_id = :profileId and application_id = :appId and version = :version");
     stmt.params.profileId = profileId;
     stmt.params.appId = appId;
     stmt.params.version = version;
@@ -384,6 +387,8 @@ JILProfileService.prototype = //#
         widget.name = stmt.row.name;
         widget.version = version;
         widget.author = stmt.row.author;
+	widget.iconFile = stmt.row.icon_file;
+	widget.contentFile = stmt.row.content_file;
 	widget.uuid = stmt.row.uuid;
       }
     }
@@ -400,13 +405,15 @@ JILProfileService.prototype = //#
 
   updateEmulatedWidget : function(widget)
   {
-    var stmt = this.getConnection().createStatement("update jwe_emulated_widget set application_id = :appId, version = :version, name = :name, author = :author, uuid = :uuid where profile_id = :profileId and id = :widgetId");
+    var stmt = this.getConnection().createStatement("update jwe_emulated_widget set application_id = :appId, version = :version, name = :name, author = :author, uuid = :uuid, icon_file = :iconFile, content_file = :contentFile where profile_id = :profileId and id = :widgetId");
     stmt.params.appId = widget.applicationId;
     stmt.params.version = widget.version;
     stmt.params.name = widget.name;
     stmt.params.author = widget.author;
     stmt.params.profileId = widget.profileId;
     stmt.params.widgetId = widget.id;
+    stmt.params.iconFile = widget.iconFile;
+    stmt.params.content_file = widget.contentFile;
     stmt.params.uuid = widget.uuid;
 
     try
@@ -427,16 +434,20 @@ JILProfileService.prototype = //#
 
   addEmulatedWidget : function(widget)
   { 
-    var stmt = this.getConnection().createStatement("insert into jwe_emulated_widget (id, profile_id, application_id, version, name, author, uuid) values (null, :profileId, :appId, :version, :name, :author, :wuuid)");
+    try
+    {
+      TransitCommon.debug("i: "+widget.iconFile+", c: "+widget.contentFile);
+    var stmt = this.getConnection().createStatement("insert into jwe_emulated_widget (id, profile_id, application_id, version, name, author, uuid, icon_file, content_file) values (null, :profileId, :appId, :version, :name, :author, :uuid, :iconFile, :contentFile)");
     stmt.params.profileId = widget.profileId;
     stmt.params.appId = widget.applicationId;
     stmt.params.version = widget.version;
     stmt.params.name = widget.name;
     stmt.params.author = widget.author;
-    stmt.params.wuuid = widget.uuid;
+    stmt.params.uuid = widget.uuid;
+    stmt.params.iconFile = widget.iconFile;
+    stmt.params.contentFile = widget.contentFile;
 
-    try
-    {
+
       stmt.executeStep();
     }
     catch(exception)

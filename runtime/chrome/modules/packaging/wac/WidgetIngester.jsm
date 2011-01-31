@@ -123,6 +123,7 @@ var WidgetIngester =
       widget.icons.push(
       {
         source : "file://"+baseUrl+iconElements[i].getAttribute("src"), 
+        iconLeafName : iconElements[i].getAttribute("src"), 
         lang : iconElements[i].getAttribute("xml:lang"), 
         height : iconElements[i].getAttribute("height"), 
         width : iconElements[i].getAttribute("width")
@@ -300,6 +301,7 @@ var WidgetIngester =
       widget.icons.push(
       {
         source : "file://"+baseUrl+iconElements[i].getAttribute("src"), 
+        iconLeafName : iconElements[i].getAttribute("src"), 
         lang : iconElements[i].getAttribute("xml:lang"), 
         height : iconElements[i].getAttribute("height"), 
         width : iconElements[i].getAttribute("width")

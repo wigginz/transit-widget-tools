@@ -108,6 +108,8 @@ var WidgetManager =
         author : widget.authorName,
         profileId : RuntimeManager.context.deviceProfile.id,
         applicationId: widget.id,
+        iconFile : widget.iconLeafName,
+        contentFile: widget.contentLeafName,
         new : true,
       };
 
