@@ -1,9 +1,24 @@
-var EXPORTED_SYMBOLS = ["RuntimeManager"];
+Components.utils.import("resource://gre/modules/XPCOMUtils.jsm");
 
-Components.utils.import("resource://transit-runtime/TransitCommon.jsm");  
-
-var RuntimeManager = 
+function TransitRuntimeService() 
 {
+  Components.utils.import("resource://transit-runtime/TransitCommon.jsm");  
+  
+  this.wrappedJSObject = this;
+  
+  this.init();
+}
+
+TransitRuntimeService.prototype = 
+{
+  classDescription: "Javascript service for all things runtime including device access and context management.",
+  classID:          Components.ID("{d60e9670-2d87-11e0-91fa-0800200c9a66}"),
+  contractID:       "@transit/runtime-service;1",
+  QueryInterface: XPCOMUtils.generateQI([Components.interfaces.nsITransitRuntimeService]),
+  
+  
+  profileService : null,
+  
   /** constants **/
   INSTALL_PREFIX : "widgets",
 
@@ -39,24 +54,18 @@ var RuntimeManager =
   init : function()
   {
     this.services.profiles = Components.classes['@jil.org/jilapi-profileservice;1'].getService().wrappedJSObject;
-
+  
     this.context.deviceProfile = this.services.profiles.getAllDeviceProfiles()[0];
     
-    
-    //this.initDevice();
+    this.context.deviceWidth = this.getDeviceInfo().screenWidth;
+    this.context.deviceHeight = this.getDeviceInfo().screenHeight;
   },
   
-  initDevice : function()
+  getDeviceInfo : function()
   {
-    TransitCommon.alert("in device init");
-    if ( !this.context.initialized )
-    {
-      TransitCommon.alert("in device init");
-      this.context.deviceWidth = this.context.deviceProfile.screenWidth;
-      this.context.deviceHeight = this.context.deviceProfile.screenHeight;
-    }
+    return(this.services.profiles.getDeviceInfo(this.context.deviceProfile.id));
   },
-
+  
   getStringPref : function(key)
   {
     var prefs = Components.classes["@mozilla.org/preferences-service;1"]
@@ -73,10 +82,6 @@ var RuntimeManager =
   {
     var ww = Components.classes["@mozilla.org/embedcomp/window-watcher;1"].getService(Components.interfaces.nsIWindowWatcher);
     ww.activeWindow.openDialog(dialog.resource, dialog.name, dialog.args, params).focus();
-    
-      //window.openDialog("chrome://transit-emulator/content/profiles/profilesCalendarItem.xul", "jwe-widget-calitem-popup", "dialog, modal", params).focus();
-      
-      
   },
 
   exit : function()
@@ -135,6 +140,17 @@ var RuntimeManager =
     else
       this.services.profiles.updateEmulatedWidget(widget);
   },
+  
+  getAPIExtensions : function()
+  {
+    return(this.services.profiles.getAPIExtensionsForDevice(this.context.deviceProfile.id));
+  },
 };
 
-RuntimeManager.init();
+
+var components = [TransitRuntimeService];
+
+function NSGetModule(compMgr, fileSpec) 
+{
+  return XPCOMUtils.generateModule(components);
+}

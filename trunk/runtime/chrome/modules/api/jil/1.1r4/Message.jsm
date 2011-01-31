@@ -2,7 +2,7 @@ var EXPORTED_SYMBOLS = ["Message"];
 
 var _Messaging_122 = Components.classes["@jil.org/jilapi-messaging;1"].getService(Components.interfaces.jilMessaging);
 
-Components.utils.import("resource://transit-emulator/api/jil/SecurityManager.jsm");
+Components.utils.import("resource://transit-runtime/api/jil/SecurityManager.jsm");
 
 function Message()
 {

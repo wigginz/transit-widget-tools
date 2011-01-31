@@ -2,12 +2,12 @@ var EXPORTED_SYMBOLS = ["Device"];
 
 var _Device_122 = Components.classes["@jil.org/jilapi-device;1"].getService(Components.interfaces.jilDevice);
 
-Components.utils.import("resource://transit-emulator/api/wac/SecurityManager.jsm");
-Components.utils.import("resource://transit-emulator/api/wac/1.0/WidgetCommon.jsm");
-Components.utils.import("resource://transit-emulator/api/wac/1.0/ApplicationTypes.jsm");
-Components.utils.import("resource://transit-emulator/api/wac/1.0/DeviceStateInfo.jsm");
-Components.utils.import("resource://transit-emulator/api/wac/1.0/PositionInfo.jsm");
-Components.utils.import("resource://transit-emulator/api/wac/1.0/AddressBookItem.jsm");
+Components.utils.import("resource://transit-runtime/api/wac/SecurityManager.jsm");
+Components.utils.import("resource://transit-runtime/api/wac/1.0/WidgetCommon.jsm");
+Components.utils.import("resource://transit-runtime/api/wac/1.0/ApplicationTypes.jsm");
+Components.utils.import("resource://transit-runtime/api/wac/1.0/DeviceStateInfo.jsm");
+Components.utils.import("resource://transit-runtime/api/wac/1.0/PositionInfo.jsm");
+Components.utils.import("resource://transit-runtime/api/wac/1.0/AddressBookItem.jsm");
 
 function Device()
 {

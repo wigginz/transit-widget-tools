@@ -2,7 +2,7 @@ var EXPORTED_SYMBOLS = ["AddressBookItem"];
 
 var _PIM_122a = Components.classes["@jil.org/jilapi-pim;1"].getService(Components.interfaces.jilPIM);
 
-Components.utils.import("resource://transit-emulator/api/wac/SecurityManager.jsm");
+Components.utils.import("resource://transit-runtime/api/wac/SecurityManager.jsm");
 
 function AddressBookItem()
 {

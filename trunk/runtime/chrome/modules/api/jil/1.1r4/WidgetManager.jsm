@@ -1,6 +1,6 @@
 var EXPORTED_SYMBOLS = ["WidgetManager"];
 
-Components.utils.import("resource://transit-emulator/api/jil/SecurityManager.jsm");
+Components.utils.import("resource://transit-runtime/api/jil/SecurityManager.jsm");
 
 var _WidgetManager_122 = Components.classes["@jil.org/jilapi-widgetmanager;1"].getService(Components.interfaces.jilWidgetManager);
 

@@ -2,10 +2,10 @@ var EXPORTED_SYMBOLS = ["PIM"];
 
 var _PIM_122 = Components.classes["@jil.org/jilapi-pim;1"].getService(Components.interfaces.jilPIM);
 
-Components.utils.import("resource://transit-emulator/api/wac/1.0/WidgetCommon.jsm");
+Components.utils.import("resource://transit-runtime/api/wac/1.0/WidgetCommon.jsm");
 
-Components.utils.import("resource://transit-emulator/api/wac/SecurityManager.jsm");
-Components.utils.import("resource://transit-emulator/api/wac/1.0/AddressBookItem.jsm");
+Components.utils.import("resource://transit-runtime/api/wac/SecurityManager.jsm");
+Components.utils.import("resource://transit-runtime/api/wac/1.0/AddressBookItem.jsm");
 
 function PIM()
 {

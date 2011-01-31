@@ -1,9 +1,9 @@
 var EXPORTED_SYMBOLS = ["WidgetCommon"];
 
-Components.utils.import("resource://transit-emulator/api/jil/SecurityManager.jsm");
+Components.utils.import("resource://transit-runtime/api/jil/SecurityManager.jsm");
 
-Components.utils.import("resource://transit-emulator/api/jil/1.2.2/Exception.jsm");
-Components.utils.import("resource://transit-emulator/api/jil/1.2.2/ExceptionTypes.jsm");
+Components.utils.import("resource://transit-runtime/api/jil/1.2.2/Exception.jsm");
+Components.utils.import("resource://transit-runtime/api/jil/1.2.2/ExceptionTypes.jsm");
 
 var WidgetCommon = 
 {

@@ -1,8 +1,8 @@
 var EXPORTED_SYMBOLS = ["Messaging"];
 
-Components.utils.import("resource://transit-emulator/api/wac/SecurityManager.jsm");
-Components.utils.import("resource://transit-emulator/api/wac/1.0/MessageTypes.jsm");
-Components.utils.import("resource://transit-emulator/api/wac/1.0/Message.jsm");
+Components.utils.import("resource://transit-runtime/api/wac/SecurityManager.jsm");
+Components.utils.import("resource://transit-runtime/api/wac/1.0/MessageTypes.jsm");
+Components.utils.import("resource://transit-runtime/api/wac/1.0/Message.jsm");
 
 var _Messaging_122 = Components.classes["@jil.org/jilapi-messaging;1"].getService(Components.interfaces.jilMessaging);
 

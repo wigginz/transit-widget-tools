@@ -1,6 +1,6 @@
 var EXPORTED_SYMBOLS = ["SecurityManager"];
 
-Components.utils.import("resource://transit-emulator/TransitCommon.jsm");
+Components.utils.import("resource://transit-runtime/TransitCommon.jsm");
 
 var SecurityManager =
 {

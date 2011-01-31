@@ -1,6 +1,6 @@
 var EXPORTED_SYMBOLS = ["AudioPlayer"];
 
-Components.utils.import("resource://transit-emulator/api/wac/1.0/WidgetCommon.jsm");
+Components.utils.import("resource://transit-runtime/api/wac/1.0/WidgetCommon.jsm");
 
 var _AudioPlayer_122 = Components.classes["@jil.org/jilapi-audioplayer;1"].getService(Components.interfaces.jilAudioPlayer);
 

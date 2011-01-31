@@ -1,6 +1,6 @@
 var EXPORTED_SYMBOLS = ["Camera"];
 
-Components.utils.import("resource://transit-emulator/api/jil/SecurityManager.jsm");
+Components.utils.import("resource://transit-runtime/api/jil/SecurityManager.jsm");
 
 var _Camera_122 = Components.classes["@jil.org/jilapi-camera;1"].getService(Components.interfaces.jilCamera);
 
