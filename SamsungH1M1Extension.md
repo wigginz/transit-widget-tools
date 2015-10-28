@@ -1,0 +1,7 @@
+## Samsung M1/H1 Extension ##
+
+The Vodafone Samsung M1/H1 adds the "widget" object to the widget runtime. Note that this is similar to the JIL Widget object, however the Samsung object has a lowercase w.
+
+| **API** | **Description** |
+|:--------|:----------------|
+| widget.openURL(url) | Implements the same functionality as the JIL Widget.openURL but with a lowercase "w" |

@@ -1,0 +1,50 @@
+# Upcoming Emulator Features and Improvements #
+
+This is the current list of features and improvements we plan to implement in the emulator in order of priority. This list is a living document, we welcome any suggestions or requests you may have via the Issues tab, discussion group, or jil.org.
+
+## High Priority ##
+
+  * Proper signature verification, feature tag enforcement, etc. and support for preferences defined in the config.xml.
+  * Allow PPI emulation for better CSS media query support.
+  * Ensure SVG and SVG Tiny is properly supported.
+  * Implementation of Camera capture APIs via attached webcam (or other input stream if possible).
+  * Additionally integrate object properties with the security manager (only methods are currently monitored by the security manager).
+  * Support for multiple languages for an emulated widget and the ability to change runtime language at runtime.
+
+## Medium Priority ##
+
+  * Allow various device state values (charge, orientation, backlight, etc.) to be changed in real time as widget is being emulated, without the need to reload the widget.
+  * Support for testing the widget update feature.
+  * Support for additional languages in UI elements (Chinese, Japanese, and more).
+  * Add API extensions for BONDI
+  * Preview implementation of JIL 1.3 draft specification.
+
+## Low Priority ##
+
+  * Inclusion of additional JIL specs such as billing, network resources, etc.
+  * Support emulation of more than one widget simultaneously.
+  * Allow simulation of a device under different levels of resource load.
+  * Implement a device clock to allow automatic calendar item alarming.
+
+## Yet to be Prioritized ##
+
+  * Highlight which input fields that have changed in all profile panels within the Manage Profiles dialog.
+  * Ability to define how a runtime reacts to an API that is not implemented (exception, error, popup, ignore, etc.).
+  * Allow emulation of a widget by pointing it a .wgt file. Emulator should unzip and run the widget.
+  * Look into adding support for more audio codecs, Firefox only supports OGG and WAV.
+  * Allow column sorting for all list boxes in the Manage Profiles dialog.
+  * Add localization of log entries.
+  * Implement a keypad and directional pad for testing of non-touch devices.
+  * Automatic creation of the virtual file paths (/virtual/pictures) when device profile is created.
+  * Implementation of optional requirement for Device.getAvailableApplications where all widgets are returned in the specified URI format.
+
+## Items Previously Listed Here Which Are Now Available ##
+
+  * Display status of all currently set callbacks as well as callback source code.
+  * More accurate emulation of full screen and floating mode.
+  * Proper validation of config.xml to automatically detect packaging spec version.
+  * Implement a framework for adding additional non-JIL APIs (Opera, W3C, proprietary, etc.).
+  * Add display of more widget details such as icon, details, security info, etc.
+  * More accurate emulation of full screen and floating mode (ongoing).
+  * Integrate usage of XMLHttpRequest to the security manager as defined in the JIL Spec.
+  * Ability to specify down to the individual API which APIs are supported by a specific device/runtime.

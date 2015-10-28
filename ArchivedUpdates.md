@@ -1,0 +1,142 @@
+# Archived Updates #
+
+Archived updates are ordered most recent first. For the most up to date news items, check out the StatusUpdates page.
+
+## Thursday August 17, 2010 ##
+
+### Fixes ###
+
+More progress on full implementation of the "find" APIs. Unless noted, all fields are currently being searched. At the moment any comparison objects that are used for "find" APIs that have boolean fields (like isRead) will default to false even if not set to false. I'm proposing to keep this behavior, however this behavior is not commented on in the JIL spec. If this seems wrong, please propose a change and we'll definitely discuss it.
+
+Note that findAddressBookItems does not support searching for group names as there is already a PIM method (getAddressBookGroupMembers) to do that.
+
+Toggling full screen mode now correctly triggers the respective onMaximize and onRestore events.
+
+Changed behavior of floating mode a bit. Widgets will now be centered on the device screen at all times. To clarify, widgets will always start in floating mode. In full screen mode, if the widget's maximum\_display\_mode is smaller than the device's screen, the widget will render in those dimensions, and a dark grey border will fill the gap between the widget's outer edges to the edges of the device screen.
+
+Added functionality to put a message in the respective message type's "sentboxes" when a message is sent. If it's an email message, the message will only copy to the "sentboxes" of the current email account.
+
+Added the creation of an outgoing call record when Telephony.initiateCall is called. Uses new default property of 'outgoing-call-duration-seconds' to use for duration of all outgoing call records. Requires a database change via the update manager.
+
+Implemented security restrictions for XMLHttpRequest per the JIL 1.1r4 and 1.2.2 specs. Operator, identified domains are allowed, unidentified is prompt for user confirmation in a session context.
+
+Download the development build [transit-emulator-20100817.xpi](http://transit-widget-tools.googlecode.com/files/transit-emulator-20100817.xpi).
+
+
+## Thursday August 5, 2010 ##
+
+### Fixes ###
+
+  * Widget.Device.onFilesFound now returns the correct Widget.Device.File objects as results.
+  * Widget.Device.findFiles, Widget.PIM.findCalendarItems, Widget.Messaging.findMessages, Widget.PIM.findAddressBookItems now properly handle the start and end index parameters for returned results. Also extended the emulator log to show what start and end index values were used.
+
+### New Features ###
+
+Adjusted the full screen toggle in the emulator window general tab to behave per the JIL packaging and format spec. At the moment, the widget will be rendered in floating mode when launched using the widget tag's height and width attribute. When full screen is toggled, the widget will use the jil:maximum\_display\_mode dimensions. If those dimensions are smaller than the device screen, the widget will be centered and padding added between the widget edge and device edge as stated in the JIL spec.
+
+### Under the Hood ###
+
+We've added some improved validation for a widget's config.xml which allow the widget to still run even with some missing elements, but the emulator will put in temp values like "Unknown" in the case where an element is missing. There are some elements (widget ID, version, content source, etc.) that will cause emulation to fail, and must be fixed before the widget can load in the emulator.
+
+Download the development build [transit-emulator-20100805.xpi](http://transit-widget-tools.googlecode.com/files/transit-emulator-20100805.xpi).
+
+
+## Thursday July 29, 2010 ##
+
+We've included some major updates included in this release. It's important information, read on for the details.
+
+### Fixes ###
+
+Previously, static data was not being reset properly when a widget was reloaded or device profile changed. For example, the value for phoneScreenHeightDefault would be 800 but when a device profile for a smaller screen device, the API was still reporting a value of 800. This has been fixed anywhere in the API where there are accessible properties.
+
+XMLHttpRequest now functions correctly and responseXML properly parses the response and returns a DOM object. Keep in mind the emulator wraps the native XMLHttpRequest object, please let us know if you find anything missing in the wrapper.
+
+### New Features ###
+
+Added a link called "Callback Source" which will pop up a panel showing the source code of the event picked via the radio buttons for event contexts.
+
+Added a landscape mode toggle for the display section of the general tab in the emulator window. Checking the landscape mode box will swap height and width while maintaining full screen mode, if checked. An onScreenChangeDimensions even will be triggered when landscape mode is toggled. Also changed is the behavior of the widget in floating mode. If a widget's height or width is larger than the screen size, the larger dimension will be shrunk to fix on the screen. For example, if a widget has a height of 500 pixels, but the device is only 400 pixels high, the widget will be resized to 400 pixels high.
+
+Implemented widget config.xml ingestion based on JIL specs. Transit will now be able to automatically detect and properly emulate widgets using either the JIL 1.0 or 1.2 packaging spec. New ingestion process also includes per the spec validation and proper handling of more config.xml elements. Feature tag enforcement and signature file detection is not yet implemented.
+
+Added support for both JIL API 1.1 [revision 4](https://code.google.com/p/transit-widget-tools/source/detail?r=4) and 1.2.2. You can choose which API a device supports by changing the value in the Manage Profiles window. By default, all devices will use the 1.2.2 spec, but can be changed to 1.1r4 at any time. If a widget calls a 1.2.2 API using a device profile with 1.1r4 API support, the normal JavaScript errors will be generated. This update also reflects the differences in the security matrix between the APIs.
+
+Introduced the API Extensions framework. These are 3rd party APIs that fall outside of the JIL specifications such as Opera, BONDI, etc. You can choose which extensions a device profile will support and any widget running with that profile will have access to those APIs. The first (and only at the moment) extension is for supporting the additional APIs in the Samsung M1/H1 runtime. More details can be found on the [API Extensions](APIExtensions.md) page. More extensions to come, keep an eye on that page for details.
+
+### Under the Hood ###
+
+To ease the process up future upgrades to the SQLite profile database, we've added an upgrade service that will recursively upgrade a database as many patch levels as required to bring it up to the current version. This check is done automatically every time the emulator starts. If any problems are encountered, it will rollback ensuring no data is lost during a failed upgrade.
+
+Download the development build [transit-emulator-20100729.xpi](http://transit-widget-tools.googlecode.com/files/transit-emulator-20100729.xpi).
+
+## Thursday July 22, 2010 ##
+
+Quite a few changes have been made in this week's build including bug fixes, emulator interface improvements and some changes under the hood.
+
+### Fixes and UI Changes ###
+
+Tackled the issue of smaller displays and cut off elements when emulating in the debug tab by adding scroll bars to the entire window if the device screen is taller than the viewable content. Also added a sliding panel separator allowing you to move the controls to the right to allow more space for the device screen. These changes work in both regular mode and debug mode.
+
+Fixed an issue where audio and video APIs would not work when the emulator was opened as a tab in the main window (debug mode).
+
+Fixed the problem with XMLHttpRequests not functioning from within a widget. This was due to the cross-domain security model Firefox uses with XMLHttpRequests. The fix involved wrapping the native XMLHttpRequest object in a JavaScript module. Currently, the wrapper only supports asynchronous requests. If implementing synchronous calls is needed in your widgets, please submit a request on the project home page and I'll get working on it. There are no security restrictions with the wrapper, it should work for all URIs.
+
+### Under the Hood ###
+
+With this build, we're edging ever closer to phasing out the XPCOM components of the JIL APIs and moving towards more native JavaScript modules. Eventually all API implementations will be fully contained in modules allowing us to simultaneously support multiple versions of the JIL API. In an upcoming build we hope to allow a device profile to define which version of the JIL API it uses (1.0, 1.2, 1.3, etc.). We're keeping the runtime and profile service as wrapped XPCOM components to better mimic the logical separations an actual device would have. This is the first step in a major change that we'll be doing over the next couple of weekly releases, we will ensure regression tests are made before each build is posted.
+
+
+## Thursday July 15, 2010 ##
+
+This is an important bug fix release and it's highly recommended that you upgrade from the previous 20100709 build.
+
+Changes include fixes in multimedia, messaging, telephony, and PIM JIL APIs. No significant functionality or interface changes have been made in this build.
+
+Download the development build [transit-emulator-20100715.xpi](http://transit-widget-tools.googlecode.com/files/transit-emulator-20100715.xpi).
+
+## Friday July 9, 2010 ##
+
+Changed window settings so the emulator is resizable, still working on getting scrollbars to work correctly, especially on smaller displays.
+
+Cleaned up the default data as well as copying the SQLite file outside of the extension directory so an upgrade or un-install will not destroy any custom data. Changed default devices to be three generic devices with common screen sizes.
+
+Enabled update check so Firefox can detect and install new versions of the extension.
+
+
+## Wednesday July 7, 2010 ##
+
+Added a right click context menu to the JIL status bar icon. Left click still launches the emulator in normal mode, right click with give the same options as in the tools menu.
+
+A widget in full screen mode will now stay in full screen mode when the reload button is pressed, even when the device profile is being changed.
+
+Fixed various minor issues found through some regression testing. Also added a menu bar to the emulator window for easier access to common functions as well as allowing a config.xml to be directly opened from the "File" menu.
+
+
+## Tuesday July 6, 2010 ##
+
+Enhancement of API injection making it finally working as it should. Fixed any issues with widgets attempting to use the Widget API before the emulator had properly injected the objects into the widget's scope. This happened previously with widgets using the JQuery onDocumentReady function as well as occasionally window.location. This also fixes the issue with the Widget object not being found when in debug mode (loaded in a browser tab), so Firebug debugging is now working well. It is possible that the objects will be injected multiple times, but I haven't seen any issues due to this yet so it's most likely safe.
+
+Security manager checks have been extended to all API functions. Current limitations:
+
+  * Security checks are done after argument validation (makes more sense for developers)
+  * Object properties (non-function members like Widget.Device.AccountInfo.phoneMSISDN, etc.) and XMLHttpRequest are not yet being checked by the security manager.
+
+
+## Thursday July 1, 2010 ##
+
+More progress made on the security context implementation. Prompts are correctly being displayed, responses are being tracked. Since the emulator is meant for developers and not end users, the "blanket" mode is treated the same as "session" mode. I doubt developers wont want responses saved forever. Only the Device.findFiles API is being monitored by the security manager in this build, full API integration to come in the next couple days.
+
+Also added a JIL image to the status bar (similar to Firebug's) to do a quick launch of the emulator instead of having to navigate to the Tools menu. The config.xml file still needs to be loaded in the current tab. Planning on adding a right click menu to allow launching of the profiles and debug windows.
+
+I recommend installing this build as the June 28 build had an issue with full screen mode which is now resolved.
+
+
+## Tuesday June 28, 2010 ##
+
+Some usability enhancements have been added as well as the beginnings of the security context implementation.
+
+Quick list of what's new in the 20100628 build:
+
+  * Changed emulator container background to the JIL logo to reduce the size of the image (previous was 1+ MB).
+  * Tweaked the general settings tab to look more consistent with the others. Moved the error console button to the bottom and added security controls (not actually working yet though).
+  * Added an optional delay time to triggering events to better simulate callbacks that may take a while to be executed (location, searches, etc.).
